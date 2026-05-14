@@ -146,13 +146,6 @@ export function HeroSection() {
                 <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-0.5">↗</span>
               </span>
             </ButtonLink>
-            <a
-              href="#three-ideas"
-              className="text-[13px] text-[var(--color-text-secondary)] underline-offset-[6px] transition hover:text-[var(--color-text-primary)] hover:underline"
-              style={{ textDecorationColor: "var(--color-border-strong)" }}
-            >
-              how it works
-            </a>
           </motion.div>
         </div>
       </Container>
