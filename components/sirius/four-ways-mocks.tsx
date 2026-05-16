@@ -40,7 +40,7 @@ export function VoiceMock() {
             className="inline-block h-1.5 w-1.5 shrink-0 rounded-full"
             style={{ backgroundColor: "var(--color-accent)" }}
           />
-          <span className="font-mono text-[11px] text-[var(--color-text-secondary)]">
+          <span className="font-mono text-[11px] text-[var(--color-ink-2)]">
             Sirius, run the release.
           </span>
         </div>
@@ -53,8 +53,8 @@ export function ChatMock() {
   return (
     <ProductMock tone="flush">
       <div className="flex flex-col gap-2">
-        <div className="self-end rounded-full bg-[var(--color-surface-inset)] px-3 py-1.5">
-          <span className="text-[12px] text-[var(--color-text-primary)]">
+        <div className="self-end rounded-full bg-[rgba(0,0,0,0.2)] px-3 py-1.5">
+          <span className="text-[12px] text-[var(--color-ink-1)]">
             Move the release to Friday.
           </span>
         </div>
@@ -63,7 +63,7 @@ export function ChatMock() {
             className="mt-1 inline-block h-1.5 w-1.5 shrink-0 rounded-full"
             style={{ backgroundColor: "var(--color-accent)" }}
           />
-          <span className="font-display-italic text-[12px] italic text-[var(--color-text-secondary)]">
+          <span className="font-display-italic text-[12px] italic text-[var(--color-ink-2)]">
             Done. I&apos;ll ping CI when it goes green.
           </span>
         </div>
@@ -87,10 +87,10 @@ export function FeedMock() {
             key={item.time}
             className="flex items-baseline gap-3 border-b border-[var(--color-border)] py-1.5 last:border-b-0"
           >
-            <span className="w-12 shrink-0 font-mono text-[10.5px] text-[var(--color-text-faint)]">
+            <span className="w-12 shrink-0 font-mono text-[10.5px] text-[var(--color-ink-3)]">
               {item.time}
             </span>
-            <span className="truncate text-[12px] text-[var(--color-text-secondary)]">
+            <span className="truncate text-[12px] text-[var(--color-ink-2)]">
               {item.title}
             </span>
           </div>
@@ -103,8 +103,8 @@ export function FeedMock() {
 function ScheduleRow({ trigger, target }: { trigger: string; target: string }) {
   return (
     <div className="flex items-center gap-2">
-      <div className="flex-1 rounded-full border border-[var(--color-border)] bg-[var(--color-surface-inset)] px-3 py-1.5 text-center">
-        <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--color-text-secondary)]">
+      <div className="flex-1 rounded-full border border-[var(--color-border)] bg-[rgba(0,0,0,0.2)] px-3 py-1.5 text-center">
+        <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--color-ink-2)]">
           {trigger}
         </span>
       </div>
@@ -112,8 +112,8 @@ function ScheduleRow({ trigger, target }: { trigger: string; target: string }) {
         <line x1="0" y1="5" x2="16" y2="5" stroke="var(--color-border-strong)" strokeWidth="1.5" />
         <polyline points="13,2 18,5 13,8" fill="none" stroke="var(--color-border-strong)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
-      <div className="flex-1 rounded-full border border-[var(--color-border)] bg-[var(--color-surface-inset)] px-3 py-1.5 text-center">
-        <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--color-text-primary)]">
+      <div className="flex-1 rounded-full border border-[var(--color-border)] bg-[rgba(0,0,0,0.2)] px-3 py-1.5 text-center">
+        <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--color-ink-1)]">
           {target}
         </span>
       </div>

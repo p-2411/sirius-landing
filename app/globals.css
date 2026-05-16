@@ -1,76 +1,55 @@
 @import "tailwindcss";
 
-:root {
-  --color-bg-primary: #110F0C;
-  --color-bg-secondary: #14120E;
-  --color-bg-muted: #181611;
-  --color-bg-deep: #0C0B09;
-  --color-bg-soft: rgba(17, 15, 12, 0.84);
-  --color-surface: rgba(235, 226, 208, 0.045);
-  --color-surface-raised: rgba(235, 226, 208, 0.065);
-  --color-surface-panel: rgba(14, 12, 9, 0.86);
-  --color-surface-elevated: #100E0B;
-  --color-surface-inset: rgba(0, 0, 0, 0.2);
-  --color-input-bg: rgba(255, 255, 255, 0.055);
-  --color-secondary: rgba(255, 255, 255, 0.045);
-  --color-secondary-hover: rgba(255, 255, 255, 0.075);
-  --color-border: rgba(221, 229, 220, 0.1);
-  --color-border-strong: rgba(221, 229, 220, 0.18);
-  --color-text-primary: #F4ECDB;
-  --color-text-secondary: rgba(232, 229, 215, 0.80);
-  --color-text-muted: rgba(196, 198, 187, 0.60);
-  --color-text-disabled: rgba(187, 190, 180, 0.38);
-  --color-text-placeholder: rgba(226, 225, 213, 0.55);
-  --color-text-ornament: rgba(217, 185, 120, 0.58);
-  --color-text-inverse: #05070b;
-  --color-link: #9bd6e5;
-  --color-link-hover: #c8eef6;
-  --color-primary: #F2EBDB;
-  --color-primary-hover: #FFF7E2;
-  --color-primary-active: #DCD2BB;
-  --color-accent: #9bd6e5;
-  --color-accent-strong: #6cd8ff;
-  --color-accent-rgb: 155, 214, 229;
-  --color-accent-strong-rgb: 108, 216, 255;
-  --color-warm: #d9b978;
-  --color-warm-rgb: 217, 185, 120;
+@theme {
+  --font-sans: var(--font-body), "Geist", "Inter", system-ui, sans-serif;
+  --font-mono: var(--font-body), ui-monospace, monospace;
+
+  --spacing-0_5: 2px;  --spacing-1: 4px;   --spacing-2: 8px;
+  --spacing-3: 12px;   --spacing-4: 16px;  --spacing-5: 20px;
+  --spacing-6: 24px;   --spacing-8: 32px;  --spacing-10: 40px;
+  --spacing-12: 48px;  --spacing-16: 64px;
+
+  --radius-xs: 4px; --radius-sm: 8px; --radius-md: 12px;
+  --radius-lg: 16px; --radius-full: 9999px;
+
+  --color-bg: #1B1712;
+  --color-surface-1: #2C261D;
+  --color-surface-2: #342D23;
+  --color-surface-deep: #14110D;
+
+  --color-ink-1: #F6EFDF;
+  --color-ink-2: rgba(238, 232, 218, 0.84);
+  --color-ink-3: rgba(206, 208, 197, 0.62);
+  --color-ink-4: rgba(196, 199, 189, 0.40);
+
+  --color-border: rgba(232, 224, 200, 0.14);
+  --color-border-strong: rgba(232, 224, 200, 0.24);
+
+  --color-accent: #f0b35a;
+  --color-accent-strong: #ffd083;
+  --color-accent-muted: #9f6b2f;
+  --color-accent-rgb: 240, 179, 90;
+  --color-accent-strong-rgb: 255, 208, 131;
+
+  --color-state-listening: #9bd6e5;
+  --color-state-listening-strong: #6cd8ff;
+  --color-state-listening-rgb: 155, 214, 229;
+  --color-state-listening-strong-rgb: 108, 216, 255;
+
   --color-success: #a7dbb2;
   --color-warning: #f0c879;
-  --color-error: #f0a3a3;
-  --color-info: #9bd6e5;
-  --color-success-soft: rgba(167, 219, 178, 0.1);
-  --color-warning-soft: rgba(240, 200, 121, 0.1);
-  --color-error-soft: rgba(240, 163, 163, 0.1);
-  --color-info-soft: rgba(155, 214, 229, 0.1);
-  --color-disabled-bg: rgba(255, 255, 255, 0.035);
-  --color-disabled-border: rgba(221, 229, 220, 0.08);
-  --color-focus: #9bd6e5;
-  --color-orb-glow: rgba(155, 214, 229, 0.16);
-  --color-orb-glow-soft: rgba(155, 214, 229, 0.1);
-  --color-shadow-problem-card: rgba(5, 12, 30, 0.22);
-  --color-shadow-problem-visual: rgba(8, 20, 58, 0.24);
-  --color-selection: rgba(159, 200, 216, 0.22);
-  --color-bg: var(--color-bg-primary);
-  --color-panel: var(--color-surface);
-  --color-panel-strong: var(--color-surface-raised);
-  --color-panel-solid: var(--color-bg-muted);
-  --color-button: var(--color-primary);
-  --color-text: var(--color-text-primary);
-  --color-text-faint: var(--color-text-muted);
-  --color-accent-soft: rgba(var(--color-accent-strong-rgb), 0.12);
-  --color-warm-soft: rgba(var(--color-warm-rgb), 0.12);
-  --shadow-orb: 0 0 46px rgba(var(--color-accent-strong-rgb), 0.11);
-  --shadow-primary: 0 14px 36px rgba(239, 231, 210, 0.12);
-  --shadow-panel: 0 24px 90px rgba(0, 0, 0, 0.34);
-  --radius-panel: 22px;
-  --radius-card: 18px;
-  --max-width: 1440px;
-  --ink: var(--color-text-secondary);
-  --ink-2: var(--color-text-primary);
-  --dim: var(--color-text-muted);
-  --cyan: var(--color-accent);
-  --green: var(--color-success);
-  --font-mono: var(--font-body);
+  --color-danger: #f0a3a3;
+
+  --color-bubble-user: #4A331A;
+  --color-bubble-assistant: #3A322A;
+}
+
+:root {
+  --font-title: var(--font-display);
+  --title-weight: 400;
+  --title-style: normal;
+  --title-tracking: -0.005em;
+
 }
 
 * {
@@ -94,41 +73,14 @@ body {
   margin: 0;
   min-height: 100vh;
   background:
-    radial-gradient(circle at 18% 12%, rgba(var(--color-accent-strong-rgb), 0.04), transparent 26%),
-    radial-gradient(circle at 78% 4%, rgba(var(--color-warm-rgb), 0.05), transparent 28%),
-    radial-gradient(circle at 50% 46%, rgba(var(--color-warm-rgb), 0.022), transparent 42%),
-    linear-gradient(180deg, var(--color-bg-secondary) 0%, var(--color-bg-primary) 48%, var(--color-bg-deep) 100%);
-  color: var(--color-text);
+    radial-gradient(circle at 20% 0%, rgba(108, 216, 255, 0.05), transparent 36%),
+    radial-gradient(circle at 78% 4%, rgba(240, 179, 90, 0.04), transparent 38%),
+    var(--color-bg);
+  color: var(--color-ink-1);
   font-family: var(--font-body);
   font-weight: 400;
   letter-spacing: -0.005em;
   font-feature-settings: "ss01", "cv11";
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background-image:
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.5  0 0 0 0 0.55  0 0 0 0 0.65  0 0 0 0 0.08 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"),
-    linear-gradient(var(--color-border) 1px, transparent 1px),
-    linear-gradient(90deg, var(--color-border) 1px, transparent 1px);
-  background-size: 200px 200px, 100% 3px, 3px 100%;
-  opacity: 0.10;
-  mix-blend-mode: overlay;
-  mask-image: radial-gradient(circle at center, black 30%, transparent 88%);
-}
-
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background:
-    linear-gradient(90deg, transparent 0, rgba(var(--color-accent-rgb), 0.06) 50%, transparent 100%) 50% 0 / min(1200px, calc(100vw - 48px)) 100% no-repeat;
-  opacity: 0.24;
-  mask-image: linear-gradient(180deg, black, transparent 72%);
 }
 
 a {
@@ -144,12 +96,7 @@ select {
 }
 
 ::selection {
-  background: var(--color-selection);
-}
-
-@theme inline {
-  --font-sans: var(--font-body);
-  --font-mono: var(--font-body);
+  background: rgba(217,185,120,0.22);
 }
 
 .text-balance {
@@ -172,7 +119,7 @@ select {
 
 .band-deep {
   position: relative;
-  background: #0A0908;
+  background: var(--color-surface-deep);
   border-top: 1px solid var(--color-border-strong);
   border-bottom: 1px solid var(--color-border-strong);
 }
@@ -181,17 +128,18 @@ select {
   font-family: var(--font-display);
   font-style: italic;
   font-weight: 300;
-  font-size: clamp(5rem, 10vw, 8rem);
+  font-size: 0;
+  display: none;
   line-height: 0.85;
   color: transparent;
-  -webkit-text-stroke: 1px rgba(var(--color-warm-rgb), 0.22);
+  -webkit-text-stroke: 1px rgba(217,185,120,0.22);
   letter-spacing: -0.04em;
   user-select: none;
   pointer-events: none;
 }
 
 .panel-recessed {
-  background: var(--color-surface-elevated);
+  background: var(--color-surface-deep);
   border: 1px solid var(--color-border-strong);
 }
 
@@ -201,6 +149,106 @@ select {
   height: 1px;
   vertical-align: middle;
   background: linear-gradient(90deg, transparent, var(--accent-color, var(--color-accent)) 65%);
+}
+
+/* ── Buttons ──────────────────────────────────────────────────────────────
+   One warm finish, shape varies by context. Gold is treated as struck
+   metal — lit from above, not a flat slab — to sit with the editorial type
+   instead of fighting it. */
+.btn {
+  position: relative;
+  display: inline-flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+  user-select: none;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  outline: none;
+  transition:
+    background-image 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.25s ease,
+    color 0.2s ease,
+    transform 0.12s ease;
+}
+
+.btn:focus-visible {
+  outline: 2px solid rgba(var(--color-accent-rgb), 0.6);
+  outline-offset: 2px;
+}
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Primary — flat warm-gold, no depth, no glow */
+.btn-primary {
+  height: 2.75rem;
+  padding-inline: 1.75rem;
+  border-radius: var(--radius-full);
+  color: #1b1712;
+  background-color: var(--color-accent);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-accent-strong);
+}
+
+.btn-primary:active {
+  background-color: #e6a647;
+}
+
+/* Ghost — hairline that warms to gold */
+.btn-ghost {
+  height: 2.75rem;
+  padding-inline: 1.5rem;
+  border-radius: var(--radius-full);
+  color: var(--color-ink-1);
+  border: 1px solid var(--color-border-strong);
+  background-color: transparent;
+}
+
+.btn-ghost:hover {
+  border-color: rgba(var(--color-accent-rgb), 0.55);
+  background-color: rgba(var(--color-accent-rgb), 0.06);
+  box-shadow: 0 10px 30px -14px rgba(var(--color-accent-rgb), 0.45);
+}
+
+.btn-ghost:active {
+  background-color: rgba(var(--color-accent-rgb), 0.1);
+}
+
+/* Quiet — refined inline link, matches the header CTA */
+.btn-quiet {
+  color: var(--color-ink-2);
+  text-underline-offset: 6px;
+  text-decoration-color: transparent;
+}
+
+.btn-quiet:hover {
+  color: var(--color-ink-1);
+  text-decoration-line: underline;
+  text-decoration-color: rgba(var(--color-accent-rgb), 0.55);
+}
+
+/* Field modifier — square off and match an adjacent input */
+.btn-field {
+  height: 3rem;
+  padding-inline: 1.25rem;
+  border-radius: var(--radius-sm);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .btn-primary:active,
+  .btn-ghost:active {
+    transform: scale(0.985);
+  }
 }
 
 @keyframes wave-pulse {
@@ -229,7 +277,7 @@ select {
 .focus-ring:focus-visible {
   box-shadow:
     0 0 0 2px var(--color-bg),
-    0 0 0 4px var(--color-focus);
+    0 0 0 4px rgba(217,185,120,0.55);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -245,4 +293,9 @@ select {
     scroll-behavior: auto !important;
     transition-duration: 0.001ms !important;
   }
+}
+
+@keyframes sirius-pulse {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1); }
 }

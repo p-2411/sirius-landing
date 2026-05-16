@@ -1,4 +1,6 @@
 .next/
+.superpowers/
+.worktrees/
 node_modules/
 .vercel/
 dist/

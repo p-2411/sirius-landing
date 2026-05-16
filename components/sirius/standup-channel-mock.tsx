@@ -17,7 +17,7 @@ const BLOCKING = [
 
 function SectionHeader({ label }: { label: string }) {
   return (
-    <p className="font-mono text-[9.5px] uppercase tracking-[0.2em] text-[var(--color-text-faint)]">
+    <p className="font-mono text-[9.5px] uppercase tracking-[0.2em] text-[var(--color-ink-3)]">
       {label}
     </p>
   );
@@ -27,13 +27,13 @@ export function StandupChannelMock() {
   return (
     <ProductMock label="#standup · 12 members" status="9:01 AM">
       <div className="flex items-start gap-2.5">
-        <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-[var(--color-border)] bg-[var(--color-surface-inset)]">
+        <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-[var(--color-border)] bg-[rgba(0,0,0,0.2)]">
           <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" />
         </div>
 
         <div className="min-w-0 flex-1">
           <div className="flex items-baseline gap-2">
-            <span className="text-[12.5px] font-medium text-[var(--color-text-primary)]">Sirius</span>
+            <span className="text-[12.5px] font-medium text-[var(--color-ink-1)]">Sirius</span>
             <span
               className="rounded-full border px-1.5 py-px font-mono text-[8.5px] uppercase tracking-[0.16em]"
               style={{
@@ -44,10 +44,10 @@ export function StandupChannelMock() {
             >
               Draft
             </span>
-            <span className="font-mono text-[9.5px] text-[var(--color-text-faint)]">9:01 AM</span>
+            <span className="font-mono text-[9.5px] text-[var(--color-ink-3)]">9:01 AM</span>
           </div>
 
-          <p className="mt-1.5 text-[12.5px] text-[var(--color-text-primary)]">
+          <p className="mt-1.5 text-[12.5px] text-[var(--color-ink-1)]">
             Standup &mdash; Mon, Mar 17
           </p>
 
@@ -57,8 +57,8 @@ export function StandupChannelMock() {
               <ul className="mt-1 space-y-0.5">
                 {SHIPPED.map((item) => (
                   <li key={item.ref} className="flex items-baseline gap-1.5 text-[11.5px]">
-                    <span className="text-[var(--color-text-faint)]">·</span>
-                    <span className="flex-1 min-w-0 text-[var(--color-text-secondary)]">{item.text}</span>
+                    <span className="text-[var(--color-ink-3)]">·</span>
+                    <span className="flex-1 min-w-0 text-[var(--color-ink-2)]">{item.text}</span>
                     <span className="font-mono text-[9.5px] text-[var(--color-accent)]">{item.ref}</span>
                   </li>
                 ))}
@@ -70,8 +70,8 @@ export function StandupChannelMock() {
               <ul className="mt-1 space-y-0.5">
                 {NEXT.map((line) => (
                   <li key={line} className="flex items-baseline gap-1.5 text-[11.5px]">
-                    <span className="text-[var(--color-text-faint)]">·</span>
-                    <span className="flex-1 text-[var(--color-text-secondary)]">{line}</span>
+                    <span className="text-[var(--color-ink-3)]">·</span>
+                    <span className="flex-1 text-[var(--color-ink-2)]">{line}</span>
                   </li>
                 ))}
               </ul>
@@ -82,8 +82,8 @@ export function StandupChannelMock() {
               <ul className="mt-1 space-y-0.5">
                 {BLOCKING.map((item) => (
                   <li key={item.ref} className="flex items-baseline gap-1.5 text-[11.5px]">
-                    <span className="text-[var(--color-warm)]">·</span>
-                    <span className="flex-1 min-w-0 text-[var(--color-text-secondary)]">{item.text}</span>
+                    <span className="text-[var(--color-accent)]">·</span>
+                    <span className="flex-1 min-w-0 text-[var(--color-ink-2)]">{item.text}</span>
                     <span className="font-mono text-[9.5px] text-[var(--color-accent)]">{item.ref}</span>
                   </li>
                 ))}
@@ -97,14 +97,14 @@ export function StandupChannelMock() {
         <button
           type="button"
           tabIndex={-1}
-          className="text-[11.5px] text-[var(--color-text-secondary)] underline-offset-4 hover:underline"
+          className="text-[11.5px] text-[var(--color-ink-2)] underline-offset-4 hover:underline"
         >
           Edit
         </button>
         <button
           type="button"
           tabIndex={-1}
-          className="rounded-full bg-[var(--color-primary)] px-3 py-1 text-[11px] font-medium tracking-tight text-[var(--color-text-inverse)]"
+          className="rounded-full bg-[var(--color-accent)] px-3 py-1 text-[11px] font-medium tracking-tight text-[var(--color-bg)]"
         >
           Post to #standup
         </button>

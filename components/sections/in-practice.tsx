@@ -5,38 +5,119 @@ import { useEffect, useRef, useState } from "react";
 import { landingContent } from "@/content/landing";
 import { Container } from "@/components/ui/container";
 import { SectionLabel } from "@/components/ui/section-label";
+import { ScreenshotFrame } from "@/components/ui/screenshot-frame";
+import { WorkflowShot, ScaledShot } from "@/components/sirius/appui";
+import type { WorkflowShotProps } from "@/components/sirius/appui";
 
-type AccentTone = { hex: string; rgb: string };
+// ─── Per-vignette screenshot metadata ────────────────────────────────────────
 
-const ACCENTS: Record<string, AccentTone> = {
-  design:      { hex: "#6cd8ff", rgb: "108, 216, 255" },
-  engineering: { hex: "#9adcb0", rgb: "154, 220, 176" },
-  meeting:     { hex: "#d9b978", rgb: "217, 185, 120" },
-  research:    { hex: "#8a9cff", rgb: "138, 156, 255" },
+const SCREENSHOT_META: Record<string, { alt: string; caption: string }> = {
+  design:      { alt: "Sirius — client feedback triaged in the app",   caption: "Feedback, sorted in Sirius" },
+  engineering: { alt: "Sirius — standup assembled in the app",          caption: "Standup, ready in Sirius" },
+  meeting:     { alt: "Sirius — meeting brief in the app",              caption: "Meeting brief in Sirius" },
+  research:    { alt: "Sirius — research digest in the app",            caption: "Research desk in Sirius" },
 };
 
-// Surface chain — composition, not chrome.
-const CHAINS: Record<string, string[]> = {
-  design:      ["CHAT", "WORKFLOW"],
-  engineering: ["SCHEDULE", "WORKFLOW"],
-  meeting:     ["SCHEDULE", "CHAT"],
-  research:    ["FEED"],
+// ─── Per-vignette WorkflowShot props ─────────────────────────────────────────
+
+const SHOT_BY_ID: Record<string, WorkflowShotProps> = {
+  design: {
+    breadcrumb: "Client feedback",
+    title: "Client feedback",
+    tone: "running",
+    statusLabel: "Running",
+    trigger: "Per inbound",
+    runsMeta: "23 runs",
+    steps: [
+      { id: "read",  type: "GMAIL", title: "Read the comments",        col: 0, next: ["sort"],  state: "done" },
+      { id: "sort",  type: "LLM",   title: "Sort by section",          col: 1, next: ["draft"], state: "done" },
+      { id: "draft", type: "LLM",   title: "Draft the routine replies", col: 2, next: ["flag"],  state: "done" },
+      { id: "flag",  type: "SLACK", title: "Flag scope changes",       col: 3, next: [],         state: "running" },
+    ],
+    messages: [
+      { role: "user",      text: "Sirius, what came in from the client?" },
+      { role: "assistant", text: "Sorted 6 comments by section. Drafted replies to the 4 routine ones; 2 change scope — flagged for you." },
+    ],
+    recentRuns: [
+      { tone: "done",    label: "Done",    when: "1h ago",  dur: "42s" },
+      { tone: "done",    label: "Done",    when: "3h ago",  dur: "38s" },
+      { tone: "running", label: "Running", when: "5m ago",  dur: "—" },
+    ],
+  },
+  engineering: {
+    breadcrumb: "Standup digest",
+    title: "Standup digest",
+    tone: "running",
+    statusLabel: "Running",
+    trigger: "Mon 09:00",
+    runsMeta: "48 runs",
+    steps: [
+      { id: "pull",      type: "GITHUB",     title: "Pull PRs + threads",  col: 0, next: ["merge"],     state: "done" },
+      { id: "merge",     type: "RUN PYTHON", title: "Merge by area",       col: 1, next: ["summarise"], state: "done" },
+      { id: "summarise", type: "LLM",        title: "Summarise blockers",  col: 2, next: ["post"],      state: "done" },
+      { id: "post",      type: "SLACK",      title: "Post the digest",     col: 3, next: [],             state: "running" },
+    ],
+    messages: [
+      { role: "user",      text: "Sirius, what's standup looking like?" },
+      { role: "assistant", text: "Pulled 9 PRs and 3 threads. Digest is posted — two blockers are pinned at the top." },
+    ],
+    recentRuns: [
+      { tone: "done", label: "Done", when: "Mon 09:01", dur: "1m 12s" },
+      { tone: "done", label: "Done", when: "Fri 09:01", dur: "58s" },
+    ],
+  },
+  meeting: {
+    breadcrumb: "Meeting brief",
+    title: "Meeting brief",
+    tone: "done",
+    statusLabel: "Done",
+    trigger: "Per meeting",
+    runsMeta: "96 runs",
+    steps: [
+      { id: "watch",  type: "CALENDAR",     title: "Watch the calendar",   col: 0, next: ["gather"], state: "done" },
+      { id: "gather", type: "HTTP REQUEST", title: "Gather the thread",    col: 1, next: ["brief"],  state: "done" },
+      { id: "brief",  type: "LLM",          title: "Write the brief",      col: 2, next: ["land"],   state: "done" },
+      { id: "land",   type: "GMAIL",        title: "Land it in your inbox", col: 3, next: [],         state: "done" },
+    ],
+    messages: [
+      { role: "user",      text: "Sirius, what's the 14:00?" },
+      { role: "assistant", text: "Brief's in your inbox: latest thread, open tasks, and the last three decisions with this account." },
+    ],
+    recentRuns: [
+      { tone: "done", label: "Done", when: "1h ago",  dur: "28s" },
+      { tone: "done", label: "Done", when: "3h ago",  dur: "31s" },
+      { tone: "done", label: "Done", when: "1d ago",  dur: "25s" },
+    ],
+  },
+  research: {
+    breadcrumb: "Research digest",
+    title: "Research digest",
+    tone: "running",
+    statusLabel: "Running",
+    trigger: "Daily 07:00",
+    runsMeta: "140 runs",
+    steps: [
+      { id: "subscribe", type: "HTTP REQUEST", title: "Pull the sources",      col: 0, next: ["filter"],  state: "done" },
+      { id: "filter",    type: "RUN PYTHON",   title: "Filter to signal",      col: 1, next: ["compare"], state: "done" },
+      { id: "compare",   type: "LLM",          title: "Compare the conflicts", col: 2, next: ["digest"],  state: "running" },
+      { id: "digest",    type: "LLM",          title: "Write the digest",      col: 3, next: [],           state: "idle" },
+    ],
+    messages: [
+      { role: "user",      text: "Sirius, what's worth knowing this morning?" },
+      { role: "assistant", text: "Filtered 40 items to 6. Two contradict last week's read — comparing now, digest lands in ~2 min." },
+    ],
+    recentRuns: [
+      { tone: "done", label: "Done", when: "07:01 today", dur: "1m 48s" },
+      { tone: "done", label: "Done", when: "07:01 yday",  dur: "1m 52s" },
+    ],
+  },
 };
 
-// Sirius's moves — what it does, not what it produces. Honest about operations,
-// silent on output specifics.
-const VERBS: Record<string, string[]> = {
-  design:      ["READ", "SORT", "DRAFT", "FLAG"],
-  engineering: ["PULL", "MERGE", "SUMMARISE", "POST"],
-  meeting:     ["WATCH", "GATHER", "BRIEF", "LAND"],
-  research:    ["SUBSCRIBE", "FILTER", "COMPARE", "DIGEST"],
-};
-
-const HEADLINE_SPLITS: Record<string, { lead: string; tail: string }> = {
-  design:      { lead: "Client feedback that ",  tail: "triages itself." },
-  engineering: { lead: "Your standup, ",         tail: "already written." },
-  meeting:     { lead: "Your next meeting, ",    tail: "already briefed." },
-  research:    { lead: "A research desk, ",      tail: "for one." },
+const TITLE_HIGHLIGHTS: Record<string, string> = {
+  design: "sorted before you read it.",
+  engineering: "ready before you are.",
+  meeting: "already briefed.",
+  research: "for one.",
 };
 
 // Match the site's body font (Geist) — tracking + caps carry the "technical
@@ -45,14 +126,13 @@ const MONO_STACK = `"Geist", "Inter", ui-sans-serif, system-ui, sans-serif`;
 
 // ─── Voice glyph ─────────────────────────────────────────────────────────────
 
-function VoiceWaveform({ accent, revealed }: { accent: AccentTone; revealed: boolean }) {
+function VoiceWaveform({ revealed }: { revealed: boolean }) {
   const bars = [0.35, 0.7, 0.5, 0.95, 0.6, 0.38];
   return (
     <span
       aria-hidden="true"
       data-revealed={revealed ? "true" : "false"}
       className="ip-voice inline-flex h-[18px] shrink-0 items-end gap-[3px]"
-      style={{ ["--ip-wave-color" as string]: accent.hex }}
     >
       {bars.map((h, i) => (
         <span
@@ -68,130 +148,15 @@ function VoiceWaveform({ accent, revealed }: { accent: AccentTone; revealed: boo
   );
 }
 
-// ─── Typographic primitives ──────────────────────────────────────────────────
-
-function ChainHeader({ chain, accent, i = 0 }: { chain: string[]; accent: AccentTone; i?: number }) {
-  return (
-    <div
-      className="ip-type-line"
-      style={{
-        ["--ip-stagger-i" as string]: i,
-        fontFamily: MONO_STACK,
-        fontSize: 11.5,
-        letterSpacing: "0.24em",
-      }}
-    >
-      {chain.map((surface, idx) => (
-        <span key={idx}>
-          {idx > 0 && (
-            <span className="mx-2.5 text-[var(--color-text-muted)]">→</span>
-          )}
-          <span style={{ color: accent.hex }}>{surface}</span>
-        </span>
-      ))}
-    </div>
-  );
-}
-
-function AccentRule({ accent, i = 1 }: { accent: AccentTone; i?: number }) {
-  return (
-    <div
-      aria-hidden="true"
-      className="ip-type-line my-4 h-px w-full"
-      style={{
-        ["--ip-stagger-i" as string]: i,
-        background: `linear-gradient(90deg, rgba(${accent.rgb}, 0.55), rgba(${accent.rgb}, 0.10) 80%, transparent)`,
-      }}
-    />
-  );
-}
-
-function TypeLine({
-  i,
-  children,
-  className = "",
-  style,
-}: {
-  i: number;
-  children: React.ReactNode;
-  className?: string;
-  style?: React.CSSProperties;
-}) {
-  return (
-    <div
-      className={`ip-type-line ${className}`}
-      style={{ ["--ip-stagger-i" as string]: i, fontFamily: MONO_STACK, ...style }}
-    >
-      {children}
-    </div>
-  );
-}
-
-// ─── Artifact: Sirius's verbs for this use case ──────────────────────────────
-
-function VerbsArtifact({
-  id,
-  accent,
-  revealed,
-}: {
-  id: string;
-  accent: AccentTone;
-  revealed: boolean;
-}) {
-  const chain = CHAINS[id] ?? [];
-  const verbs = VERBS[id] ?? [];
-  return (
-    <div
-      data-revealed={revealed ? "true" : "false"}
-      className="ip-artifact"
-      style={{ ["--ip-accent-rgb" as string]: accent.rgb }}
-    >
-      <ChainHeader chain={chain} accent={accent} i={0} />
-      <AccentRule accent={accent} i={1} />
-
-      <ol className="mt-1 space-y-3">
-        {verbs.map((verb, idx) => (
-          <TypeLine
-            key={idx}
-            i={2 + idx}
-            className="grid grid-cols-[40px_1fr] items-baseline gap-4"
-          >
-            <span
-              style={{
-                fontFamily: MONO_STACK,
-                fontSize: 11,
-                letterSpacing: "0.20em",
-                color: "var(--color-text-disabled)",
-              }}
-            >
-              {String(idx + 1).padStart(2, "0")}
-            </span>
-            <span
-              style={{
-                fontFamily: MONO_STACK,
-                fontSize: "clamp(1.05rem, 1.4vw, 1.25rem)",
-                letterSpacing: "0.13em",
-                color: accent.hex,
-                fontWeight: 500,
-              }}
-            >
-              {verb}
-              <span style={{ color: "rgba(255,255,255,0.35)" }}>.</span>
-            </span>
-          </TypeLine>
-        ))}
-      </ol>
-    </div>
-  );
-}
-
 // ─── Card ─────────────────────────────────────────────────────────────────────
 
 type CardData = (typeof landingContent.inPractice.vignettes)[number];
 
 function PracticeCard({ card, total }: { card: CardData; total: number }) {
-  const accent = ACCENTS[card.id];
-  const split = HEADLINE_SPLITS[card.id];
+  const highlight = TITLE_HIGHLIGHTS[card.id];
+  const highlightIndex = highlight ? card.title.indexOf(highlight) : -1;
+  const titleLead = highlightIndex >= 0 ? card.title.slice(0, highlightIndex) : card.title;
+  const screenshot = SCREENSHOT_META[card.id];
 
   const ref = useRef<HTMLElement | null>(null);
   const [revealed, setRevealed] = useState(false);
@@ -223,60 +188,69 @@ function PracticeCard({ card, total }: { card: CardData; total: number }) {
     <article
       ref={ref}
       data-revealed={revealed ? "true" : "false"}
-      className="ip-card relative grid grid-cols-1 items-center gap-12 border-t border-[var(--color-border-strong)] py-20 first:border-t-0 first:pt-4 last:pb-0 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:gap-16 md:py-28 md:first:pt-6 md:last:pb-0"
-      style={{
-        ["--ip-accent" as string]: accent.hex,
-        ["--ip-accent-rgb" as string]: accent.rgb,
-      }}
+      className="ip-card relative grid grid-cols-1 items-center gap-8 border-t border-[var(--color-border-strong)] py-12 first:border-t-0 first:pt-2 last:pb-0 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:gap-12 md:py-16 md:first:pt-4 md:last:pb-0"
     >
       {/* TEXT COLUMN */}
       <div className="relative flex max-w-[58ch] flex-col">
-        <p className="flex items-center gap-3 text-[15px] italic leading-[1.5] text-[var(--color-text-secondary)]">
-          <VoiceWaveform accent={accent} revealed={revealed} />
+        <p className="flex items-center gap-3 text-[15px] italic leading-[1.5] text-[var(--color-ink-2)]">
+          <VoiceWaveform revealed={revealed} />
           <span>&ldquo;{card.voiceTrigger}&rdquo;</span>
         </p>
 
-        <h3 className="font-display mt-6 max-w-[22ch] text-[clamp(1.9rem,3.4vw,2.8rem)] leading-[1.05] tracking-[-0.022em] text-[var(--color-text-primary)]">
-          {split.lead}
-          <em
-            className="font-display-italic not-italic"
-            style={{ color: accent.hex }}
-          >
-            {split.tail}
-          </em>
+        <h3 className="font-display mt-4 max-w-[22ch] text-[clamp(1.7rem,3vw,2.4rem)] leading-[1.08] tracking-[-0.022em] text-[var(--color-ink-1)]">
+          {titleLead}
+          {highlightIndex >= 0 && (
+            <em
+              className="font-display-italic not-italic"
+              style={{ color: "var(--color-accent)" }}
+            >
+              {highlight}
+            </em>
+          )}
         </h3>
 
-        <p className="mt-7 max-w-[54ch] text-[16px] leading-[1.7] text-[var(--color-text-secondary)]">
+        <p className="mt-4 max-w-[54ch] text-[15px] leading-[1.65] text-[var(--color-ink-2)]">
           {card.body}
         </p>
 
         <p
-          className="mt-8 inline-flex items-baseline gap-3 text-[14px] leading-[1.5] text-[var(--color-text-primary)]"
+          className="mt-6 inline-flex items-baseline gap-3 text-[14px] leading-[1.5] text-[var(--color-ink-1)]"
           style={{ fontFamily: MONO_STACK, letterSpacing: "0.01em" }}
         >
-          <span aria-hidden="true" style={{ color: accent.hex }}>—</span>
+          <span aria-hidden="true" style={{ color: "var(--color-accent)" }}>—</span>
           <span>{card.punchline}</span>
         </p>
 
         <div
-          className="mt-12"
+          className="mt-7"
           style={{
             fontFamily: MONO_STACK,
             fontSize: 10.5,
             letterSpacing: "0.22em",
-            color: "var(--color-text-muted)",
+            color: "var(--color-ink-3)",
           }}
         >
-          <span style={{ color: accent.hex, opacity: 0.9 }}>{card.seq}</span>
+          <span style={{ color: "var(--color-accent)", opacity: 0.9 }}>{card.seq}</span>
           <span className="mx-2 opacity-60">/</span>
           <span>{String(total).padStart(2, "0")}</span>
         </div>
       </div>
 
-      {/* ARTIFACT COLUMN — the verbs */}
-      <div className="relative flex justify-center md:justify-end">
-        <div className="w-full max-w-[420px]">
-          <VerbsArtifact id={card.id} accent={accent} revealed={revealed} />
+      {/* PRODUCT COLUMN */}
+      <div className="relative flex flex-col justify-center md:justify-end">
+        <div className="w-full max-w-[480px] self-center md:self-end">
+          {screenshot && (
+            <ScreenshotFrame
+              alt={screenshot.alt}
+              caption={screenshot.caption}
+            >
+              {SHOT_BY_ID[card.id] && (
+                <ScaledShot width={1360} height={850}>
+                  <WorkflowShot {...SHOT_BY_ID[card.id]} />
+                </ScaledShot>
+              )}
+            </ScreenshotFrame>
+          )}
         </div>
       </div>
     </article>
@@ -286,23 +260,28 @@ function PracticeCard({ card, total }: { card: CardData; total: number }) {
 // ─── Section ──────────────────────────────────────────────────────────────────
 
 export function InPracticeSection() {
-  const { sectionLabel, vignettes } = landingContent.inPractice;
+  const { sectionLabel, intro, vignettes } = landingContent.inPractice;
 
   return (
     <section id="in-practice" className="scroll-mt-24 py-24 md:py-32">
       <Container>
-        <SectionLabel index="04" tone="cyan">
+        {/* Section eyebrow — gold (decorative brand accent, tone="warm") */}
+        <SectionLabel index="01" tone="warm">
           {sectionLabel}
         </SectionLabel>
 
-        <h2 className="font-display mt-7 max-w-[26ch] text-[clamp(2.4rem,5.2vw,4rem)] leading-[0.92] tracking-[-0.028em] font-normal text-[var(--color-text-primary)]">
-          Four short{" "}
-          <em className="font-display-italic not-italic" style={{ color: "var(--color-warm)" }}>
-            demonstrations.
+        <h2 className="font-display mt-7 max-w-[26ch] text-[clamp(2.4rem,5.2vw,4rem)] leading-[0.92] tracking-[-0.028em] font-normal text-[var(--color-ink-1)]">
+          Stop doing the same work{" "}
+          <em className="font-display-italic not-italic" style={{ color: "var(--color-accent)" }}>
+            from scratch.
           </em>
         </h2>
 
-        <div className="mt-14 flex flex-col">
+        <p className="mt-7 max-w-[52ch] text-[clamp(0.98rem,1.25vw,1.08rem)] leading-[1.68] text-[var(--color-ink-2)]">
+          {intro}
+        </p>
+
+        <div className="mt-16 flex flex-col border-t border-[var(--color-border-strong)] pt-6 md:pt-8">
           {vignettes.map((v) => (
             <PracticeCard key={v.id} card={v} total={vignettes.length} />
           ))}
@@ -310,10 +289,11 @@ export function InPracticeSection() {
       </Container>
 
       <style>{`
-        /* Voice waveform — single slow pulse on reveal */
+        /* Voice waveform — single slow pulse on reveal.
+           Wave bars use CYAN (state-listening-strong) — this is a LIVE / running indicator. */
         .ip-voice-bar {
           height: var(--ip-wave-h);
-          background: var(--ip-wave-color, var(--color-accent-strong));
+          background: var(--ip-wave-color, var(--color-state-listening-strong));
           transform: scaleY(0.32);
           transform-origin: bottom center;
           opacity: 0.55;
@@ -330,30 +310,9 @@ export function InPracticeSection() {
           100% { transform: scaleY(0.55); }
         }
 
-        /* Typewriter line reveal — clip-path inset with stepped timing */
-        .ip-type-line {
-          clip-path: inset(0 100% 0 0);
-          opacity: 0;
-          will-change: clip-path;
-        }
-        .ip-artifact[data-revealed="true"] .ip-type-line {
-          opacity: 1;
-          animation: ip-type 460ms steps(40, end) forwards;
-          animation-delay: calc(140ms + var(--ip-stagger-i, 0) * 110ms);
-        }
-        @keyframes ip-type {
-          from { clip-path: inset(0 100% 0 0); }
-          to   { clip-path: inset(0 0 0 0); }
-        }
-
         @media (prefers-reduced-motion: reduce) {
-          .ip-voice[data-revealed="true"] .ip-voice-bar,
-          .ip-artifact[data-revealed="true"] .ip-type-line {
+          .ip-voice[data-revealed="true"] .ip-voice-bar {
             animation: none !important;
-          }
-          .ip-type-line {
-            opacity: 1 !important;
-            clip-path: none !important;
           }
         }
       `}</style>

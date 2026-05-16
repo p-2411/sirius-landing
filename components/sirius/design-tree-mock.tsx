@@ -41,8 +41,8 @@ function StatusMark({ status }: { status: Status }) {
         "inline-flex h-4 w-4 shrink-0 items-center justify-center text-[12px]",
         status === "done"     && "text-[var(--color-success)]",
         status === "drafted"  && "text-[var(--color-accent)]",
-        status === "flagged"  && "text-[var(--color-warm)]",
-        status === "declined" && "text-[var(--color-text-faint)]",
+        status === "flagged"  && "text-[var(--color-accent)]",
+        status === "declined" && "text-[var(--color-ink-3)]",
       )}
       aria-hidden="true"
     >
@@ -85,12 +85,12 @@ export function DesignTreeMock() {
                 style={{
                   width: nav.widthPct,
                   background: nav.active
-                    ? "var(--color-text-secondary)"
+                    ? "var(--color-ink-2)"
                     : "var(--color-border)",
                 }}
               />
               {nav.count && (
-                <span className="ml-auto font-mono text-[8.5px] tabular-nums text-[var(--color-text-faint)]">
+                <span className="ml-auto font-mono text-[8.5px] tabular-nums text-[var(--color-ink-3)]">
                   {nav.count}
                 </span>
               )}
@@ -112,10 +112,10 @@ export function DesignTreeMock() {
             >
               All · 8
             </span>
-            <span className="inline-flex h-4 items-center rounded-full border border-[var(--color-border)] bg-[var(--color-surface-inset)] px-1.5 font-mono text-[8.5px] uppercase tracking-[0.14em] text-[var(--color-text-faint)]">
+            <span className="inline-flex h-4 items-center rounded-full border border-[var(--color-border)] bg-[rgba(0,0,0,0.2)] px-1.5 font-mono text-[8.5px] uppercase tracking-[0.14em] text-[var(--color-ink-3)]">
               Open · 4
             </span>
-            <span className="inline-flex h-4 items-center rounded-full border border-[var(--color-border)] bg-[var(--color-surface-inset)] px-1.5 font-mono text-[8.5px] uppercase tracking-[0.14em] text-[var(--color-text-faint)]">
+            <span className="inline-flex h-4 items-center rounded-full border border-[var(--color-border)] bg-[rgba(0,0,0,0.2)] px-1.5 font-mono text-[8.5px] uppercase tracking-[0.14em] text-[var(--color-ink-3)]">
               Replied
             </span>
           </div>
@@ -124,10 +124,10 @@ export function DesignTreeMock() {
             {ITEMS.map((item, i) => (
               <div key={i} className="flex items-center gap-2.5 py-1.5">
                 <StatusMark status={item.status} />
-                <span className="min-w-0 flex-1 truncate text-[12.5px] text-[var(--color-text-primary)]">
+                <span className="min-w-0 flex-1 truncate text-[12.5px] text-[var(--color-ink-1)]">
                   {item.text}
                 </span>
-                <span className="shrink-0 font-mono text-[9.5px] uppercase tracking-[0.12em] text-[var(--color-text-faint)]">
+                <span className="shrink-0 font-mono text-[9.5px] uppercase tracking-[0.12em] text-[var(--color-ink-3)]">
                   {item.tag}
                 </span>
                 <span
@@ -142,10 +142,10 @@ export function DesignTreeMock() {
       </div>
 
       <div className="mt-4 flex items-center gap-3 border-t border-[var(--color-border)] pt-3">
-        <p className="flex-1 font-mono text-[10.5px] uppercase tracking-[0.18em] text-[var(--color-text-secondary)]">
+        <p className="flex-1 font-mono text-[10.5px] uppercase tracking-[0.18em] text-[var(--color-ink-2)]">
           4 done · 2 need yours · 2 flagged
         </p>
-        <span className="font-display-italic text-[12px] text-[var(--color-text-faint)]">
+        <span className="font-display-italic text-[12px] text-[var(--color-ink-3)]">
           Want me to send?
         </span>
       </div>

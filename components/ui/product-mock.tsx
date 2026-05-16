@@ -21,7 +21,7 @@ type ProductMockProps = {
 };
 
 const ACCENT_GRADIENT: Record<Accent, string> = {
-  warm: "rgba(var(--color-warm-rgb), 0.55)",
+  warm: "rgba(var(--color-accent-rgb), 0.55)",
   cyan: "rgba(var(--color-accent-rgb), 0.6)",
 };
 
@@ -55,11 +55,11 @@ export function ProductMock({
   return (
     <figure
       className={cn(
-        "relative overflow-hidden rounded-[var(--radius-card)] border border-[var(--color-border)]",
+        "relative overflow-hidden rounded-[var(--radius-md)] border border-[var(--color-border)]",
         tone === "raised"
-          ? "bg-[var(--color-surface-panel)] shadow-[var(--shadow-panel)]"
-          : "bg-[var(--color-surface-inset)]",
-        isBriefing && "bg-[var(--color-surface-panel)]",
+          ? "bg-[var(--color-surface-deep)] shadow-[0 24px 64px rgba(0,0,0,0.45)]"
+          : "bg-[rgba(0,0,0,0.2)]",
+        isBriefing && "bg-[var(--color-surface-deep)]",
         className,
       )}
     >
@@ -78,8 +78,8 @@ export function ProductMock({
           className={cn(
             "flex items-center gap-3 border-b border-[var(--color-border)] px-4 py-2.5",
             isFinder && "bg-[rgba(var(--color-accent-rgb),0.025)]",
-            isInbox && "bg-[rgba(var(--color-warm-rgb),0.03)]",
-            isBriefing && "bg-[rgba(var(--color-warm-rgb),0.02)]",
+            isInbox && "bg-[rgba(var(--color-accent-rgb),0.03)]",
+            isBriefing && "bg-[rgba(var(--color-accent-rgb),0.02)]",
           )}
         >
           <WindowDots />
@@ -98,8 +98,8 @@ export function ProductMock({
               className={cn(
                 "flex-1 truncate",
                 isBriefing
-                  ? "text-center font-display-italic text-[12.5px] tracking-[0.01em] text-[var(--color-text-primary)]"
-                  : "font-mono text-[10.5px] uppercase tracking-[0.2em] text-[var(--color-text-faint)]",
+                  ? "text-center font-display-italic text-[12.5px] tracking-[0.01em] text-[var(--color-ink-1)]"
+                  : "font-mono text-[10.5px] uppercase tracking-[0.2em] text-[var(--color-ink-3)]",
               )}
             >
               {label}
@@ -107,7 +107,7 @@ export function ProductMock({
           )}
 
           {status && (
-            <span className="shrink-0 font-mono text-[10.5px] uppercase tracking-[0.18em] text-[var(--color-text-secondary)]">
+            <span className="shrink-0 font-mono text-[10.5px] uppercase tracking-[0.18em] text-[var(--color-ink-2)]">
               {status}
             </span>
           )}

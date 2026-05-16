@@ -5,7 +5,7 @@ const FOOTER_ORB = true;
 
 export function SiteFooter() {
   return (
-    <footer className="relative border-t border-[var(--color-border-strong)] py-12">
+    <footer className="relative border-t border-[var(--color-border)] py-12">
       <span
         aria-hidden="true"
         className="absolute inset-x-0 top-0 mx-auto h-px max-w-[480px] surface-line"
@@ -27,16 +27,16 @@ export function SiteFooter() {
               <span className="relative h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" />
             )}
           </span>
-          <span className="font-mono text-[12.5px] font-medium uppercase tracking-[0.28em] text-[var(--color-text-primary)]">
+          <span className="font-sans text-[12.5px] font-medium uppercase tracking-[0.28em] text-[var(--color-ink-1)]">
             Sirius
           </span>
         </div>
-        <p className="font-display-italic text-[14px] text-[var(--color-text-secondary)]">
+        <p className="font-display-italic text-[14px] text-[var(--color-ink-2)]">
           An assistant. In the proper sense.
         </p>
         <a
           href="#cta"
-          className="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--color-text-muted)] underline-offset-4 transition hover:text-[var(--color-accent)] hover:underline hover:decoration-[rgba(var(--color-accent-rgb),0.4)]"
+          className="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--color-ink-3)] underline-offset-4 transition hover:text-[var(--color-accent)] hover:underline hover:decoration-[var(--color-accent)]"
         >
           Request access &rarr;
         </a>

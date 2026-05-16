@@ -3,14 +3,14 @@ export const landingContent = {
   meta: {
     wordmark: "Sirius",
     availability: "Private beta",
-    tagline: "An assistant. In the proper sense.",
+    tagline: "Your personal assistant that doesn't forget.",
   },
   hero: {
     eyebrow: "Sirius",
-    title: "AI assistants, rethought.",
+    title: "Your personal assistant",
     description:
-      "Listens. Remembers. Learns. Executes. Voice first, on your machine.",
-    primaryCta: "Join waitlist",
+      "Sirius remembers the context behind your work, acts across your apps, and turns repeated tasks into workflows you can reuse.",
+    primaryCta: "Request early access",
     headlineAlternates: [
       "The assistant the others were pretending to be.",
       "Quietly competent.",
@@ -20,52 +20,51 @@ export const landingContent = {
     sectionLabel: "Workflows",
     title: "The work you already do, saved for next time.",
     intro:
-      "You already have workflows. They’re just trapped in your head: the emails you rewrite, the checks you run before every meeting, and the same steps you take every time you want to ship a new feature.",
+      "You already have workflows: the emails you rewrite, the checks you run before meetings, the updates you pull together every week.",
     coda:
-      "Introducing workflows. A systematic way to get work done. Sirius makes them once, you can run them always. Think N8N, but for your assistant.",
+      "Sirius notices the patterns, helps package the useful ones, and lets you run them again by voice or chat. Feeds and schedules are next.",
     notes: [
-      "Third 'Hey Anne, quick rundown' this month. Your calendar knows what you were in, your inbox knows what's still hanging, I can wire it together so this stops being a Friday chore.",
-      "Your 14:00 with Daniel is coming up. Your brief is ready."
+      "You've written this kind of client update three times this month. Want me to save it as a workflow?",
+      "Your 2:00 meeting is coming up. I pulled the latest thread, open tasks, and last notes.",
     ],
   },
   fourWays: {
     sectionLabel: "One assistant. Four ways to command it.",
     leadIn:
-      "Sirius listens, remembers, schedules, and acts across the systems you already use. It'll search the web, your emails, calendar, slack and every other app you use..",
+      "Use voice when you are in flow and chat when you need detail. Feeds and schedules are coming soon for work that should be watched or run later.",
     items: [
-      { id: "voice",     title: "Voice",     body: "Command Sirius naturally. You don't ever have to look awway form your work." },
-      { id: "chat",      title: "Chat",      body: "One conversation. Everything you've ever told it. No new tabs." },
-      { id: "feeds",     title: "Feeds",     body: "Connect the streams that matter. Sirius watches your world and notifies you when something deserves attention. Markets, papers, your team's PRs, anything." },
-      { id: "schedules", title: "Schedules", body: "Automate the timing. Workflows or single actions, on a clock or when something happens." },
+      { id: "voice",     title: "Voice",     body: "Ask naturally without leaving your work." },
+      { id: "chat",      title: "Chat",      body: "Work through details with the same assistant that remembers your context." },
+      { id: "feeds",     title: "Feeds",     body: "Coming soon: track updates from the sources that matter and surface what needs attention." },
+      { id: "schedules", title: "Schedules", body: "Coming soon: run tasks at a time or set events as triggers." },
     ],
   },
   threeIdeas: {
     sectionLabel: "One system",
-    title: "One app. Everything about you.",
+    title: "One assistant that remembers, acts, and automates.",
     items: [
-      { index: "01", role: "The conversation that keeps the context." },
-      { index: "02", role: "The agent that does the work." },
-      { index: "03", role: "The workflows that automate the boring stuff." },
+      { index: "01", role: "Memory that keeps the context." },
+      { index: "02", role: "Actions that do the work." },
+      { index: "03", role: "Workflows that run again." },
     ],
     body:
-      "Everything shares the same memory, so you never have to re-explain yourself. The chat knows what your schedules did this morning. Or what you emailed John yesterday. Or that project you started (but didn't finish) last week. ",
+      "Sirius keeps conversation, actions, and workflows connected through the same memory. Chat knows what your workflows did earlier. Your workflows know what you asked yesterday. Your briefs include the context you would otherwise have to repeat.",
   },
   whatsNext: {
     sectionLabel: "What's next",
     headlineLead: "The desktop is where Sirius starts.",
     headlineTail: "Not where it stops.",
-    fragments: ["SWITCHES", "NOZZLES", "AXES"],
+    fragments: ["MOBILE", "TEAM MEMORY", "BROWSER CONTEXT"],
   },
   localData: {
     sectionLabel: "Local-first",
-    title: "Your data stays on your machine.",
-    body:
-      "Memories, conversations, files are all local. The workflows that need to run while you're asleep (outreach, briefings, anything recurring) run on Sirius's cloud, with only the data they need to do their job. Prefer fully local? You can have that. The trade is that those workflows stop when your laptop does.",
-    footnote: "Private beta",
+    title: "Your data, your machine.",
   },
   inPractice: {
     sectionLabel: "In practice",
-    title: "\"Sirius, handle it for me.\"",
+    title: "Stop doing the same work from scratch.",
+    intro:
+      "Sirius remembers the context, finds the repeated steps, and helps turn them into workflows you can reuse.",
     weekly: [
       { id: "design",      label: "TUE",          tail: "FEEDBACK" },
       { id: "engineering", label: "MON 09:00",    tail: "STANDUP" },
@@ -80,8 +79,8 @@ export const landingContent = {
         frequency: "ad-hoc",
         voiceTrigger: "Sirius, what came in from the client?",
         title: "Client feedback, sorted before you read it.",
-        body: "A client sends a messy list of comments. Sirius separates quick fixes from real decisions, drafts the easy changes, and flags what needs you.",
-        punchline: "You review the call, not the chaos.",
+        body: "A client sends scattered comments across email and docs. Sirius groups the fixes, drafts the easy changes, and highlights the decisions that need you.",
+        punchline: "You review the work, not the chaos.",
       },
       {
         id: "engineering",
@@ -121,24 +120,29 @@ export const landingContent = {
     items: [
       {
         q: "Where does my data live?",
-        a: "Your memories, conversations, and connected files will always always live on your machine. Soon, Sirius will be able to use the cloud tasks you want running while you're away from your computer, like scheduled workflows, but they run on your machine for now.",
+        a: "Your personal memory, conversations, and connected files stay local by default. Some scheduled or background workflows may use Sirius cloud services when they need to run while your device is unavailable, but they only receive the context required for that workflow.",
       },
       {
-        q: "What models does it use?",
-        a: "Right now, Sirius uses a combination of Anthropic, OpenAI, and Gemini models.",
+        q: "How is Sirius different from ChatGPT or Claude?",
+        a: "1. Memory that actually persists. Sirius builds a picture of your projects, preferences, and patterns over time, instead of starting fresh every conversation.\n 2. It's wired into the tools you already use: email, calendar, slack, github, and more.\n3. Workflows. You can build automations that run on their own, not just ask questions and wait for answers.",
       },
       {
-        q: "How is this different from any other chat agent?",
-        a: "An agent answers when asked, forces you to re-explain every time, and you're stuck trying to convince it to do what you want it to do. Sirius remembers all the details about you, and builds a workflow once, you run it anytime after with certainty that it’ll do what you want. Without burning through all your tokens."
+        q: "What can Sirius automate?",
+        a: "Sirius can help with repeatable knowledge work: drafting replies, preparing meeting briefs, summarizing updates, and triaging feedback. Feed tracking and scheduled workflows are coming soon.",
       },
       {
-        q: "When can I expect access?",
-        a: "Private beta is rolling out in small waves. Most invitations land within a couple of weeks of joining the list.",
+        q: "What models does Sirius use?",
+        a: "Sirius uses a mix of leading AI models depending on the task. The goal is to choose the right model for the job while avoiding unnecessary costs.",
+      },
+      {
+        q: "When can I get access?",
+        a: "Sirius is in private beta. Access is rolling out in small waves so the product can be shaped with early users.",
       },
     ],
   },
   cta: {
     title: "Meet Sirius.",
     primaryCta: "Request access",
+    note: "Early access is rolling out in small waves.",
   },
 } as const;

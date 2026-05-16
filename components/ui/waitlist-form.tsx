@@ -3,6 +3,8 @@
 import { FormEvent, useEffect, useId, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
+import { AppIcon } from "@/components/sirius/appui";
+
 type Step = "email" | "submittingEmail" | "name" | "submittingName" | "done" | "errorEmail" | "errorName";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -38,6 +40,39 @@ export function WaitlistForm() {
 
   useEffect(() => {
     mountTimeRef.current = performance.now();
+  }, []);
+
+  useEffect(() => {
+    const focusWaitlistInput = () => {
+      window.setTimeout(() => {
+        inputRef.current?.focus({ preventScroll: true });
+      }, 450);
+    };
+
+    const focusFromHash = () => {
+      if (window.location.hash === "#cta" || window.location.hash === "#waitlist") {
+        focusWaitlistInput();
+      }
+    };
+
+    const handleClick = (event: MouseEvent) => {
+      const target = event.target instanceof Element
+        ? event.target.closest('a[href="#cta"], a[href="#waitlist"]')
+        : null;
+
+      if (target) {
+        focusWaitlistInput();
+      }
+    };
+
+    focusFromHash();
+    window.addEventListener("hashchange", focusFromHash);
+    document.addEventListener("click", handleClick);
+
+    return () => {
+      window.removeEventListener("hashchange", focusFromHash);
+      document.removeEventListener("click", handleClick);
+    };
   }, []);
 
   // Focus the active input after a step transition. Skip the initial mount so
@@ -129,10 +164,9 @@ export function WaitlistForm() {
         transition: { duration: 0.22, ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number] },
       };
 
-  const showInputRow = visibleStep !== "done";
-
   return (
     <form
+      id="waitlist"
       onSubmit={visibleStep === "email" ? onSubmitEmail : onSubmitName}
       noValidate
       className="w-full"
@@ -149,16 +183,10 @@ export function WaitlistForm() {
         />
       </label>
 
-      <div
-        className={`relative flex min-h-[44px] items-end gap-4 border-b pb-3 transition-colors duration-200 ${
-          showInputRow
-            ? "border-[var(--color-border-strong)] focus-within:border-[var(--color-accent)]"
-            : "border-transparent"
-        }`}
-      >
+      <div className="relative">
         <AnimatePresence mode="wait" initial={false}>
           {visibleStep === "email" && (
-            <motion.div key="email" {...motionProps} className="flex w-full items-end gap-4">
+            <motion.div key="email" {...motionProps} className="flex w-full items-stretch gap-2 border-b border-[var(--color-border-strong)] transition-colors focus-within:border-[var(--color-accent)]">
               <label htmlFor={inputId} className="sr-only">
                 Email address
               </label>
@@ -180,20 +208,25 @@ export function WaitlistForm() {
                 aria-describedby={statusId}
                 aria-invalid={step === "errorEmail"}
                 disabled={isSubmitting}
-                className="min-w-0 flex-1 bg-transparent text-[18px] text-[var(--color-text-primary)] placeholder:text-[var(--color-text-placeholder)] outline-none disabled:opacity-60"
+                className="min-w-0 flex-1 h-12 px-1 bg-transparent text-[16px] text-[var(--color-ink-1)] placeholder:text-[var(--color-ink-3)] outline-none disabled:opacity-60"
               />
               <button
                 type="submit"
-                disabled={isSubmitting || !EMAIL_REGEX.test(email.trim())}
-                className="shrink-0 text-[14px] font-medium tracking-tight text-[var(--color-text-primary)] underline-offset-4 transition hover:underline decoration-[var(--color-accent)] disabled:cursor-not-allowed disabled:text-[var(--color-text-disabled)]"
+                disabled={isSubmitting}
+                className="group inline-flex h-12 shrink-0 cursor-pointer items-center gap-2 rounded-[var(--radius-xs)] bg-transparent px-2 text-[14px] font-medium text-[var(--color-accent)] outline-none transition-colors hover:text-[var(--color-accent-strong)] focus-visible:ring-2 focus-visible:ring-[rgba(var(--color-accent-rgb),0.5)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)] disabled:cursor-not-allowed disabled:opacity-50"
               >
-                {step === "submittingEmail" ? "Sending" : "Request access →"}
+                {step === "submittingEmail" ? "Sending" : "Request access"}
+                {step !== "submittingEmail" && (
+                  <span className="inline-flex motion-safe:transition-transform motion-safe:duration-200 motion-safe:ease-out group-hover:translate-x-0.5">
+                    <AppIcon name="arrow" size={13} stroke="currentColor" />
+                  </span>
+                )}
               </button>
             </motion.div>
           )}
 
           {visibleStep === "name" && (
-            <motion.div key="name" {...motionProps} className="flex w-full items-end gap-4">
+            <motion.div key="name" {...motionProps} className="flex w-full items-stretch gap-2 border-b border-[var(--color-border-strong)] transition-colors focus-within:border-[var(--color-accent)]">
               <label htmlFor={inputId} className="sr-only">
                 Your name
               </label>
@@ -214,14 +247,19 @@ export function WaitlistForm() {
                 aria-describedby={statusId}
                 aria-invalid={step === "errorName"}
                 disabled={isSubmitting}
-                className="min-w-0 flex-1 bg-transparent text-[18px] text-[var(--color-text-primary)] placeholder:text-[var(--color-text-placeholder)] outline-none disabled:opacity-60"
+                className="min-w-0 flex-1 h-12 px-1 bg-transparent text-[16px] text-[var(--color-ink-1)] placeholder:text-[var(--color-ink-3)] outline-none disabled:opacity-60"
               />
               <button
                 type="submit"
-                disabled={isSubmitting || name.trim().length === 0}
-                className="shrink-0 text-[14px] font-medium tracking-tight text-[var(--color-text-primary)] underline-offset-4 transition hover:underline decoration-[var(--color-accent)] disabled:cursor-not-allowed disabled:text-[var(--color-text-disabled)]"
+                disabled={isSubmitting}
+                className="group inline-flex h-12 shrink-0 cursor-pointer items-center gap-2 rounded-[var(--radius-xs)] bg-transparent px-2 text-[14px] font-medium text-[var(--color-accent)] outline-none transition-colors hover:text-[var(--color-accent-strong)] focus-visible:ring-2 focus-visible:ring-[rgba(var(--color-accent-rgb),0.5)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)] disabled:cursor-not-allowed disabled:opacity-50"
               >
-                {step === "submittingName" ? "Sending" : "Join →"}
+                {step === "submittingName" ? "Sending" : "Join"}
+                {step !== "submittingName" && (
+                  <span className="inline-flex motion-safe:transition-transform motion-safe:duration-200 motion-safe:ease-out group-hover:translate-x-0.5">
+                    <AppIcon name="arrow" size={13} stroke="currentColor" />
+                  </span>
+                )}
               </button>
             </motion.div>
           )}
@@ -230,9 +268,14 @@ export function WaitlistForm() {
             <motion.p
               key="done"
               {...motionProps}
-              className="w-full text-[18px] text-[var(--color-text-primary)]"
+              className="w-full text-[18px] text-[var(--color-ink-1)]"
             >
-              <span aria-hidden="true">✓ </span>You&apos;re on the list, {firstName}. We&apos;ll be in touch.
+              <span className="inline-flex items-center gap-2">
+                <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-[var(--color-success)] text-[var(--color-bg)]">
+                  <AppIcon name="check" size={14} stroke="currentColor" />
+                </span>
+                You&apos;re on the list, {firstName}. We&apos;ll be in touch.
+              </span>
             </motion.p>
           )}
         </AnimatePresence>
@@ -241,7 +284,7 @@ export function WaitlistForm() {
       <p
         id={statusId}
         aria-live="polite"
-        className="mt-4 min-h-[1.25rem] text-[13px] leading-5 text-[var(--color-text-muted)]"
+        className="mt-4 min-h-[1.25rem] text-[13px] leading-5 text-[var(--color-ink-3)]"
       >
         {errorMessage}
       </p>

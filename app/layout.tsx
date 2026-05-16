@@ -23,23 +23,23 @@ const geist = Geist({
 });
 
 export const metadata: Metadata = {
-  title: "Sirius",
+  title: "Sirius - Local-first AI assistant with memory",
   description:
-    "Voice-first orchestration for turning outcomes into workflows, automations, and real-world actions.",
+    "Sirius is a personal AI assistant for working professionals. It remembers your context, acts across your apps, and turns repeated tasks into reusable workflows.",
   metadataBase: new URL("https://sirius.so"),
   openGraph: {
-    title: "Sirius",
+    title: "Sirius - Local-first AI assistant with memory",
     description:
-      "Voice-first orchestration for turning outcomes into workflows, automations, and real-world actions.",
+      "Sirius is a personal AI assistant for working professionals. It remembers your context, acts across your apps, and turns repeated tasks into reusable workflows.",
     url: "https://sirius.so",
     siteName: "Sirius",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sirius",
+    title: "Sirius - Local-first AI assistant with memory",
     description:
-      "Voice-first orchestration for turning outcomes into workflows, automations, and real-world actions.",
+      "Sirius is a personal AI assistant for working professionals. It remembers your context, acts across your apps, and turns repeated tasks into reusable workflows.",
   },
 };
 

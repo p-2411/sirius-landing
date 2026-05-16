@@ -60,15 +60,15 @@ export function ResearchBriefingMock() {
       {/* Watchlist */}
       <section>
         <div className="-mt-1 mb-2 flex items-baseline justify-between">
-          <span className="font-mono text-[9.5px] uppercase tracking-[0.22em] text-[var(--color-text-secondary)]">
+          <span className="font-mono text-[9.5px] uppercase tracking-[0.22em] text-[var(--color-ink-2)]">
             Watchlist
           </span>
-          <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-[var(--color-text-faint)]">
+          <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-[var(--color-ink-3)]">
             3 tracked · live
           </span>
         </div>
 
-        <div className="rounded-md border border-[var(--color-border)] bg-[var(--color-surface-inset)]">
+        <div className="rounded-md border border-[var(--color-border)] bg-[rgba(0,0,0,0.2)]">
           {TICKERS.map((t, i) => (
             <div
               key={t.symbol}
@@ -76,16 +76,16 @@ export function ResearchBriefingMock() {
                 i < TICKERS.length - 1 ? "border-b border-[var(--color-border)]" : ""
               }`}
             >
-              <span className="w-12 shrink-0 font-mono text-[11px] tracking-[0.06em] text-[var(--color-text-primary)]">
+              <span className="w-12 shrink-0 font-mono text-[11px] tracking-[0.06em] text-[var(--color-ink-1)]">
                 {t.symbol}
               </span>
-              <span className="w-[68px] shrink-0 font-mono text-[10.5px] tabular-nums text-[var(--color-text-faint)]">
+              <span className="w-[68px] shrink-0 font-mono text-[10.5px] tabular-nums text-[var(--color-ink-3)]">
                 {t.meta}
               </span>
               <span
                 className="w-12 shrink-0 font-mono text-[10.5px] tabular-nums"
                 style={{
-                  color: t.positive ? "var(--color-warm)" : "var(--color-text-secondary)",
+                  color: t.positive ? "var(--color-accent)" : "var(--color-ink-2)",
                 }}
               >
                 {t.delta}
@@ -100,7 +100,7 @@ export function ResearchBriefingMock() {
                 <polyline
                   points={t.spark}
                   fill="none"
-                  stroke={t.positive ? "var(--color-warm)" : "var(--color-text-secondary)"}
+                  stroke={t.positive ? "var(--color-accent)" : "var(--color-ink-2)"}
                   strokeWidth="1.3"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -108,7 +108,7 @@ export function ResearchBriefingMock() {
                 />
               </svg>
 
-              <span className="min-w-0 flex-1 truncate text-right font-mono text-[10px] text-[var(--color-text-faint)]">
+              <span className="min-w-0 flex-1 truncate text-right font-mono text-[10px] text-[var(--color-ink-3)]">
                 {t.note}
               </span>
             </div>
@@ -119,10 +119,10 @@ export function ResearchBriefingMock() {
       {/* Headlines feed */}
       <section className="mt-4">
         <div className="mb-1.5 flex items-baseline justify-between">
-          <span className="font-mono text-[9.5px] uppercase tracking-[0.22em] text-[var(--color-text-secondary)]">
+          <span className="font-mono text-[9.5px] uppercase tracking-[0.22em] text-[var(--color-ink-2)]">
             Headlines
           </span>
-          <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-[var(--color-text-faint)]">
+          <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-[var(--color-ink-3)]">
             since 05:00
           </span>
         </div>
@@ -130,24 +130,24 @@ export function ResearchBriefingMock() {
         <div className="divide-y divide-[var(--color-border)]">
           {HEADLINES.map((h) => (
             <div key={h.time} className="flex items-baseline gap-3 py-1.5">
-              <span className="w-10 shrink-0 font-mono text-[10px] tabular-nums text-[var(--color-text-faint)]">
+              <span className="w-10 shrink-0 font-mono text-[10px] tabular-nums text-[var(--color-ink-3)]">
                 {h.time}
               </span>
               <span
                 className="w-14 shrink-0 font-mono text-[9px] uppercase tracking-[0.16em]"
                 style={{
-                  color: h.hot ? "var(--color-warm)" : "var(--color-text-faint)",
+                  color: h.hot ? "var(--color-accent)" : "var(--color-ink-3)",
                 }}
               >
                 {h.tag}
               </span>
-              <span className="min-w-0 flex-1 truncate text-[12px] leading-[1.4] text-[var(--color-text-primary)]">
+              <span className="min-w-0 flex-1 truncate text-[12px] leading-[1.4] text-[var(--color-ink-1)]">
                 {h.text}
               </span>
               {h.hot && (
                 <span
                   className="shrink-0 font-mono text-[9px] uppercase tracking-[0.16em]"
-                  style={{ color: "var(--color-warm)" }}
+                  style={{ color: "var(--color-accent)" }}
                   aria-hidden="true"
                 >
                   ●
@@ -161,16 +161,16 @@ export function ResearchBriefingMock() {
       {/* Command bar */}
       <div className="mt-4 flex items-center gap-2 rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2">
         <span
-          className="font-mono text-[9px] uppercase tracking-[0.18em] text-[var(--color-text-faint)]"
+          className="font-mono text-[9px] uppercase tracking-[0.18em] text-[var(--color-ink-3)]"
           aria-hidden="true"
         >
           ⌘K
         </span>
         <span className="h-3 w-px bg-[var(--color-border)]" />
-        <p className="flex-1 truncate font-display-italic text-[12px] text-[var(--color-text-secondary)]">
+        <p className="flex-1 truncate font-display-italic text-[12px] text-[var(--color-ink-2)]">
           Ask &ldquo;what&rsquo;s the bear case on NVDA&rdquo;…
         </p>
-        <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-[var(--color-text-faint)]">
+        <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-[var(--color-ink-3)]">
           ⏎
         </span>
       </div>

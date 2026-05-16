@@ -41,13 +41,13 @@ export function OutreachInboxMock() {
           <div
             className="mb-1.5 flex h-6 items-center justify-center rounded-md"
             style={{
-              background: "rgba(var(--color-warm-rgb), 0.12)",
-              border: "1px solid rgba(var(--color-warm-rgb), 0.32)",
+              background: "rgba(var(--color-accent-rgb), 0.12)",
+              border: "1px solid rgba(var(--color-accent-rgb), 0.32)",
             }}
           >
             <span
               className="font-mono text-[8.5px] uppercase tracking-[0.16em]"
-              style={{ color: "var(--color-warm)" }}
+              style={{ color: "var(--color-accent)" }}
             >
               Compose
             </span>
@@ -58,7 +58,7 @@ export function OutreachInboxMock() {
               <span
                 className="h-1 w-1 shrink-0 rounded-full"
                 style={{
-                  background: item.active ? "var(--color-warm)" : "var(--color-border)",
+                  background: item.active ? "var(--color-accent)" : "var(--color-border)",
                 }}
               />
               <span
@@ -66,12 +66,12 @@ export function OutreachInboxMock() {
                 style={{
                   width: item.widthPct,
                   background: item.active
-                    ? "var(--color-text-secondary)"
+                    ? "var(--color-ink-2)"
                     : "var(--color-border)",
                 }}
               />
               {item.count && (
-                <span className="ml-auto font-mono text-[8.5px] tabular-nums text-[var(--color-text-faint)]">
+                <span className="ml-auto font-mono text-[8.5px] tabular-nums text-[var(--color-ink-3)]">
                   {item.count}
                 </span>
               )}
@@ -86,7 +86,7 @@ export function OutreachInboxMock() {
               key={`${row.initial}-${index}`}
               className={cn(
                 "flex items-center gap-2.5 border-b border-[var(--color-border)] py-2 last:border-b-0",
-                row.unread && "bg-[rgba(var(--color-warm-rgb),0.04)]",
+                row.unread && "bg-[rgba(var(--color-accent-rgb),0.04)]",
               )}
             >
               <div
@@ -105,8 +105,8 @@ export function OutreachInboxMock() {
                     style={{
                       width: row.subjectWidth,
                       background: row.unread
-                        ? "var(--color-text-primary)"
-                        : "var(--color-text-secondary)",
+                        ? "var(--color-ink-1)"
+                        : "var(--color-ink-2)",
                       opacity: row.unread ? 0.95 : 0.6,
                     }}
                   />
@@ -114,9 +114,9 @@ export function OutreachInboxMock() {
                     <span
                       className="inline-flex h-3.5 items-center rounded-full px-1.5 font-mono text-[8.5px] uppercase tracking-[0.16em]"
                       style={{
-                        border: "1px solid rgba(var(--color-warm-rgb),0.5)",
-                        color: "var(--color-warm)",
-                        background: "rgba(var(--color-warm-rgb),0.06)",
+                        border: "1px solid rgba(var(--color-accent-rgb),0.5)",
+                        color: "var(--color-accent)",
+                        background: "rgba(var(--color-accent-rgb),0.06)",
                       }}
                     >
                       Replied
@@ -131,7 +131,7 @@ export function OutreachInboxMock() {
                 </div>
               </div>
 
-              <span className="shrink-0 font-mono text-[9.5px] tabular-nums text-[var(--color-text-faint)]">
+              <span className="shrink-0 font-mono text-[9.5px] tabular-nums text-[var(--color-ink-3)]">
                 {row.time}
               </span>
             </div>
@@ -140,10 +140,10 @@ export function OutreachInboxMock() {
       </div>
 
       <div className="mt-4 flex items-center justify-between border-t border-[var(--color-border)] pt-3">
-        <p className="font-mono text-[10.5px] text-[var(--color-text-faint)]">
+        <p className="font-mono text-[10.5px] text-[var(--color-ink-3)]">
           9 sent · 1 reply
         </p>
-        <p className="font-mono text-[10.5px] text-[var(--color-text-faint)]">
+        <p className="font-mono text-[10.5px] text-[var(--color-ink-3)]">
           queue Tue
         </p>
       </div>

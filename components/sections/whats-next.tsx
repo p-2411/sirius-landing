@@ -214,36 +214,35 @@ function StarCluster() {
 }
 
 export function WhatsNextSection() {
-  const { sectionLabel, headlineLead, headlineTail } = landingContent.whatsNext;
+  const { sectionLabel, headlineLead, headlineTail, fragments } = landingContent.whatsNext;
 
   return (
     <section
       id="whats-next"
-      className="band-deep relative scroll-mt-24 py-24 md:py-32"
-      style={{ borderBottom: "none" }}
+      className="relative scroll-mt-24 bg-black py-24 md:py-32"
     >
       <Container>
         <div className="grid gap-12 md:grid-cols-[0.92fr_1.08fr] md:items-center md:gap-16">
           <div>
-            <SectionLabel index="06" tone="cyan">
+            <SectionLabel index="06" tone="warm">
               {sectionLabel}
             </SectionLabel>
 
-            <h2 className="font-display text-balance mt-7 max-w-[22ch] text-[clamp(2.4rem,5.2vw,4rem)] leading-[0.92] tracking-[-0.028em] text-[var(--color-text-primary)] font-normal">
+            <h2 className="font-display text-balance mt-7 max-w-[22ch] text-[clamp(2.4rem,5.2vw,4rem)] leading-[0.92] tracking-[-0.005em] text-[var(--color-ink-1)] font-normal">
               {headlineLead}{" "}
               <em
                 className="font-display-italic not-italic"
-                style={{ color: "var(--color-warm)" }}
+                style={{ color: "var(--color-accent)" }}
               >
                 {headlineTail}
               </em>
             </h2>
 
             <div
-              className="mt-14 font-mono text-[12px] uppercase tracking-[0.16em] text-[var(--color-text-muted)]"
+              className="mt-14 text-[10.5px] uppercase tracking-[0.16em] text-[var(--color-ink-3)]"
               aria-label="Coming soon"
             >
-              <span>COMING SOON</span>
+              <span>{fragments.join(" · ")}</span>
               <span className="wn-dots" aria-hidden="true" />
             </div>
 
