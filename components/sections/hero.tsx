@@ -141,7 +141,7 @@ export function HeroSection() {
               variants={line2Variants}
               style={{ color: "var(--color-accent)" }}
             >
-              <em className="font-display-italic not-italic">that doesn&apos;t forget.</em>
+              <em className="font-display-italic not-italic">In the proper sense.</em>
             </motion.span>
           </h1>
 

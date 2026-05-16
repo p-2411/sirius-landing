@@ -3,11 +3,11 @@ export const landingContent = {
   meta: {
     wordmark: "Sirius",
     availability: "Private beta",
-    tagline: "Your personal assistant that doesn't forget.",
+    tagline: "Your personal assistant. In the proper sense.",
   },
   hero: {
     eyebrow: "Sirius",
-    title: "Your personal assistant",
+    title: "Your personal assistant.",
     description:
       "Sirius remembers the context behind your work, acts across your apps, and turns repeated tasks into workflows you can reuse.",
     primaryCta: "Request early access",
