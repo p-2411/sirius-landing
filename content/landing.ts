@@ -54,7 +54,7 @@ export const landingContent = {
     sectionLabel: "What's next",
     headlineLead: "The desktop is where Sirius starts.",
     headlineTail: "Not where it stops.",
-    fragments: ["MOBILE", "TEAM MEMORY", "BROWSER CONTEXT"],
+    fragments: ["COMING SOON"],
   },
   localData: {
     sectionLabel: "Local-first",
