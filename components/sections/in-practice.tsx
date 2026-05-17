@@ -15,7 +15,7 @@ const SCREENSHOT_META: Record<string, { alt: string; caption: string }> = {
   design:      { alt: "Sirius — client feedback triaged in the app",   caption: "Feedback, sorted in Sirius" },
   engineering: { alt: "Sirius — standup assembled in the app",          caption: "Standup, ready in Sirius" },
   meeting:     { alt: "Sirius — meeting brief in the app",              caption: "Meeting brief in Sirius" },
-  research:    { alt: "Sirius — research digest in the app",            caption: "Research desk in Sirius" },
+  research:    { alt: "Sirius — client changes drafted in Figma",        caption: "Changes drafted in Sirius" },
 };
 
 // ─── Per-vignette WorkflowShot props ─────────────────────────────────────────
@@ -90,25 +90,25 @@ const SHOT_BY_ID: Record<string, WorkflowShotProps> = {
     ],
   },
   research: {
-    breadcrumb: "Research digest",
-    title: "Research digest",
-    tone: "running",
-    statusLabel: "Running",
-    trigger: "Daily 07:00",
-    runsMeta: "140 runs",
+    breadcrumb: "Client changes",
+    title: "Client changes",
+    tone: "done",
+    statusLabel: "Done",
+    trigger: "Per inbound",
+    runsMeta: "31 runs",
     steps: [
-      { id: "subscribe", type: "HTTP REQUEST", title: "Pull the sources",      col: 0, next: ["filter"],  state: "done" },
-      { id: "filter",    type: "RUN PYTHON",   title: "Filter to signal",      col: 1, next: ["compare"], state: "done" },
-      { id: "compare",   type: "LLM",          title: "Compare the conflicts", col: 2, next: ["digest"],  state: "running" },
-      { id: "digest",    type: "LLM",          title: "Write the digest",      col: 3, next: [],           state: "idle" },
+      { id: "read",    type: "GMAIL", title: "Read the change list", col: 0, next: ["edit"],    state: "done" },
+      { id: "edit",    type: "FIGMA", title: "Draft edits in Figma", col: 1, next: ["reply"],   state: "done" },
+      { id: "reply",   type: "LLM",   title: "Draft the reply",      col: 2, next: ["summary"], state: "done" },
+      { id: "summary", type: "LLM",   title: "Summarise for you",    col: 3, next: [],          state: "done" },
     ],
     messages: [
-      { role: "user",      text: "Sirius, what's worth knowing this morning?" },
-      { role: "assistant", text: "Filtered 40 items to 6. Two contradict last week's read — comparing now, digest lands in ~2 min." },
+      { role: "user",      text: "Sirius, what did the client want changed?" },
+      { role: "assistant", text: "8 changes from the email. Drafted them all in Figma — a summary and a reply are ready for you to send." },
     ],
     recentRuns: [
-      { tone: "done", label: "Done", when: "07:01 today", dur: "1m 48s" },
-      { tone: "done", label: "Done", when: "07:01 yday",  dur: "1m 52s" },
+      { tone: "done", label: "Done", when: "20m ago", dur: "1m 04s" },
+      { tone: "done", label: "Done", when: "2d ago",  dur: "58s" },
     ],
   },
 };
@@ -117,7 +117,7 @@ const TITLE_HIGHLIGHTS: Record<string, string> = {
   design: "sorted before you read it.",
   engineering: "ready before you are.",
   meeting: "already briefed.",
-  research: "for one.",
+  research: "already done.",
 };
 
 // Match the site's body font (Geist) — tracking + caps carry the "technical

@@ -69,7 +69,7 @@ export const landingContent = {
       { id: "design",      label: "TUE",          tail: "FEEDBACK" },
       { id: "engineering", label: "MON 09:00",    tail: "STANDUP" },
       { id: "meeting",     label: "PER MEETING",  tail: "BRIEF" },
-      { id: "research",    label: "DAILY am",     tail: "BRIEF" },
+      { id: "research",    label: "AD-HOC",       tail: "CHANGES" },
     ],
     vignettes: [
       {
@@ -105,12 +105,12 @@ export const landingContent = {
       {
         id: "research",
         seq: "04",
-        kind: "RESEARCH",
-        frequency: "daily · am",
-        voiceTrigger: "Sirius, what's worth knowing this morning?",
-        title: "A research desk, for one.",
-        body: "Sirius keeps a feed on the companies you're tracking. Two paragraphs of what's changed since yesterday, before your first coffee.",
-        punchline: "Never miss a signal.",
+        kind: "DESIGN",
+        frequency: "ad-hoc",
+        voiceTrigger: "Sirius, what did the client want changed?",
+        title: "Client changes, already done.",
+        body: "A client emails a list of changes. Sirius picks it up, drafts the edits in Figma, and writes the reply. You get a summary and an email ready to send.",
+        punchline: "You approve, not redo.",
       },
     ],
   },
