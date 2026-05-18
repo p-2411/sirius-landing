@@ -25,6 +25,7 @@ export type WorkflowShotProps = {
   chatHeader?: string;
   recentRuns?: { tone: AppPillTone; label: string; when: string; dur: string }[];
   railActive?: string;
+  showRunButton?: boolean;
 };
 
 /**
@@ -53,6 +54,7 @@ export function WorkflowShot({
   chatHeader,
   recentRuns,
   railActive,
+  showRunButton,
 }: WorkflowShotProps) {
   return (
     <div
@@ -84,6 +86,7 @@ export function WorkflowShot({
           statusLabel={statusLabel}
           trigger={trigger}
           runsMeta={runsMeta}
+          showRunButton={showRunButton}
         />
 
         {/* Two-pane main — matches app exactly */}

@@ -19,6 +19,7 @@ export function TopBar({
   statusLabel,
   trigger,
   runsMeta,
+  showRunButton = true,
 }: {
   breadcrumb: string;
   title: string;
@@ -26,6 +27,7 @@ export function TopBar({
   statusLabel: string;
   trigger: string;
   runsMeta: string;
+  showRunButton?: boolean;
 }) {
   return (
     <div
@@ -117,28 +119,29 @@ export function TopBar({
           </div>
         </div>
 
-        {/* Run now button — app primary md: h-11 px-4 rounded-[8px] text-[13px] */}
-        <div
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 8,
-            height: 44,
-            paddingLeft: 16,
-            paddingRight: 16,
-            borderRadius: 8,
-            fontSize: 13,
-            fontFamily: "var(--font-sans)",
-            fontWeight: 500,
-            background: "var(--color-accent)",
-            color: "var(--color-bg)",
-            flexShrink: 0,
-          }}
-        >
-          <AppIcon name="play" size={12} stroke="currentColor" />
-          Run now
-        </div>
+        {showRunButton && (
+          <div
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 8,
+              height: 44,
+              paddingLeft: 16,
+              paddingRight: 16,
+              borderRadius: 8,
+              fontSize: 13,
+              fontFamily: "var(--font-sans)",
+              fontWeight: 500,
+              background: "var(--color-accent)",
+              color: "var(--color-bg)",
+              flexShrink: 0,
+            }}
+          >
+            <AppIcon name="play" size={12} stroke="currentColor" />
+            Run now
+          </div>
+        )}
       </div>
     </div>
   );

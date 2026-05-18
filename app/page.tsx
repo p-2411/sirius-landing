@@ -11,15 +11,18 @@ import { WhatsNextSection } from "@/components/sections/whats-next";
 import { WorkflowsSection } from "@/components/sections/workflows";
 import { ProgressRail } from "@/components/ui/progress-rail";
 import { SectionDivider } from "@/components/ui/section-divider";
+import { getStartupAnalystDemoFiles } from "@/lib/startup-analyst-demo";
 
 export default function HomePage() {
+  const startupAnalystFiles = getStartupAnalystDemoFiles();
+
   return (
     <main className="relative min-h-screen overflow-x-clip bg-[var(--color-bg)] text-[var(--color-ink-1)]">
       <SiteHeader />
       <ProgressRail />
       <HeroSection />
       <SectionDivider />
-      <InPracticeSection />
+      <InPracticeSection startupAnalystFiles={startupAnalystFiles} />
       <SectionDivider />
       <WorkflowsSection />
       <SectionDivider />
