@@ -260,6 +260,7 @@ export function StartupAnalystDemo({
   const [mode, setMode] = useState<DemoMode>("preview");
   const [running, setRunning] = useState(false);
   const [completed, setCompleted] = useState(false);
+  const [hasCompletedRun, setHasCompletedRun] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const reportFile = files.find((file) => file.group === "report") ?? files[0];
   const [activeFileId, setActiveFileId] = useState(reportFile?.id ?? "");
@@ -311,6 +312,7 @@ export function StartupAnalystDemo({
     const timeout = window.setTimeout(() => {
       if (activeIndex >= PIPELINE_STEPS.length - 1) {
         setCompleted(true);
+        setHasCompletedRun(true);
         setRunning(false);
         window.setTimeout(() => setMode("output"), 650);
         return;
@@ -340,6 +342,7 @@ export function StartupAnalystDemo({
   function runWorkflow() {
     setMode("workflow");
     setCompleted(false);
+    setHasCompletedRun(false);
     setActiveIndex(0);
     setRunning(true);
   }
@@ -363,10 +366,10 @@ export function StartupAnalystDemo({
     <article
       ref={rootRef}
       data-revealed={revealed ? "true" : "false"}
-      className="sad-root relative border-t border-[var(--color-border-strong)] py-12 md:py-16"
+      className="sad-root relative border-t border-[var(--color-border-strong)] py-12 md:flex md:min-h-[calc(100svh-4rem)] md:items-center md:py-16"
     >
       {mode === "preview" ? (
-        <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:gap-12">
+        <div className="grid w-full grid-cols-1 items-center gap-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:gap-12">
           <div className="relative flex max-w-[58ch] flex-col">
             <p className="flex items-center gap-3 text-[15px] italic leading-[1.5] text-[var(--color-ink-2)]">
               <span className="inline-flex h-[18px] shrink-0 items-center text-[var(--color-state-listening-strong)]">
@@ -388,15 +391,15 @@ export function StartupAnalystDemo({
 
             <p className="mt-6 inline-flex items-baseline gap-3 text-[14px] leading-[1.5] text-[var(--color-ink-1)]">
               <span aria-hidden="true" style={{ color: "var(--color-accent)" }}>-</span>
-              <span>{completed ? `Last run: Pipeline Done · ${startupCount} startups analyzed · report generated.` : "You inspect the finished diligence packet, not a loading screen."}</span>
+              <span>{hasCompletedRun ? `Last run: Pipeline Done · ${startupCount} startups analyzed · report generated.` : "You inspect the finished diligence packet, not a loading screen."}</span>
             </p>
 
             <div className="mt-7 flex flex-wrap items-center gap-3">
               <button type="button" className="btn btn-primary btn-field text-[13px]" onClick={openWorkflow}>
                 <AppIcon name="play" size={13} />
-                Open Startup Analyst
+                Open demo
               </button>
-              {completed && (
+              {hasCompletedRun && (
                 <button type="button" className="btn btn-ghost btn-field text-[13px]" onClick={() => setMode("output")}>
                   <AppIcon name="doc" size={14} />
                   Reopen output
@@ -568,6 +571,9 @@ export function StartupAnalystDemo({
       )}
 
       <style>{`
+        .sad-root {
+          scroll-margin-top: 5rem;
+        }
         .sad-preview {
           opacity: 0;
           transform: translateY(18px) scale(0.94);
@@ -790,7 +796,40 @@ export function StartupAnalystDemo({
         .sad-output {
           display: grid;
           grid-template-columns: minmax(240px, 300px) minmax(0, 1fr);
-          min-height: min(760px, calc(100svh - 156px));
+          height: min(760px, calc(100svh - 156px));
+          min-height: 560px;
+          overflow: hidden;
+        }
+        .sad-output * {
+          scrollbar-width: thin;
+          scrollbar-color: rgba(var(--color-accent-rgb), 0.48) rgba(20, 17, 13, 0.58);
+        }
+        .sad-output *::-webkit-scrollbar {
+          width: 10px;
+          height: 10px;
+        }
+        .sad-output *::-webkit-scrollbar-track {
+          background: rgba(20, 17, 13, 0.58);
+          border-left: 1px solid rgba(232, 224, 200, 0.08);
+        }
+        .sad-output *::-webkit-scrollbar-thumb {
+          border: 2px solid rgba(20, 17, 13, 0.58);
+          border-radius: var(--radius-full);
+          background: linear-gradient(
+            180deg,
+            rgba(var(--color-accent-strong-rgb), 0.68),
+            rgba(var(--color-accent-rgb), 0.42)
+          );
+        }
+        .sad-output *::-webkit-scrollbar-thumb:hover {
+          background: linear-gradient(
+            180deg,
+            rgba(var(--color-accent-strong-rgb), 0.82),
+            rgba(var(--color-accent-rgb), 0.58)
+          );
+        }
+        .sad-output *::-webkit-scrollbar-corner {
+          background: rgba(20, 17, 13, 0.58);
         }
         .sad-files {
           overflow: auto;
@@ -853,6 +892,7 @@ export function StartupAnalystDemo({
         }
         .sad-preview-pane {
           min-width: 0;
+          min-height: 0;
           overflow: auto;
           background: var(--color-surface-1);
         }
@@ -986,6 +1026,12 @@ export function StartupAnalystDemo({
           0%, 100% { box-shadow: 0 0 0 1px rgba(var(--color-accent-rgb), 0.24), 0 0 26px rgba(var(--color-accent-rgb), 0.17); }
           50% { box-shadow: 0 0 0 1px rgba(var(--color-accent-rgb), 0.48), 0 0 40px rgba(var(--color-accent-rgb), 0.32); }
         }
+        @media (min-width: 900px) {
+          .sad-preview {
+            position: sticky;
+            top: 6rem;
+          }
+        }
         @media (max-width: 760px) {
           .sad-shell {
             min-height: calc(100svh - 74px);
@@ -1006,9 +1052,15 @@ export function StartupAnalystDemo({
           }
           .sad-output {
             grid-template-columns: 1fr;
+            height: auto;
+            min-height: calc(100svh - 156px);
+            overflow: visible;
           }
           .sad-files {
             max-height: 250px;
+            position: sticky;
+            top: 0;
+            z-index: 2;
             border-right: 0;
             border-bottom: 1px solid var(--color-border);
           }
