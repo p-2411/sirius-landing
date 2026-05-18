@@ -417,6 +417,7 @@ export function StartupAnalystDemo({
 
   return (
     <article
+      id="startup-analyst-demo"
       ref={rootRef}
       data-revealed={revealed ? "true" : "false"}
       className="sad-root relative border-t border-[var(--color-border-strong)] py-12 md:flex md:min-h-[calc(100svh-4rem)] md:items-center md:py-16"
@@ -1218,6 +1219,10 @@ export function StartupAnalystAppDemo({ files }: { files: StartupAnalystDemoFile
     setActiveIndex(0);
   }
 
+  function returnToLandingDemo() {
+    window.location.assign("/#startup-analyst-demo");
+  }
+
   const assistantText = completed
     ? `Done. I generated the report, scored CSV, ${companyCount} company profiles, and ${founderCount} founder briefs.`
     : running
@@ -1269,7 +1274,9 @@ export function StartupAnalystAppDemo({ files }: { files: StartupAnalystDemoFile
             </div>
 
             <div className="sad-app-actions">
-              <Link href="/">Back to landing</Link>
+              <button type="button" className="sad-app-ghost-button" onClick={returnToLandingDemo}>
+                Back to landing
+              </button>
               {completed && (
                 <button type="button" className="sad-app-ghost-button" onClick={resetWorkflow}>
                   Reset
