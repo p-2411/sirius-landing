@@ -5,6 +5,7 @@ import { FinalCtaSection } from "@/components/sections/final-cta";
 import { FourWaysSection } from "@/components/sections/four-ways";
 import { HeroSection } from "@/components/sections/hero";
 import { InPracticeSection } from "@/components/sections/in-practice";
+import { LiveDemoSection } from "@/components/sections/live-demo";
 import { LocalDataSection } from "@/components/sections/local-data";
 import { ThreeIdeasSection } from "@/components/sections/three-ideas";
 import { WhatsNextSection } from "@/components/sections/whats-next";
@@ -22,7 +23,9 @@ export default function HomePage() {
       <ProgressRail />
       <HeroSection />
       <SectionDivider />
-      <InPracticeSection startupAnalystFiles={startupAnalystFiles} />
+      <InPracticeSection />
+      <SectionDivider />
+      <LiveDemoSection startupAnalystFiles={startupAnalystFiles} />
       <SectionDivider />
       <WorkflowsSection />
       <SectionDivider />

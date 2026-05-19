@@ -22,10 +22,19 @@ export function ChatPane({
   header = "Chat with this workflow",
   subtitle = "Sirius knows what this workflow is",
   messages,
+  prefill,
+  pulseSend = false,
+  onSend,
 }: {
   header?: string;
   subtitle?: string;
   messages: ChatMsg[];
+  /** When set, the composer shows this as ready-to-send text (locked) instead of the placeholder. */
+  prefill?: string;
+  /** Pulses the Send button to draw the eye to the one action. */
+  pulseSend?: boolean;
+  /** When set, Send becomes a real interactive button. Absent → static port (unchanged). */
+  onSend?: () => void;
 }) {
   return (
     <div
@@ -216,40 +225,88 @@ export function ChatPane({
             padding: "11px 12px",
             fontSize: 14,
             fontFamily: "var(--font-sans)",
-            color: "var(--color-ink-4)",
+            color: prefill ? "var(--color-ink-1)" : "var(--color-ink-4)",
             background: "var(--color-surface-1)",
             border: "1px solid var(--color-border)",
             display: "flex",
             alignItems: "center",
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
           }}
         >
-          Send a message…
+          {prefill ?? "Send a message…"}
         </div>
 
-        {/* Send button — app primary md: h-11 px-4 rounded-[8px] text-[13px] font-medium */}
-        <div
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 8,
-            height: 44,
-            paddingLeft: 16,
-            paddingRight: 16,
-            borderRadius: 8,
-            fontSize: 13,
-            fontFamily: "var(--font-sans)",
-            fontWeight: 500,
-            background: "var(--color-accent)",
-            color: "var(--color-bg)",
-            flexShrink: 0,
-          }}
-        >
-          <AppIcon name="send" size={13} stroke="currentColor" />
-          Send
-        </div>
+        {/* Send button — app primary md: h-11 px-4 rounded-[8px] text-[13px] font-medium.
+            Interactive when onSend is provided; otherwise the static port (unchanged). */}
+        {onSend ? (
+          <button
+            type="button"
+            onClick={onSend}
+            className={pulseSend ? "chatpane-send chatpane-send--pulse" : "chatpane-send"}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 8,
+              height: 44,
+              paddingLeft: 16,
+              paddingRight: 16,
+              borderRadius: 8,
+              fontSize: 13,
+              fontFamily: "var(--font-sans)",
+              fontWeight: 500,
+              background: "var(--color-accent)",
+              color: "var(--color-bg)",
+              flexShrink: 0,
+              border: "none",
+              cursor: "pointer",
+            }}
+          >
+            <AppIcon name="send" size={13} stroke="currentColor" />
+            Send
+          </button>
+        ) : (
+          <div
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 8,
+              height: 44,
+              paddingLeft: 16,
+              paddingRight: 16,
+              borderRadius: 8,
+              fontSize: 13,
+              fontFamily: "var(--font-sans)",
+              fontWeight: 500,
+              background: "var(--color-accent)",
+              color: "var(--color-bg)",
+              flexShrink: 0,
+            }}
+          >
+            <AppIcon name="send" size={13} stroke="currentColor" />
+            Send
+          </div>
+        )}
       </div>
       </div>
+
+      {onSend && (
+        <style>{`
+          @keyframes chatpane-send-pulse {
+            0%, 100% { box-shadow: 0 0 0 1px rgba(var(--color-accent-rgb), 0.30), 0 0 22px rgba(var(--color-accent-rgb), 0.18); }
+            50%      { box-shadow: 0 0 0 1px rgba(var(--color-accent-rgb), 0.55), 0 0 38px rgba(var(--color-accent-rgb), 0.36); }
+          }
+          .chatpane-send { transition: background 160ms ease; }
+          .chatpane-send:hover { background: var(--color-accent-strong) !important; }
+          .chatpane-send--pulse { animation: chatpane-send-pulse 1.8s ease-in-out infinite; }
+          @media (prefers-reduced-motion: reduce) {
+            .chatpane-send--pulse { animation: none !important; }
+          }
+        `}</style>
+      )}
     </div>
   );
 }

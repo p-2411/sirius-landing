@@ -8,8 +8,6 @@ import { SectionLabel } from "@/components/ui/section-label";
 import { ScreenshotFrame } from "@/components/ui/screenshot-frame";
 import { WorkflowShot, ScaledShot } from "@/components/sirius/appui";
 import type { WorkflowShotProps } from "@/components/sirius/appui";
-import { StartupAnalystDemo } from "@/components/sirius/startup-analyst-demo";
-import type { StartupAnalystDemoFile } from "@/lib/startup-analyst-demo";
 
 // ─── Per-vignette screenshot metadata ────────────────────────────────────────
 
@@ -261,11 +259,7 @@ function PracticeCard({ card, total }: { card: CardData; total: number }) {
 
 // ─── Section ──────────────────────────────────────────────────────────────────
 
-export function InPracticeSection({
-  startupAnalystFiles,
-}: {
-  startupAnalystFiles: StartupAnalystDemoFile[];
-}) {
+export function InPracticeSection() {
   const { sectionLabel, intro, vignettes } = landingContent.inPractice;
 
   return (
@@ -291,7 +285,6 @@ export function InPracticeSection({
           {vignettes.map((v) => (
             <PracticeCard key={v.id} card={v} total={vignettes.length} />
           ))}
-          <StartupAnalystDemo files={startupAnalystFiles} index={vignettes.length + 1} total={vignettes.length + 1} />
         </div>
       </Container>
 
