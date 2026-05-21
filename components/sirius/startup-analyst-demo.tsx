@@ -8,7 +8,7 @@ import type { StartupAnalystDemoFile } from "@/lib/startup-analyst-demo";
 import { cn } from "@/lib/utils";
 import type { DagStep } from "./appui/dag-mini";
 
-type AppDemoView = "workflow" | "run" | "output";
+type AppDemoView = "chat" | "workflow" | "run" | "output";
 type DemoRunStatus = "pending" | "running" | "completed";
 
 const PIPELINE_STEPS: DagStep[] = [
@@ -397,7 +397,7 @@ export function StartupAnalystAppDemo({
   /** Reports the app's current phase so the landing frame can grow/shrink. */
   onPhaseChange?: (phase: "chat" | "running" | "output") => void;
 }) {
-  const [view, setView] = useState<AppDemoView>("workflow");
+  const [view, setView] = useState<AppDemoView>(() => (contained ? "chat" : "workflow"));
   const [running, setRunning] = useState(false);
   const [completed, setCompleted] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -478,17 +478,28 @@ export function StartupAnalystAppDemo({
   }, [completed, running, view]);
 
   useEffect(() => {
-    onPhaseChange?.(view === "run" ? "running" : view === "output" ? "output" : "chat");
+    onPhaseChange?.(view === "chat" ? "chat" : view === "output" ? "output" : "running");
   }, [view, onPhaseChange]);
 
   useEffect(() => {
     if (!contained) return;
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape" && view !== "workflow") resetWorkflow();
+      if (event.key !== "Escape" || view === "chat") return;
+      setView("chat");
+      setRunning(false);
+      setCompleted(false);
+      setActiveIndex(0);
     };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [contained, view]);
+
+  function openWorkflow() {
+    setView("workflow");
+    setCompleted(false);
+    setActiveIndex(0);
+    setRunning(false);
+  }
 
   function runWorkflow() {
     setView("run");
@@ -498,7 +509,7 @@ export function StartupAnalystAppDemo({
   }
 
   function resetWorkflow() {
-    setView("workflow");
+    setView(contained ? "chat" : "workflow");
     setRunning(false);
     setCompleted(false);
     setActiveIndex(0);
@@ -509,7 +520,7 @@ export function StartupAnalystAppDemo({
   }
 
   // The landing card's entry state: a pre-filled, one-gesture chat send.
-  const chatEntry = contained && !running && !completed;
+  const chatEntry = view === "chat";
 
   const assistantText = completed
     ? `Done. I generated the report, scored CSV, ${companyCount} company profiles, and ${founderCount} founder briefs.`
@@ -543,13 +554,13 @@ export function StartupAnalystAppDemo({
           <ChatPane
             header="Startup Analyst"
             subtitle="Talk to Sirius"
-            prefill="Sirius, run the startup analyst workflow."
+            prefill="Sirius, take me to the startup analyst workflow."
             pulseSend
-            onSend={runWorkflow}
+            onSend={openWorkflow}
             messages={[
               {
                 role: "assistant",
-                text: "Ask me to run the startup-analyst dealflow pipeline — I'll discover companies, score conviction, write profiles, then produce the weekly report.",
+                text: "I can take you to the startup analyst workflow. It finds promising AI infrastructure startups, scores them, drafts the company and founder notes, and puts a weekly report together for you.",
               },
             ]}
           />
