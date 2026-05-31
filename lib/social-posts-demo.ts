@@ -77,4 +77,4 @@ export const DEMO_DRAFTS: DemoDraft[] = [
 
 // What the home surface shows right after the orb is clicked.
 export const HOME_PROMPT = "Draft this week's posts from my Notion page.";
-export const HOME_REPLY = `On it — running ${WORKFLOW_NAME} in the background. I'll ping you when your drafts are ready.`;
+export const HOME_REPLY = "On it. I'll ping you when your drafts are ready.";
