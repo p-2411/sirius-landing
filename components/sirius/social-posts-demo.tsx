@@ -30,11 +30,12 @@ const TL = {
   startToast: 3700,
   toastTap: 5000,
   runStart: 5300,
-  perStep: 780, // 6 steps → done ≈ 9980
-  backTap: 11200,
-  home2: 11500,
-  doneNotif: 12200,
-  total: 14400,
+  perStep: 700, // still running when we leave the run page
+  backTap: 8000, // head home BEFORE the run finishes (~3 steps done)
+  home2: 8300,
+  doneNotif: 9500, // run finishes in the background → briefing pings home
+  briefingExpand: 10700, // cursor hovers the briefing → it opens to the drafts
+  total: 14200,
 };
 
 type Surface = "home" | "run";
@@ -121,6 +122,7 @@ export function SocialPostsDemo() {
   const stepsDone = Math.max(0, Math.min(RUN_STEPS.length, Math.floor((e - TL.runStart) / TL.perStep)));
   const showDisplay = surface === "run" && stepsDone >= RUN_STEPS.length;
   const showBriefing = e >= TL.doneNotif;
+  const briefingExpanded = e >= TL.briefingExpand;
 
   useEffect(() => {
     if (surface !== "run") return;
@@ -147,6 +149,7 @@ export function SocialPostsDemo() {
               showReply={showReply}
               showStartToast={showStartToast}
               showBriefing={showBriefing}
+              briefingExpanded={briefingExpanded}
             />
           ) : (
             <RunDetailShot scrollRef={runScrollRef} stepsDone={stepsDone} showDisplay={showDisplay} />
@@ -199,12 +202,14 @@ function HomeShot({
   showReply,
   showStartToast,
   showBriefing,
+  briefingExpanded,
 }: {
   orbActive: boolean;
   showPrompt: boolean;
   showReply: boolean;
   showStartToast: boolean;
   showBriefing: boolean;
+  briefingExpanded: boolean;
 }) {
   return (
     <div style={{ display: "flex", width: DW, height: DH, background: T.bg, fontFamily: FONT_BODY, color: T.ink, overflow: "hidden" }}>
@@ -274,9 +279,9 @@ function HomeShot({
 
         {/* Tier-1 briefing column — below the orb, exactly as the home screen */}
         {showBriefing && (
-          <div style={{ flexShrink: 0, maxHeight: "52%", overflowY: "auto", width: "100%" }}>
+          <div style={{ flexShrink: 0, maxHeight: "56%", overflowY: "hidden", width: "100%" }}>
             <div style={{ width: "min(540px, 82%)", margin: "0 auto", display: "flex", flexDirection: "column", gap: 10, paddingBottom: 40 }}>
-              <BriefingCardShot />
+              <BriefingCardShot expanded={briefingExpanded} />
             </div>
           </div>
         )}
@@ -335,18 +340,21 @@ function ActivityToast({ name }: { name: string }) {
   );
 }
 
-// Tier 1 — copied from notifications/BriefingCard.tsx (static open state).
-function BriefingCardShot() {
+// Tier 1 — copied from notifications/BriefingCard.tsx (collapsed → hover-expanded).
+function BriefingCardShot({ expanded }: { expanded: boolean }) {
   return (
     <div
       style={{
+        position: "relative",
         display: "flex",
         flexDirection: "column",
+        maxHeight: expanded ? 420 : 210,
         borderRadius: 12,
         background: "linear-gradient(180deg, #3A3327, #342D23 40%)",
         border: "1px solid rgba(232,224,200,0.18)",
-        boxShadow: "inset 0 1px 0 rgba(246,239,223,0.06)",
+        boxShadow: expanded ? "0 20px 50px rgba(0,0,0,0.45)" : "inset 0 1px 0 rgba(246,239,223,0.06)",
         overflow: "hidden",
+        transition: "max-height 320ms cubic-bezier(0.22,1,0.36,1), box-shadow 320ms ease",
         animation: "sp-notif-in 360ms cubic-bezier(0.22,1,0.36,1) both",
       }}
     >
@@ -365,21 +373,49 @@ function BriefingCardShot() {
           </svg>
         </span>
       </div>
+
       <h2 style={{ flexShrink: 0, fontFamily: FONT_DISPLAY, fontWeight: 400, fontSize: 22, lineHeight: 1.2, color: T.ink, margin: "0 18px 10px" }}>
         3 LinkedIn drafts ready
       </h2>
-      <div style={{ padding: "0 18px 18px" }}>
-        <p style={{ margin: 0, fontSize: 14, lineHeight: 1.55, color: T.ink2 }}>
-          Three angles, written in your voice from <span style={{ color: T.ink }}>{DEMO_SOURCE}</span>. Pick one to ship.
-        </p>
-        <div style={{ marginTop: 10, display: "flex", gap: 8, flexWrap: "wrap" }}>
-          {DEMO_DRAFTS.map((d) => (
-            <span key={d.id} style={{ border: `1px solid ${T.border}`, borderRadius: 6, padding: "3px 9px", fontSize: 11.5, color: T.ink3 }}>
-              {d.angle}
-            </span>
-          ))}
+
+      {!expanded ? (
+        <div style={{ padding: "0 18px 18px" }}>
+          <p style={{ margin: 0, fontSize: 14, lineHeight: 1.55, color: T.ink2 }}>
+            Three angles, written in your voice from <span style={{ color: T.ink }}>{DEMO_SOURCE}</span>. Pick one to ship.
+          </p>
+          <div style={{ marginTop: 10, display: "flex", gap: 8, flexWrap: "wrap" }}>
+            {DEMO_DRAFTS.map((d) => (
+              <span key={d.id} style={{ border: `1px solid ${T.border}`, borderRadius: 6, padding: "3px 9px", fontSize: 11.5, color: T.ink3 }}>
+                {d.angle}
+              </span>
+            ))}
+          </div>
         </div>
-      </div>
+      ) : (
+        <div style={{ flex: "1 1 auto", minHeight: 0, overflow: "hidden", padding: "0 18px 0", position: "relative" }}>
+          {DEMO_DRAFTS.map((d, di) => {
+            const paras = d.text.split("\n\n");
+            return (
+              <div key={d.id} style={{ marginTop: di === 0 ? 0 : 18 }}>
+                <p style={{ margin: "0 0 6px", fontSize: 11, letterSpacing: "0.08em", textTransform: "uppercase", color: T.warm, fontWeight: 600 }}>
+                  Post {di + 1} · {d.angle}
+                </p>
+                <p style={{ margin: 0, fontSize: 13, lineHeight: 1.55, color: T.ink2 }}>{paras[0]}</p>
+                {paras.slice(1).map((p, pi) => (
+                  <p key={pi} style={{ margin: "6px 0 0", whiteSpace: "pre-line", fontSize: 13, lineHeight: 1.55, color: T.ink2 }}>
+                    {p}
+                  </p>
+                ))}
+              </div>
+            );
+          })}
+          {/* bottom fade — there's more below the cap */}
+          <div
+            aria-hidden
+            style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 56, pointerEvents: "none", background: "linear-gradient(180deg, rgba(52,45,35,0) 0%, #342D23 92%)" }}
+          />
+        </div>
+      )}
     </div>
   );
 }
@@ -531,7 +567,7 @@ function cursorFor(t: number): { x: number; y: number } {
   if (t < TL.toastTap + 250) return { x: 88, y: 93 };
   if (t < TL.backTap) return { x: 50, y: 50 };
   if (t < TL.home2) return { x: 4, y: 44 };
-  return { x: 50, y: 74 };
+  return { x: 50, y: 62 };
 }
 
 function near(t: number, mark: number) {
