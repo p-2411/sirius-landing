@@ -47,9 +47,6 @@ export async function POST(request: NextRequest) {
   if (!EMAIL_REGEX.test(email)) {
     return NextResponse.json({ ok: false, error: "email" }, { status: 400 });
   }
-  if (!consent) {
-    return NextResponse.json({ ok: false, error: "consent" }, { status: 400 });
-  }
   if (mobile.length > MOBILE_MAX) {
     return NextResponse.json({ ok: false, error: "mobile" }, { status: 400 });
   }

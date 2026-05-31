@@ -170,7 +170,6 @@ function DownloadDialog({ onClose }: { onClose: () => void }) {
                 type="checkbox"
                 checked={consent}
                 onChange={(e) => setConsent(e.target.checked)}
-                required
                 className="mt-0.5 h-4 w-4 shrink-0 accent-[var(--color-accent)]"
               />
               I&rsquo;d be happy to be reached out to for feedback.
