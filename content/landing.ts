@@ -48,11 +48,32 @@ export const landingContent = {
   },
   pricing: {
     eyebrow: "Pricing",
-    betaBadge: "Limited time — free during beta",
-    price: "$XX",
-    priceSuffix: "/mo after",
+    title: "Start free. Pay only for more.",
     note: "Less than the tools it replaces. Far less than the assistant it stands in for.",
-    cta: "Download for Mac",
+    tiers: [
+      {
+        name: "Free",
+        price: "$0",
+        priceSuffix: "",
+        tagline: "Everything Sirius does, with limited usage.",
+        features: [
+          "Every feature — voice, chat, workflows, schedules",
+          "Local-first: your data stays on your Mac",
+          "Limited monthly usage",
+        ],
+        cta: "Download for Mac",
+        featured: false,
+      },
+      {
+        name: "Pro",
+        price: "$20",
+        priceSuffix: "/mo",
+        tagline: "The same Sirius — just higher limits.",
+        features: ["Everything in Free", "Much higher usage limits"],
+        cta: "Download for Mac",
+        featured: true,
+      },
+    ],
   },
   local: {
     eyebrow: "Local-first",

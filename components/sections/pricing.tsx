@@ -1,36 +1,64 @@
 import { Container } from "@/components/ui/container";
 import { ButtonLink } from "@/components/ui/button";
-import { Reveal } from "@/components/ui/reveal";
+import { Reveal, RevealGroup, RevealItem } from "@/components/ui/reveal";
+import { AppIcon } from "@/components/sirius/appui";
+import { SectionLabel } from "@/components/ui/section-label";
 import { landingContent } from "@/content/landing";
 
 export function PricingSection() {
-  const { eyebrow, betaBadge, price, priceSuffix, note, cta } = landingContent.pricing;
+  const { eyebrow, title, note, tiers } = landingContent.pricing;
   const { downloadCta } = landingContent;
   return (
     <section id="pricing" className="scroll-mt-24 py-24 md:py-32">
       <Container className="flex flex-col items-center text-center">
-        <Reveal className="flex w-full flex-col items-center">
-          <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-[var(--color-accent)]">
-            {eyebrow}
-          </span>
-          <div className="mt-7 w-full max-w-[440px] rounded-[var(--radius-lg)] border border-[rgba(240,179,90,0.35)] bg-[var(--color-surface-1)] p-8">
-            <span className="inline-block rounded-full border border-[rgba(108,216,255,0.4)] px-3 py-1.5 text-[12px] font-medium text-[var(--color-state-listening-strong)]">
-              {betaBadge}
-            </span>
-            <div className="mt-6 font-display text-[44px] font-normal leading-none text-[var(--color-ink-1)]">
-              {price}
-              <span className="text-[16px] text-[var(--color-ink-3)]">{priceSuffix}</span>
-            </div>
-            <p className="mx-auto mt-4 max-w-[34ch] text-[14px] leading-[1.55] text-[var(--color-ink-2)]">
-              {note}
-            </p>
-            <div className="mt-7 flex justify-center">
-              <ButtonLink href={downloadCta.href} variant="primary">
-                {cta}
-              </ButtonLink>
-            </div>
-          </div>
+        <Reveal className="flex flex-col items-center">
+          <SectionLabel tone="warm">{eyebrow}</SectionLabel>
+          <h2 className="font-display mt-7 max-w-[18ch] text-[clamp(2.2rem,5vw,3.6rem)] font-normal leading-[0.95] tracking-[-0.028em] text-[var(--color-ink-1)]">
+            {title}
+          </h2>
         </Reveal>
+
+        <RevealGroup className="mt-14 grid w-full max-w-[760px] items-stretch gap-4 sm:grid-cols-2" stagger={0.12}>
+          {tiers.map((t) => (
+            <RevealItem key={t.name} className="h-full">
+              <div
+                className="flex h-full flex-col rounded-[var(--radius-lg)] border bg-[var(--color-surface-1)] p-7 text-left"
+                style={{
+                  borderColor: t.featured ? "rgba(240,179,90,0.45)" : "var(--color-border)",
+                  boxShadow: t.featured ? "0 24px 60px -34px rgba(240,179,90,0.5)" : "none",
+                }}
+              >
+                <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--color-ink-3)]">
+                  {t.name}
+                </span>
+                <div className="mt-4 font-display text-[44px] font-normal leading-none text-[var(--color-ink-1)]">
+                  {t.price}
+                  {t.priceSuffix && <span className="text-[16px] text-[var(--color-ink-3)]">{t.priceSuffix}</span>}
+                </div>
+                <p className="mt-3 text-[14px] leading-[1.5] text-[var(--color-ink-2)]">{t.tagline}</p>
+
+                <ul className="mt-6 flex flex-col gap-2.5">
+                  {t.features.map((f) => (
+                    <li key={f} className="flex items-start gap-2.5 text-[13.5px] leading-[1.45] text-[var(--color-ink-2)]">
+                      <span className="mt-0.5 shrink-0 text-[var(--color-success)]">
+                        <AppIcon name="check" size={14} />
+                      </span>
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="mt-auto pt-8">
+                  <ButtonLink href={downloadCta.href} variant={t.featured ? "primary" : "secondary"}>
+                    {t.cta}
+                  </ButtonLink>
+                </div>
+              </div>
+            </RevealItem>
+          ))}
+        </RevealGroup>
+
+        <p className="mt-8 max-w-[40ch] text-[13px] leading-[1.55] text-[var(--color-ink-3)]">{note}</p>
       </Container>
     </section>
   );
