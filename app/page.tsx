@@ -1,42 +1,42 @@
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
-import { FaqSection } from "@/components/sections/faq";
-import { FinalCtaSection } from "@/components/sections/final-cta";
-import { FourWaysSection } from "@/components/sections/four-ways";
 import { HeroSection } from "@/components/sections/hero";
-import { InPracticeSection } from "@/components/sections/in-practice";
-import { LiveDemoSection } from "@/components/sections/live-demo";
+import { WhatItDoesSection } from "@/components/sections/what-it-does";
+import { LearnsOnceSection } from "@/components/sections/learns-once";
+import { OneAppSection } from "@/components/sections/one-app";
+import { PricingSection } from "@/components/sections/pricing";
 import { LocalDataSection } from "@/components/sections/local-data";
-import { ThreeIdeasSection } from "@/components/sections/three-ideas";
-import { WhatsNextSection } from "@/components/sections/whats-next";
-import { WorkflowsSection } from "@/components/sections/workflows";
+import { FinalCtaSection } from "@/components/sections/final-cta";
 import { ProgressRail } from "@/components/ui/progress-rail";
 import { SectionDivider } from "@/components/ui/section-divider";
-import { getStartupAnalystDemoFiles } from "@/lib/startup-analyst-demo";
+import { landingContent } from "@/content/landing";
 
 export default function HomePage() {
-  const startupAnalystFiles = getStartupAnalystDemoFiles();
-
+  const { beat } = landingContent;
   return (
     <main className="relative min-h-screen overflow-x-clip bg-[var(--color-bg)] text-[var(--color-ink-1)]">
       <SiteHeader />
       <ProgressRail />
       <HeroSection />
       <SectionDivider />
-      <InPracticeSection />
+      <section id="beat" className="py-16 md:py-20">
+        <div className="mx-auto max-w-[640px] px-6 text-center">
+          <p className="font-display text-[clamp(1.3rem,2.6vw,1.9rem)] font-normal italic leading-[1.3] text-[var(--color-ink-1)]">
+            {beat}
+          </p>
+        </div>
+      </section>
       <SectionDivider />
-      <LiveDemoSection startupAnalystFiles={startupAnalystFiles} />
+      <WhatItDoesSection />
       <SectionDivider />
-      <WorkflowsSection />
+      <LearnsOnceSection />
       <SectionDivider />
-      <FourWaysSection />
-      <ThreeIdeasSection />
+      <OneAppSection />
+      <SectionDivider />
+      <PricingSection />
       <SectionDivider />
       <LocalDataSection />
-      <FaqSection />
       <FinalCtaSection />
-      <SectionDivider />
-      <WhatsNextSection />
       <SiteFooter />
     </main>
   );
