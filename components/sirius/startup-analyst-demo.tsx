@@ -8,7 +8,7 @@ import type { StartupAnalystDemoFile } from "@/lib/startup-analyst-demo";
 import { cn } from "@/lib/utils";
 import type { DagStep } from "./appui/dag-mini";
 
-type AppDemoView = "workflow" | "run" | "output";
+type AppDemoView = "chat" | "workflow" | "run" | "output";
 type DemoRunStatus = "pending" | "running" | "completed";
 
 const PIPELINE_STEPS: DagStep[] = [
@@ -681,7 +681,7 @@ export function StartupAnalystAppDemo({
   /** Gate that flips true once the demo is on screen (so it plays in view). */
   start?: boolean;
 }) {
-  const [view, setView] = useState<AppDemoView>("workflow");
+  const [view, setView] = useState<AppDemoView>(() => (contained ? "chat" : "workflow"));
   const [running, setRunning] = useState(false);
   const [completed, setCompleted] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -737,7 +737,7 @@ export function StartupAnalystAppDemo({
   }, [completed, running, view]);
 
   useEffect(() => {
-    onPhaseChange?.(view === "run" ? "running" : view === "output" ? "output" : "chat");
+    onPhaseChange?.(view === "chat" ? "chat" : view === "output" ? "output" : "running");
   }, [view, onPhaseChange]);
 
   // Directed film: once on screen, let the viewer read the "ask", then it runs
@@ -766,11 +766,22 @@ export function StartupAnalystAppDemo({
   useEffect(() => {
     if (!contained) return;
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape" && view !== "workflow") resetWorkflow();
+      if (event.key !== "Escape" || view === "chat") return;
+      setView("chat");
+      setRunning(false);
+      setCompleted(false);
+      setActiveIndex(0);
     };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [contained, view]);
+
+  function openWorkflow() {
+    setView("workflow");
+    setCompleted(false);
+    setActiveIndex(0);
+    setRunning(false);
+  }
 
   function runWorkflow() {
     setView("run");
@@ -780,7 +791,7 @@ export function StartupAnalystAppDemo({
   }
 
   function resetWorkflow() {
-    setView("workflow");
+    setView(contained ? "chat" : "workflow");
     setRunning(false);
     setCompleted(false);
     setActiveIndex(0);
@@ -791,7 +802,7 @@ export function StartupAnalystAppDemo({
   }
 
   // The landing card's entry state: a pre-filled, one-gesture chat send.
-  const chatEntry = contained && !running && !completed;
+  const chatEntry = view === "chat";
 
   const assistantText = completed
     ? `Done. I generated the report, scored CSV, ${companyCount} company profiles, and ${founderCount} founder briefs.`
@@ -803,26 +814,19 @@ export function StartupAnalystAppDemo({
     <main className={cn("sad-app-demo", contained && "sad-app-demo--contained")}>
       {chatEntry ? (
         <div className="sad-app-chat-entry">
-          <nav className="sad-app-breadcrumb" aria-label="Breadcrumb">
-            <span>Workflows</span>
-            <span>/</span>
-            <strong>Startup analyst</strong>
-          </nav>
-          <div className="sad-chat-entry-pane">
-            <ChatPane
-              header="Startup Analyst"
-              subtitle="Talk to Sirius"
-              prefill="Sirius, pull together this week's dealflow."
-              pulseSend={!autoplay}
-              onSend={autoplay ? undefined : runWorkflow}
-              messages={[
-                {
-                  role: "assistant",
-                  text: "Ask and I'll handle it end to end — find this week's companies, score them, write the profiles, and hand you a weekly report you can act on.",
-                },
-              ]}
-            />
-          </div>
+          <ChatPane
+            header="Startup Analyst"
+            subtitle="Talk to Sirius"
+            prefill="Sirius, take me to the startup analyst workflow."
+            pulseSend
+            onSend={openWorkflow}
+            messages={[
+              {
+                role: "assistant",
+                text: "I can take you to the startup analyst workflow. It finds promising AI infrastructure startups, scores them, drafts the company and founder notes, and puts a weekly report together for you.",
+              },
+            ]}
+          />
         </div>
       ) : (
         <>
