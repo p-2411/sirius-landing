@@ -54,6 +54,10 @@ export function LearnsOnceSection() {
               </span>
               <div className="mt-3 flex flex-col gap-2">
                 <Bubble who="you">Do this week&rsquo;s client update.</Bubble>
+                <div className="flex items-center gap-2 pl-1 text-[12.5px] text-[var(--color-success)]">
+                  <AppIcon name="check" size={13} />
+                  <span>Ran in 6s</span>
+                </div>
               </div>
             </RevealItem>
           </RevealGroup>
