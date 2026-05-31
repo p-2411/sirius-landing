@@ -2,7 +2,6 @@
 export const landingContent = {
   meta: {
     wordmark: "Sirius",
-    availability: "Free during beta",
     tagline: "One assistant. It knows you. It does the work.",
   },
   nav: [
@@ -16,7 +15,6 @@ export const landingContent = {
     titleAccent: "It does the work.",
     description:
       "Across your inbox, calendar, files, and any app with an API — it holds the context and does the jumping, so you don't.",
-    betaPill: "Free during beta",
     micHint: "say anything — watch it go to work",
     micPrivacy: "Your voice stays in your browser. We're not listening.",
     tapFallback: "See it work",
@@ -92,7 +90,7 @@ export const landingContent = {
   cta: {
     title: "Get the assistant the others were pretending to be.",
     button: "Download for Mac",
-    sub: "macOS · free during beta",
+    sub: "macOS · Apple silicon",
   },
   footer: {
     blurb: "One assistant that knows you and acts across everything. Local-first, Mac.",
