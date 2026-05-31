@@ -57,7 +57,7 @@ export const landingContent = {
   local: {
     eyebrow: "Local-first",
     title: "Plus, your data stays on your Mac.",
-    body: "Memories, conversations, files — all local. The recurring jobs that run while you sleep use the cloud, with only the data they need to do their job. Prefer fully local? You can have that — the trade is that scheduled runs stop when your laptop does.",
+    body: "Memories, conversations, files are all stored on your computer. Your automation triggers are listened for on the cloud, and run on your computer.",
   },
   cta: {
     title: "Get the assistant the others were pretending to be.",
