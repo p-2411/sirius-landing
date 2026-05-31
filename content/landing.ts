@@ -43,7 +43,7 @@ export const landingContent = {
     eyebrow: "One app, not five",
     title: "Your whole stack collapses into one subscription.",
     body: "The chat knows what your automations did this morning. The automations know what you talked about yesterday. Nothing falls between systems, because there is only one system.",
-    replaces: ["AI chat", "automations & schedules", "research", "personal CRM"],
+    replaces: ["automation tool", "personal CRM", "email management", "personal agent", "research"],
     becomes: "Sirius",
   },
   pricing: {
