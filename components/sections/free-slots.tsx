@@ -7,17 +7,17 @@ import { useEffect, useState } from "react";
 const LAUNCH = Date.parse("2026-06-02T11:00:00");
 
 /**
- * Slots consumed since launch, on a decelerating schedule:
- *   • 2 per 10 min for the first 30 min      (→ 6)
- *   • 1 per 10 min for the next hour         (→ 6)
- *   • 1 per 5 hours thereafter
+ * Slots consumed since launch, on a decelerating schedule. Drops fire at the
+ * START of each interval, so the first −2 lands exactly at launch (20 → 18):
+ *   • 2 per 10 min for the first 30 min   — drops at 0, 10, 20  (→ 6)
+ *   • 1 per 10 min for the next hour      — drops at 30…80      (→ 6)
+ *   • 1 per 5 hours thereafter            — drops at 90, 390, …
  */
 function consumed(elapsedMin: number): number {
-  if (elapsedMin <= 0) return 0;
-  let used = 0;
-  used += Math.floor(Math.min(elapsedMin, 30) / 10) * 2;
-  if (elapsedMin > 30) used += Math.floor((Math.min(elapsedMin, 90) - 30) / 10);
-  if (elapsedMin > 90) used += Math.floor((elapsedMin - 90) / 300);
+  if (elapsedMin < 0) return 0;
+  let used = Math.min(Math.floor(elapsedMin / 10) + 1, 3) * 2; // phase 1
+  if (elapsedMin >= 30) used += Math.min(Math.floor((elapsedMin - 30) / 10) + 1, 6); // phase 2
+  if (elapsedMin >= 90) used += Math.floor((elapsedMin - 90) / 300) + 1; // phase 3
   return used;
 }
 
