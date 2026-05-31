@@ -110,13 +110,15 @@ export async function updateName(recordId: string, name: string): Promise<void> 
 // every row in this table.
 function usersConfig(): AirtableConfig {
   const cfg = readConfig();
-  return { ...cfg, tableName: process.env.AIRTABLE_USERS_TABLE ?? "Users" };
+  // Falls back to the configured table (AIRTABLE_TABLE_NAME) when no dedicated
+  // users table is set.
+  return { ...cfg, tableName: process.env.AIRTABLE_USERS_TABLE ?? cfg.tableName };
 }
 
 /** How many free downloads have been claimed (every row in the Users table). */
 export async function countDownloads(): Promise<number> {
   const cfg = usersConfig();
-  const url = `${tableUrl(cfg)}?maxRecords=100&fields%5B%5D=email`;
+  const url = `${tableUrl(cfg)}?maxRecords=100`;
   const res = await fetch(url, { headers: authHeaders(cfg), cache: "no-store" });
   if (!res.ok) throw new Error(`Airtable countDownloads failed: ${res.status}`);
   const data = (await res.json()) as { records: unknown[] };
