@@ -142,18 +142,20 @@ export function SocialPostsDemo() {
     >
       <div className="relative w-full bg-black" style={{ aspectRatio: `${DW} / ${DH}` }}>
         <ScaledShot width={DW} height={DH}>
-          {onHome ? (
-            <HomeShot
-              orbActive={orbActive}
-              showPrompt={showPrompt}
-              showReply={showReply}
-              showStartToast={showStartToast}
-              showBriefing={showBriefing}
-              briefingExpanded={briefingExpanded}
-            />
-          ) : (
-            <RunDetailShot scrollRef={runScrollRef} stepsDone={stepsDone} showDisplay={showDisplay} />
-          )}
+          <div key={surface} style={{ width: DW, height: DH, animation: "sp-surface-in 320ms ease both" }}>
+            {onHome ? (
+              <HomeShot
+                orbActive={orbActive}
+                showPrompt={showPrompt}
+                showReply={showReply}
+                showStartToast={showStartToast}
+                showBriefing={showBriefing}
+                briefingExpanded={briefingExpanded}
+              />
+            ) : (
+              <RunDetailShot scrollRef={runScrollRef} stepsDone={stepsDone} showDisplay={showDisplay} />
+            )}
+          </div>
         </ScaledShot>
 
         {!reduce && started && !ended && (
@@ -162,7 +164,7 @@ export function SocialPostsDemo() {
             style={{
               left: `${cursor.x}%`,
               top: `${cursor.y}%`,
-              transition: "left 680ms cubic-bezier(0.4,0,0.2,1), top 680ms cubic-bezier(0.4,0,0.2,1)",
+              transition: "left 950ms cubic-bezier(0.45,0,0.25,1), top 950ms cubic-bezier(0.45,0,0.25,1)",
             }}
           >
             {clicking && (
@@ -190,7 +192,7 @@ export function SocialPostsDemo() {
         </div>
       </div>
 
-      <style>{`@keyframes sp-notif-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}@keyframes sp-toast-in{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}`}</style>
+      <style>{`@keyframes sp-notif-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}@keyframes sp-toast-in{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}@keyframes sp-surface-in{from{opacity:0}to{opacity:1}}`}</style>
     </div>
   );
 }
@@ -214,13 +216,12 @@ function HomeShot({
   return (
     <div style={{ display: "flex", width: DW, height: DH, background: T.bg, fontFamily: FONT_BODY, color: T.ink, overflow: "hidden" }}>
       <Rail active="voice" />
-      <main style={{ position: "relative", flex: 1, minWidth: 0, height: DH, display: "flex", flexDirection: "column", overflow: "hidden" }}>
-        {/* Voice center — orb + transcript, fills the upper space */}
+      <main style={{ position: "relative", flex: 1, minWidth: 0, height: DH, overflow: "hidden" }}>
+        {/* Voice center — orb + transcript, always centered (the overlay never moves it) */}
         <div
           style={{
-            position: "relative",
-            flex: 1,
-            minHeight: 0,
+            position: "absolute",
+            inset: 0,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -277,10 +278,26 @@ function HomeShot({
           <div style={{ fontSize: 12, color: T.ink4, letterSpacing: 0.4 }}>or to type: ⌘ K</div>
         </div>
 
-        {/* Tier-1 briefing column — below the orb, exactly as the home screen */}
+        {/* App dim when a briefing is expanded (matches the real card behaviour) */}
         {showBriefing && (
-          <div style={{ flexShrink: 0, maxHeight: "56%", overflowY: "hidden", width: "100%" }}>
-            <div style={{ width: "min(540px, 82%)", margin: "0 auto", display: "flex", flexDirection: "column", gap: 10, paddingBottom: 40 }}>
+          <div
+            aria-hidden
+            style={{
+              position: "absolute",
+              inset: 0,
+              background: "rgba(0,0,0,0.32)",
+              opacity: briefingExpanded ? 1 : 0,
+              transition: "opacity 280ms ease",
+              zIndex: 8,
+              pointerEvents: "none",
+            }}
+          />
+        )}
+
+        {/* Tier-1 briefing — bottom-anchored overlay; expands UPWARD over the orb */}
+        {showBriefing && (
+          <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, zIndex: 10, paddingBottom: 40 }}>
+            <div style={{ width: "min(540px, 82%)", margin: "0 auto" }}>
               <BriefingCardShot expanded={briefingExpanded} />
             </div>
           </div>
@@ -562,12 +579,13 @@ function PlanRow({
 
 // ── Cursor scripting (% of the player box, which matches design aspect) ──────────
 function cursorFor(t: number): { x: number; y: number } {
-  if (t < TL.orbClick) return { x: 53, y: 38 };
-  if (t < TL.startToast) return { x: 53, y: 50 };
-  if (t < TL.toastTap + 250) return { x: 88, y: 93 };
-  if (t < TL.backTap) return { x: 50, y: 50 };
-  if (t < TL.home2) return { x: 4, y: 44 };
-  return { x: 50, y: 62 };
+  if (t < 400) return { x: 80, y: 74 }; // enters from the lower-right
+  if (t < TL.orbClick + 120) return { x: 53, y: 38 }; // glide to orb, then click
+  if (t < TL.startToast) return { x: 53, y: 50 }; // rest by the orb during the reply
+  if (t < TL.toastTap + 250) return { x: 88, y: 93 }; // glide to the started toast, tap
+  if (t < TL.runStart + 1500) return { x: 50, y: 50 }; // watch the run progress
+  if (t < TL.home2) return { x: 4, y: 44 }; // glide to rail home (arrives before backTap)
+  return { x: 50, y: 62 }; // settle over the briefing, then hover-expand
 }
 
 function near(t: number, mark: number) {
