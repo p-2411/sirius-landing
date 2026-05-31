@@ -42,16 +42,16 @@ export function FreeSlots({ limit = 20 }: { limit?: number }) {
   const pct = Math.max(4, (left / limit) * 100);
 
   return (
-    <div className="mt-5 rounded-[var(--radius-md)] border border-[rgba(108,216,255,0.3)] bg-[var(--color-surface-deep)] p-3">
+    <div className="mt-5 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface-deep)] p-3">
       <div className="flex items-baseline justify-between font-mono text-[10.5px] uppercase tracking-[0.14em] text-[var(--color-ink-3)]">
         <span>Only the first {limit}</span>
-        <span className="text-[var(--color-state-listening-strong)]">
+        <span className="text-[var(--color-accent)]">
           <span className="text-[13px] font-semibold tabular-nums">{left}</span> left
         </span>
       </div>
       <div className="mt-2 h-1 overflow-hidden rounded-full bg-[var(--color-border-strong)]">
         <div
-          className="h-full rounded-full bg-[var(--color-state-listening-strong)] transition-[width] duration-500"
+          className="h-full rounded-full bg-[var(--color-accent)] transition-[width] duration-500"
           style={{ width: `${pct}%` }}
         />
       </div>
