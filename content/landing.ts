@@ -1,148 +1,70 @@
-// Landing copy — see sirius-landing-page-spec-v1.md
+// Landing copy — see docs/superpowers/specs/2026-05-31-landing-revamp-design.md
 export const landingContent = {
   meta: {
     wordmark: "Sirius",
-    availability: "Private beta",
-    tagline: "Your personal assistant. In the proper sense.",
+    availability: "Free during beta",
+    tagline: "One assistant. It knows you. It does the work.",
   },
+  nav: [
+    { id: "what-it-does", label: "What it does" },
+    { id: "learns-once", label: "How it works" },
+    { id: "pricing", label: "Pricing" },
+  ],
+  downloadCta: { label: "Download for Mac", href: "#cta" },
   hero: {
-    eyebrow: "Sirius",
-    title: "Your personal assistant.",
+    title: "One assistant. It knows you.",
+    titleAccent: "It does the work.",
     description:
-      "Sirius remembers the context behind your work, acts across your apps, and turns repeated tasks into workflows you can reuse.",
-    primaryCta: "Request early access",
-    headlineAlternates: [
-      "The assistant the others were pretending to be.",
-      "Quietly competent.",
+      "Across your inbox, calendar, files, and any app with an API — it holds the context and does the jumping, so you don't.",
+    betaPill: "Free during beta",
+    micHint: "say anything — watch it go to work",
+    micPrivacy: "Your voice stays in your browser. We're not listening.",
+    tapFallback: "See it work",
+  },
+  beat: "You already knew what to do. The bottleneck was being the one holding the context and doing the jumping.",
+  whatItDoes: {
+    eyebrow: "What it actually does",
+    title: "Your week, mostly handled.",
+    cards: [
+      { id: "standup",  title: "Your standup, ready before you are", body: "It pulls the week's commits, closed tickets, and threads. A draft is waiting before you sit down." },
+      { id: "meeting",  title: "Your next meeting, briefed",          body: "Fifteen minutes before, it pulls the last thread, open tasks, and prior notes. You walk in with the file." },
+      { id: "client",   title: "Client changes, already done",        body: "Feedback scattered across emails and a doc — it groups the changes, drafts the easy ones, flags what needs you." },
+      { id: "outreach", title: "The outreach you didn't send",        body: "Fifty people, each needing a real message. It researches each one and drafts them all. You review and send." },
     ],
   },
-  workflows: {
-    sectionLabel: "Workflows",
-    title: "The work you already do, saved for next time.",
-    intro:
-      "You already have workflows: the emails you rewrite, the checks you run before meetings, the updates you pull together every week.",
-    coda:
-      "Sirius notices the patterns, helps package the useful ones, and lets you run them again by voice or chat. Feeds and schedules are next.",
-    notes: [
-      "You've written this kind of client update three times this month. Want me to save it as a workflow?",
-      "Your 2:00 meeting is coming up. I pulled the latest thread, open tasks, and last notes.",
-    ],
+  learnsOnce: {
+    eyebrow: "Why it's reliable",
+    title: "Guide it once. Then just ask.",
+    body: `Every other agent re-thinks the task from scratch every run — slow, inconsistent, needs babysitting. Sirius crystallizes that first run into a workflow. After that, “do the morning briefing” runs clean in seconds. Change it by asking; you never rebuild anything.`,
+    before: `“First run — you guide it.”`,
+    after: `“Do another for X” — it runs itself.`,
   },
-  fourWays: {
-    sectionLabel: "One assistant. Four ways to command it.",
-    leadIn:
-      "Use voice when you are in flow and chat when you need detail. Feeds and schedules are coming soon for work that should be watched or run later.",
-    items: [
-      { id: "voice",     title: "Voice",     body: "Ask naturally without leaving your work." },
-      { id: "chat",      title: "Chat",      body: "Work through details with the same assistant that remembers your context." },
-      { id: "feeds",     title: "Feeds",     body: "Coming soon: track updates from the sources that matter and surface what needs attention." },
-      { id: "schedules", title: "Schedules", body: "Coming soon: run tasks at a time or set events as triggers." },
-    ],
+  oneApp: {
+    eyebrow: "One app, not five",
+    title: "Your whole stack collapses into one subscription.",
+    body: "The chat knows what your automations did this morning. The automations know what you talked about yesterday. Nothing falls between systems, because there is only one system.",
+    replaces: ["AI chat", "automations & schedules", "research", "personal CRM"],
+    becomes: "Sirius",
   },
-  threeIdeas: {
-    sectionLabel: "One system",
-    title: "One assistant that remembers, acts, and automates.",
-    items: [
-      { index: "01", role: "Memory that keeps the context." },
-      { index: "02", role: "Actions that do the work." },
-      { index: "03", role: "Workflows that run again." },
-    ],
-    body:
-      "Sirius keeps conversation, actions, and workflows connected through the same memory. Chat knows what your workflows did earlier. Your workflows know what you asked yesterday. Your briefs include the context you would otherwise have to repeat.",
+  pricing: {
+    eyebrow: "Pricing",
+    betaBadge: "Limited time — free during beta",
+    price: "$XX",
+    priceSuffix: "/mo after",
+    note: "Less than the tools it replaces. Far less than the assistant it stands in for.",
+    cta: "Download for Mac",
   },
-  whatsNext: {
-    sectionLabel: "What's next",
-    headlineLead: "The desktop is where Sirius starts.",
-    headlineTail: "Not where it stops.",
-    fragments: ["COMING SOON"],
-  },
-  localData: {
-    sectionLabel: "Local-first",
-    title: "Your data, your machine.",
-  },
-  inPractice: {
-    sectionLabel: "In practice",
-    title: "Stop doing the same work from scratch.",
-    intro:
-      "Sirius remembers the context, finds the repeated steps, and helps turn them into workflows you can reuse.",
-    weekly: [
-      { id: "design",      label: "TUE",          tail: "FEEDBACK" },
-      { id: "engineering", label: "MON 09:00",    tail: "STANDUP" },
-      { id: "meeting",     label: "PER MEETING",  tail: "BRIEF" },
-      { id: "research",    label: "AD-HOC",       tail: "CHANGES" },
-    ],
-    vignettes: [
-      {
-        id: "design",
-        seq: "01",
-        kind: "DESIGN",
-        frequency: "ad-hoc",
-        voiceTrigger: "Sirius, what came in from the client?",
-        title: "Client feedback, sorted before you read it.",
-        body: "A client sends scattered comments across email and docs. Sirius groups the fixes, drafts the easy changes, and highlights the decisions that need you.",
-        punchline: "You review the work, not the chaos.",
-      },
-      {
-        id: "engineering",
-        seq: "02",
-        kind: "ENGINEERING",
-        frequency: "mon · 09:00",
-        voiceTrigger: "Sirius, what's standup looking like?",
-        title: "Your standup, ready before you are.",
-        body: "Every Monday, Sirius pulls the week’s commits, closed tickets, and team threads. A draft is waiting before you sit down. You skim, fix anything off, and post.",
-        punchline: "Twenty seconds, not twenty minutes.",
-      },
-      {
-        id: "meeting",
-        seq: "03",
-        kind: "MEETINGS",
-        frequency: "15 min before",
-        voiceTrigger: "Sirius, what's the 14:00?",
-        title: "Your next meeting, already briefed.",
-        body: "Fifteen minutes before a meeting, Sirius pulls the last thread, open tasks, previous notes, and anything you promised to follow up on. You walk in with the file.",
-        punchline: "Briefed, not blindsided.",
-      },
-      {
-        id: "research",
-        seq: "04",
-        kind: "DESIGN",
-        frequency: "ad-hoc",
-        voiceTrigger: "Sirius, what did the client want changed?",
-        title: "Client changes, already done.",
-        body: "A client emails a list of changes. Sirius picks it up, drafts the edits in Figma, and writes the reply. You get a summary and an email ready to send.",
-        punchline: "You approve, not redo.",
-      },
-    ],
-  },
-  faq: {
-    sectionLabel: "Questions",
-    title: "What people ask first.",
-    items: [
-      {
-        q: "Where does my data live?",
-        a: "Your personal memory, conversations, and connected files stay local by default. Some scheduled or background workflows may use Sirius cloud services when they need to run while your device is unavailable, but they only receive the context required for that workflow.",
-      },
-      {
-        q: "How is Sirius different from ChatGPT or Claude?",
-        a: "1. Memory that actually persists. Sirius builds a picture of your projects, preferences, and patterns over time, instead of starting fresh every conversation.\n 2. It's wired into the tools you already use: email, calendar, slack, github, and more.\n3. Workflows. You can build automations that run on their own, not just ask questions and wait for answers.",
-      },
-      {
-        q: "What can Sirius automate?",
-        a: "Sirius can help with repeatable knowledge work: drafting replies, preparing meeting briefs, summarizing updates, and triaging feedback. Feed tracking and scheduled workflows are coming soon.",
-      },
-      {
-        q: "What models does Sirius use?",
-        a: "Sirius uses a mix of leading AI models depending on the task. The goal is to choose the right model for the job while avoiding unnecessary costs.",
-      },
-      {
-        q: "When can I get access?",
-        a: "Sirius is in private beta. Access is rolling out in small waves so the product can be shaped with early users.",
-      },
-    ],
+  local: {
+    eyebrow: "Local-first",
+    title: "Your data stays on your Mac.",
+    body: "Memories, conversations, files — all local. The recurring jobs that run while you sleep use the cloud, with only the data they need to do their job. Prefer fully local? You can have that — the trade is that scheduled runs stop when your laptop does.",
   },
   cta: {
-    title: "Meet Sirius.",
-    primaryCta: "Request access",
-    note: "Early access is rolling out in small waves.",
+    title: "Get the assistant the others were pretending to be.",
+    button: "Download for Mac",
+    sub: "macOS · free during beta",
+  },
+  footer: {
+    blurb: "One assistant that knows you and acts across everything. Local-first, Mac.",
   },
 } as const;
