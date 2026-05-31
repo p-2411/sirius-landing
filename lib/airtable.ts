@@ -110,9 +110,8 @@ export async function updateName(recordId: string, name: string): Promise<void> 
 // every row in this table.
 function usersConfig(): AirtableConfig {
   const cfg = readConfig();
-  // Falls back to the configured table (AIRTABLE_TABLE_NAME) when no dedicated
-  // users table is set.
-  return { ...cfg, tableName: process.env.AIRTABLE_USERS_TABLE ?? cfg.tableName };
+  // Free-download signups go to the Users table (override via AIRTABLE_USERS_TABLE).
+  return { ...cfg, tableName: process.env.AIRTABLE_USERS_TABLE ?? "Users" };
 }
 
 /** How many free downloads have been claimed (every row in the Users table). */
@@ -129,7 +128,7 @@ export async function countDownloads(): Promise<number> {
 export async function downloadExists(email: string): Promise<boolean> {
   const cfg = usersConfig();
   const safe = email.replace(/"/g, "");
-  const filter = `LOWER({email})="${safe}"`;
+  const filter = `LOWER({Email})="${safe}"`;
   const url = `${tableUrl(cfg)}?filterByFormula=${encodeURIComponent(filter)}&maxRecords=1`;
   const res = await fetch(url, { headers: authHeaders(cfg), cache: "no-store" });
   if (!res.ok) throw new Error(`Airtable downloadExists failed: ${res.status}`);
@@ -145,11 +144,11 @@ export async function createDownload(input: {
 }): Promise<void> {
   const cfg = usersConfig();
   const fields: Record<string, unknown> = {
-    name: input.name,
-    email: input.email,
-    consent: input.consent ? "yes" : "no", // single-select option
+    Name: input.name,
+    Email: input.email,
+    Consent: input.consent ? "yes" : "no", // single-select option
   };
-  if (input.mobile) fields.phone = input.mobile;
+  if (input.mobile) fields.Phone = input.mobile;
   const res = await fetch(tableUrl(cfg), {
     method: "POST",
     headers: authHeaders(cfg),
