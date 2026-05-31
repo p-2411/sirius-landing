@@ -29,7 +29,7 @@ export function HeroSection() {
     <section id="hero" className="relative scroll-mt-24 overflow-hidden">
       <div className="mx-auto grid w-full max-w-[1600px] items-center gap-10 px-6 py-[clamp(3rem,7vh,5.5rem)] md:px-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
         {/* Left — words */}
-        <motion.div {...motionState} variants={fade} className="text-center lg:text-left">
+        <motion.div {...motionState} variants={fade} className="text-center">
           <h1
             className="font-display text-balance font-normal text-[var(--color-ink-1)]"
             style={{ fontSize: "clamp(2.3rem,5vw,4.4rem)", lineHeight: "1.0", letterSpacing: "-0.03em" }}
@@ -40,7 +40,7 @@ export function HeroSection() {
             </span>
           </h1>
 
-          <p className="mx-auto mt-6 max-w-[480px] text-[clamp(1rem,1.3vw,1.15rem)] leading-[1.55] text-[var(--color-ink-2)] lg:mx-0">
+          <p className="mx-auto mt-6 max-w-[480px] text-[clamp(1rem,1.3vw,1.15rem)] leading-[1.55] text-[var(--color-ink-2)]">
             {description}
           </p>
 
