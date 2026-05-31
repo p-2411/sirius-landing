@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 
 import { useOrbAudio } from "@/components/sirius/orb-audio-context";
 
@@ -13,7 +13,7 @@ type WebkitAudioWindow = Window & {
 const VOICE_ACTIVE_THRESHOLD = 0.055;
 const SILENCE_RESET_MS = 1100;
 
-export function useMicSignal() {
+export function useMicSignal(options?: { onVoiceDetected?: () => void }) {
   const { signalRef } = useOrbAudio();
   const [state, setState] = useState<MicState>("idle");
   const mediaRef = useRef<MediaStream | null>(null);
@@ -21,6 +21,11 @@ export function useMicSignal() {
   const rafRef = useRef<number | null>(null);
   const heardVoiceRef = useRef(false);
   const silenceSinceRef = useRef<number | null>(null);
+  const firedRef = useRef(false);
+  const onVoiceRef = useRef(options?.onVoiceDetected);
+  useLayoutEffect(() => {
+    onVoiceRef.current = options?.onVoiceDetected;
+  });
 
   const stop = useCallback(() => {
     if (rafRef.current) {
@@ -66,6 +71,7 @@ export function useMicSignal() {
 
       heardVoiceRef.current = false;
       silenceSinceRef.current = null;
+      firedRef.current = false;
 
       const tick = (now: number) => {
         analyser.getByteTimeDomainData(time);
@@ -92,6 +98,10 @@ export function useMicSignal() {
         if (voiceActive) {
           heardVoiceRef.current = true;
           silenceSinceRef.current = null;
+          if (!firedRef.current) {
+            firedRef.current = true;
+            onVoiceRef.current?.();
+          }
         } else if (heardVoiceRef.current) {
           silenceSinceRef.current ??= now;
           if (now - silenceSinceRef.current >= SILENCE_RESET_MS) {
