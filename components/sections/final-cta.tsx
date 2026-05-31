@@ -4,7 +4,7 @@ import { motion, useReducedMotion } from "motion/react";
 
 import { landingContent } from "@/content/landing";
 import { Orb } from "@/components/sirius/orb";
-import { WaitlistForm } from "@/components/ui/waitlist-form";
+import { ButtonLink } from "@/components/ui/button";
 
 export function FinalCtaSection() {
   const reducedMotion = useReducedMotion();
@@ -37,16 +37,15 @@ export function FinalCtaSection() {
           className="font-display text-balance font-normal text-[var(--color-ink-1)]"
           style={{ fontSize: "clamp(3rem, 9vw, 7.5rem)", lineHeight: "0.9", letterSpacing: "-0.005em" }}
         >
-          Meet{" "}
-          <em className="font-display-italic not-italic" style={{ color: "var(--color-accent)" }}>
-            Sirius.
-          </em>
+          {cta.title}
         </motion.h2>
 
-        <motion.div {...fadeUp(0.2)} className="mt-12 w-full max-w-[480px]">
-          <WaitlistForm />
-          <p className="mt-4 text-[13px] leading-5 text-[var(--color-ink-3)]">
-            {cta.note}
+        <motion.div {...fadeUp(0.2)} className="mt-12 flex flex-col items-center gap-4">
+          <ButtonLink href="#cta" variant="primary">
+            {cta.button}
+          </ButtonLink>
+          <p className="text-[13px] leading-5 text-[var(--color-ink-3)]">
+            {cta.sub}
           </p>
         </motion.div>
       </div>

@@ -1,9 +1,12 @@
 import { Orb } from "@/components/sirius/orb";
 import { Container } from "@/components/ui/container";
+import { landingContent } from "@/content/landing";
 
 const FOOTER_ORB = true;
 
 export function SiteFooter() {
+  const { meta, footer, downloadCta } = landingContent;
+
   return (
     <footer className="relative border-t border-[var(--color-border)] py-12">
       <span
@@ -28,18 +31,23 @@ export function SiteFooter() {
             )}
           </span>
           <span className="font-sans text-[12.5px] font-medium uppercase tracking-[0.28em] text-[var(--color-ink-1)]">
-            Sirius
+            {meta.wordmark}
           </span>
         </div>
         <p className="font-display-italic text-[14px] text-[var(--color-ink-2)]">
-          An assistant. In the proper sense.
+          {footer.blurb}
         </p>
-        <a
-          href="#cta"
-          className="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--color-ink-3)] underline-offset-4 transition hover:text-[var(--color-accent)] hover:underline hover:decoration-[var(--color-accent)]"
-        >
-          Request access &rarr;
-        </a>
+        <div className="flex items-center gap-3">
+          <span className="text-[11px] uppercase tracking-[0.22em] text-[var(--color-ink-3)]">
+            {meta.availability}
+          </span>
+          <a
+            href={downloadCta.href}
+            className="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--color-ink-3)] underline-offset-4 transition hover:text-[var(--color-accent)] hover:underline hover:decoration-[var(--color-accent)]"
+          >
+            {downloadCta.label} &rarr;
+          </a>
+        </div>
       </Container>
     </footer>
   );
