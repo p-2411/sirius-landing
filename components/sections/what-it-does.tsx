@@ -14,7 +14,7 @@ type Meta = {
 
 // The "how" lives as a sources → output flow, not a paragraph.
 const META: Record<string, Meta> = {
-  standup: { icon: "doc", sources: ["commits", "tickets", "threads"], out: "draft", tag: "Mon 8:00", featured: true },
+  standup: { icon: "doc", sources: ["commits", "tickets", "team chats"], out: "draft", tag: "Mon 8:00", featured: true },
   meeting: { icon: "clock", sources: ["last thread", "open tasks", "notes"], out: "brief", tag: "15 min before" },
   client: { icon: "mail", sources: ["emails", "a doc"], out: "edits + reply", tag: "drafted" },
   outreach: { icon: "send", sources: ["50 people, researched"], out: "50 drafts", tag: "ready to send", featured: true },
