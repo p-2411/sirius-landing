@@ -18,7 +18,7 @@ const rise: Variants = {
 
 export function HeroSection() {
   const reduce = useReducedMotion();
-  const { title, titleAccent, description, betaPill } = landingContent.hero;
+  const { title, titleAccent, description } = landingContent.hero;
   const { downloadCta } = landingContent;
 
   const motionState = reduce
@@ -44,13 +44,13 @@ export function HeroSection() {
             {description}
           </p>
 
-          <div className="mt-9 flex items-center justify-center gap-4 lg:justify-start">
+          <div className="mt-9 flex items-center justify-center lg:justify-start">
             <ButtonLink href={downloadCta.href} variant="primary">
-              {downloadCta.label}
+              <span className="inline-flex items-center gap-2">
+                <span className="text-[15px] leading-none">⌘</span>
+                {downloadCta.label}
+              </span>
             </ButtonLink>
-            <span className="rounded-full border border-[rgba(108,216,255,0.4)] px-3 py-1.5 text-[12px] font-medium text-[var(--color-state-listening-strong)]">
-              {betaPill}
-            </span>
           </div>
         </motion.div>
 
