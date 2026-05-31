@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { useReducedMotion } from "motion/react";
 
-import { Orb } from "@/components/sirius/orb";
+import { VoiceOrb } from "@/components/sirius/voice-orb";
 import { Rail, ScaledShot, AppIcon } from "@/components/sirius/appui";
 import { Eyebrow } from "@/components/sirius/appui/eyebrow";
 import { T, FONT_BODY, FONT_DISPLAY } from "@/lib/app-theme";
@@ -24,7 +24,7 @@ const DH = 850;
 const RUN_ID = 128;
 
 // Word-by-word transcript pacing.
-const WORD_MS = 130;
+const WORD_MS = 195;
 const PROMPT_WORDS = HOME_PROMPT.split(" ");
 const REPLY_WORDS = HOME_REPLY.split(" ");
 
@@ -280,33 +280,8 @@ function HomeShot({
               borderRadius: "50%",
             }}
           />
-          <div style={{ position: "relative", width: 300, height: 300 }}>
-            <Orb className="!h-full !w-full" staticRender />
-            {/* Listening (you speaking) — cyan */}
-            <div
-              aria-hidden
-              style={{
-                position: "absolute",
-                inset: "-12%",
-                borderRadius: "50%",
-                transition: "opacity 450ms ease",
-                opacity: orbState === "user" ? 1 : 0,
-                background: "radial-gradient(circle, rgba(108,216,255,0.45), transparent 60%)",
-              }}
-            />
-            {/* Sirius speaking — purple */}
-            <div
-              aria-hidden
-              style={{
-                position: "absolute",
-                inset: "-12%",
-                borderRadius: "50%",
-                transition: "opacity 450ms ease",
-                opacity: orbState === "sirius" ? 1 : 0,
-                background: "radial-gradient(circle, rgba(176,141,255,0.5), transparent 60%)",
-              }}
-            />
-          </div>
+          {/* Real plasma orb: idle (cool) → listening/you (violet) → Sirius (warm) */}
+          <VoiceOrb size={300} hue="cool" pulse listening={orbState === "user"} speaking={orbState === "sirius"} />
 
           <div style={{ minHeight: 24, fontSize: 14, color: T.ink3 }}>
             {showPrompt ? null : "Tap the orb to talk (or press ⌘ /)."}
