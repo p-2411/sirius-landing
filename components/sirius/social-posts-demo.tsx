@@ -4,11 +4,12 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { useReducedMotion } from "motion/react";
 
 import { Orb } from "@/components/sirius/orb";
-import { Rail, ScaledShot } from "@/components/sirius/appui";
+import { Rail, ScaledShot, AppIcon } from "@/components/sirius/appui";
 import { Eyebrow } from "@/components/sirius/appui/eyebrow";
 import { T, FONT_BODY, FONT_DISPLAY } from "@/lib/app-theme";
 import {
   WORKFLOW_NAME,
+  DEMO_SOURCE,
   RUN_STEPS,
   DISPLAY_INTRO,
   DEMO_DRAFTS,
@@ -55,7 +56,6 @@ export function SocialPostsDemo() {
   const [playing, setPlaying] = useState(false);
   const [started, setStarted] = useState(false);
 
-  // Auto-play once on scroll-into-view (skipped for reduced motion).
   useEffect(() => {
     if (reduce) return;
     const el = rootRef.current;
@@ -74,7 +74,6 @@ export function SocialPostsDemo() {
     return () => io.disconnect();
   }, [reduce, started]);
 
-  // rAF clock — setState only inside the callback, never the effect body.
   useEffect(() => {
     if (!playing || reduce) return;
     const tick = (ts: number) => {
@@ -113,7 +112,6 @@ export function SocialPostsDemo() {
     setPlaying((p) => !p);
   }, [reduce]);
 
-  // Derived view state.
   const surface = surfaceFor(e);
   const onHome = surface === "home";
   const orbActive = e >= TL.orbClick && onHome && e < TL.runStart;
@@ -122,9 +120,8 @@ export function SocialPostsDemo() {
   const showStartToast = e >= TL.startToast && e < TL.runStart;
   const stepsDone = Math.max(0, Math.min(RUN_STEPS.length, Math.floor((e - TL.runStart) / TL.perStep)));
   const showDisplay = surface === "run" && stepsDone >= RUN_STEPS.length;
-  const showDoneNotif = e >= TL.doneNotif;
+  const showBriefing = e >= TL.doneNotif;
 
-  // Auto-scroll the run page to reveal the display output.
   useEffect(() => {
     if (surface !== "run") return;
     const el = runScrollRef.current;
@@ -149,7 +146,7 @@ export function SocialPostsDemo() {
               showPrompt={showPrompt}
               showReply={showReply}
               showStartToast={showStartToast}
-              showDoneNotif={showDoneNotif}
+              showBriefing={showBriefing}
             />
           ) : (
             <RunDetailShot scrollRef={runScrollRef} stepsDone={stepsDone} showDisplay={showDisplay} />
@@ -190,149 +187,199 @@ export function SocialPostsDemo() {
         </div>
       </div>
 
-      <style>{`@keyframes sp-toast-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}`}</style>
+      <style>{`@keyframes sp-notif-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}@keyframes sp-toast-in{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}`}</style>
     </div>
   );
 }
 
-// ── Home surface (mirrors the real app voice/home screen) ──────────────────────
+// ── Home surface (mirrors app/app/page.tsx: orb on top, tier-1 briefings below) ──
 function HomeShot({
   orbActive,
   showPrompt,
   showReply,
   showStartToast,
-  showDoneNotif,
+  showBriefing,
 }: {
   orbActive: boolean;
   showPrompt: boolean;
   showReply: boolean;
   showStartToast: boolean;
-  showDoneNotif: boolean;
+  showBriefing: boolean;
 }) {
   return (
     <div style={{ display: "flex", width: DW, height: DH, background: T.bg, fontFamily: FONT_BODY, color: T.ink, overflow: "hidden" }}>
       <Rail active="voice" />
-      <main
-        style={{
-          position: "relative",
-          flex: 1,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: 32,
-          padding: "48px 24px",
-          overflow: "hidden",
-        }}
-      >
+      <main style={{ position: "relative", flex: 1, minWidth: 0, height: DH, display: "flex", flexDirection: "column", overflow: "hidden" }}>
+        {/* Voice center — orb + transcript, fills the upper space */}
         <div
-          aria-hidden
           style={{
-            position: "absolute",
-            left: "50%",
-            top: "42%",
-            width: 760,
-            height: 760,
-            transform: "translate(-50%, -50%)",
-            background:
-              "radial-gradient(circle closest-side, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.42) 40%, rgba(0,0,0,0.14) 70%, rgba(0,0,0,0) 100%)",
-            borderRadius: "50%",
+            position: "relative",
+            flex: 1,
+            minHeight: 0,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 28,
+            padding: "40px 24px",
           }}
-        />
-        <div style={{ position: "relative", width: 300, height: 300 }}>
-          <Orb className="!h-full !w-full" staticRender />
+        >
           <div
             aria-hidden
             style={{
               position: "absolute",
-              inset: "-10%",
+              left: "50%",
+              top: "44%",
+              width: 720,
+              height: 720,
+              transform: "translate(-50%, -50%)",
+              background:
+                "radial-gradient(circle closest-side, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.42) 40%, rgba(0,0,0,0.14) 70%, rgba(0,0,0,0) 100%)",
               borderRadius: "50%",
-              transition: "opacity 500ms ease",
-              opacity: orbActive ? 1 : 0,
-              background: "radial-gradient(circle, rgba(108,216,255,0.4), transparent 60%)",
             }}
           />
-        </div>
+          <div style={{ position: "relative", width: 300, height: 300 }}>
+            <Orb className="!h-full !w-full" staticRender />
+            <div
+              aria-hidden
+              style={{
+                position: "absolute",
+                inset: "-10%",
+                borderRadius: "50%",
+                transition: "opacity 500ms ease",
+                opacity: orbActive ? 1 : 0,
+                background: "radial-gradient(circle, rgba(108,216,255,0.4), transparent 60%)",
+              }}
+            />
+          </div>
 
-        <div style={{ minHeight: 24, fontSize: 14, color: T.ink3 }}>
-          {showPrompt ? null : "Tap the orb to talk (or press ⌘ /)."}
-        </div>
+          <div style={{ minHeight: 24, fontSize: 14, color: T.ink3 }}>
+            {showPrompt ? null : "Tap the orb to talk (or press ⌘ /)."}
+          </div>
 
-        {showPrompt && (
-          <div style={{ width: "min(640px, 92%)", display: "flex", flexDirection: "column", gap: 18, alignItems: "center" }}>
-            <div style={{ fontSize: 13, color: T.ink3, textAlign: "center", lineHeight: 1.45, maxWidth: 520 }}>
-              <span style={{ color: T.ink4 }}>You · </span>
-              {HOME_PROMPT}
-            </div>
-            {showReply && (
-              <div style={{ fontSize: 17, color: T.ink, lineHeight: 1.5, textAlign: "center", maxWidth: 600 }}>
-                {HOME_REPLY}
+          {showPrompt && (
+            <div style={{ width: "min(640px, 92%)", display: "flex", flexDirection: "column", gap: 18, alignItems: "center" }}>
+              <div style={{ fontSize: 13, color: T.ink3, textAlign: "center", lineHeight: 1.45, maxWidth: 520 }}>
+                <span style={{ color: T.ink4 }}>You · </span>
+                {HOME_PROMPT}
               </div>
-            )}
+              {showReply && (
+                <div style={{ fontSize: 17, color: T.ink, lineHeight: 1.5, textAlign: "center", maxWidth: 600 }}>{HOME_REPLY}</div>
+              )}
+            </div>
+          )}
+
+          <div style={{ fontSize: 12, color: T.ink4, letterSpacing: 0.4 }}>or to type: ⌘ K</div>
+        </div>
+
+        {/* Tier-1 briefing column — below the orb, exactly as the home screen */}
+        {showBriefing && (
+          <div style={{ flexShrink: 0, maxHeight: "52%", overflowY: "auto", width: "100%" }}>
+            <div style={{ width: "min(540px, 82%)", margin: "0 auto", display: "flex", flexDirection: "column", gap: 10, paddingBottom: 40 }}>
+              <BriefingCardShot />
+            </div>
           </div>
         )}
 
-        <div style={{ fontSize: 12, color: T.ink4, letterSpacing: 0.4 }}>or to type: ⌘ K</div>
-
-        {showStartToast && !showDoneNotif && (
-          <AppToast tone="neutral" title={WORKFLOW_NAME} body="Started — running in the background." />
-        )}
-        {showDoneNotif && (
-          <AppToast tone="gold" title={WORKFLOW_NAME} body="3 drafts ready. Pick one, ship." chips />
-        )}
+        {/* Tier-2 ambient toast (run started) — bottom-right */}
+        {showStartToast && !showBriefing && <ActivityToast name={WORKFLOW_NAME} />}
       </main>
     </div>
   );
 }
 
-function AppToast({
-  tone,
-  title,
-  body,
-  chips = false,
-}: {
-  tone: "neutral" | "gold";
-  title: string;
-  body: string;
-  chips?: boolean;
-}) {
-  const gold = tone === "gold";
+// Tier 2 — copied from ActivityToasts.tsx (the "started" toast).
+function ActivityToast({ name }: { name: string }) {
+  const color = "var(--color-warning)";
+  return (
+    <div style={{ position: "absolute", bottom: 24, right: 24, zIndex: 50 }}>
+      <div
+        style={{
+          width: 272,
+          background: T.surface,
+          border: `1px solid ${T.borderStrong}`,
+          borderRadius: 12,
+          boxShadow: "0 10px 26px rgba(0,0,0,0.30), 0 2px 6px rgba(0,0,0,0.16)",
+          padding: "11px 12px",
+          display: "flex",
+          alignItems: "center",
+          gap: 11,
+          animation: "sp-toast-in 240ms cubic-bezier(0.22,1,0.36,1) both",
+        }}
+      >
+        <div
+          style={{
+            width: 30,
+            height: 30,
+            borderRadius: 9,
+            flexShrink: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: `color-mix(in srgb, ${color} 18%, transparent)`,
+            color,
+          }}
+        >
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+          </svg>
+        </div>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ color: T.ink, fontSize: 13, fontWeight: 500, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", lineHeight: 1.35 }}>
+            {name}
+          </div>
+          <div style={{ color, fontSize: 11, fontWeight: 500, marginTop: 1 }}>Started</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Tier 1 — copied from notifications/BriefingCard.tsx (static open state).
+function BriefingCardShot() {
   return (
     <div
       style={{
-        position: "absolute",
-        bottom: 32,
-        right: 32,
-        width: 360,
+        display: "flex",
+        flexDirection: "column",
         borderRadius: 12,
-        padding: 16,
-        background: T.surface,
-        border: `1px solid ${gold ? "rgba(217,185,120,0.55)" : T.borderStrong}`,
-        boxShadow: "0 18px 50px -16px rgba(0,0,0,0.7)",
-        textAlign: "left",
-        animation: "sp-toast-in 360ms cubic-bezier(0.22,1,0.36,1) both",
+        background: "linear-gradient(180deg, #3A3327, #342D23 40%)",
+        border: "1px solid rgba(232,224,200,0.18)",
+        boxShadow: "inset 0 1px 0 rgba(246,239,223,0.06)",
+        overflow: "hidden",
+        animation: "sp-notif-in 360ms cubic-bezier(0.22,1,0.36,1) both",
       }}
     >
-      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-        <span style={{ width: 8, height: 8, borderRadius: "50%", background: gold ? T.warm : T.cyanStrong }} />
-        <span style={{ fontSize: 11, letterSpacing: 1.6, textTransform: "uppercase", color: T.ink3, fontWeight: 600 }}>
-          Sirius
+      <div style={{ flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, padding: "16px 18px 10px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, minWidth: 0 }}>
+          <span style={{ color: T.ink3, display: "inline-flex" }}>
+            <AppIcon name="spark" size={14} />
+          </span>
+          <span style={{ fontSize: 10.5, letterSpacing: "0.16em", textTransform: "uppercase", color: T.ink3, fontWeight: 500, whiteSpace: "nowrap" }}>
+            {WORKFLOW_NAME} · just now
+          </span>
+        </div>
+        <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 28, height: 28, color: T.ink3 }}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M6 6l12 12M18 6 6 18" />
+          </svg>
         </span>
       </div>
-      <p style={{ margin: "10px 0 0", fontSize: 15, fontWeight: 500, color: T.ink }}>{title}</p>
-      <p style={{ margin: "4px 0 0", fontSize: 13, lineHeight: 1.45, color: T.ink2 }}>{body}</p>
-      {chips && (
+      <h2 style={{ flexShrink: 0, fontFamily: FONT_DISPLAY, fontWeight: 400, fontSize: 22, lineHeight: 1.2, color: T.ink, margin: "0 18px 10px" }}>
+        3 LinkedIn drafts ready
+      </h2>
+      <div style={{ padding: "0 18px 18px" }}>
+        <p style={{ margin: 0, fontSize: 14, lineHeight: 1.55, color: T.ink2 }}>
+          Three angles, written in your voice from <span style={{ color: T.ink }}>{DEMO_SOURCE}</span>. Pick one to ship.
+        </p>
         <div style={{ marginTop: 10, display: "flex", gap: 8, flexWrap: "wrap" }}>
           {DEMO_DRAFTS.map((d) => (
-            <span
-              key={d.id}
-              style={{ border: `1px solid ${T.border}`, borderRadius: 6, padding: "3px 9px", fontSize: 11, color: T.ink3 }}
-            >
+            <span key={d.id} style={{ border: `1px solid ${T.border}`, borderRadius: 6, padding: "3px 9px", fontSize: 11.5, color: T.ink3 }}>
               {d.angle}
             </span>
           ))}
         </div>
-      )}
+      </div>
     </div>
   );
 }
@@ -352,7 +399,6 @@ function RunDetailShot({
       <Rail active="workflows" />
       <main style={{ flex: 1, minWidth: 0, height: DH, padding: "32px 48px", display: "flex", flexDirection: "column", overflow: "hidden" }}>
         <div style={{ maxWidth: 1120, width: "100%", margin: "0 auto", flex: 1, minHeight: 0, display: "flex", flexDirection: "column" }}>
-          {/* Breadcrumb */}
           <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 28, fontSize: 11.5, letterSpacing: "0.04em", flexShrink: 0 }}>
             <span style={{ color: T.ink3 }}>Workflows</span>
             <span style={{ color: T.ink4 }}>/</span>
@@ -361,31 +407,17 @@ function RunDetailShot({
             <span style={{ color: T.ink2 }}>run #{RUN_ID}</span>
           </div>
 
-          {/* Header */}
           <header style={{ paddingBottom: 24, borderBottom: `1px solid ${T.border}`, flexShrink: 0 }}>
             <Eyebrow accent="warm">Run</Eyebrow>
             <h1 style={{ fontFamily: FONT_DISPLAY, fontWeight: 400, fontSize: 30, color: T.ink, letterSpacing: "-0.02em", margin: "8px 0 12px" }}>
-              {WORKFLOW_NAME}{" "}
-              <span style={{ color: T.ink4, fontWeight: 400, fontSize: 18, fontFamily: FONT_BODY }}>#{RUN_ID}</span>
+              {WORKFLOW_NAME} <span style={{ color: T.ink4, fontWeight: 400, fontSize: 18, fontFamily: FONT_BODY }}>#{RUN_ID}</span>
             </h1>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 14, flexWrap: "wrap" }}>
               <span style={{ display: "inline-flex", alignItems: "center", gap: 7, fontSize: 13.5 }}>
                 <span style={{ width: 7, height: 7, borderRadius: "50%", background: showDisplay ? T.success : T.warning, display: "inline-block" }} />
                 <span style={{ color: showDisplay ? T.success : T.warning, fontWeight: 500 }}>{showDisplay ? "Done" : "Running"}</span>
               </span>
-              <span
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: 6,
-                  borderRadius: 999,
-                  padding: "6px 14px",
-                  background: T.warm,
-                  color: T.bgDeep,
-                  fontWeight: 500,
-                  fontSize: 12.5,
-                }}
-              >
+              <span style={{ display: "inline-flex", alignItems: "center", gap: 6, borderRadius: 999, padding: "6px 14px", background: T.warm, color: T.bgDeep, fontWeight: 500, fontSize: 12.5 }}>
                 <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor" aria-hidden>
                   <polygon points="2,1 9,5 2,9" />
                 </svg>
@@ -394,7 +426,6 @@ function RunDetailShot({
             </div>
           </header>
 
-          {/* Steps */}
           <div ref={scrollRef} style={{ flex: 1, minHeight: 0, overflowY: "auto" }}>
             <div style={{ maxWidth: 760 }}>
               <section style={{ marginTop: 28 }}>
@@ -457,17 +488,7 @@ function PlanRow({
         </div>
 
         {isDisplay && completed && (
-          <div
-            style={{
-              margin: "10px 0 0",
-              padding: "10px 12px",
-              background: T.surface,
-              borderLeft: `2px solid ${T.warm}`,
-              fontSize: 13,
-              color: T.ink,
-              borderRadius: "0 6px 6px 0",
-            }}
-          >
+          <div style={{ margin: "10px 0 0", padding: "10px 12px", background: T.surface, borderLeft: `2px solid ${T.warm}`, fontSize: 13, color: T.ink, borderRadius: "0 6px 6px 0" }}>
             <p style={{ margin: 0 }}>{DISPLAY_INTRO}</p>
             <div style={{ height: 1, background: T.border, margin: "10px 0" }} />
             {DEMO_DRAFTS.map((d, di) => {
@@ -505,12 +526,12 @@ function PlanRow({
 
 // ── Cursor scripting (% of the player box, which matches design aspect) ──────────
 function cursorFor(t: number): { x: number; y: number } {
-  if (t < TL.orbClick) return { x: 53, y: 40 };
-  if (t < TL.startToast) return { x: 53, y: 52 };
-  if (t < TL.toastTap + 250) return { x: 87, y: 90 };
-  if (t < TL.backTap) return { x: 50, y: 55 };
+  if (t < TL.orbClick) return { x: 53, y: 38 };
+  if (t < TL.startToast) return { x: 53, y: 50 };
+  if (t < TL.toastTap + 250) return { x: 88, y: 93 };
+  if (t < TL.backTap) return { x: 50, y: 50 };
   if (t < TL.home2) return { x: 4, y: 44 };
-  return { x: 87, y: 86 };
+  return { x: 50, y: 74 };
 }
 
 function near(t: number, mark: number) {
