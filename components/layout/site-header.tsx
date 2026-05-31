@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { AppIcon } from "@/components/sirius/appui";
+import { HeaderNav } from "@/components/layout/header-nav";
 import { Orb } from "@/components/sirius/orb";
 import { Container } from "@/components/ui/container";
 import { landingContent } from "@/content/landing";
@@ -38,17 +39,7 @@ export function SiteHeader() {
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-6 sm:flex">
-          {nav.map((item) => (
-            <a
-              key={item.id}
-              href={"#" + item.id}
-              className="text-[12px] font-medium uppercase tracking-[0.18em] text-[var(--color-ink-3)] transition hover:text-[var(--color-ink-1)]"
-            >
-              {item.label}
-            </a>
-          ))}
-        </nav>
+        <HeaderNav items={nav} />
 
         <div className="flex items-center gap-3 sm:gap-4">
           <a
