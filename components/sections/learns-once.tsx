@@ -38,9 +38,8 @@ export function LearnsOnceSection() {
               </div>
             </div>
 
-            {/* saved divider */}
-            <div className="my-3 flex items-center gap-3 pl-1">
-              <span className="h-4 w-px bg-[var(--color-border-strong)]" aria-hidden />
+            {/* saved divider — centred between the two cards */}
+            <div className="my-3 flex items-center justify-center">
               <span className="inline-flex items-center gap-1.5 rounded-full border border-[rgba(240,179,90,0.4)] bg-[rgba(240,179,90,0.06)] px-2.5 py-1 text-[11px] font-medium text-[var(--color-accent)]">
                 <AppIcon name="flows" size={12} />
                 saved as a workflow
@@ -54,10 +53,6 @@ export function LearnsOnceSection() {
               </span>
               <div className="mt-3 flex flex-col gap-2">
                 <Bubble who="you">Do this week&rsquo;s client update.</Bubble>
-                <div className="flex items-center gap-2 pl-1 text-[12.5px] text-[var(--color-success)]">
-                  <AppIcon name="check" size={13} />
-                  <span>Ran in 6s — draft ready, no re-explaining.</span>
-                </div>
               </div>
             </div>
           </div>
