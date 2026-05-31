@@ -280,8 +280,10 @@ function HomeShot({
               borderRadius: "50%",
             }}
           />
-          {/* Real plasma orb: idle (cool) → listening/you (violet) → Sirius (warm) */}
-          <VoiceOrb size={300} hue="cool" pulse listening={orbState === "user"} speaking={orbState === "sirius"} />
+          {/* Real plasma orb: idle (cool) → listening/you (violet) → Sirius (warm).
+              glow={false} to match the app's home surface (no blue halo bleeding
+              through the orb's transparent centre). */}
+          <VoiceOrb size={300} hue="cool" glow={false} pulse listening={orbState === "user"} speaking={orbState === "sirius"} />
 
           <div style={{ minHeight: 24, fontSize: 14, color: T.ink3 }}>
             {showPrompt ? null : "Tap the orb to talk (or press ⌘ /)."}
