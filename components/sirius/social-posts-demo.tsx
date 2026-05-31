@@ -23,19 +23,41 @@ const DW = 1360;
 const DH = 850;
 const RUN_ID = 128;
 
-// ── Timeline (ms). One clock; visuals derive from `e` so scrubber + scene agree.
+// Word-by-word transcript pacing.
+const WORD_MS = 130;
+const PROMPT_WORDS = HOME_PROMPT.split(" ");
+const REPLY_WORDS = HOME_REPLY.split(" ");
+
+type OrbState = "idle" | "user" | "sirius";
+
+// ── Timeline (ms), derived so transcript typing + scene always line up. ──────────
+const _orbClick = 1500;
+const _promptDone = _orbClick + PROMPT_WORDS.length * WORD_MS; // user finishes speaking
+const _siriusStart = _promptDone + 350; // orb flips to Sirius-speaking
+const _replyDone = _siriusStart + REPLY_WORDS.length * WORD_MS;
+const _startToast = _replyDone + 250; // run kicks off → "Started" toast
+const _toastTap = _startToast + 1300;
+const _runStart = _toastTap + 300; // navigate to the run page
+const _runWatch = _runStart + 1500; // cursor leaves toward Home (still running)
+const _backTap = _runWatch + 1100;
+const _home2 = _backTap + 300; // back on the home surface
+const _doneNotif = _home2 + 1200; // run finishes in the background → briefing pings
+const _briefingExpand = _doneNotif + 1200; // hover → briefing opens to the drafts
+const _total = _briefingExpand + 3400;
+
 const TL = {
-  orbClick: 1600,
-  reply: 2400,
-  startToast: 3700,
-  toastTap: 5000,
-  runStart: 5300,
-  perStep: 700, // still running when we leave the run page
-  backTap: 8000, // head home BEFORE the run finishes (~3 steps done)
-  home2: 8300,
-  doneNotif: 9500, // run finishes in the background → briefing pings home
-  briefingExpand: 10700, // cursor hovers the briefing → it opens to the drafts
-  total: 14200,
+  orbClick: _orbClick,
+  siriusStart: _siriusStart,
+  startToast: _startToast,
+  toastTap: _toastTap,
+  runStart: _runStart,
+  runWatch: _runWatch,
+  backTap: _backTap,
+  home2: _home2,
+  doneNotif: _doneNotif,
+  briefingExpand: _briefingExpand,
+  total: _total,
+  perStep: 700,
 };
 
 type Surface = "home" | "run";
@@ -115,10 +137,18 @@ export function SocialPostsDemo() {
 
   const surface = surfaceFor(e);
   const onHome = surface === "home";
-  const orbActive = e >= TL.orbClick && onHome && e < TL.runStart;
+
+  // Orb conversation state + word-by-word transcript.
+  const orbState: OrbState =
+    e < TL.orbClick ? "idle" : e < TL.siriusStart ? "user" : e < TL.runStart ? "sirius" : "idle";
+  const nUser = e < TL.orbClick ? 0 : Math.min(PROMPT_WORDS.length, Math.floor((e - TL.orbClick) / WORD_MS) + 1);
+  const nReply = e < TL.siriusStart ? 0 : Math.min(REPLY_WORDS.length, Math.floor((e - TL.siriusStart) / WORD_MS) + 1);
+  const userText = PROMPT_WORDS.slice(0, nUser).join(" ");
+  const replyText = REPLY_WORDS.slice(0, nReply).join(" ");
   const showPrompt = e >= TL.orbClick && e < TL.runStart;
-  const showReply = e >= TL.reply && e < TL.runStart;
+  const showReply = e >= TL.siriusStart && e < TL.runStart;
   const showStartToast = e >= TL.startToast && e < TL.runStart;
+
   const stepsDone = Math.max(0, Math.min(RUN_STEPS.length, Math.floor((e - TL.runStart) / TL.perStep)));
   const showDisplay = surface === "run" && stepsDone >= RUN_STEPS.length;
   const showBriefing = e >= TL.doneNotif;
@@ -145,9 +175,11 @@ export function SocialPostsDemo() {
           <div key={surface} style={{ width: DW, height: DH, animation: "sp-surface-in 320ms ease both" }}>
             {onHome ? (
               <HomeShot
-                orbActive={orbActive}
+                orbState={orbState}
                 showPrompt={showPrompt}
+                userText={userText}
                 showReply={showReply}
+                replyText={replyText}
                 showStartToast={showStartToast}
                 showBriefing={showBriefing}
                 briefingExpanded={briefingExpanded}
@@ -199,16 +231,20 @@ export function SocialPostsDemo() {
 
 // ── Home surface (mirrors app/app/page.tsx: orb on top, tier-1 briefings below) ──
 function HomeShot({
-  orbActive,
+  orbState,
   showPrompt,
+  userText,
   showReply,
+  replyText,
   showStartToast,
   showBriefing,
   briefingExpanded,
 }: {
-  orbActive: boolean;
+  orbState: OrbState;
   showPrompt: boolean;
+  userText: string;
   showReply: boolean;
+  replyText: string;
   showStartToast: boolean;
   showBriefing: boolean;
   briefingExpanded: boolean;
@@ -246,15 +282,28 @@ function HomeShot({
           />
           <div style={{ position: "relative", width: 300, height: 300 }}>
             <Orb className="!h-full !w-full" staticRender />
+            {/* Listening (you speaking) — cyan */}
             <div
               aria-hidden
               style={{
                 position: "absolute",
-                inset: "-10%",
+                inset: "-12%",
                 borderRadius: "50%",
-                transition: "opacity 500ms ease",
-                opacity: orbActive ? 1 : 0,
-                background: "radial-gradient(circle, rgba(108,216,255,0.4), transparent 60%)",
+                transition: "opacity 450ms ease",
+                opacity: orbState === "user" ? 1 : 0,
+                background: "radial-gradient(circle, rgba(108,216,255,0.45), transparent 60%)",
+              }}
+            />
+            {/* Sirius speaking — purple */}
+            <div
+              aria-hidden
+              style={{
+                position: "absolute",
+                inset: "-12%",
+                borderRadius: "50%",
+                transition: "opacity 450ms ease",
+                opacity: orbState === "sirius" ? 1 : 0,
+                background: "radial-gradient(circle, rgba(176,141,255,0.5), transparent 60%)",
               }}
             />
           </div>
@@ -267,10 +316,10 @@ function HomeShot({
             <div style={{ width: "min(640px, 92%)", display: "flex", flexDirection: "column", gap: 18, alignItems: "center" }}>
               <div style={{ fontSize: 13, color: T.ink3, textAlign: "center", lineHeight: 1.45, maxWidth: 520 }}>
                 <span style={{ color: T.ink4 }}>You · </span>
-                {HOME_PROMPT}
+                {userText}
               </div>
               {showReply && (
-                <div style={{ fontSize: 17, color: T.ink, lineHeight: 1.5, textAlign: "center", maxWidth: 600 }}>{HOME_REPLY}</div>
+                <div style={{ fontSize: 17, color: T.ink, lineHeight: 1.5, textAlign: "center", maxWidth: 600 }}>{replyText}</div>
               )}
             </div>
           )}
@@ -426,7 +475,6 @@ function BriefingCardShot({ expanded }: { expanded: boolean }) {
               </div>
             );
           })}
-          {/* bottom fade — there's more below the cap */}
           <div
             aria-hidden
             style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 56, pointerEvents: "none", background: "linear-gradient(180deg, rgba(52,45,35,0) 0%, #342D23 92%)" }}
@@ -581,10 +629,10 @@ function PlanRow({
 function cursorFor(t: number): { x: number; y: number } {
   if (t < 400) return { x: 80, y: 74 }; // enters from the lower-right
   if (t < TL.orbClick + 120) return { x: 53, y: 38 }; // glide to orb, then click
-  if (t < TL.startToast) return { x: 53, y: 50 }; // rest by the orb during the reply
+  if (t < TL.startToast) return { x: 53, y: 52 }; // rest by the orb during the conversation
   if (t < TL.toastTap + 250) return { x: 88, y: 93 }; // glide to the started toast, tap
-  if (t < TL.runStart + 1500) return { x: 50, y: 50 }; // watch the run progress
-  if (t < TL.home2) return { x: 3, y: 37 }; // glide to the rail's orb logo = Home (arrives before backTap)
+  if (t < TL.runWatch) return { x: 50, y: 50 }; // watch the run progress
+  if (t < TL.home2) return { x: 3, y: 37 }; // glide to the rail's orb logo = Home
   return { x: 50, y: 62 }; // settle over the briefing, then hover-expand
 }
 
