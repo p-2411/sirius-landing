@@ -63,7 +63,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ ok: false, soldOut: true, remaining: 0 }, { status: 409 });
     }
 
-    await createDownload({ name, email, mobile: mobile || undefined, consent: true });
+    await createDownload({ name, email, mobile: mobile || undefined, consent });
     return NextResponse.json({ ok: true, remaining: Math.max(0, LIMIT - (count + 1)) });
   } catch (error) {
     console.error("[free-download] POST failed", error);
