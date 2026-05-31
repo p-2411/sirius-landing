@@ -44,7 +44,7 @@ export function HeroSection() {
             {description}
           </p>
 
-          <div className="mt-9 flex items-center justify-center lg:justify-start">
+          <div className="mt-9 flex items-center justify-center">
             <ButtonLink href={downloadCta.href} variant="primary">
               <span className="inline-flex items-center gap-2">
                 <span className="text-[15px] leading-none">⌘</span>
