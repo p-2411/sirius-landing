@@ -73,6 +73,15 @@ export const landingContent = {
         cta: "Download for Mac",
         featured: true,
       },
+      {
+        name: "Max",
+        price: "$40",
+        priceSuffix: "/mo",
+        tagline: "For heavy, all-day use.",
+        features: ["Everything in Pro", "Top usage limits", "Early access to new features"],
+        cta: "Download for Mac",
+        featured: false,
+      },
     ],
   },
   local: {

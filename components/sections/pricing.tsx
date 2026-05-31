@@ -18,7 +18,7 @@ export function PricingSection() {
           </h2>
         </Reveal>
 
-        <RevealGroup className="mt-14 grid w-full max-w-[760px] items-stretch gap-4 sm:grid-cols-2" stagger={0.12}>
+        <RevealGroup className="mt-14 grid w-full max-w-[980px] items-stretch gap-4 sm:grid-cols-3" stagger={0.1}>
           {tiers.map((t) => (
             <RevealItem key={t.name} className="h-full">
               <div
