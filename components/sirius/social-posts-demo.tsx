@@ -77,6 +77,7 @@ export function SocialPostsDemo() {
   const rafRef = useRef<number | null>(null);
   const lastTsRef = useRef<number | null>(null);
   const elapsedRef = useRef(0);
+  const trackRef = useRef<HTMLDivElement | null>(null);
 
   const [elapsed, setElapsed] = useState(0);
   const [playing, setPlaying] = useState(false);
@@ -137,6 +138,25 @@ export function SocialPostsDemo() {
     }
     setPlaying((p) => !p);
   }, [reduce]);
+
+  // Click anywhere on the bar to seek to that timestamp.
+  const seekTo = useCallback(
+    (clientX: number) => {
+      if (reduce) return;
+      const el = trackRef.current;
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      const frac = Math.max(0, Math.min(1, (clientX - r.left) / r.width));
+      const wasEnded = elapsedRef.current >= TL.total;
+      const ms = frac * TL.total;
+      elapsedRef.current = ms;
+      lastTsRef.current = null;
+      setElapsed(ms);
+      setStarted(true);
+      if (wasEnded) setPlaying(true);
+    },
+    [reduce],
+  );
 
   const surface = surfaceFor(e);
   const onHome = surface === "home";
@@ -230,8 +250,16 @@ export function SocialPostsDemo() {
         >
           {ended ? <ReplayGlyph /> : playing ? <PauseGlyph /> : <PlayGlyph />}
         </button>
-        <div className="relative h-[2px] flex-1 rounded-full bg-white/20">
-          <div className="absolute left-0 top-0 h-full rounded-full bg-white" style={{ width: `${progress}%` }} />
+        <div
+          role="button"
+          aria-label="Seek"
+          tabIndex={0}
+          onClick={(ev) => seekTo(ev.clientX)}
+          className="group relative flex-1 cursor-pointer py-2"
+        >
+          <div ref={trackRef} className="relative h-[2px] w-full rounded-full bg-white/20 transition-[height] group-hover:h-[3px]">
+            <div className="absolute left-0 top-0 h-full rounded-full bg-white" style={{ width: `${progress}%` }} />
+          </div>
         </div>
       </div>
 
