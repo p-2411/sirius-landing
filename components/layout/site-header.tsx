@@ -13,7 +13,7 @@ export function SiteHeader() {
   const { meta, nav, downloadCta } = landingContent;
 
   return (
-    <header className="sticky top-0 z-50 border-b border-[var(--color-border)] bg-[rgba(27,23,18,0.84)] backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-[var(--color-border)] bg-[rgba(18,15,11,0.9)] backdrop-blur-xl">
       <Container className="flex h-14 items-center justify-between">
         <Link
           href="/"
