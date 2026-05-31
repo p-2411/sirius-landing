@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react";
 
-// The countdown begins at this moment; before it, all slots show as available.
-// The counter is a deterministic function of (now − LAUNCH).
-const LAUNCH = Date.parse("2026-06-02T11:00:00");
+// The countdown begins at this fixed instant — 11am AEST (UTC+10) — so every
+// visitor worldwide sees the same number. Counter = function of (now − LAUNCH).
+const LAUNCH = Date.parse("2026-06-02T11:00:00+10:00");
 
 /**
  * Slots consumed since launch, on a decelerating schedule. Drops fire at the
