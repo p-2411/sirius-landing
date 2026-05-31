@@ -33,7 +33,7 @@ type OrbState = "idle" | "user" | "sirius";
 // ── Timeline (ms), derived so transcript typing + scene always line up. ──────────
 const _orbClick = 1500;
 const _promptDone = _orbClick + PROMPT_WORDS.length * WORD_MS; // user finishes speaking
-const _siriusStart = _promptDone + 350; // orb flips to Sirius-speaking
+const _siriusStart = _promptDone + 950; // pause after you finish, then Sirius answers
 const _replyDone = _siriusStart + REPLY_WORDS.length * WORD_MS;
 const _startToast = _replyDone + 250; // run kicks off → "Started" toast
 const _toastTap = _startToast + 1300;
@@ -47,6 +47,7 @@ const _total = _briefingExpand + 3400;
 
 const TL = {
   orbClick: _orbClick,
+  promptDone: _promptDone,
   siriusStart: _siriusStart,
   startToast: _startToast,
   toastTap: _toastTap,
@@ -140,7 +141,15 @@ export function SocialPostsDemo() {
 
   // Orb conversation state + word-by-word transcript.
   const orbState: OrbState =
-    e < TL.orbClick ? "idle" : e < TL.siriusStart ? "user" : e < TL.runStart ? "sirius" : "idle";
+    e < TL.orbClick
+      ? "idle"
+      : e < TL.promptDone
+        ? "user" // you're talking
+        : e < TL.siriusStart
+          ? "idle" // brief pause after you finish
+          : e < TL.runStart
+            ? "sirius" // Sirius answers
+            : "idle";
   const nUser = e < TL.orbClick ? 0 : Math.min(PROMPT_WORDS.length, Math.floor((e - TL.orbClick) / WORD_MS) + 1);
   const nReply = e < TL.siriusStart ? 0 : Math.min(REPLY_WORDS.length, Math.floor((e - TL.siriusStart) / WORD_MS) + 1);
   const userText = PROMPT_WORDS.slice(0, nUser).join(" ");
