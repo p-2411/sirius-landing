@@ -1,6 +1,53 @@
 # Landing demo: placement, chat-triggered card, run pacing
 
-**Date:** 2026-05-19
+**Date:** 2026-05-19 (rev. 2026-05-20)
+**Status:** Approved — final design is the "live build" pattern (§5)
+
+## §5. "Live build" run pattern (final, supersedes the run/output of §2b)
+
+Design driven by frontend-design + ui-ux-pro-max against the existing Sirius
+aesthetic (no new design system). The run must have **no dead time**: the
+deliverable visibly assembles while the pipeline runs.
+
+Scope: applies in `contained` mode (landing card) only. `/demo`
+(`StartupAnalystAppDemo`, non-contained) keeps its current DAG run page.
+
+1. **Send → reframe.** First assistant line:
+   *"On it. I'll assemble the dealflow packet — watch it build, or keep
+   scrolling and I'll ping you when it's ready."*
+2. **Run view = deliverable forming** (hero), not the DAG. As `activeIndex`
+   advances through `PIPELINE_STEPS`, partial artifacts reveal, mapped by phase:
+   - Discovering (steps 0–4): CSV rows stream into a table.
+   - Scoring conviction (5–8): a conviction/score column fills in.
+   - Writing profiles (9–11): company + founder cards appear.
+   - Generating report (12–15): the report writes in.
+   A compact step/phase **ticker** (reuse `PHASES` + current step) is the
+   credibility strip — small, not the hero. A "Details" toggle can reveal the
+   real DAG run page for the curious (optional / stretch).
+3. **Persistent controls.** Always-visible **"Skip to result →"**
+   (`escape-routes`); Esc still exits to chat.
+4. **Off-screen ready pill.** Lives in the landing frame
+   (`StartupAnalystDemo`), driven by an IntersectionObserver on the card. When
+   running **and** card not in view: slim sticky pill *"Sirius is finishing
+   your dealflow packet…"*; on completion → *"✓ Dealflow packet ready"* with a
+   gentle gold pulse; click scrolls back to the card. Hidden when card visible.
+   Respects `prefers-reduced-motion` (no pulse).
+5. **Completion = one orchestrated reveal.** Forming workspace resolves into the
+   output workspace with a staggered settle + a single gold sweep
+   (frontend-design "one memorable moment"; `excessive-motion` → 1 reveal).
+   Then an **in-context CTA** block: *"Sirius did this in ~Ns — every morning,
+   before you're in."* + the existing waitlist/Get-Sirius affordance.
+6. **Pacing.** Total run ~8–12s. Non-AGENT steps snappy (360ms); AGENT_TASK
+   steps 1000ms as the "thinking" punctuation (already implemented).
+7. **A11y/perf.** `progressive-loading` (artifacts stream vs spinner),
+   `content-jumping` (reserve the forming-workspace skeleton; no CLS),
+   `motion-meaning`/`continuity` (chat→build→result one spatial flow),
+   `interruptible`, `reduced-motion` throughout.
+
+---
+
+(Historical record below — superseded sections kept for context.)
+
 **Status:** Approved (pivoted from manual-run to chat-triggered expanding card)
 
 ## Problem

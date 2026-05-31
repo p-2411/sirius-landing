@@ -39,11 +39,12 @@ const PHASES = [
   { label: "Pipeline Done", range: [16, 16] },
 ] as const;
 
+// Real workspace folders the run writes to (not invented product sections).
 const GROUP_LABELS: Record<StartupAnalystDemoFile["group"], string> = {
-  report: "Report",
-  data: "Data",
-  companies: "Company profiles",
-  founders: "Founder profiles",
+  report: "reports/",
+  data: "data/",
+  companies: "companies/",
+  founders: "founders/",
 };
 
 function buildSteps(activeIndex: number, completed: boolean): DagStep[] {
@@ -70,12 +71,6 @@ function demoStatusLabel(completed: boolean, running: boolean) {
   if (completed) return "Done";
   if (running) return "Running";
   return "Awaiting input";
-}
-
-function runStatusLabel(completed: boolean, running: boolean) {
-  if (completed) return "completed";
-  if (running) return "running";
-  return "ready";
 }
 
 function runNodeStatus(index: number, activeIndex: number, completed: boolean): DemoRunStatus {
@@ -304,6 +299,12 @@ export function StartupAnalystDemo({ files }: { files: StartupAnalystDemoFile[] 
   const rootRef = useRef<HTMLElement | null>(null);
   const [revealed, setRevealed] = useState(false);
   const [phase, setPhase] = useState<"chat" | "running" | "output">("chat");
+  const [inView, setInView] = useState(true);
+  // Sticky: flips true the first time the demo scrolls into view, so the
+  // directed film plays in view (and only once).
+  const [started, setStarted] = useState(false);
+  // Remount key — "Replay" is a website control, not an app feature.
+  const [runKey, setRunKey] = useState(0);
 
   useEffect(() => {
     const el = rootRef.current;
@@ -321,6 +322,20 @@ export function StartupAnalystDemo({ files }: { files: StartupAnalystDemoFile[] 
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const el = rootRef.current;
+    if (!el) return;
+    const vis = new IntersectionObserver(
+      ([entry]) => {
+        setInView(entry.isIntersecting);
+        if (entry.isIntersecting) setStarted(true);
+      },
+      { threshold: 0.35 },
+    );
+    vis.observe(el);
+    return () => vis.disconnect();
+  }, []);
+
   return (
     <article
       id="startup-analyst-demo"
@@ -331,8 +346,58 @@ export function StartupAnalystDemo({ files }: { files: StartupAnalystDemoFile[] 
       {/* The card is just the app window. The real /demo app runs inside it,
           contained, and the frame grows when a run starts. No website chrome. */}
       <div className="sad-card" data-mode={phase}>
-        <StartupAnalystAppDemo files={files} contained onPhaseChange={setPhase} />
+        <StartupAnalystAppDemo
+          key={runKey}
+          files={files}
+          contained
+          autoplay
+          start={started}
+          onPhaseChange={setPhase}
+        />
       </div>
+
+      {/* Website/demo layer — deliberately styled as the site, not the app,
+          so it never reads as product chrome. */}
+      <div className="sad-web">
+        <span className="sad-web-hint">
+          {phase === "output"
+            ? "That's one workflow. Sirius is a local desktop app that runs your whole back office."
+            : "A live look at the Sirius desktop app."}
+        </span>
+        <div className="sad-web-actions">
+          {phase === "output" && (
+            <button
+              type="button"
+              className="btn btn-ghost btn-field text-[13px]"
+              onClick={() => {
+                setRunKey((k) => k + 1);
+                setPhase("chat");
+              }}
+            >
+              ↻ Replay
+            </button>
+          )}
+          <a href="#cta" className="btn btn-primary btn-field text-[13px]">
+            Get Sirius
+          </a>
+        </div>
+      </div>
+
+      {phase !== "chat" && !inView && (
+        <button
+          type="button"
+          className="sad-pill"
+          data-ready={phase === "output" ? "true" : "false"}
+          onClick={() =>
+            rootRef.current?.scrollIntoView({ behavior: "smooth", block: "center" })
+          }
+        >
+          <span className="sad-pill-dot" />
+          {phase === "output"
+            ? "Dealflow packet ready — view"
+            : "Sirius is finishing your dealflow packet…"}
+        </button>
+      )}
 
       <style>{`
         .sad-root {
@@ -381,8 +446,221 @@ export function StartupAnalystDemo({ files }: { files: StartupAnalystDemoFile[] 
             transition: opacity 1ms linear, transform 1ms linear;
           }
         }
+        .sad-pill {
+          position: fixed;
+          right: 20px;
+          bottom: 20px;
+          z-index: 50;
+          display: inline-flex;
+          align-items: center;
+          gap: 9px;
+          max-width: min(86vw, 360px);
+          padding: 12px 16px;
+          border: 1px solid var(--color-border-strong);
+          border-radius: 999px;
+          color: var(--color-ink-1);
+          background: var(--color-surface-deep);
+          box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4);
+          font: inherit;
+          font-size: 13px;
+          font-weight: 500;
+          text-align: left;
+          cursor: pointer;
+          animation: sad-pill-in 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+        .sad-pill-dot {
+          flex-shrink: 0;
+          width: 8px;
+          height: 8px;
+          border-radius: 999px;
+          background: var(--color-state-listening);
+          animation: sirius-pulse 1.4s ease-in-out infinite;
+        }
+        .sad-pill[data-ready="true"] {
+          border-color: rgba(var(--color-accent-rgb), 0.6);
+        }
+        .sad-pill[data-ready="true"] .sad-pill-dot {
+          background: var(--color-accent);
+        }
+        @keyframes sad-pill-in {
+          from { opacity: 0; transform: translateY(12px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .sad-pill,
+          .sad-pill-dot { animation: none !important; }
+        }
+        /* Website layer — sits outside the app card, on the page surface. */
+        .sad-web {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 12px;
+          flex-wrap: wrap;
+          margin-top: 14px;
+        }
+        .sad-web-hint {
+          max-width: 52ch;
+          color: var(--color-ink-3);
+          font-size: 13px;
+        }
+        .sad-web-actions {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          flex-shrink: 0;
+        }
       `}</style>
     </article>
+  );
+}
+
+// Plain-language labels for the real pipeline nodes (banners are phase headers).
+const NODE_LABEL: Record<string, string> = {
+  ha_search: "Searched Hacker News",
+  web_search: "Searched the web",
+  extract: "Extracted companies",
+  write_csv: "Saved companies → data/startups.csv",
+  read_score: "Read data/startups.csv",
+  score_python: "Scored conviction",
+  write_scored: "Saved scores → data/startups.csv",
+  read_profiles: "Read data/startups.csv",
+  write_profiles: "Wrote company & founder profiles",
+  list_companies: "Listed companies",
+  read_report: "Read data/startups.csv",
+  generate_report: "Wrote the weekly report",
+};
+
+// A better-but-real run page: the real step/node/output model, rendered as a
+// phase timeline + a "produced so far" rail. Raw input/output stays available
+// behind a disclosure for fidelity. Shippable into the real app.
+function RunTimeline({
+  files,
+  activeIndex,
+  completed,
+  running,
+  onCancel,
+}: {
+  files: StartupAnalystDemoFile[];
+  activeIndex: number;
+  completed: boolean;
+  running: boolean;
+  onCancel: () => void;
+}) {
+  const csvFile = files.find((f) => f.kind === "csv");
+  const startupCount = countCsvRows(csvFile);
+  const companyFiles = files.filter((f) => f.group === "companies");
+  const founderFiles = files.filter((f) => f.group === "founders");
+  const reportFiles = files.filter((f) => f.group === "report");
+
+  const phases = PHASES.filter((p) => p.label !== "Pipeline Done").map((p) => {
+    const [lo, hi] = p.range;
+    const state =
+      completed || activeIndex > hi
+        ? "done"
+        : !completed && activeIndex >= lo && activeIndex <= hi
+          ? "active"
+          : "idle";
+    const nodes = PIPELINE_STEPS.map((s, i) => ({ s, i }))
+      .filter(({ s, i }) => i >= lo && i <= hi && s.type !== "DISPLAY_TO_USER")
+      .map(({ s, i }) => {
+        const status = runNodeStatus(i, activeIndex, completed);
+        const out =
+          status === "completed"
+            ? runOutputForStep(s.id, startupCount, companyFiles.length, founderFiles.length)
+            : null;
+        const input =
+          i === 0
+            ? { query: "AI infrastructure startups", sources: ["Hacker News", "web search"] }
+            : { from: PIPELINE_STEPS[Math.max(0, i - 1)].id };
+        return { id: s.id, label: NODE_LABEL[s.id] ?? s.title, status, out, input };
+      });
+    return { label: p.label, state, nodes };
+  });
+
+  const produced: { folder: string; items: string[] }[] = [];
+  if (completed || activeIndex >= 4) produced.push({ folder: "data/", items: ["startups.csv"] });
+  if ((completed || activeIndex >= 11) && companyFiles.length)
+    produced.push({ folder: "companies/", items: companyFiles.map((f) => f.name) });
+  if ((completed || activeIndex >= 11) && founderFiles.length)
+    produced.push({ folder: "founders/", items: founderFiles.map((f) => f.name) });
+  if ((completed || activeIndex >= 15) && reportFiles.length)
+    produced.push({ folder: "reports/", items: reportFiles.map((f) => f.name) });
+
+  return (
+    <section className="sad-rt" aria-label="Run">
+      <header className="sad-rt-head">
+        <div>
+          <span className="sad-rt-eyebrow">Run</span>
+          <h2>Startup analyst</h2>
+        </div>
+        <div className="sad-rt-status">
+          <span className={cn("sad-rt-pill", completed && "is-done", running && "is-running")}>
+            {completed ? "Done" : running ? currentPhase(activeIndex, completed) : "Ready"}
+          </span>
+          {running && (
+            <button type="button" onClick={onCancel}>
+              Cancel
+            </button>
+          )}
+        </div>
+      </header>
+
+      <div className="sad-rt-body">
+        <ol className="sad-rt-timeline">
+          {phases.map((ph) => (
+            <li key={ph.label} className="sad-rt-phase" data-state={ph.state}>
+              <div className="sad-rt-phase-head">
+                <span className="sad-rt-mark" />
+                <strong>{ph.label}</strong>
+              </div>
+              <ul className="sad-rt-nodes">
+                {ph.nodes.map((n) => (
+                  <li key={n.id} className="sad-rt-node" data-status={n.status}>
+                    <span className="sad-rt-dot" />
+                    <div className="sad-rt-node-main">
+                      <span className="sad-rt-label">{n.label}</span>
+                      {n.out?.text && <p className="sad-rt-out">{n.out.text}</p>}
+                      {n.out?.path && (
+                        <span className="sad-rt-file">
+                          <AppIcon name="doc" size={12} />
+                          {n.out.path}
+                        </span>
+                      )}
+                      {n.status === "completed" && (
+                        <details className="sad-rt-details">
+                          <summary>input / output</summary>
+                          <pre>{JSON.stringify({ input: n.input, output: n.out }, null, 2)}</pre>
+                        </details>
+                      )}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))}
+        </ol>
+
+        <aside className="sad-rt-rail" aria-label="Produced so far">
+          <header>{completed ? "Output" : "Producing"}</header>
+          {produced.length === 0 ? (
+            <p className="sad-rt-muted">Nothing written yet…</p>
+          ) : (
+            produced.map((g) => (
+              <div key={g.folder} className="sad-rt-grp">
+                <p>{g.folder}</p>
+                {g.items.map((it) => (
+                  <span key={it} className="sad-rt-file">
+                    <AppIcon name="doc" size={12} />
+                    {it}
+                  </span>
+                ))}
+              </div>
+            ))
+          )}
+        </aside>
+      </div>
+    </section>
   );
 }
 
@@ -390,24 +668,27 @@ export function StartupAnalystAppDemo({
   files,
   contained = false,
   onPhaseChange,
+  autoplay = false,
+  start = false,
 }: {
   files: StartupAnalystDemoFile[];
   /** Rendered inside the landing card (vs. the full-screen /demo route). */
   contained?: boolean;
   /** Reports the app's current phase so the landing frame can grow/shrink. */
   onPhaseChange?: (phase: "chat" | "running" | "output") => void;
+  /** Directed-film mode: no interaction, the sequence plays itself. */
+  autoplay?: boolean;
+  /** Gate that flips true once the demo is on screen (so it plays in view). */
+  start?: boolean;
 }) {
   const [view, setView] = useState<AppDemoView>("workflow");
   const [running, setRunning] = useState(false);
   const [completed, setCompleted] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
-  const activeRunCardRef = useRef<HTMLLIElement | null>(null);
 
   const reportFile = files.find((file) => file.group === "report") ?? files[0];
   const [activeFileId, setActiveFileId] = useState(reportFile?.id ?? "");
   const activeFile = files.find((file) => file.id === activeFileId) ?? reportFile;
-  const csvFile = files.find((file) => file.kind === "csv");
-  const startupCount = countCsvRows(csvFile);
   const companyCount = files.filter((file) => file.group === "companies").length;
   const founderCount = files.filter((file) => file.group === "founders").length;
   const steps = useMemo(() => buildSteps(activeIndex, completed), [activeIndex, completed]);
@@ -446,28 +727,6 @@ export function StartupAnalystAppDemo({
   }, [activeIndex, running, contained]);
 
   useEffect(() => {
-    if (view !== "run" || !activeRunCardRef.current) return;
-
-    const card = activeRunCardRef.current;
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const behavior: ScrollBehavior = reduceMotion ? "auto" : "smooth";
-
-    if (contained) {
-      // Scroll only the card's own run list — scrollIntoView would bubble up
-      // and drag the whole page with it.
-      const container = card.closest<HTMLElement>(".sad-run-page");
-      if (!container) return;
-      const cRect = container.getBoundingClientRect();
-      const tRect = card.getBoundingClientRect();
-      const delta = tRect.top - cRect.top - (container.clientHeight - card.clientHeight) / 2;
-      container.scrollBy({ top: delta, behavior });
-      return;
-    }
-
-    card.scrollIntoView({ block: "center", behavior });
-  }, [activeIndex, completed, view, contained]);
-
-  useEffect(() => {
     if (view !== "run" || !completed || running) return;
 
     const timeout = window.setTimeout(() => {
@@ -480,6 +739,29 @@ export function StartupAnalystAppDemo({
   useEffect(() => {
     onPhaseChange?.(view === "run" ? "running" : view === "output" ? "output" : "chat");
   }, [view, onPhaseChange]);
+
+  // Directed film: once on screen, let the viewer read the "ask", then it runs
+  // itself — no interaction. Reduced-motion jumps straight to the payoff.
+  useEffect(() => {
+    if (!autoplay || !start || view !== "workflow" || running || completed) return;
+    const reduce =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const t = window.setTimeout(
+      () => {
+        if (reduce) {
+          setActiveIndex(PIPELINE_STEPS.length - 1);
+          setCompleted(true);
+          setRunning(false);
+          setView("output");
+        } else {
+          runWorkflow();
+        }
+      },
+      reduce ? 0 : 1700,
+    );
+    return () => window.clearTimeout(t);
+  }, [autoplay, start, view, running, completed]);
 
   useEffect(() => {
     if (!contained) return;
@@ -514,45 +796,33 @@ export function StartupAnalystAppDemo({
   const assistantText = completed
     ? `Done. I generated the report, scored CSV, ${companyCount} company profiles, and ${founderCount} founder briefs.`
     : running
-      ? `${phase}. Working through the pipeline now.`
+      ? "On it — running it now. Watch the steps, or keep scrolling and I'll ping you when it's done."
       : "Ready. This workflow will discover, score, profile, and package this week's AI infrastructure dealflow.";
-
-  const runPlan = PIPELINE_STEPS.map((step, index) => ({
-    ...step,
-    runStatus: runNodeStatus(index, activeIndex, completed),
-    input: index === 0
-      ? { query: "AI infrastructure startups", sources: ["Hacker News", "web search"] }
-      : { from: PIPELINE_STEPS[Math.max(0, index - 1)].id },
-    output: index < activeIndex || completed
-      ? runOutputForStep(step.id, startupCount, companyCount, founderCount)
-      : null,
-  }));
-
-  const planByStep = runPlan.reduce<Map<number, typeof runPlan>>((acc, node) => {
-    const list = acc.get(node.col) ?? [];
-    list.push(node);
-    acc.set(node.col, list);
-    return acc;
-  }, new Map());
-  const runStepNumbers = Array.from(planByStep.keys()).sort((a, b) => a - b);
 
   return (
     <main className={cn("sad-app-demo", contained && "sad-app-demo--contained")}>
       {chatEntry ? (
         <div className="sad-app-chat-entry">
-          <ChatPane
-            header="Startup Analyst"
-            subtitle="Talk to Sirius"
-            prefill="Sirius, run the startup analyst workflow."
-            pulseSend
-            onSend={runWorkflow}
-            messages={[
-              {
-                role: "assistant",
-                text: "Ask me to run the startup-analyst dealflow pipeline — I'll discover companies, score conviction, write profiles, then produce the weekly report.",
-              },
-            ]}
-          />
+          <nav className="sad-app-breadcrumb" aria-label="Breadcrumb">
+            <span>Workflows</span>
+            <span>/</span>
+            <strong>Startup analyst</strong>
+          </nav>
+          <div className="sad-chat-entry-pane">
+            <ChatPane
+              header="Startup Analyst"
+              subtitle="Talk to Sirius"
+              prefill="Sirius, pull together this week's dealflow."
+              pulseSend={!autoplay}
+              onSend={autoplay ? undefined : runWorkflow}
+              messages={[
+                {
+                  role: "assistant",
+                  text: "Ask and I'll handle it end to end — find this week's companies, score them, write the profiles, and hand you a weekly report you can act on.",
+                },
+              ]}
+            />
+          </div>
         </div>
       ) : (
         <>
@@ -560,22 +830,34 @@ export function StartupAnalystAppDemo({
 
           <div className="sad-app-main">
         <header className="sad-app-topbar">
-          <div className="sad-app-breadcrumb">
+          <nav className="sad-app-breadcrumb" aria-label="Breadcrumb">
             <span>Workflows</span>
             <span>/</span>
-            <strong>dealflow_pipeline</strong>
-          </div>
+            {view === "workflow" ? (
+              <strong>Startup analyst</strong>
+            ) : (
+              <>
+                <span>Startup analyst</span>
+                <span>/</span>
+                <strong>run #17</strong>
+              </>
+            )}
+          </nav>
 
           <div className="sad-app-title-row">
             <div className="sad-app-title-copy">
               <h1>Startup analyst</h1>
               <div className="sad-app-meta">
                 <AppPill tone={tone} label={statusLabel} />
-                <span>
-                  <AppIcon name="arrow" size={12} />
-                  Manual trigger
-                </span>
-                <span>{PIPELINE_STEPS.length} steps · {completed ? "last run now" : "ready"}</span>
+                {!contained && (
+                  <>
+                    <span>
+                      <AppIcon name="arrow" size={12} />
+                      Manual trigger
+                    </span>
+                    <span>{PIPELINE_STEPS.length} steps · {completed ? "last run now" : "ready"}</span>
+                  </>
+                )}
               </div>
             </div>
 
@@ -583,11 +865,6 @@ export function StartupAnalystAppDemo({
               {!contained && (
                 <button type="button" className="sad-app-ghost-button" onClick={returnToLandingDemo}>
                   Back to landing
-                </button>
-              )}
-              {completed && (
-                <button type="button" className="sad-app-ghost-button" onClick={resetWorkflow}>
-                  Reset
                 </button>
               )}
               <button type="button" className="sad-app-run-button" onClick={runWorkflow} disabled={running}>
@@ -645,90 +922,22 @@ export function StartupAnalystAppDemo({
             </footer>
           </>
         ) : view === "run" ? (
-          <section className="sad-run-page" aria-label="Startup analyst run details">
-            <div className="sad-run-inner">
-              <div className="sad-run-breadcrumb">
-                <button type="button" onClick={() => setView("workflow")}>Workflows</button>
-                <span>/</span>
-                <button type="button" onClick={() => setView("workflow")}>dealflow_pipeline</button>
-                <span>/</span>
-                <strong>run #17</strong>
-              </div>
-
-              <header className="sad-run-header">
-                <span className="sad-run-eyebrow">Run</span>
-                <h1>
-                  dealflow_pipeline <span>#17</span>
-                </h1>
-                <div className="sad-run-meta">
-                  <AppPill tone={tone} label={runStatusLabel(completed, running)} />
-                  {running && (
-                    <button type="button" onClick={resetWorkflow}>
-                      Cancel run
-                    </button>
-                  )}
-                  {completed && (
-                    <button type="button" onClick={() => setView("output")}>
-                      Open generated output
-                    </button>
-                  )}
-                </div>
-              </header>
-
-              <section className="sad-run-steps">
-                <span className="sad-run-eyebrow sad-run-eyebrow-dim">Steps</span>
-                {runStepNumbers.map((step) => (
-                  <div key={step} className="sad-run-step-group">
-                    <h2>Step {step}</h2>
-                    <ol>
-                      {planByStep.get(step)!.map((node) => (
-                        <li
-                          key={node.id}
-                          ref={node.runStatus === "running" || (completed && node.id === "done") ? activeRunCardRef : null}
-                          className="sad-run-card"
-                          data-status={node.runStatus}
-                        >
-                          <div className="sad-run-card-top">
-                            <span>
-                              <i aria-hidden="true" />
-                              <code>{node.id}</code>
-                              <small>({node.type})</small>
-                            </span>
-                            <em>{node.runStatus}</em>
-                          </div>
-
-                          {node.runStatus !== "pending" && node.output?.text && (
-                            <p>{node.output.text}</p>
-                          )}
-
-                          {node.runStatus !== "pending" && (
-                            <>
-                              <details>
-                                <summary>input</summary>
-                                <pre>{JSON.stringify(node.input, null, 2)}</pre>
-                              </details>
-                              {node.output && (
-                                <details>
-                                  <summary>output</summary>
-                                  <pre>{JSON.stringify(node.output, null, 2)}</pre>
-                                </details>
-                              )}
-                            </>
-                          )}
-                        </li>
-                      ))}
-                    </ol>
-                  </div>
-                ))}
-              </section>
-            </div>
-          </section>
+          <RunTimeline
+            files={files}
+            activeIndex={activeIndex}
+            completed={completed}
+            running={running}
+            onCancel={resetWorkflow}
+          />
         ) : (
-          <section className="sad-app-output" aria-label="Generated startup analyst output">
+          <section
+            className={cn("sad-app-output", contained && "sad-app-output--reveal")}
+            aria-label="Generated startup analyst output"
+          >
             <aside className="sad-app-files" aria-label="Generated files">
               <div className="sad-app-output-summary">
-                <span>Pipeline Done</span>
-                <strong>{startupCount} startups · {files.length} files</strong>
+                <span>Run output</span>
+                <strong>{files.length} files written to the workspace</strong>
               </div>
               {(Object.keys(groupedFiles) as StartupAnalystDemoFile["group"][]).map((group) => (
                 groupedFiles[group].length > 0 && (
@@ -756,9 +965,15 @@ export function StartupAnalystAppDemo({
                   <span>{activeFile?.path ?? "output"}</span>
                   <h2>{activeFile?.name ?? "Generated output"}</h2>
                 </div>
-                <button type="button" onClick={() => setView("workflow")}>
-                  Back to workflow
-                </button>
+                {contained ? (
+                  <button type="button" onClick={resetWorkflow}>
+                    ← Back
+                  </button>
+                ) : (
+                  <button type="button" onClick={() => setView("workflow")}>
+                    Back to workflow
+                  </button>
+                )}
               </header>
               {activeFile ? <FilePreview file={activeFile} /> : <div className="sad-empty">No demo files found.</div>}
             </div>
@@ -794,16 +1009,247 @@ export function StartupAnalystAppDemo({
         .sad-app-demo--contained .sad-app-runs {
           padding: 12px 24px 16px;
         }
-        .sad-app-demo--contained .sad-run-page {
-          padding: 22px 28px 36px;
-        }
-        .sad-app-demo--contained .sad-run-inner {
-          width: min(760px, 100%);
-        }
         .sad-app-demo--contained .sad-app-actions a,
         .sad-app-demo--contained .sad-app-ghost-button,
         .sad-app-demo--contained .sad-app-run-button {
           height: 38px;
+        }
+        .sad-app-output--reveal {
+          position: relative;
+          grid-template-rows: minmax(0, 1fr) auto;
+          animation: sad-reveal 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+        .sad-app-output--reveal::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          background: linear-gradient(105deg, transparent 40%, rgba(var(--color-accent-rgb), 0.16) 50%, transparent 60%);
+          transform: translateX(-100%);
+          animation: sad-sweep 900ms ease 120ms 1 forwards;
+        }
+        @keyframes sad-reveal {
+          from { opacity: 0; transform: translateY(10px) scale(0.99); }
+          to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes sad-sweep { to { transform: translateX(100%); } }
+        @media (prefers-reduced-motion: reduce) {
+          .sad-app-output--reveal,
+          .sad-app-output--reveal::after { animation: none !important; }
+        }
+        /* Run timeline + result rail — real model, better presentation. */
+        .sad-rt {
+          flex: 1;
+          min-height: 0;
+          display: flex;
+          flex-direction: column;
+          overflow: hidden;
+        }
+        .sad-rt-head {
+          flex-shrink: 0;
+          display: flex;
+          align-items: flex-end;
+          justify-content: space-between;
+          gap: 16px;
+          padding: 18px 24px;
+          border-bottom: 1px solid var(--color-border);
+        }
+        .sad-rt-eyebrow {
+          display: inline-flex;
+          color: var(--color-accent);
+          font-size: 10.5px;
+          font-weight: 700;
+          letter-spacing: 0.16em;
+          text-transform: uppercase;
+        }
+        .sad-rt-head h2 {
+          margin: 6px 0 0;
+          color: var(--color-ink-1);
+          font-family: var(--font-title);
+          font-size: 24px;
+          font-weight: 400;
+        }
+        .sad-rt-status {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+        }
+        .sad-rt-pill {
+          display: inline-flex;
+          align-items: center;
+          min-height: 26px;
+          padding: 0 12px;
+          border: 1px solid var(--color-border-strong);
+          border-radius: 999px;
+          color: var(--color-ink-2);
+          font-size: 12px;
+          font-weight: 600;
+          white-space: nowrap;
+        }
+        .sad-rt-pill.is-running { color: var(--color-state-listening); }
+        .sad-rt-pill.is-done { color: var(--color-success); }
+        .sad-rt-status button {
+          border: 1px solid var(--color-border);
+          border-radius: 999px;
+          padding: 5px 12px;
+          color: var(--color-ink-3);
+          background: transparent;
+          font-size: 12px;
+          cursor: pointer;
+        }
+        .sad-rt-status button:hover {
+          color: var(--color-ink-1);
+          border-color: var(--color-border-strong);
+        }
+        .sad-rt-body {
+          flex: 1;
+          min-height: 0;
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) minmax(220px, 300px);
+          overflow: hidden;
+        }
+        .sad-rt-timeline {
+          margin: 0;
+          padding: 16px 24px 28px;
+          list-style: none;
+          overflow: auto;
+        }
+        .sad-rt-phase {
+          position: relative;
+          padding-left: 22px;
+        }
+        .sad-rt-phase::before {
+          content: "";
+          position: absolute;
+          left: 5px;
+          top: 20px;
+          bottom: -8px;
+          width: 2px;
+          background: var(--color-border);
+        }
+        .sad-rt-phase:last-child::before { display: none; }
+        .sad-rt-phase-head {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          margin: 14px 0 8px;
+        }
+        .sad-rt-mark {
+          position: absolute;
+          left: 0;
+          width: 12px;
+          height: 12px;
+          border-radius: 999px;
+          border: 2px solid var(--color-border-strong);
+          background: var(--color-surface-deep);
+        }
+        .sad-rt-phase[data-state="active"] .sad-rt-mark { border-color: var(--color-state-listening); }
+        .sad-rt-phase[data-state="done"] .sad-rt-mark {
+          border-color: var(--color-success);
+          background: var(--color-success);
+        }
+        .sad-rt-phase-head strong {
+          color: var(--color-ink-1);
+          font-size: 13px;
+          font-weight: 600;
+        }
+        .sad-rt-phase[data-state="idle"] .sad-rt-phase-head strong { color: var(--color-ink-3); }
+        .sad-rt-nodes {
+          margin: 0 0 6px;
+          padding: 0;
+          list-style: none;
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+        .sad-rt-node {
+          display: flex;
+          gap: 10px;
+          opacity: 0.5;
+        }
+        .sad-rt-node[data-status="running"],
+        .sad-rt-node[data-status="completed"] { opacity: 1; }
+        .sad-rt-dot {
+          flex-shrink: 0;
+          margin-top: 6px;
+          width: 6px;
+          height: 6px;
+          border-radius: 999px;
+          background: var(--color-ink-4);
+        }
+        .sad-rt-node[data-status="running"] .sad-rt-dot {
+          background: var(--color-state-listening);
+          animation: sirius-pulse 1.4s ease-in-out infinite;
+        }
+        .sad-rt-node[data-status="completed"] .sad-rt-dot { background: var(--color-success); }
+        .sad-rt-node-main { min-width: 0; }
+        .sad-rt-label { color: var(--color-ink-1); font-size: 13px; }
+        .sad-rt-out {
+          margin: 5px 0 0;
+          border-left: 2px solid var(--color-accent);
+          padding: 4px 0 4px 10px;
+          color: var(--color-ink-2);
+          font-size: 12.5px;
+          line-height: 1.5;
+        }
+        .sad-rt-file {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          margin-top: 6px;
+          color: var(--color-ink-3);
+          font-family: var(--font-mono);
+          font-size: 11px;
+        }
+        .sad-rt-details { margin-top: 6px; font-size: 11.5px; }
+        .sad-rt-details summary { color: var(--color-ink-4); cursor: pointer; }
+        .sad-rt-details pre {
+          margin: 6px 0 0;
+          max-height: 160px;
+          overflow: auto;
+          border: 1px solid var(--color-border);
+          border-radius: 6px;
+          padding: 10px;
+          color: var(--color-ink-2);
+          background: var(--color-surface-deep);
+          font-family: var(--font-sans);
+          font-size: 11px;
+          white-space: pre-wrap;
+          word-break: break-word;
+        }
+        .sad-rt-rail {
+          min-height: 0;
+          overflow: auto;
+          border-left: 1px solid var(--color-border);
+          background: var(--color-surface-deep);
+          padding: 16px;
+        }
+        .sad-rt-rail > header {
+          margin-bottom: 12px;
+          color: var(--color-ink-3);
+          font-size: 10.5px;
+          font-weight: 600;
+          letter-spacing: 0.16em;
+          text-transform: uppercase;
+        }
+        .sad-rt-grp { margin-bottom: 14px; }
+        .sad-rt-grp p {
+          margin: 0 0 6px;
+          color: var(--color-ink-3);
+          font-family: var(--font-mono);
+          font-size: 11px;
+        }
+        .sad-rt-grp .sad-rt-file { display: flex; margin-top: 4px; color: var(--color-ink-2); }
+        .sad-rt-muted { margin: 0; color: var(--color-ink-4); font-size: 12px; }
+        .sad-app-demo--contained .sad-rt-head { padding: 14px 20px; }
+        .sad-app-demo--contained .sad-rt-timeline { padding: 14px 20px 22px; }
+        .sad-app-demo--contained .sad-rt-head h2 { font-size: 20px; }
+        @media (max-width: 760px) {
+          .sad-rt-body { grid-template-columns: 1fr; }
+          .sad-rt-rail { border-left: 0; border-top: 1px solid var(--color-border); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .sad-rt-node[data-status="running"] .sad-rt-dot { animation: none !important; }
         }
         /* Entry state: just the chat, filling the card — no rail, no topbar. */
         .sad-app-chat-entry {
@@ -811,9 +1257,18 @@ export function StartupAnalystAppDemo({
           min-width: 0;
           min-height: 0;
           display: flex;
+          flex-direction: column;
+          gap: 12px;
           padding: 20px;
         }
-        .sad-app-chat-entry > * {
+        .sad-app-chat-entry .sad-app-breadcrumb { flex-shrink: 0; margin-bottom: 0; }
+        .sad-chat-entry-pane {
+          flex: 1;
+          min-width: 0;
+          min-height: 0;
+          display: flex;
+        }
+        .sad-chat-entry-pane > * {
           flex: 1;
           min-width: 0;
         }
@@ -1084,229 +1539,6 @@ export function StartupAnalystAppDemo({
           font-style: normal;
           font-variant-numeric: tabular-nums;
         }
-        .sad-run-page {
-          flex: 1;
-          min-height: 0;
-          overflow: auto;
-          padding: 32px 48px 56px;
-        }
-        .sad-run-inner {
-          width: min(920px, 100%);
-          margin: 0 auto;
-        }
-        .sad-run-breadcrumb {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          margin-bottom: 28px;
-          color: var(--color-ink-4);
-          font-size: 11.5px;
-          font-weight: 500;
-          letter-spacing: 0.08em;
-        }
-        .sad-run-breadcrumb button {
-          border: 0;
-          padding: 0;
-          color: var(--color-ink-3);
-          background: transparent;
-          font: inherit;
-          cursor: pointer;
-        }
-        .sad-run-breadcrumb button:hover {
-          color: var(--color-ink-1);
-        }
-        .sad-run-breadcrumb strong {
-          color: var(--color-ink-2);
-          font-weight: 500;
-        }
-        .sad-run-header {
-          padding-bottom: 24px;
-          border-bottom: 1px solid var(--color-border);
-        }
-        .sad-run-eyebrow {
-          display: inline-flex;
-          color: var(--color-accent);
-          font-size: 10.5px;
-          font-weight: 700;
-          letter-spacing: 0.16em;
-          text-transform: uppercase;
-        }
-        .sad-run-eyebrow-dim {
-          color: var(--color-ink-3);
-        }
-        .sad-run-header h1 {
-          margin: 8px 0 12px;
-          color: var(--color-ink-1);
-          font-size: 30px;
-          font-weight: 500;
-          letter-spacing: -0.02em;
-          line-height: 1.15;
-        }
-        .sad-run-header h1 span {
-          color: var(--color-ink-4);
-          font-size: 18px;
-          font-weight: 400;
-        }
-        .sad-run-meta {
-          display: flex;
-          align-items: center;
-          gap: 14px;
-          flex-wrap: wrap;
-        }
-        .sad-run-meta button {
-          border: 1px solid var(--color-border);
-          border-radius: 999px;
-          padding: 6px 14px;
-          color: var(--color-ink-2);
-          background: transparent;
-          font-size: 12px;
-          font-weight: 500;
-          cursor: pointer;
-        }
-        .sad-run-meta button:hover {
-          border-color: var(--color-border-strong);
-          color: var(--color-ink-1);
-          background: rgba(244, 236, 219, 0.04);
-        }
-        .sad-run-steps {
-          margin-top: 28px;
-        }
-        .sad-run-step-group {
-          margin-bottom: 14px;
-        }
-        .sad-run-step-group h2 {
-          margin: 10px 0 8px;
-          color: var(--color-ink-4);
-          font-size: 11px;
-          font-weight: 600;
-          letter-spacing: 0.13em;
-          text-transform: uppercase;
-        }
-        .sad-run-step-group ol {
-          margin: 0;
-          padding: 0;
-        }
-        .sad-run-card {
-          position: relative;
-          list-style: none;
-          margin-bottom: 8px;
-          overflow: hidden;
-          border: 1px solid var(--color-border);
-          border-radius: 8px;
-          padding: 12px 14px;
-          background: var(--color-surface-1);
-          opacity: 0.55;
-        }
-        .sad-run-card[data-status="running"],
-        .sad-run-card[data-status="completed"] {
-          opacity: 1;
-        }
-        .sad-run-card[data-status="running"]::before {
-          content: "";
-          position: absolute;
-          left: 0;
-          top: 0;
-          bottom: 0;
-          width: 3px;
-          background: var(--color-state-listening);
-        }
-        .sad-run-card[data-status="completed"]::before {
-          content: "";
-          position: absolute;
-          left: 0;
-          top: 0;
-          bottom: 0;
-          width: 3px;
-          background: var(--color-success);
-        }
-        .sad-run-card-top {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 8px;
-        }
-        .sad-run-card-top > span {
-          min-width: 0;
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-        }
-        .sad-run-card-top i {
-          width: 6px;
-          height: 6px;
-          border-radius: 999px;
-          background: var(--color-ink-4);
-        }
-        .sad-run-card[data-status="running"] .sad-run-card-top i {
-          background: var(--color-state-listening);
-          animation: sirius-pulse 1.4s ease-in-out infinite;
-        }
-        .sad-run-card[data-status="completed"] .sad-run-card-top i {
-          background: var(--color-success);
-        }
-        .sad-run-card code {
-          color: var(--color-ink-1);
-          font-family: var(--font-sans);
-          font-size: 12.5px;
-          font-weight: 600;
-        }
-        .sad-run-card small {
-          min-width: 0;
-          color: var(--color-ink-4);
-          font-size: 11px;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-        }
-        .sad-run-card-top em {
-          flex-shrink: 0;
-          border: 1px solid var(--color-border);
-          border-radius: 999px;
-          padding: 2px 8px;
-          color: var(--color-ink-3);
-          font-size: 9.5px;
-          font-style: normal;
-          font-weight: 600;
-          letter-spacing: 0.13em;
-          text-transform: uppercase;
-        }
-        .sad-run-card[data-status="running"] .sad-run-card-top em {
-          color: var(--color-state-listening);
-        }
-        .sad-run-card[data-status="completed"] .sad-run-card-top em {
-          color: var(--color-success);
-        }
-        .sad-run-card p {
-          margin: 10px 0 4px;
-          border-left: 3px solid var(--color-accent);
-          border-radius: 0 6px 6px 0;
-          padding: 10px 12px;
-          color: var(--color-ink-1);
-          background: var(--color-surface-2);
-          font-size: 13px;
-          line-height: 1.5;
-        }
-        .sad-run-card details {
-          margin-top: 6px;
-          font-size: 12px;
-        }
-        .sad-run-card summary {
-          color: var(--color-ink-3);
-          cursor: pointer;
-          font-weight: 500;
-        }
-        .sad-run-card pre {
-          margin: 6px 0;
-          border: 1px solid var(--color-border);
-          border-radius: 6px;
-          padding: 10px;
-          color: var(--color-ink-2);
-          background: var(--color-surface-deep);
-          font-family: var(--font-sans);
-          font-size: 11.5px;
-          white-space: pre-wrap;
-          word-break: break-word;
-        }
         .sad-app-output {
           flex: 1;
           min-height: 0;
@@ -1550,16 +1782,6 @@ export function StartupAnalystAppDemo({
           }
           .sad-app-runs {
             padding: 14px 20px 20px;
-          }
-          .sad-run-page {
-            padding: 24px 20px 40px;
-          }
-          .sad-run-card-top {
-            align-items: flex-start;
-            flex-direction: column;
-          }
-          .sad-run-card small {
-            max-width: 100%;
           }
           .sad-app-output {
             grid-template-columns: 1fr;
