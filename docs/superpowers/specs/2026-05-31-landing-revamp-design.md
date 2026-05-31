@@ -22,6 +22,15 @@ Audience is unchanged and binding (`CLAUDE.md`): high-agency professionals —
 founders, investors, agency owners, freelancers — **not engineers**. Lead with
 the outcome, not the machinery.
 
+### Product changes since the old page
+
+- **Feeds are removed from the product.** No "feed," "briefings," or
+  feed-on-companies framing anywhere on the page or in any app depiction. The
+  old `/api/chat` rail (Work · Workflows · Feed · Settings) loses Feed.
+- **Schedules is implemented and real.** Recurring/automated runs ("while you
+  sleep") can be depicted as a genuine surface, not aspiration. Any app rail we
+  show reflects the current product (Feed gone; Schedules present).
+
 ## Locked decisions
 
 | Decision | Choice |
@@ -65,8 +74,9 @@ A single long scroll. Section IDs in parentheses for nav/anchors.
    (first run = you guide it → saved → "do another for X" = runs itself).
 
 6. **One app, not five** (`#one-app`) — the stack collapses into one
-   subscription (AI chat · automation · research · briefings · personal CRM →
-   Sirius). Capability breadth + ROI framing (no hard numbers).
+   subscription (AI chat · automations/schedules · research · personal CRM →
+   Sirius). No "briefings/feed" item. Capability breadth + ROI framing (no hard
+   numbers).
 
 7. **Pricing** (`#pricing`) — card: **Free during beta** (loud) · **$XX/mo
    after** (quiet) · "less than the tools it replaces, far less than the
@@ -129,6 +139,11 @@ Film phases:
 Output is **readable drafts**, not files-on-disk — the deliverable, surfaced
 where the user lives (home), per the audience guidance.
 
+Fidelity notes (feeds gone, schedules real): any rail shown drops **Feed** and
+reflects **Schedules**. The social-posts automation can be framed as something
+that *also* runs on a schedule ("set it to every Monday") — reinforcing the
+real "runs while you sleep" capability — even though the hero triggers it live.
+
 The existing heavy `StartupAnalystAppDemo` + `/demo` route are **out of scope to
 delete**; they stay for the standalone `/demo` page. The new home page does not
 embed the startup-analyst film.
@@ -141,7 +156,7 @@ embed the startup-analyst film.
 | `sections/live-demo.tsx` + `sirius/startup-analyst-demo.tsx` | **Not on home page.** Demo engine pattern reused for the new social film; originals retained for `/demo` |
 | `sections/in-practice.tsx` | **Repurposed** → "What it does" outcome cards |
 | `sections/workflows.tsx` | **Folded** → "It learns it once" |
-| `sections/four-ways.tsx` | **Cut** (voice/chat/feed/automations no longer a standalone section; voice shown live in hero) |
+| `sections/four-ways.tsx` | **Cut** — Feed is removed from the product; voice is shown live in the hero; chat/schedules surface elsewhere, so the standalone row is gone |
 | `sections/three-ideas.tsx` | **Folded** → "One app, not five" |
 | `sections/local-data.tsx` | **Kept**, copy refreshed → "Local-first" |
 | `sections/faq.tsx` | **Optional/trimmed** (resolve on review) |
