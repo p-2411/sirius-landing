@@ -584,7 +584,7 @@ function cursorFor(t: number): { x: number; y: number } {
   if (t < TL.startToast) return { x: 53, y: 50 }; // rest by the orb during the reply
   if (t < TL.toastTap + 250) return { x: 88, y: 93 }; // glide to the started toast, tap
   if (t < TL.runStart + 1500) return { x: 50, y: 50 }; // watch the run progress
-  if (t < TL.home2) return { x: 4, y: 44 }; // glide to rail home (arrives before backTap)
+  if (t < TL.home2) return { x: 3, y: 37 }; // glide to the rail's orb logo = Home (arrives before backTap)
   return { x: 50, y: 62 }; // settle over the briefing, then hover-expand
 }
 
