@@ -108,14 +108,11 @@ export function SocialPostsDemo() {
       if (lastTsRef.current == null) lastTsRef.current = ts;
       const dt = ts - lastTsRef.current;
       lastTsRef.current = ts;
-      const next = Math.min(elapsedRef.current + dt, TL.total);
+      let next = elapsedRef.current + dt;
+      if (next >= TL.total) next = 0; // loop — the demo replays automatically
       elapsedRef.current = next;
       setElapsed(next);
-      if (next < TL.total) {
-        rafRef.current = requestAnimationFrame(tick);
-      } else {
-        setPlaying(false);
-      }
+      rafRef.current = requestAnimationFrame(tick);
     };
     rafRef.current = requestAnimationFrame(tick);
     return () => {
