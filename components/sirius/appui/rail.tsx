@@ -13,7 +13,7 @@ type NavItem = { id: string; icon: AppIconName; label: string };
 const ITEMS: NavItem[] = [
   { id: "work",      icon: "work",     label: "Work" },
   { id: "workflows", icon: "flows",    label: "Workflows" },
-  { id: "feed",      icon: "feed",     label: "Feed" },
+  { id: "workspace", icon: "doc",      label: "Workspace" },
 ];
 
 const FOOTER_ITEMS: NavItem[] = [
