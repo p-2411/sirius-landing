@@ -5,7 +5,7 @@ import { useEffect, useId, useState } from "react";
 import { cn } from "@/lib/utils";
 import { landingContent } from "@/content/landing";
 
-type Status = "idle" | "submitting" | "success" | "already" | "soldout" | "error";
+type Status = "idle" | "submitting" | "success" | "already" | "error";
 
 const DOWNLOAD_URL =
   "https://github.com/p-2411/sirius-releases/releases/download/v0.4.6/Sirius-0.4.6-arm64.dmg";
@@ -43,6 +43,7 @@ function DownloadDialog({ onClose }: { onClose: () => void }) {
   const [consent, setConsent] = useState(false);
   const [status, setStatus] = useState<Status>("idle");
   const [remaining, setRemaining] = useState<number | null>(null);
+  const [pastFree, setPastFree] = useState(false);
   const [err, setErr] = useState("");
 
   useEffect(() => {
@@ -73,11 +74,6 @@ function DownloadDialog({ onClose }: { onClose: () => void }) {
         remaining?: number;
         error?: string;
       };
-      if (res.status === 409 || data.soldOut) {
-        setRemaining(0);
-        setStatus("soldout");
-        return;
-      }
       if (!res.ok || !data.ok) {
         setErr(
           data.error === "consent"
@@ -92,6 +88,7 @@ function DownloadDialog({ onClose }: { onClose: () => void }) {
         return;
       }
       if (typeof data.remaining === "number") setRemaining(data.remaining);
+      setPastFree(Boolean(data.soldOut));
       setStatus(data.already ? "already" : "success");
       startDownload();
     } catch {
@@ -118,7 +115,7 @@ function DownloadDialog({ onClose }: { onClose: () => void }) {
       >
         <div className="flex items-start justify-between gap-4">
           <h2 className="font-display text-[22px] font-normal leading-tight text-[var(--color-ink-1)]">
-            {done ? "You're in." : status === "soldout" ? "Free spots are gone." : "Download Sirius for Mac"}
+            {done ? "You're in." : "Download Sirius for Mac"}
           </h2>
           <button
             type="button"
@@ -136,9 +133,11 @@ function DownloadDialog({ onClose }: { onClose: () => void }) {
           <div className="mt-3 text-[14px] leading-[1.6] text-[var(--color-ink-2)]">
             <p>
               {status === "already" ? "Welcome back — your download is starting." : "You're in. Your download is starting."}
-              {remaining != null && remaining > 0 && (
+              {pastFree ? (
+                <span className="mt-2 block text-[var(--color-ink-3)]">The 20 free spots are gone — you&rsquo;re on the $20 plan.</span>
+              ) : remaining != null && remaining > 0 ? (
                 <span className="mt-2 block text-[var(--color-ink-3)]">{remaining} free spots left.</span>
-              )}
+              ) : null}
             </p>
             <p className="mt-3 text-[13px] text-[var(--color-ink-3)]">
               Didn&rsquo;t start?{" "}
@@ -151,10 +150,6 @@ function DownloadDialog({ onClose }: { onClose: () => void }) {
               .
             </p>
           </div>
-        ) : status === "soldout" ? (
-          <p className="mt-3 text-[14px] leading-[1.6] text-[var(--color-ink-2)]">
-            All 20 free downloads have been claimed. Sirius Pro starts at $20/mo — same app, higher limits.
-          </p>
         ) : (
           <form onSubmit={submit} className="mt-5 flex flex-col gap-4">
             <Field id={`${ids}-name`} label="Name">
@@ -211,7 +206,7 @@ function DownloadDialog({ onClose }: { onClose: () => void }) {
           </form>
         )}
 
-        {(done || status === "soldout") && (
+        {done && (
           <button type="button" onClick={onClose} className="btn btn-ghost mt-5 w-full text-[13.5px]">
             Close
           </button>

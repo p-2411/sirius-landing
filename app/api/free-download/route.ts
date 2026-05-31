@@ -52,19 +52,24 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    // Already claimed with this email → idempotent success, don't take a 2nd slot.
+    // The app is always downloadable; the cap only retires the *free* offer.
+    // Already claimed with this email → idempotent, don't take a 2nd slot.
     if (await downloadExists(email)) {
       const count = await countDownloads();
-      return NextResponse.json({ ok: true, already: true, remaining: Math.max(0, LIMIT - count) });
+      return NextResponse.json({
+        ok: true,
+        already: true,
+        remaining: Math.max(0, LIMIT - count),
+        soldOut: count >= LIMIT,
+      });
     }
 
     const count = await countDownloads();
-    if (count >= LIMIT) {
-      return NextResponse.json({ ok: false, soldOut: true, remaining: 0 }, { status: 409 });
-    }
-
     await createDownload({ name, email, mobile: mobile || undefined, consent });
-    return NextResponse.json({ ok: true, remaining: Math.max(0, LIMIT - (count + 1)) });
+    const remaining = Math.max(0, LIMIT - (count + 1));
+    // soldOut here means "past the free 20" — they still get the download,
+    // just on the paid plan.
+    return NextResponse.json({ ok: true, remaining, soldOut: remaining <= 0 });
   } catch (error) {
     console.error("[free-download] POST failed", error);
     return NextResponse.json({ ok: false, error: "server" }, { status: 502 });
