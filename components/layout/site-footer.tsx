@@ -38,9 +38,6 @@ export function SiteFooter() {
           {footer.blurb}
         </p>
         <div className="flex items-center gap-3">
-          <span className="text-[11px] uppercase tracking-[0.22em] text-[var(--color-ink-3)]">
-            {meta.availability}
-          </span>
           <a
             href={downloadCta.href}
             className="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--color-ink-3)] underline-offset-4 transition hover:text-[var(--color-accent)] hover:underline hover:decoration-[var(--color-accent)]"

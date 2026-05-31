@@ -50,18 +50,20 @@ export function PricingSection() {
                     </li>
                   ))}
                 </ul>
-
-                <div className="mt-auto pt-8">
-                  <ButtonLink href={downloadCta.href} variant={t.featured ? "primary" : "secondary"}>
-                    {t.cta}
-                  </ButtonLink>
-                </div>
               </div>
             </RevealItem>
           ))}
         </RevealGroup>
 
-        <p className="mt-8 max-w-[40ch] text-[13px] leading-[1.55] text-[var(--color-ink-3)]">{note}</p>
+        <Reveal className="mt-10 flex flex-col items-center">
+          <ButtonLink href={downloadCta.href} variant="primary">
+            <span className="inline-flex items-center gap-2">
+              <span className="text-[15px] leading-none">⌘</span>
+              {downloadCta.label}
+            </span>
+          </ButtonLink>
+          <p className="mt-6 max-w-[40ch] text-[13px] leading-[1.55] text-[var(--color-ink-3)]">{note}</p>
+        </Reveal>
       </Container>
     </section>
   );
