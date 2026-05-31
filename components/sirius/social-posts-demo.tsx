@@ -24,7 +24,7 @@ const DH = 850;
 const RUN_ID = 128;
 
 // Word-by-word transcript pacing.
-const WORD_MS = 250;
+const WORD_MS = 300;
 const PROMPT_WORDS = HOME_PROMPT.split(" ");
 const REPLY_WORDS = HOME_REPLY.split(" ");
 
