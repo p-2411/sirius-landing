@@ -75,7 +75,7 @@ export const landingContent = {
       },
       {
         name: "Max",
-        price: "$40",
+        price: "$50",
         priceSuffix: "/mo",
         tagline: "For heavy, all-day use.",
         features: ["Everything in Pro", "Top usage limits", "Early access to new features"],
