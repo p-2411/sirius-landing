@@ -23,23 +23,23 @@ const geist = Geist({
 });
 
 export const metadata: Metadata = {
-  title: "Sirius — Your personal assistant. In the proper sense.",
+  title: "Sirius — one assistant that knows you and does the work",
   description:
-    "Sirius is a personal AI assistant for working professionals. It remembers your context, acts across your apps, and turns repeated tasks into reusable workflows.",
+    "Across your inbox, calendar, files, and any app with an API, Sirius holds the context and does the work. Local-first, Mac.",
   metadataBase: new URL("https://sirius.so"),
   openGraph: {
-    title: "Sirius — Your personal assistant. In the proper sense.",
+    title: "Sirius — one assistant that knows you and does the work",
     description:
-      "Sirius is a personal AI assistant for working professionals. It remembers your context, acts across your apps, and turns repeated tasks into reusable workflows.",
+      "Across your inbox, calendar, files, and any app with an API, Sirius holds the context and does the work. Local-first, Mac.",
     url: "https://sirius.so",
     siteName: "Sirius",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sirius — Your personal assistant. In the proper sense.",
+    title: "Sirius — one assistant that knows you and does the work",
     description:
-      "Sirius is a personal AI assistant for working professionals. It remembers your context, acts across your apps, and turns repeated tasks into reusable workflows.",
+      "Across your inbox, calendar, files, and any app with an API, Sirius holds the context and does the work. Local-first, Mac.",
   },
 };
 
