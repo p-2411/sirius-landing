@@ -5,7 +5,6 @@ import { motion, useReducedMotion, type Variants } from "motion/react";
 import { landingContent } from "@/content/landing";
 import { SocialPostsDemo } from "@/components/sirius/social-posts-demo";
 import { ButtonLink } from "@/components/ui/button";
-import { Container } from "@/components/ui/container";
 
 const fade: Variants = {
   hidden: { opacity: 0, y: 12 },
@@ -28,7 +27,7 @@ export function HeroSection() {
 
   return (
     <section id="hero" className="relative scroll-mt-24 overflow-hidden">
-      <Container className="grid min-h-[calc(100svh-3.5rem)] items-center gap-12 py-[clamp(2rem,5vh,4rem)] lg:grid-cols-[0.92fr_1.08fr] lg:gap-16">
+      <div className="mx-auto grid w-full max-w-[1600px] items-center gap-10 px-6 py-[clamp(1.5rem,4vh,3rem)] md:px-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
         {/* Left — words */}
         <motion.div {...motionState} variants={fade} className="text-center lg:text-left">
           <h1
@@ -59,7 +58,7 @@ export function HeroSection() {
         <motion.div {...motionState} variants={rise}>
           <SocialPostsDemo />
         </motion.div>
-      </Container>
+      </div>
     </section>
   );
 }
