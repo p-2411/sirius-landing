@@ -51,6 +51,7 @@ export const landingContent = {
     tiers: [
       {
         name: "Free",
+        was: "",
         price: "$0",
         priceSuffix: "",
         tagline: "Everything Sirius does, with limited usage.",
@@ -64,6 +65,7 @@ export const landingContent = {
       },
       {
         name: "Pro",
+        was: "$30",
         price: "$20",
         priceSuffix: "/mo",
         tagline: "The same Sirius — just higher limits.",
@@ -73,6 +75,7 @@ export const landingContent = {
       },
       {
         name: "Max",
+        was: "",
         price: "$50",
         priceSuffix: "/mo",
         tagline: "For heavy, all-day use.",

@@ -31,10 +31,16 @@ export function PricingSection() {
                 <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--color-ink-3)]">
                   {t.name}
                 </span>
-                <div className="mt-4 font-display text-[44px] font-normal leading-none text-[var(--color-ink-1)]">
-                  {t.price}
+                <div className="mt-4 flex items-baseline gap-2 font-display leading-none text-[var(--color-ink-1)]">
+                  {t.was && <span className="text-[22px] font-normal text-[var(--color-ink-4)] line-through">{t.was}</span>}
+                  <span className="text-[44px] font-normal">{t.price}</span>
                   {t.priceSuffix && <span className="text-[16px] text-[var(--color-ink-3)]">{t.priceSuffix}</span>}
                 </div>
+                {t.was && (
+                  <span className="mt-1.5 inline-block font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--color-accent)]">
+                    Launch price
+                  </span>
+                )}
                 <p className="mt-3 text-[14px] leading-[1.5] text-[var(--color-ink-2)]">{t.tagline}</p>
 
                 {t.name === "Free" && <FreeSlots limit={20} />}
