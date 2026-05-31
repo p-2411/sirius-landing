@@ -4,7 +4,9 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { useReducedMotion } from "motion/react";
 
 import { Orb } from "@/components/sirius/orb";
-import { Rail } from "@/components/sirius/appui";
+import { Rail, ScaledShot } from "@/components/sirius/appui";
+import { Eyebrow } from "@/components/sirius/appui/eyebrow";
+import { T, FONT_BODY, FONT_DISPLAY } from "@/lib/app-theme";
 import {
   WORKFLOW_NAME,
   RUN_STEPS,
@@ -12,30 +14,32 @@ import {
   DEMO_DRAFTS,
   HOME_PROMPT,
   HOME_REPLY,
+  type RunStep,
 } from "@/lib/social-posts-demo";
 
-// ── Timeline (ms) ───────────────────────────────────────────────────────────
-// One clock drives everything; visuals are derived from `elapsed`, so the
-// scrubber and the scene always agree. This is a directed film, not a video.
-const T = {
-  orbClick: 1500,
-  prompt: 1500,
-  reply: 2100,
-  startToast: 3400,
-  toastTap: 4600,
-  runStart: 4800,
-  perStep: 400, // 6 steps → all done by ~7200
-  backTap: 9200,
-  home2: 9500,
-  doneNotif: 10300,
-  total: 11200,
+// Design size of the real app screen we render then scale into the player.
+const DW = 1360;
+const DH = 850;
+const RUN_ID = 128;
+
+// ── Timeline (ms). One clock; visuals derive from `e` so scrubber + scene agree.
+const TL = {
+  orbClick: 1600,
+  reply: 2400,
+  startToast: 3700,
+  toastTap: 5000,
+  runStart: 5300,
+  perStep: 780, // 6 steps → done ≈ 9980
+  backTap: 11200,
+  home2: 11500,
+  doneNotif: 12200,
+  total: 14400,
 };
 
 type Surface = "home" | "run";
-
 function surfaceFor(t: number): Surface {
-  if (t < T.runStart) return "home";
-  if (t < T.home2) return "run";
+  if (t < TL.runStart) return "home";
+  if (t < TL.home2) return "run";
   return "home";
 }
 
@@ -45,14 +49,13 @@ export function SocialPostsDemo() {
   const runScrollRef = useRef<HTMLDivElement | null>(null);
   const rafRef = useRef<number | null>(null);
   const lastTsRef = useRef<number | null>(null);
+  const elapsedRef = useRef(0);
 
   const [elapsed, setElapsed] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [started, setStarted] = useState(false);
-  // elapsedRef is the clock's source of truth; `elapsed` mirrors it for render.
-  const elapsedRef = useRef(0);
 
-  // Auto-play once when scrolled into view (skipped for reduced motion).
+  // Auto-play once on scroll-into-view (skipped for reduced motion).
   useEffect(() => {
     if (reduce) return;
     const el = rootRef.current;
@@ -71,18 +74,17 @@ export function SocialPostsDemo() {
     return () => io.disconnect();
   }, [reduce, started]);
 
-  // rAF loop — advances the ref, mirrors to state, stops at the end.
-  // setState only happens inside the rAF callback (not the effect body).
+  // rAF clock — setState only inside the callback, never the effect body.
   useEffect(() => {
     if (!playing || reduce) return;
     const tick = (ts: number) => {
       if (lastTsRef.current == null) lastTsRef.current = ts;
       const dt = ts - lastTsRef.current;
       lastTsRef.current = ts;
-      const next = Math.min(elapsedRef.current + dt, T.total);
+      const next = Math.min(elapsedRef.current + dt, TL.total);
       elapsedRef.current = next;
       setElapsed(next);
-      if (next < T.total) {
+      if (next < TL.total) {
         rafRef.current = requestAnimationFrame(tick);
       } else {
         setPlaying(false);
@@ -96,13 +98,12 @@ export function SocialPostsDemo() {
     };
   }, [playing, reduce]);
 
-  // Reduced motion → render the finished payoff without animating.
-  const e = reduce ? T.total : elapsed;
-  const ended = e >= T.total;
+  const e = reduce ? TL.total : elapsed;
+  const ended = e >= TL.total;
 
   const toggle = useCallback(() => {
     if (reduce) return;
-    if (elapsedRef.current >= T.total) {
+    if (elapsedRef.current >= TL.total) {
       elapsedRef.current = 0;
       setElapsed(0);
       lastTsRef.current = null;
@@ -112,22 +113,18 @@ export function SocialPostsDemo() {
     setPlaying((p) => !p);
   }, [reduce]);
 
-  // ── Derived view state ─────────────────────────────────────────────────────
+  // Derived view state.
   const surface = surfaceFor(e);
   const onHome = surface === "home";
-  const orbActive = e >= T.orbClick && onHome && e < T.runStart;
-  const showPrompt = e >= T.prompt && e < T.runStart;
-  const showReply = e >= T.reply && e < T.runStart;
-  const showStartToast = e >= T.startToast && e < T.runStart;
-  const stepsDone = Math.max(
-    0,
-    Math.min(RUN_STEPS.length, Math.floor((e - T.runStart) / T.perStep)),
-  );
+  const orbActive = e >= TL.orbClick && onHome && e < TL.runStart;
+  const showPrompt = e >= TL.orbClick && e < TL.runStart;
+  const showReply = e >= TL.reply && e < TL.runStart;
+  const showStartToast = e >= TL.startToast && e < TL.runStart;
+  const stepsDone = Math.max(0, Math.min(RUN_STEPS.length, Math.floor((e - TL.runStart) / TL.perStep)));
   const showDisplay = surface === "run" && stepsDone >= RUN_STEPS.length;
-  const showBackHint = surface === "run" && e > T.runStart + 200;
-  const showDoneNotif = e >= T.doneNotif;
+  const showDoneNotif = e >= TL.doneNotif;
 
-  // Auto-scroll the run page as the display output reveals.
+  // Auto-scroll the run page to reveal the display output.
   useEffect(() => {
     if (surface !== "run") return;
     const el = runScrollRef.current;
@@ -136,21 +133,18 @@ export function SocialPostsDemo() {
   }, [surface, showDisplay, stepsDone, reduce]);
 
   const cursor = cursorFor(e);
-  const clicking = near(e, T.orbClick) || near(e, T.toastTap) || near(e, T.backTap);
-  const progress = Math.min(100, (e / T.total) * 100);
+  const clicking = near(e, TL.orbClick) || near(e, TL.toastTap) || near(e, TL.backTap);
+  const progress = Math.min(100, (e / TL.total) * 100);
 
   return (
     <div
       ref={rootRef}
       className="overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border-strong)] bg-black shadow-[0_30px_80px_-36px_rgba(0,0,0,0.8)]"
     >
-      {/* play area */}
-      <div className="relative h-[380px] bg-black sm:h-[400px]">
-        <div className="absolute inset-0 flex">
-          <Rail active={surface === "run" ? "workflows" : "voice"} />
-
+      <div className="relative w-full bg-black" style={{ aspectRatio: `${DW} / ${DH}` }}>
+        <ScaledShot width={DW} height={DH}>
           {onHome ? (
-            <HomeSurface
+            <HomeShot
               orbActive={orbActive}
               showPrompt={showPrompt}
               showReply={showReply}
@@ -158,35 +152,23 @@ export function SocialPostsDemo() {
               showDoneNotif={showDoneNotif}
             />
           ) : (
-            <RunSurface
-              scrollRef={runScrollRef}
-              stepsDone={stepsDone}
-              showDisplay={showDisplay}
-              showBackHint={showBackHint}
-            />
+            <RunDetailShot scrollRef={runScrollRef} stepsDone={stepsDone} showDisplay={showDisplay} />
           )}
-        </div>
+        </ScaledShot>
 
-        {/* simulated cursor */}
         {!reduce && started && !ended && (
           <div
             className="pointer-events-none absolute z-20"
             style={{
               left: `${cursor.x}%`,
               top: `${cursor.y}%`,
-              transition: "left 650ms cubic-bezier(0.4,0,0.2,1), top 650ms cubic-bezier(0.4,0,0.2,1)",
+              transition: "left 680ms cubic-bezier(0.4,0,0.2,1), top 680ms cubic-bezier(0.4,0,0.2,1)",
             }}
           >
             {clicking && (
-              <span className="absolute -left-2 -top-2 h-6 w-6 animate-ping rounded-full border border-white/70" />
+              <span className="absolute -left-2 -top-2 h-7 w-7 animate-ping rounded-full border border-white/70" />
             )}
-            <svg
-              width="17"
-              height="17"
-              viewBox="0 0 16 16"
-              fill="white"
-              className="drop-shadow-[0_1px_2px_rgba(0,0,0,0.7)]"
-            >
+            <svg width="18" height="18" viewBox="0 0 16 16" fill="white" className="drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">
               <path d="M1 1 L1 12 L4 9 L6.5 14 L8.5 13 L6 8 L10 8 Z" />
             </svg>
           </div>
@@ -199,7 +181,7 @@ export function SocialPostsDemo() {
           type="button"
           onClick={toggle}
           aria-label={ended ? "Replay" : playing ? "Pause" : "Play"}
-          className="text-white/90 outline-none transition-opacity hover:opacity-70 focus-visible:opacity-100"
+          className="text-white/90 outline-none transition-opacity hover:opacity-70"
         >
           {ended ? <ReplayGlyph /> : playing ? <PauseGlyph /> : <PlayGlyph />}
         </button>
@@ -207,12 +189,14 @@ export function SocialPostsDemo() {
           <div className="absolute left-0 top-0 h-full rounded-full bg-white" style={{ width: `${progress}%` }} />
         </div>
       </div>
+
+      <style>{`@keyframes sp-toast-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}`}</style>
     </div>
   );
 }
 
-// ── Home surface ──────────────────────────────────────────────────────────────
-function HomeSurface({
+// ── Home surface (mirrors the real app voice/home screen) ──────────────────────
+function HomeShot({
   orbActive,
   showPrompt,
   showReply,
@@ -226,53 +210,78 @@ function HomeSurface({
   showDoneNotif: boolean;
 }) {
   return (
-    <main className="relative flex flex-1 flex-col items-center justify-center gap-5 overflow-hidden bg-[var(--color-bg)] px-6 py-8">
-      <div className="relative" style={{ width: 132, height: 132 }}>
-        <Orb className="!h-full !w-full" staticRender />
+    <div style={{ display: "flex", width: DW, height: DH, background: T.bg, fontFamily: FONT_BODY, color: T.ink, overflow: "hidden" }}>
+      <Rail active="voice" />
+      <main
+        style={{
+          position: "relative",
+          flex: 1,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 32,
+          padding: "48px 24px",
+          overflow: "hidden",
+        }}
+      >
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-[-14%] rounded-full transition-opacity duration-500"
           style={{
-            opacity: orbActive ? 1 : 0,
-            background: "radial-gradient(circle, rgba(108,216,255,0.42), transparent 62%)",
+            position: "absolute",
+            left: "50%",
+            top: "42%",
+            width: 760,
+            height: 760,
+            transform: "translate(-50%, -50%)",
+            background:
+              "radial-gradient(circle closest-side, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.42) 40%, rgba(0,0,0,0.14) 70%, rgba(0,0,0,0) 100%)",
+            borderRadius: "50%",
           }}
         />
-      </div>
+        <div style={{ position: "relative", width: 300, height: 300 }}>
+          <Orb className="!h-full !w-full" staticRender />
+          <div
+            aria-hidden
+            style={{
+              position: "absolute",
+              inset: "-10%",
+              borderRadius: "50%",
+              transition: "opacity 500ms ease",
+              opacity: orbActive ? 1 : 0,
+              background: "radial-gradient(circle, rgba(108,216,255,0.4), transparent 60%)",
+            }}
+          />
+        </div>
 
-      <div className="flex min-h-[64px] w-full max-w-[380px] flex-col items-center gap-2 text-center">
-        {!showPrompt ? (
-          <p className="text-[12.5px] text-[var(--color-ink-3)]">Tap the orb to start.</p>
-        ) : (
-          <>
-            <p className="text-[11.5px] leading-[1.45] text-[var(--color-ink-3)]">
-              <span className="text-[var(--color-ink-4)]">You · </span>
+        <div style={{ minHeight: 24, fontSize: 14, color: T.ink3 }}>
+          {showPrompt ? null : "Tap the orb to talk (or press ⌘ /)."}
+        </div>
+
+        {showPrompt && (
+          <div style={{ width: "min(640px, 92%)", display: "flex", flexDirection: "column", gap: 18, alignItems: "center" }}>
+            <div style={{ fontSize: 13, color: T.ink3, textAlign: "center", lineHeight: 1.45, maxWidth: 520 }}>
+              <span style={{ color: T.ink4 }}>You · </span>
               {HOME_PROMPT}
-            </p>
+            </div>
             {showReply && (
-              <p className="text-[13px] leading-[1.5] text-[var(--color-ink-1)]">{HOME_REPLY}</p>
+              <div style={{ fontSize: 17, color: T.ink, lineHeight: 1.5, textAlign: "center", maxWidth: 600 }}>
+                {HOME_REPLY}
+              </div>
             )}
-          </>
-        )}
-      </div>
-
-      {showStartToast && !showDoneNotif && (
-        <AppToast tone="neutral" title={WORKFLOW_NAME} body="Started — running in the background." />
-      )}
-      {showDoneNotif && (
-        <AppToast tone="gold" title={WORKFLOW_NAME} body="3 drafts ready. Pick one, ship.">
-          <div className="mt-2 flex flex-wrap gap-1.5">
-            {DEMO_DRAFTS.map((d) => (
-              <span
-                key={d.id}
-                className="rounded-md border border-[var(--color-border)] px-2 py-0.5 text-[9.5px] text-[var(--color-ink-3)]"
-              >
-                {d.angle}
-              </span>
-            ))}
           </div>
-        </AppToast>
-      )}
-    </main>
+        )}
+
+        <div style={{ fontSize: 12, color: T.ink4, letterSpacing: 0.4 }}>or to type: ⌘ K</div>
+
+        {showStartToast && !showDoneNotif && (
+          <AppToast tone="neutral" title={WORKFLOW_NAME} body="Started — running in the background." />
+        )}
+        {showDoneNotif && (
+          <AppToast tone="gold" title={WORKFLOW_NAME} body="3 drafts ready. Pick one, ship." chips />
+        )}
+      </main>
+    </div>
   );
 }
 
@@ -280,144 +289,232 @@ function AppToast({
   tone,
   title,
   body,
-  children,
+  chips = false,
 }: {
   tone: "neutral" | "gold";
   title: string;
   body: string;
-  children?: React.ReactNode;
+  chips?: boolean;
 }) {
   const gold = tone === "gold";
   return (
     <div
-      className="absolute bottom-3 right-3 w-[228px] rounded-[10px] border bg-[var(--color-surface-1)] p-3 text-left shadow-[0_12px_34px_-12px_rgba(0,0,0,0.7)]"
       style={{
-        borderColor: gold ? "rgba(240,179,90,0.55)" : "var(--color-border-strong)",
+        position: "absolute",
+        bottom: 32,
+        right: 32,
+        width: 360,
+        borderRadius: 12,
+        padding: 16,
+        background: T.surface,
+        border: `1px solid ${gold ? "rgba(217,185,120,0.55)" : T.borderStrong}`,
+        boxShadow: "0 18px 50px -16px rgba(0,0,0,0.7)",
+        textAlign: "left",
         animation: "sp-toast-in 360ms cubic-bezier(0.22,1,0.36,1) both",
       }}
     >
-      <div className="flex items-center gap-2">
-        <span
-          className="h-1.5 w-1.5 shrink-0 rounded-full"
-          style={{ background: gold ? "var(--color-accent)" : "var(--color-state-listening-strong)" }}
-        />
-        <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-[var(--color-ink-3)]">
+      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+        <span style={{ width: 8, height: 8, borderRadius: "50%", background: gold ? T.warm : T.cyanStrong }} />
+        <span style={{ fontSize: 11, letterSpacing: 1.6, textTransform: "uppercase", color: T.ink3, fontWeight: 600 }}>
           Sirius
         </span>
       </div>
-      <p className="mt-1.5 text-[12px] font-medium text-[var(--color-ink-1)]">{title}</p>
-      <p className="mt-0.5 text-[11px] leading-[1.4] text-[var(--color-ink-2)]">{body}</p>
-      {children}
-      <style>{`@keyframes sp-toast-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}`}</style>
+      <p style={{ margin: "10px 0 0", fontSize: 15, fontWeight: 500, color: T.ink }}>{title}</p>
+      <p style={{ margin: "4px 0 0", fontSize: 13, lineHeight: 1.45, color: T.ink2 }}>{body}</p>
+      {chips && (
+        <div style={{ marginTop: 10, display: "flex", gap: 8, flexWrap: "wrap" }}>
+          {DEMO_DRAFTS.map((d) => (
+            <span
+              key={d.id}
+              style={{ border: `1px solid ${T.border}`, borderRadius: 6, padding: "3px 9px", fontSize: 11, color: T.ink3 }}
+            >
+              {d.angle}
+            </span>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
 
-// ── Run surface (mirrors the real app run detail) ───────────────────────────────
-function RunSurface({
+// ── Run detail (mirrors app/app/workflows/runs/[id]) ────────────────────────────
+function RunDetailShot({
   scrollRef,
   stepsDone,
   showDisplay,
-  showBackHint,
 }: {
   scrollRef: React.RefObject<HTMLDivElement | null>;
   stepsDone: number;
   showDisplay: boolean;
-  showBackHint: boolean;
 }) {
   return (
-    <main className="relative flex flex-1 flex-col overflow-hidden bg-[var(--color-bg)]">
-      <header className="flex-shrink-0 border-b border-[var(--color-border)] px-5 py-3">
-        <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-[var(--color-state-listening-strong)]">
-          Run · {showDisplay ? "done" : "running"}
-        </span>
-        <h4 className="mt-0.5 font-display text-[16px] font-normal text-[var(--color-ink-1)]">{WORKFLOW_NAME}</h4>
-      </header>
+    <div style={{ display: "flex", width: DW, height: DH, background: T.bg, fontFamily: FONT_BODY, color: T.ink, overflow: "hidden" }}>
+      <Rail active="workflows" />
+      <main style={{ flex: 1, minWidth: 0, height: DH, padding: "32px 48px", display: "flex", flexDirection: "column", overflow: "hidden" }}>
+        <div style={{ maxWidth: 1120, width: "100%", margin: "0 auto", flex: 1, minHeight: 0, display: "flex", flexDirection: "column" }}>
+          {/* Breadcrumb */}
+          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 28, fontSize: 11.5, letterSpacing: "0.04em", flexShrink: 0 }}>
+            <span style={{ color: T.ink3 }}>Workflows</span>
+            <span style={{ color: T.ink4 }}>/</span>
+            <span style={{ color: T.ink3 }}>{WORKFLOW_NAME}</span>
+            <span style={{ color: T.ink4 }}>/</span>
+            <span style={{ color: T.ink2 }}>run #{RUN_ID}</span>
+          </div>
 
-      <div ref={scrollRef} className="min-h-0 flex-1 overflow-y-auto px-5 py-4">
-        <p className="mb-3 font-mono text-[9px] uppercase tracking-[0.2em] text-[var(--color-ink-3)]">Steps</p>
-        <ol className="flex flex-col">
-          {RUN_STEPS.map((step, i) => {
-            const done = i < stepsDone;
-            const running = i === stepsDone && !showDisplay;
-            const last = i === RUN_STEPS.length - 1;
-            return (
-              <li key={step.id} className="relative pl-6" style={{ opacity: done || running ? 1 : 0.4 }}>
-                {!last && (
-                  <span aria-hidden className="absolute left-[3.5px] top-4 h-full w-px bg-[var(--color-border)]" />
-                )}
-                <span
-                  className="absolute left-0 top-1.5 h-[7px] w-[7px] rounded-full"
-                  style={{
-                    background: done
-                      ? "var(--color-success)"
-                      : running
-                        ? "var(--color-state-listening-strong)"
-                        : "var(--color-ink-4)",
-                  }}
-                />
-                <div className="flex items-baseline gap-2 pb-0.5">
-                  <span className="text-[12.5px] text-[var(--color-ink-1)]">{step.title}</span>
-                  <span className="font-mono text-[10px] text-[var(--color-ink-4)]">{step.type}</span>
-                  <span className="ml-auto text-[10px] text-[var(--color-ink-4)]">
-                    {done ? "done" : running ? "running" : ""}
-                  </span>
-                </div>
-                {(done || running) && (
-                  <div className="flex gap-3 pb-3 pt-0.5 text-[10px] text-[var(--color-ink-4)]">
-                    <span>▸ input</span>
-                    <span>▸ output</span>
-                  </div>
-                )}
+          {/* Header */}
+          <header style={{ paddingBottom: 24, borderBottom: `1px solid ${T.border}`, flexShrink: 0 }}>
+            <Eyebrow accent="warm">Run</Eyebrow>
+            <h1 style={{ fontFamily: FONT_DISPLAY, fontWeight: 400, fontSize: 30, color: T.ink, letterSpacing: "-0.02em", margin: "8px 0 12px" }}>
+              {WORKFLOW_NAME}{" "}
+              <span style={{ color: T.ink4, fontWeight: 400, fontSize: 18, fontFamily: FONT_BODY }}>#{RUN_ID}</span>
+            </h1>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 14, flexWrap: "wrap" }}>
+              <span style={{ display: "inline-flex", alignItems: "center", gap: 7, fontSize: 13.5 }}>
+                <span style={{ width: 7, height: 7, borderRadius: "50%", background: showDisplay ? T.success : T.warning, display: "inline-block" }} />
+                <span style={{ color: showDisplay ? T.success : T.warning, fontWeight: 500 }}>{showDisplay ? "Done" : "Running"}</span>
+              </span>
+              <span
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 6,
+                  borderRadius: 999,
+                  padding: "6px 14px",
+                  background: T.warm,
+                  color: T.bgDeep,
+                  fontWeight: 500,
+                  fontSize: 12.5,
+                }}
+              >
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor" aria-hidden>
+                  <polygon points="2,1 9,5 2,9" />
+                </svg>
+                Run now
+              </span>
+            </div>
+          </header>
 
-                {last && showDisplay && (
-                  <div className="mb-2 mt-1 rounded-[8px] border-l-2 border-[var(--color-accent)] bg-[var(--color-surface-1)] p-3.5">
-                    <p className="text-[12px] text-[var(--color-ink-1)]">{DISPLAY_INTRO}</p>
-                    <div className="mt-2 h-px bg-[var(--color-border)]" />
-                    {DEMO_DRAFTS.map((d, di) => (
-                      <div key={d.id} className="mt-3">
-                        <p className="text-[10px] font-semibold uppercase tracking-[0.1em] text-[var(--color-accent)]">
-                          Post {di + 1} · {d.angle}
-                        </p>
-                        {d.text.split("\n\n").map((para, pi) => (
-                          <p
-                            key={pi}
-                            className="mt-1.5 whitespace-pre-line text-[11.5px] leading-[1.55] text-[var(--color-ink-2)]"
-                          >
-                            {para}
-                          </p>
-                        ))}
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </li>
-            );
-          })}
-        </ol>
-      </div>
-
-      {showBackHint && !showDisplay && (
-        <div className="pointer-events-none absolute bottom-3 left-5 max-w-[260px] border-l-2 border-[var(--color-accent)] pl-2.5 text-[10.5px] leading-[1.35] text-[var(--color-ink-3)]">
-          Head back home — I&rsquo;ll ping you when the drafts are ready.
+          {/* Steps */}
+          <div ref={scrollRef} style={{ flex: 1, minHeight: 0, overflowY: "auto" }}>
+            <div style={{ maxWidth: 760 }}>
+              <section style={{ marginTop: 28 }}>
+                <Eyebrow accent="dim">Steps</Eyebrow>
+                <ol style={{ position: "relative", listStyle: "none", margin: "18px 0 0", padding: 0 }}>
+                  <div aria-hidden style={{ position: "absolute", left: 6, top: 7, bottom: 20, width: 1, background: T.border }} />
+                  {RUN_STEPS.map((step, i) => (
+                    <PlanRow key={step.id} step={step} index={i} stepsDone={stepsDone} showDisplay={showDisplay} />
+                  ))}
+                </ol>
+              </section>
+            </div>
+          </div>
         </div>
-      )}
-    </main>
+      </main>
+    </div>
   );
 }
 
-// ── Cursor scripting ────────────────────────────────────────────────────────────
+function PlanRow({
+  step,
+  index,
+  stepsDone,
+  showDisplay,
+}: {
+  step: RunStep;
+  index: number;
+  stepsDone: number;
+  showDisplay: boolean;
+}) {
+  const completed = index < stepsDone;
+  const running = index === stepsDone && !showDisplay;
+  const pending = !completed && !running;
+  const isDisplay = step.type === "display_to_user";
+  const statusText = completed ? "done" : running ? "running…" : "pending";
+  const statusColor = running ? T.warning : T.ink4;
+
+  return (
+    <li style={{ listStyle: "none", display: "flex", gap: 14, position: "relative", paddingBottom: 20 }}>
+      <span
+        aria-hidden
+        style={{
+          width: 13,
+          height: 13,
+          borderRadius: "50%",
+          marginTop: 1,
+          flexShrink: 0,
+          zIndex: 1,
+          boxSizing: "border-box",
+          background: pending ? "var(--color-bg)" : running ? T.warning : T.success,
+          border: pending ? `1.5px solid ${T.ink4}` : "2px solid var(--color-bg)",
+        }}
+      />
+      <div style={{ flex: 1, minWidth: 0, opacity: pending ? 0.55 : 1 }}>
+        <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 10 }}>
+          <span style={{ fontSize: 13.5, color: T.ink, minWidth: 0 }}>
+            {step.title} <span style={{ color: T.ink4, fontSize: 11 }}>{step.type}</span>
+          </span>
+          <span style={{ fontSize: 11, color: statusColor, flexShrink: 0 }}>{statusText}</span>
+        </div>
+
+        {isDisplay && completed && (
+          <div
+            style={{
+              margin: "10px 0 0",
+              padding: "10px 12px",
+              background: T.surface,
+              borderLeft: `2px solid ${T.warm}`,
+              fontSize: 13,
+              color: T.ink,
+              borderRadius: "0 6px 6px 0",
+            }}
+          >
+            <p style={{ margin: 0 }}>{DISPLAY_INTRO}</p>
+            <div style={{ height: 1, background: T.border, margin: "10px 0" }} />
+            {DEMO_DRAFTS.map((d, di) => {
+              const paras = d.text.split("\n\n");
+              return (
+                <div key={d.id} style={{ marginTop: di === 0 ? 0 : 16 }}>
+                  <p style={{ margin: "0 0 4px" }}>
+                    <strong>Post {di + 1}:</strong> {paras[0]}
+                  </p>
+                  {paras.slice(1).map((p, pi) => (
+                    <p key={pi} style={{ margin: "6px 0 0", whiteSpace: "pre-line", color: T.ink2 }}>
+                      {p}
+                    </p>
+                  ))}
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {completed && !isDisplay && (
+          <div style={{ display: "flex", gap: 16, marginTop: 8 }}>
+            <details style={{ fontSize: 11.5 }}>
+              <summary style={{ color: T.ink4, cursor: "pointer", fontFamily: FONT_BODY }}>input</summary>
+            </details>
+            <details style={{ fontSize: 11.5 }}>
+              <summary style={{ color: T.ink4, cursor: "pointer", fontFamily: FONT_BODY }}>output</summary>
+            </details>
+          </div>
+        )}
+      </div>
+    </li>
+  );
+}
+
+// ── Cursor scripting (% of the player box, which matches design aspect) ──────────
 function cursorFor(t: number): { x: number; y: number } {
-  if (t < T.orbClick) return { x: 53, y: 44 }; // glide to orb
-  if (t < T.startToast) return { x: 53, y: 56 }; // rest near orb
-  if (t < T.toastTap + 200) return { x: 86, y: 84 }; // to the started toast
-  if (t < T.backTap) return { x: 20, y: 90 }; // near the back hint on the run page
-  if (t < T.home2) return { x: 5, y: 30 }; // rail home button
-  return { x: 86, y: 82 }; // near the drafts-ready notification
+  if (t < TL.orbClick) return { x: 53, y: 40 };
+  if (t < TL.startToast) return { x: 53, y: 52 };
+  if (t < TL.toastTap + 250) return { x: 87, y: 90 };
+  if (t < TL.backTap) return { x: 50, y: 55 };
+  if (t < TL.home2) return { x: 4, y: 44 };
+  return { x: 87, y: 86 };
 }
 
 function near(t: number, mark: number) {
-  return t >= mark - 60 && t <= mark + 220;
+  return t >= mark - 70 && t <= mark + 240;
 }
 
 // ── Scrubber glyphs ─────────────────────────────────────────────────────────────
@@ -438,17 +535,7 @@ function PauseGlyph() {
 }
 function ReplayGlyph() {
   return (
-    <svg
-      width="13"
-      height="13"
-      viewBox="0 0 14 14"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.4"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden
-    >
+    <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
       <path d="M12 7a5 5 0 1 1-1.5-3.5" />
       <path d="M12 2v3h-3" />
     </svg>
