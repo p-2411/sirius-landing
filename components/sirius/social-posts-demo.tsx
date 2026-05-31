@@ -32,7 +32,7 @@ type OrbState = "idle" | "user" | "sirius";
 
 // ── Timeline (ms), derived so transcript typing + scene always line up. ──────────
 const _orbClick = 1500;
-const _userStart = _orbClick + 150; // brief beat after the tap before words appear
+const _userStart = _orbClick + 450; // beat after the tap before words appear
 const _promptDone = _userStart + PROMPT_WORDS.length * WORD_MS; // user finishes speaking
 const _siriusStart = _promptDone + 950; // pause after you finish, then Sirius answers
 const _replyDone = _siriusStart + REPLY_WORDS.length * WORD_MS;
