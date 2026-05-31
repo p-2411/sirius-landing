@@ -1,5 +1,5 @@
 import { Container } from "@/components/ui/container";
-import { ButtonLink } from "@/components/ui/button";
+import { DownloadButton } from "@/components/ui/download-button";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/reveal";
 import { AppIcon } from "@/components/sirius/appui";
 import { SectionLabel } from "@/components/ui/section-label";
@@ -8,7 +8,6 @@ import { landingContent } from "@/content/landing";
 
 export function PricingSection() {
   const { eyebrow, title, note, tiers } = landingContent.pricing;
-  const { downloadCta } = landingContent;
   return (
     <section id="pricing" className="scroll-mt-24 py-24 md:py-32">
       <Container className="flex flex-col items-center text-center">
@@ -56,12 +55,7 @@ export function PricingSection() {
         </RevealGroup>
 
         <Reveal className="mt-10 flex flex-col items-center">
-          <ButtonLink href={downloadCta.href} variant="primary">
-            <span className="inline-flex items-center gap-2">
-              <span className="text-[15px] leading-none">⌘</span>
-              {downloadCta.label}
-            </span>
-          </ButtonLink>
+          <DownloadButton />
           <p className="mt-6 max-w-[40ch] text-[13px] leading-[1.55] text-[var(--color-ink-3)]">{note}</p>
         </Reveal>
       </Container>

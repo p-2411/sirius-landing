@@ -103,3 +103,56 @@ export async function updateName(recordId: string, name: string): Promise<void> 
     throw new Error(`Airtable updateName failed: ${res.status}`);
   }
 }
+
+// ── Free-tier downloads (capped) ────────────────────────────────────────────
+// Saved to the Users table. Columns: name, email, phone, consent
+// (consent is a single-select with options "yes" / "no"). The cap counts
+// every row in this table.
+function usersConfig(): AirtableConfig {
+  const cfg = readConfig();
+  return { ...cfg, tableName: process.env.AIRTABLE_USERS_TABLE ?? "Users" };
+}
+
+/** How many free downloads have been claimed (every row in the Users table). */
+export async function countDownloads(): Promise<number> {
+  const cfg = usersConfig();
+  const url = `${tableUrl(cfg)}?maxRecords=100&fields%5B%5D=email`;
+  const res = await fetch(url, { headers: authHeaders(cfg), cache: "no-store" });
+  if (!res.ok) throw new Error(`Airtable countDownloads failed: ${res.status}`);
+  const data = (await res.json()) as { records: unknown[] };
+  return Array.isArray(data.records) ? data.records.length : 0;
+}
+
+/** True if this email already claimed a free download (don't double-count). */
+export async function downloadExists(email: string): Promise<boolean> {
+  const cfg = usersConfig();
+  const safe = email.replace(/"/g, "");
+  const filter = `LOWER({email})="${safe}"`;
+  const url = `${tableUrl(cfg)}?filterByFormula=${encodeURIComponent(filter)}&maxRecords=1`;
+  const res = await fetch(url, { headers: authHeaders(cfg), cache: "no-store" });
+  if (!res.ok) throw new Error(`Airtable downloadExists failed: ${res.status}`);
+  const data = (await res.json()) as { records: unknown[] };
+  return Array.isArray(data.records) && data.records.length > 0;
+}
+
+export async function createDownload(input: {
+  name: string;
+  email: string;
+  mobile?: string;
+  consent: boolean;
+}): Promise<void> {
+  const cfg = usersConfig();
+  const fields: Record<string, unknown> = {
+    name: input.name,
+    email: input.email,
+    consent: input.consent ? "yes" : "no", // single-select option
+  };
+  if (input.mobile) fields.phone = input.mobile;
+  const res = await fetch(tableUrl(cfg), {
+    method: "POST",
+    headers: authHeaders(cfg),
+    body: JSON.stringify({ records: [{ fields }] }),
+    cache: "no-store",
+  });
+  if (!res.ok) throw new Error(`Airtable createDownload failed: ${res.status}`);
+}

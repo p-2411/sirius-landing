@@ -4,7 +4,7 @@ import { motion, useReducedMotion } from "motion/react";
 
 import { landingContent } from "@/content/landing";
 import { Orb } from "@/components/sirius/orb";
-import { ButtonLink } from "@/components/ui/button";
+import { DownloadButton } from "@/components/ui/download-button";
 
 export function FinalCtaSection() {
   const reducedMotion = useReducedMotion();
@@ -41,9 +41,7 @@ export function FinalCtaSection() {
         </motion.h2>
 
         <motion.div {...fadeUp(0.2)} className="mt-12 flex flex-col items-center gap-4">
-          <ButtonLink href="#cta" variant="primary">
-            {cta.button}
-          </ButtonLink>
+          <DownloadButton label={cta.button} />
           <p className="text-[13px] leading-5 text-[var(--color-ink-3)]">
             {cta.sub}
           </p>

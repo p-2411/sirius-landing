@@ -2,45 +2,47 @@
 
 import { useEffect, useState } from "react";
 
-// The countdown begins at this fixed instant — 11am AEST (UTC+10) — so every
-// visitor worldwide sees the same number. Counter = function of (now − LAUNCH).
-const LAUNCH = Date.parse("2026-06-02T11:00:00+10:00");
-
 /**
- * Slots consumed since launch, on a decelerating schedule. Drops fire at the
- * START of each interval, so the first −2 lands exactly at launch (20 → 18):
- *   • 2 per 10 min for the first 30 min   — drops at 0, 10, 20  (→ 6)
- *   • 1 per 10 min for the next hour      — drops at 30…80      (→ 6)
- *   • 1 per 5 hours thereafter            — drops at 90, 390, …
+ * FreeSlots — live count of remaining free downloads (capped at `limit`),
+ * read from /api/free-download which counts real signups. Shows "sold out"
+ * once the cap is reached. Renders nothing until the first fetch resolves.
  */
-function consumed(elapsedMin: number): number {
-  if (elapsedMin < 0) return 0;
-  let used = Math.min(Math.floor(elapsedMin / 10) + 1, 3) * 2; // phase 1
-  if (elapsedMin >= 30) used += Math.min(Math.floor((elapsedMin - 30) / 10) + 1, 6); // phase 2
-  if (elapsedMin >= 90) used += Math.floor((elapsedMin - 90) / 300) + 1; // phase 3
-  return used;
-}
-
-function slotsLeft(now: number, limit: number): number {
-  const min = (now - LAUNCH) / 60000;
-  return Math.max(1, limit - consumed(min));
-}
-
 export function FreeSlots({ limit = 20 }: { limit?: number }) {
-  // Client-only (depends on the current time) — render nothing until mounted
-  // so server and client markup match.
-  const [left, setLeft] = useState<number | null>(null);
+  const [state, setState] = useState<{ remaining: number; soldOut: boolean } | null>(null);
 
   useEffect(() => {
-    const tick = () => setLeft(slotsLeft(Date.now(), limit));
-    tick();
-    const id = setInterval(tick, 15_000);
-    return () => clearInterval(id);
-  }, [limit]);
+    let alive = true;
+    const load = async () => {
+      try {
+        const res = await fetch("/api/free-download", { cache: "no-store" });
+        const d = (await res.json()) as { remaining?: number; soldOut?: boolean };
+        if (alive && typeof d.remaining === "number") {
+          setState({ remaining: d.remaining, soldOut: Boolean(d.soldOut) });
+        }
+      } catch {
+        /* leave previous state */
+      }
+    };
+    load();
+    const id = setInterval(load, 30_000);
+    return () => {
+      alive = false;
+      clearInterval(id);
+    };
+  }, []);
 
-  if (left == null) return null;
+  if (!state) return null;
+
+  if (state.soldOut) {
+    return (
+      <div className="mt-5 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface-deep)] p-3 text-center font-mono text-[10.5px] uppercase tracking-[0.16em] text-[var(--color-ink-3)]">
+        All {limit} free spots claimed — sold out
+      </div>
+    );
+  }
+
+  const left = state.remaining;
   const pct = Math.max(4, (left / limit) * 100);
-
   return (
     <div className="mt-5 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface-deep)] p-3">
       <div className="flex items-baseline justify-between font-mono text-[10.5px] uppercase tracking-[0.14em] text-[var(--color-ink-3)]">

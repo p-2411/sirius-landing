@@ -4,7 +4,7 @@ import { motion, useReducedMotion, type Variants } from "motion/react";
 
 import { landingContent } from "@/content/landing";
 import { SocialPostsDemo } from "@/components/sirius/social-posts-demo";
-import { ButtonLink } from "@/components/ui/button";
+import { DownloadButton } from "@/components/ui/download-button";
 
 const fade: Variants = {
   hidden: { opacity: 0, y: 12 },
@@ -19,7 +19,6 @@ const rise: Variants = {
 export function HeroSection() {
   const reduce = useReducedMotion();
   const { title, titleAccent, description } = landingContent.hero;
-  const { downloadCta } = landingContent;
 
   const motionState = reduce
     ? { initial: undefined, animate: undefined }
@@ -45,12 +44,7 @@ export function HeroSection() {
           </p>
 
           <div className="mt-9 flex items-center justify-center">
-            <ButtonLink href={downloadCta.href} variant="primary">
-              <span className="inline-flex items-center gap-2">
-                <span className="text-[15px] leading-none">⌘</span>
-                {downloadCta.label}
-              </span>
-            </ButtonLink>
+            <DownloadButton />
           </div>
         </motion.div>
 
