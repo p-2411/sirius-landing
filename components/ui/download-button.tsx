@@ -206,7 +206,7 @@ function DownloadDialog({ onClose }: { onClose: () => void }) {
               disabled={status === "submitting"}
               className="btn btn-primary mt-1 text-[13.5px] disabled:cursor-wait disabled:opacity-70"
             >
-              {status === "submitting" ? "Sending…" : "Get the download link"}
+              {status === "submitting" ? "Starting…" : "Download"}
             </button>
           </form>
         )}
