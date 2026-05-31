@@ -7,6 +7,18 @@ import { landingContent } from "@/content/landing";
 
 type Status = "idle" | "submitting" | "success" | "already" | "soldout" | "error";
 
+const DOWNLOAD_URL =
+  "https://github.com/p-2411/sirius-releases/releases/download/v0.4.5/Sirius-v0.4.5-arm64.dmg";
+
+function startDownload() {
+  const a = document.createElement("a");
+  a.href = DOWNLOAD_URL;
+  a.rel = "noopener";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+}
+
 export function DownloadButton({ label, className }: { label?: string; className?: string }) {
   const [open, setOpen] = useState(false);
   const text = label ?? landingContent.downloadCta.label;
@@ -81,6 +93,7 @@ function DownloadDialog({ onClose }: { onClose: () => void }) {
       }
       if (typeof data.remaining === "number") setRemaining(data.remaining);
       setStatus(data.already ? "already" : "success");
+      startDownload();
     } catch {
       setErr("Network error — please try again.");
       setStatus("error");
@@ -120,13 +133,24 @@ function DownloadDialog({ onClose }: { onClose: () => void }) {
         </div>
 
         {done ? (
-          <p className="mt-3 text-[14px] leading-[1.6] text-[var(--color-ink-2)]">
-            {status === "already" ? "You're already on the list — " : "You've claimed a free spot. "}
-            We&rsquo;ll email your download link to <span className="text-[var(--color-ink-1)]">{email}</span>.
-            {remaining != null && remaining > 0 && (
-              <span className="mt-2 block text-[var(--color-ink-3)]">{remaining} free spots left.</span>
-            )}
-          </p>
+          <div className="mt-3 text-[14px] leading-[1.6] text-[var(--color-ink-2)]">
+            <p>
+              {status === "already" ? "Welcome back — your download is starting." : "You're in. Your download is starting."}
+              {remaining != null && remaining > 0 && (
+                <span className="mt-2 block text-[var(--color-ink-3)]">{remaining} free spots left.</span>
+              )}
+            </p>
+            <p className="mt-3 text-[13px] text-[var(--color-ink-3)]">
+              Didn&rsquo;t start?{" "}
+              <a
+                href={DOWNLOAD_URL}
+                className="text-[var(--color-accent)] underline underline-offset-2"
+              >
+                Download Sirius for Mac
+              </a>
+              .
+            </p>
+          </div>
         ) : status === "soldout" ? (
           <p className="mt-3 text-[14px] leading-[1.6] text-[var(--color-ink-2)]">
             All 20 free downloads have been claimed. Sirius Pro starts at $20/mo — same app, higher limits.
