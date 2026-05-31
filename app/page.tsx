@@ -23,9 +23,9 @@ export default function HomePage() {
       <SectionDivider />
       <OneAppSection />
       <SectionDivider />
-      <PricingSection />
-      <SectionDivider />
       <LocalDataSection />
+      <SectionDivider />
+      <PricingSection />
       <FinalCtaSection />
       <SiteFooter />
     </main>
