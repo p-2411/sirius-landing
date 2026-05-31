@@ -173,7 +173,7 @@ function DownloadDialog({ onClose }: { onClose: () => void }) {
                 required
                 className="mt-0.5 h-4 w-4 shrink-0 accent-[var(--color-accent)]"
               />
-              I agree that Sirius can reach out to me for feedback.
+              I&rsquo;d be happy to be reached out to for feedback.
             </label>
 
             {status === "error" && <p className="text-[13px] text-[var(--color-danger)]">{err}</p>}
