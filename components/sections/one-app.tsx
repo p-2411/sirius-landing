@@ -15,19 +15,19 @@ export function OneAppSection() {
           </h2>
         </Reveal>
 
-        <RevealGroup className="mt-12 flex flex-wrap items-center gap-3" stagger={0.07}>
+        <RevealGroup className="mt-14 flex flex-wrap items-center gap-3.5" stagger={0.07}>
           {replaces.map((t) => (
             <RevealItem key={t}>
-              <span className="rounded-[var(--radius-sm)] border border-[var(--color-border)] px-3 py-2 text-[13px] text-[var(--color-ink-3)] line-through decoration-[var(--color-ink-4)]">
+              <span className="rounded-[var(--radius-md)] border border-[var(--color-border)] px-4 py-2.5 text-[15px] text-[var(--color-ink-3)] line-through decoration-[var(--color-ink-4)]">
                 {t}
               </span>
             </RevealItem>
           ))}
           <RevealItem>
-            <span className="text-[18px] text-[var(--color-accent)]" aria-hidden>→</span>
+            <span className="text-[22px] text-[var(--color-accent)]" aria-hidden>→</span>
           </RevealItem>
           <RevealItem>
-            <span className="rounded-[var(--radius-sm)] bg-[var(--color-accent)] px-3.5 py-2 text-[13px] font-semibold text-[#1b1712]">
+            <span className="rounded-[var(--radius-md)] bg-[var(--color-accent)] px-5 py-2.5 text-[15px] font-semibold text-[#1b1712]">
               {becomes}
             </span>
           </RevealItem>
