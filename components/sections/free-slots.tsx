@@ -2,38 +2,64 @@
 
 import { useEffect, useState } from "react";
 
+// Decay begins at this instant — 11:30am AEST (UTC+10). Before it, decay = full.
+const LAUNCH = Date.parse("2026-06-02T11:30:00+10:00");
+
 /**
- * FreeSlots — live count of remaining free downloads (capped at `limit`),
- * read from /api/free-download which counts real signups. Shows "sold out"
- * once the cap is reached. Renders nothing until the first fetch resolves.
+ * Time-based "slots consumed" on a decelerating schedule, drops at the START
+ * of each interval (first −2 lands at launch → 18):
+ *   • 2 per 10 min for the first 30 min   (→ 6)
+ *   • 1 per 10 min for the next hour      (→ 6)
+ *   • 1 per 5 hours thereafter
+ */
+function consumed(elapsedMin: number): number {
+  if (elapsedMin < 0) return 0;
+  let used = Math.min(Math.floor(elapsedMin / 10) + 1, 3) * 2;
+  if (elapsedMin >= 30) used += Math.min(Math.floor((elapsedMin - 30) / 10) + 1, 6);
+  if (elapsedMin >= 90) used += Math.floor((elapsedMin - 90) / 300) + 1;
+  return used;
+}
+
+/** Decayed remaining — floored at 1 so the decay alone never "sells out". */
+function decayRemaining(limit: number): number {
+  const min = (Date.now() - LAUNCH) / 60000;
+  return Math.max(1, limit - consumed(min));
+}
+
+/**
+ * FreeSlots — shows min(time-decay, real remaining). The decay drives urgency
+ * (down to 1); only real signups filling all `limit` slots flip it to sold out.
  */
 export function FreeSlots({ limit = 20 }: { limit?: number }) {
-  const [state, setState] = useState<{ remaining: number; soldOut: boolean } | null>(null);
+  const [actual, setActual] = useState<{ remaining: number; soldOut: boolean } | null>(null);
+  const [, tick] = useState(0);
 
   useEffect(() => {
     let alive = true;
-    const load = async () => {
+    const loadApi = async () => {
       try {
         const res = await fetch("/api/free-download", { cache: "no-store" });
         const d = (await res.json()) as { remaining?: number; soldOut?: boolean };
         if (alive && typeof d.remaining === "number") {
-          setState({ remaining: d.remaining, soldOut: Boolean(d.soldOut) });
+          setActual({ remaining: d.remaining, soldOut: Boolean(d.soldOut) });
         }
       } catch {
-        /* leave previous state */
+        /* keep previous */
       }
     };
-    load();
-    const id = setInterval(load, 30_000);
+    loadApi();
+    const apiId = setInterval(loadApi, 30_000);
+    const tickId = setInterval(() => tick((n) => n + 1), 15_000); // re-evaluate decay
     return () => {
       alive = false;
-      clearInterval(id);
+      clearInterval(apiId);
+      clearInterval(tickId);
     };
   }, []);
 
-  if (!state) return null;
+  if (!actual) return null;
 
-  if (state.soldOut) {
+  if (actual.soldOut) {
     return (
       <div className="mt-5 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface-deep)] p-3 text-center font-mono text-[10.5px] uppercase tracking-[0.16em] text-[var(--color-ink-3)]">
         All {limit} free spots claimed — sold out
@@ -41,7 +67,7 @@ export function FreeSlots({ limit = 20 }: { limit?: number }) {
     );
   }
 
-  const left = state.remaining;
+  const left = Math.min(decayRemaining(limit), actual.remaining);
   const pct = Math.max(4, (left / limit) * 100);
   return (
     <div className="mt-5 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface-deep)] p-3">
