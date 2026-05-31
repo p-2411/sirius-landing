@@ -27,7 +27,7 @@ export function HeroSection() {
 
   return (
     <section id="hero" className="relative scroll-mt-24 overflow-hidden">
-      <div className="mx-auto grid w-full max-w-[1600px] items-center gap-10 px-6 py-[clamp(1.5rem,4vh,3rem)] md:px-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+      <div className="mx-auto grid w-full max-w-[1600px] items-center gap-10 px-6 py-[clamp(3rem,7vh,5.5rem)] md:px-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
         {/* Left — words */}
         <motion.div {...motionState} variants={fade} className="text-center lg:text-left">
           <h1
