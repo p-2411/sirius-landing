@@ -153,8 +153,11 @@ export async function createDownload(input: {
   const res = await fetch(tableUrl(cfg), {
     method: "POST",
     headers: authHeaders(cfg),
-    body: JSON.stringify({ records: [{ fields }] }),
+    body: JSON.stringify({ records: [{ fields }], typecast: true }),
     cache: "no-store",
   });
-  if (!res.ok) throw new Error(`Airtable createDownload failed: ${res.status}`);
+  if (!res.ok) {
+    const detail = await res.text().catch(() => "");
+    throw new Error(`Airtable createDownload failed: ${res.status} ${detail}`);
+  }
 }
