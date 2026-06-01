@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from "react";
 
-// Decay begins at this instant — 11:30am AEST (UTC+10). Before it, decay = full.
-const LAUNCH = Date.parse("2026-06-02T11:30:00+10:00");
+// Decay begins at this instant (epoch ms). Set to launch time; currently "now"
+// so the countdown is live. Before LAUNCH, decay = full.
+const LAUNCH = 1780282948852;
 
 /**
  * Time-based "slots consumed" on a decelerating schedule, drops at the START
