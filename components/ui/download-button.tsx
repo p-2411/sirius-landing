@@ -8,7 +8,7 @@ import { landingContent } from "@/content/landing";
 type Status = "idle" | "submitting" | "success" | "already" | "error";
 
 const DOWNLOAD_URL =
-  "https://github.com/p-2411/sirius-releases/releases/download/v0.4.9/Sirius-0.4.9-arm64.dmg";
+  "https://github.com/p-2411/sirius-releases/releases/download/v0.4.13/Sirius-0.4.13-arm64.dmg";
 
 function startDownload() {
   const a = document.createElement("a");

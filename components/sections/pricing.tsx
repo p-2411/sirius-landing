@@ -3,7 +3,6 @@ import { DownloadButton } from "@/components/ui/download-button";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/reveal";
 import { AppIcon } from "@/components/sirius/appui";
 import { SectionLabel } from "@/components/ui/section-label";
-import { FreeSlots } from "@/components/sections/free-slots";
 import { landingContent } from "@/content/landing";
 
 export function PricingSection() {
@@ -42,8 +41,6 @@ export function PricingSection() {
                   </span>
                 )}
                 <p className="mt-3 text-[14px] leading-[1.5] text-[var(--color-ink-2)]">{t.tagline}</p>
-
-                {t.name === "Free" && <FreeSlots limit={20} />}
 
                 <ul className="mt-6 flex flex-col gap-2.5">
                   {t.features.map((f) => (
