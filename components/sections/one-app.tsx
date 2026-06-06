@@ -1,37 +1,29 @@
 import { Container } from "@/components/ui/container";
 import { SectionLabel } from "@/components/ui/section-label";
-import { Reveal, RevealGroup, RevealItem } from "@/components/ui/reveal";
+import { Reveal } from "@/components/ui/reveal";
+import { ToolOrbit } from "@/components/sirius/tool-orbit";
 import { landingContent } from "@/content/landing";
 
 export function OneAppSection() {
-  const { eyebrow, title, replaces, becomes } = landingContent.oneApp;
+  const { eyebrow, title } = landingContent.oneApp;
   return (
-    <section id="one-app" className="scroll-mt-24 py-24 md:py-32">
+    <section id="one-app" className="scroll-mt-24 py-12 md:py-16">
       <Container>
-        <Reveal>
-          <SectionLabel tone="warm">{eyebrow}</SectionLabel>
-          <h2 className="font-display mt-7 max-w-[22ch] text-[clamp(2.2rem,5vw,3.6rem)] font-normal leading-[0.95] tracking-[-0.028em] text-[var(--color-ink-1)]">
-            {title}
-          </h2>
-        </Reveal>
+        <div className="grid items-center gap-12 lg:grid-cols-[1fr_1fr] lg:gap-16">
+          <Reveal>
+            <SectionLabel index="03" tone="warm">
+              {eyebrow}
+            </SectionLabel>
+            <h2 className="font-display mt-7 max-w-[18ch] text-[clamp(2.2rem,5vw,3.6rem)] font-light leading-[0.95] tracking-[-0.028em] text-[var(--color-ink-1)]">
+              {title}
+            </h2>
+          </Reveal>
 
-        <RevealGroup className="mt-14 flex flex-wrap items-center gap-3.5" stagger={0.07}>
-          {replaces.map((t) => (
-            <RevealItem key={t}>
-              <span className="rounded-[var(--radius-md)] border border-[var(--color-border)] px-4 py-2.5 text-[15px] text-[var(--color-ink-3)] line-through decoration-[var(--color-ink-4)]">
-                {t}
-              </span>
-            </RevealItem>
-          ))}
-          <RevealItem>
-            <span className="text-[22px] text-[var(--color-accent)]" aria-hidden>→</span>
-          </RevealItem>
-          <RevealItem>
-            <span className="rounded-[var(--radius-md)] bg-[var(--color-accent)] px-5 py-2.5 text-[15px] font-semibold text-[#1b1712]">
-              {becomes}
-            </span>
-          </RevealItem>
-        </RevealGroup>
+          {/* Tools orbit the Sirius orb in 3D. */}
+          <Reveal delay={0.12}>
+            <ToolOrbit />
+          </Reveal>
+        </div>
       </Container>
     </section>
   );

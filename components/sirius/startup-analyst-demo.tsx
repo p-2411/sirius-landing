@@ -361,7 +361,7 @@ export function StartupAnalystDemo({ files }: { files: StartupAnalystDemoFile[] 
       <div className="sad-web">
         <span className="sad-web-hint">
           {phase === "output"
-            ? "That's one workflow. Sirius is a local desktop app that runs your whole back office."
+            ? "This used to be your Monday morning. Sirius just did it — and it runs the exact same way every time, for a fraction of the cost."
             : "A live look at the Sirius desktop app."}
         </span>
         <div className="sad-web-actions">

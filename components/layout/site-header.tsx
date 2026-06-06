@@ -1,7 +1,7 @@
 import Link from "next/link";
 
-import { AppIcon } from "@/components/sirius/appui";
 import { HeaderNav } from "@/components/layout/header-nav";
+import { HeaderDownload } from "@/components/layout/header-download";
 import { Orb } from "@/components/sirius/orb";
 import { Container } from "@/components/ui/container";
 import { landingContent } from "@/content/landing";
@@ -42,18 +42,7 @@ export function SiteHeader() {
         <HeaderNav items={nav} />
 
         <div className="flex items-center gap-3 sm:gap-4">
-          <a
-            href={downloadCta.href}
-            className="group inline-flex cursor-pointer items-center text-[13px] text-[var(--color-ink-1)] underline-offset-[6px] transition hover:underline outline-none focus-visible:ring-2 focus-visible:ring-[rgba(217,185,120,0.55)] focus-visible:ring-offset-4 focus-visible:ring-offset-[var(--color-bg)]"
-            style={{ textDecorationColor: "rgba(var(--color-accent-rgb), 0.55)" }}
-          >
-            <span className="inline-flex items-center gap-1.5 transition-colors duration-200 group-hover:text-[var(--color-accent)]">
-              {downloadCta.label}
-              <span className="inline-flex motion-safe:transition-transform motion-safe:duration-200 motion-safe:ease-out group-hover:translate-x-0.5">
-                <AppIcon name="arrow" size={13} stroke="currentColor" />
-              </span>
-            </span>
-          </a>
+          <HeaderDownload label={downloadCta.label} />
         </div>
       </Container>
     </header>

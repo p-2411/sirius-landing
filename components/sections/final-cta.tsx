@@ -23,7 +23,7 @@ export function FinalCtaSection() {
   return (
     <section
       id="cta"
-      className="relative isolate scroll-mt-24 border-t border-[var(--color-border)] bg-[var(--color-bg)] px-6 py-24 md:px-10 md:py-32 lg:min-h-[80vh] lg:py-36"
+      className="relative isolate scroll-mt-24 px-6 py-24 md:px-10 md:py-32 lg:min-h-[80vh] lg:py-36"
     >
       <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_50%_36%,rgba(0,0,0,0.7)_0%,rgba(0,0,0,0.45)_32%,transparent_72%)]" />
 

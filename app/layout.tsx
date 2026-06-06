@@ -3,8 +3,10 @@ import { Fraunces, Geist } from "next/font/google";
 import type { ReactNode } from "react";
 
 import { MotionProvider } from "@/components/ui/motion-provider";
+import { DownloadProvider } from "@/components/ui/download-modal";
 
 import "./globals.css";
+import "./sirius-design.css";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -47,7 +49,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={`${fraunces.variable} ${geist.variable}`}>
       <body>
-        <MotionProvider>{children}</MotionProvider>
+        <MotionProvider>
+          <DownloadProvider>{children}</DownloadProvider>
+        </MotionProvider>
       </body>
     </html>
   );

@@ -179,6 +179,8 @@ export function ChatPane({
                   lineHeight: 1.6,
                   color: "var(--color-ink-1)",
                   margin: 0,
+                  // Preserve paragraph breaks (\n\n) in multi-paragraph answers.
+                  whiteSpace: "pre-line",
                 }}
               >
                 {msg.text}
