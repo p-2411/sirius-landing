@@ -21,7 +21,7 @@ export const landingContent = {
     title: "It knows you.",
     titleAccent: "It does the work.",
     description:
-      "It knows your projects and your clients, and it works inside the tools you already live in.",
+      "An agent that knows your projects and your clients, and works inside the tools you already live in.",
     proof: "Free to start — and it runs entirely on your Mac.",
     micHint: "say anything — watch it go to work",
     micPrivacy: "Your voice stays in your browser. We're not listening.",
