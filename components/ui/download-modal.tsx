@@ -5,7 +5,7 @@ import { createContext, useCallback, useContext, useEffect, useId, useState } fr
 type Status = "idle" | "submitting" | "success" | "already" | "error";
 
 const DOWNLOAD_URL =
-  "https://github.com/p-2411/sirius-releases/releases/download/v0.5.4/Sirius-0.5.4-arm64.dmg";
+  "https://github.com/p-2411/sirius-releases/releases/download/v0.5.5/Sirius-0.5.5-arm64.dmg";
 
 function startDownload() {
   const a = document.createElement("a");

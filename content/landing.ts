@@ -7,7 +7,7 @@ export const landingContent = {
   // Tools Sirius works inside. Anything with an API connects, so the list is open-ended.
   integrations: {
     label: "Works inside the tools you already use",
-    tools: ["Gmail", "Calendar", "Slack", "Notion", "GitHub", "Discord"],
+    tools: ["Gmail", "Calendar", "Google Drive", "Notion", "GitHub", "Discord", "Word", "Google Docs", "Google Sheets"],
     more: "…",
   },
   nav: [

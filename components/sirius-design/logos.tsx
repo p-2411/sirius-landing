@@ -30,21 +30,6 @@ function LogoCalendar() {
   );
 }
 
-function LogoSlack() {
-  return (
-    <svg viewBox="0 0 48 48" width="100%" height="100%" aria-hidden="true">
-      <path fill="#33d375" d="M33,8c0-2.209-1.791-4-4-4s-4,1.791-4,4c0,1.254,0,9.741,0,11c0,2.209,1.791,4,4,4s4-1.791,4-4C33,17.741,33,9.254,33,8z" />
-      <path fill="#33d375" d="M43,19c0,2.209-1.791,4-4,4c-1.195,0-4,0-4,0s0-2.986,0-4c0-2.209,1.791-4,4-4S43,16.791,43,19z" />
-      <path fill="#40c4ff" d="M8,14c-2.209,0-4,1.791-4,4s1.791,4,4,4c1.254,0,9.741,0,11,0c2.209,0,4-1.791,4-4s-1.791-4-4-4C17.741,14,9.254,14,8,14z" />
-      <path fill="#40c4ff" d="M19,4c2.209,0,4,1.791,4,4c0,1.195,0,4,0,4s-2.986,0-4,0c-2.209,0-4-1.791-4-4S16.791,4,19,4z" />
-      <path fill="#e91e63" d="M14,40c0,2.209,1.791,4,4,4s4-1.791,4-4c0-1.254,0-9.741,0-11c0-2.209-1.791-4-4-4s-4,1.791-4,4C14,30.259,14,38.746,14,40z" />
-      <path fill="#e91e63" d="M4,29c0-2.209,1.791-4,4-4c1.195,0,4,0,4,0s0,2.986,0,4c0,2.209-1.791,4-4,4S4,31.209,4,29z" />
-      <path fill="#ffc107" d="M40,33c2.209,0,4-1.791,4-4s-1.791-4-4-4c-1.254,0-9.741,0-11,0c-2.209,0-4,1.791-4,4s1.791,4,4,4C30.259,33,38.746,33,40,33z" />
-      <path fill="#ffc107" d="M29,43c-2.209,0-4-1.791-4-4c0-1.195,0-4,0-4s2.986,0,4,0c2.209,0,4,1.791,4,4S31.209,43,29,43z" />
-    </svg>
-  );
-}
-
 function LogoNotion() {
   return (
     <svg viewBox="0 0 24 24" width="100%" height="100%" fill="#f6efdf" aria-hidden="true">
@@ -69,11 +54,69 @@ function LogoDiscord() {
   );
 }
 
-export const DESIGN_LOGOS: { name: string; Mark: () => ReactElement }[] = [
+function LogoWord() {
+  return (
+    // Official Word mark from the real app's integration-logos; an SVG, so
+    // next/image optimization is skipped in favor of a plain element.
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src="/word-logo.svg"
+      alt=""
+      aria-hidden="true"
+      style={{ width: "100%", height: "100%", objectFit: "contain" }}
+    />
+  );
+}
+
+function LogoGoogleDocs() {
+  return (
+    <svg viewBox="0 0 48 64" width="100%" height="100%" aria-hidden="true">
+      <path fill="#4285f4" d="M30 0H6C3.79 0 2 1.79 2 4v56c0 2.21 1.79 4 4 4h36c2.21 0 4-1.79 4-4V16L30 0z" />
+      <path fill="#a1c2fa" d="M30 0v12c0 2.21 1.79 4 4 4h12L30 0z" />
+      <path fill="#f1f1f1" d="M12 25h24v3H12zM12 32h24v3H12zM12 39h24v3H12zM12 46h16v3H12z" />
+    </svg>
+  );
+}
+
+function LogoGoogleSheets() {
+  return (
+    <svg viewBox="0 0 48 64" width="100%" height="100%" aria-hidden="true">
+      <path fill="#0f9d58" d="M30 0H6C3.79 0 2 1.79 2 4v56c0 2.21 1.79 4 4 4h36c2.21 0 4-1.79 4-4V16L30 0z" />
+      <path fill="#87ceac" d="M30 0v12c0 2.21 1.79 4 4 4h12L30 0z" />
+      <path fill="#f1f1f1" d="M13 26v20h22V26H13zm10 17h-8v-4.5h8V43zm0-6h-8v-4.5h8V37zm0-6h-8V26.5h8V31zm10 12h-8v-4.5h8V43zm0-6h-8v-4.5h8V37zm0-6h-8V26.5h8V31z" />
+    </svg>
+  );
+}
+
+function LogoGoogleDrive() {
+  return (
+    <svg viewBox="0 0 87.3 78" width="100%" height="100%" aria-hidden="true">
+      <path fill="#0066da" d="m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8h-27.5c0 1.55.4 3.1 1.2 4.5z" />
+      <path fill="#00ac47" d="m43.65 25-13.75-23.8c-1.35.8-2.5 1.9-3.3 3.3l-25.4 44c-.8 1.4-1.2 2.95-1.2 4.5h27.5z" />
+      <path fill="#ea4335" d="m73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5h-27.502l5.852 11.5z" />
+      <path fill="#00832d" d="m43.65 25 13.75-23.8c-1.35-.8-2.9-1.2-4.5-1.2h-18.5c-1.6 0-3.15.45-4.5 1.2z" />
+      <path fill="#2684fc" d="m59.8 53h-32.3l-13.75 23.8c1.35.8 2.9 1.2 4.5 1.2h50.8c1.6 0 3.15-.45 4.5-1.2z" />
+      <path fill="#ffba00" d="m73.4 26.5-12.7-22c-.8-1.4-1.95-2.5-3.3-3.3l-13.75 23.8 16.15 28h27.45c0-1.55-.4-3.1-1.2-4.5z" />
+    </svg>
+  );
+}
+
+type LogoEntry = { name: string; Mark: () => ReactElement };
+
+// Hero integration strip — the everyday tools, kept short and glanceable.
+export const DESIGN_LOGOS: LogoEntry[] = [
   { name: "Gmail", Mark: LogoGmail },
   { name: "Calendar", Mark: LogoCalendar },
-  { name: "Slack", Mark: LogoSlack },
+  { name: "Google Drive", Mark: LogoGoogleDrive },
   { name: "Notion", Mark: LogoNotion },
   { name: "GitHub", Mark: LogoGithub },
   { name: "Discord", Mark: LogoDiscord },
+];
+
+// Footer carries the fuller set, including the document apps.
+export const FOOTER_LOGOS: LogoEntry[] = [
+  ...DESIGN_LOGOS,
+  { name: "Word", Mark: LogoWord },
+  { name: "Google Docs", Mark: LogoGoogleDocs },
+  { name: "Google Sheets", Mark: LogoGoogleSheets },
 ];

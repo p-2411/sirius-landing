@@ -8,7 +8,7 @@ import { landingContent } from "@/content/landing";
 import { Orb } from "@/components/sirius/orb";
 import { DownloadButton } from "@/components/ui/download-button";
 import { ScrollLink } from "@/components/layout/scroll-link";
-import { DESIGN_LOGOS } from "@/components/sirius-design/logos";
+import { DESIGN_LOGOS, FOOTER_LOGOS } from "@/components/sirius-design/logos";
 
 const d = (v: number) => ({ "--d": `${v}s` }) as CSSProperties;
 
@@ -372,7 +372,7 @@ export function SiriusFooter() {
           </a>
           <p className="footer-blurb">{footer.blurb}</p>
           <div className="footer-logos" aria-hidden="true">
-            {DESIGN_LOGOS.map(({ name, Mark }) => (
+            {FOOTER_LOGOS.map(({ name, Mark }) => (
               <span key={name} className="footer-logo">
                 <Mark />
               </span>
