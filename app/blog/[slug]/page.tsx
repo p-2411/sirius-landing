@@ -107,32 +107,29 @@ export default async function BlogPostPage({ params }: Props) {
       <div className="atlas-grain" aria-hidden="true" />
       <SiteHeader />
 
-      <article className="section" style={{ paddingBlockStart: "clamp(110px, 14vh, 160px)" }}>
-        <Container>
-          <div className="max-w-[820px] mx-auto">
-            <p className="plate-meta">
-              <Link href="/blog" className="hover:text-[var(--color-ink-1)] transition-colors">
-                ← ALL PLATES
-              </Link>
-              {"  ·  "}
-              {plateNo} · {plateDate(post.date)} · {post.readingMinutes} MIN
-              {post.tags[0] ? ` · ${post.tags[0].toUpperCase()}` : ""}
-            </p>
+      {/* Full-bleed hero banner — escapes the content column on purpose. */}
+      <article className="section px-4 md:px-8" style={{ paddingBlockStart: "clamp(110px, 14vh, 160px)" }}>
+        <p className="plate-meta">
+          <Link href="/blog" className="hover:text-[var(--color-ink-1)] transition-colors">
+            ← ALL PLATES
+          </Link>
+          {"  ·  "}
+          {plateNo} · {plateDate(post.date)} · {post.readingMinutes} MIN
+          {post.tags[0] ? ` · ${post.tags[0].toUpperCase()}` : ""}
+        </p>
 
-            <PlateFrame className="mt-5 p-6 md:p-8">
-              <Plate model={model} variant="hero" />
-              <h1 className="font-display text-[clamp(1.8rem,4vw,2.6rem)] leading-[1.05] text-[var(--color-ink-1)] mt-5">
-                {post.title}
-              </h1>
-              <p className="text-[0.98rem] leading-relaxed text-[var(--color-ink-3)] mt-3 max-w-[600px]">
-                {post.description}
-              </p>
-              <p className="plate-meta mt-4" style={{ fontSize: "0.62rem" }}>
-                UNCHARTED · SCROLL TO BEGIN
-              </p>
-            </PlateFrame>
-          </div>
-        </Container>
+        <PlateFrame className="mt-5 p-6 md:p-8">
+          <Plate model={model} variant="hero" />
+          <h1 className="font-display text-[clamp(1.8rem,4vw,2.6rem)] leading-[1.05] text-[var(--color-ink-1)] mt-5">
+            {post.title}
+          </h1>
+          <p className="text-[0.98rem] leading-relaxed text-[var(--color-ink-3)] mt-3 max-w-[600px]">
+            {post.description}
+          </p>
+          <p className="plate-meta mt-4" style={{ fontSize: "0.62rem" }}>
+            UNCHARTED · SCROLL TO BEGIN
+          </p>
+        </PlateFrame>
       </article>
 
       <section

@@ -1,8 +1,12 @@
 import type { PlateModel } from "@/lib/constellation";
 import { cn } from "@/lib/utils";
 
-const VIEW_W = 600;
-const VIEW_H = 220;
+// Card plates are chart-shaped; the hero stretches into a wide banner strip.
+// Both keep a fixed aspect so circles stay round (uniform scaling).
+const VIEW = {
+  card: { w: 600, h: 220 },
+  hero: { w: 1200, h: 200 },
+} as const;
 // Normalized [0,1] radii/orbits are expressed in viewBox units via this scale.
 const UNIT = 3;
 
@@ -20,13 +24,14 @@ export function Plate({
   variant: "card" | "hero";
   className?: string;
 }) {
-  const px = (x: number) => x * VIEW_W;
-  const py = (y: number) => y * VIEW_H;
+  const { w, h } = VIEW[variant];
+  const px = (x: number) => x * w;
+  const py = (y: number) => y * h;
   const points = model.stars.map((s) => `${px(s.x)},${py(s.y)}`).join(" ");
 
   return (
     <svg
-      viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
+      viewBox={`0 0 ${w} ${h}`}
       className={cn("plate-art", variant === "hero" && "plate-art--unlit", className)}
       aria-hidden="true"
     >
@@ -68,7 +73,7 @@ export function Plate({
         <circle
           key={i}
           className="plate-satellite"
-          cx={px(s.x) + s.orbitR * VIEW_W}
+          cx={px(s.x) + s.orbitR * w}
           cy={py(s.y)}
           r={1.4}
           style={{
