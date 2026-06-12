@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 interface SkyStar {
   /** Normalized x from the PlateModel — used to seed a margin-band position. */
@@ -13,6 +13,10 @@ interface SkyStar {
  * The post's constellation laid into the page background across the full
  * article height. Stars ignite and the line extends as the reader passes
  * each H2 (observed by heading id). Decorative only: aria-hidden, no pointer.
+ *
+ * The polyline lives in a preserveAspectRatio="none" SVG (non-scaling-stroke
+ * keeps its width sane); the star dots are spans so they stay perfectly round
+ * regardless of how tall the article stretches the sky.
  */
 export function ChartedSky({
   stars,
@@ -22,11 +26,11 @@ export function ChartedSky({
   headingIds: string[];
 }) {
   const [lit, setLit] = useState(0);
-  const reduced = useRef(false);
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      reduced.current = true;
+      // Deferred to satisfy react-hooks/set-state-in-effect; also keeps the
+      // server and first client render identical (no hydration mismatch).
       queueMicrotask(() => setLit(stars.length));
       return;
     }
@@ -64,30 +68,25 @@ export function ChartedSky({
   const progress = lit <= 1 || placed.length < 2 ? 0 : (lit - 1) / (placed.length - 1);
 
   return (
-    <svg
-      className="charted-sky"
-      viewBox="0 0 100 100"
-      preserveAspectRatio="none"
-      aria-hidden="true"
-    >
+    <div className="charted-sky" aria-hidden="true">
       {placed.length > 1 && (
-        <polyline
-          className="charted-sky-path"
-          points={points}
-          pathLength={1}
-          fill="none"
-          style={{ strokeDashoffset: 1 - progress }}
-        />
+        <svg className="charted-sky-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <polyline
+            className="charted-sky-path"
+            points={points}
+            pathLength={1}
+            fill="none"
+            style={{ strokeDashoffset: 1 - progress }}
+          />
+        </svg>
       )}
       {placed.map((p, i) => (
-        <circle
+        <span
           key={i}
           className={i < lit ? "charted-sky-star is-lit" : "charted-sky-star"}
-          cx={p.x}
-          cy={p.y}
-          r={0.45}
+          style={{ left: `${p.x}%`, top: `${p.y}%` }}
         />
       ))}
-    </svg>
+    </div>
   );
 }
