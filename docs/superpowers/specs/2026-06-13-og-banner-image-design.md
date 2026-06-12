@@ -20,10 +20,10 @@ YAGNI until per-post banner titles are wanted).
 ## Design
 
 1. **Asset:** one 1200×630 PNG — starry sky, dark orb, "It knows you. *It does
-   the work.*" headline — captured from the live homepage with headless Chrome
-   at 1200×687 and the top 57px (site nav header) cropped off by a second
-   Chrome pass (`sips --cropOffset` shifts from center and can't reach a
-   top-anchored crop here).
+   the work.*" headline — *(amended 2026-06-13)* fitted from a user-provided
+   high-res hero capture (1886×1200, scaled to 1200 wide, cropped to the orb +
+   headline; the subline is dropped since previews show the description text).
+   It is a curated static asset, not a generated one.
    Committed as `app/opengraph-image.png` and duplicated as
    `app/twitter-image.png` (the Twitter tag needs its own convention file).
 2. **Alt text:** `app/opengraph-image.alt.txt` and `app/twitter-image.alt.txt`
@@ -33,9 +33,9 @@ YAGNI until per-post banner titles are wanted).
    existing text-only `openGraph`/`twitter` objects in `app/layout.tsx` merge
    with the generated image tags. All routes, including `/blog/[slug]`
    (which sets only text fields in its own `openGraph`), inherit the banner.
-4. **Regeneration script:** `scripts/generate-og.sh` — captures
-   `http://localhost:3000/` (requires the dev server) and writes both PNGs.
-   Run manually whenever the hero changes; documented in a header comment.
+4. **Regeneration:** *(amended 2026-06-13)* none — the script was removed once
+   the banner became a curated asset; replace the PNGs by hand if the hero
+   ever changes (any 1200×630 crop of a fresh capture works).
 
 ## Out of scope
 
