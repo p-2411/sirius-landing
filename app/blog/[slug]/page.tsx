@@ -108,7 +108,7 @@ export default async function BlogPostPage({ params }: Props) {
       <SiteHeader />
 
       {/* Full-bleed hero banner — escapes the content column on purpose. */}
-      <article className="section px-4 md:px-8" style={{ paddingBlockStart: "clamp(110px, 14vh, 160px)" }}>
+      <article className="section px-4 md:px-8" style={{ paddingBlockStart: "clamp(20px, 3vh, 36px)" }}>
         <p className="plate-meta">
           <Link href="/blog" className="hover:text-[var(--color-ink-1)] transition-colors">
             ← ALL PLATES
