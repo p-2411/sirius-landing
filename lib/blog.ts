@@ -109,7 +109,9 @@ interface RawPost {
 let rawPostsCache: RawPost[] | null = null;
 
 function readRawPosts(): RawPost[] {
-  if (rawPostsCache) return rawPostsCache;
+  // Cache only in production builds — in `next dev`, posts must re-read from
+  // disk so new/edited MDX files appear without a server restart.
+  if (rawPostsCache && process.env.NODE_ENV === "production") return rawPostsCache;
   if (!fs.existsSync(postsDirectory)) return [];
 
   const filenames = fs

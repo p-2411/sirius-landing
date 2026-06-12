@@ -67,8 +67,10 @@ export function ChartedSky({
   const points = placed.map((p) => `${p.x},${p.y}`).join(" ");
   const progress = lit <= 1 || placed.length < 2 ? 0 : (lit - 1) / (placed.length - 1);
 
+  const complete = lit >= stars.length;
+
   return (
-    <div className="charted-sky" aria-hidden="true">
+    <div className={complete ? "charted-sky is-complete" : "charted-sky"} aria-hidden="true">
       {placed.length > 1 && (
         <svg className="charted-sky-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
           <polyline
