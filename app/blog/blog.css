@@ -217,6 +217,7 @@
 .plate-satellite {
   fill: #6cd8ff;
   animation: plate-orbit linear infinite;
+  transform-box: view-box; /* orbit origin is SVG user-space, not element bbox */
 }
 
 @keyframes plate-twinkle {

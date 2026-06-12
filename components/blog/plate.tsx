@@ -55,8 +55,9 @@ export function Plate({
           />
           <text
             className="plate-label"
-            x={px(s.x) - 8}
+            x={px(s.x) + (s.x > 0.75 ? 8 : -8)}
             y={py(s.y) + (s.y > 0.5 ? -14 : 22)}
+            textAnchor={s.x > 0.75 ? "end" : "start"}
           >
             {s.greek} {s.label}
           </text>
