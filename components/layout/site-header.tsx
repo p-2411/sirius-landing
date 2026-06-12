@@ -3,7 +3,6 @@ import Link from "next/link";
 import { HeaderNav } from "@/components/layout/header-nav";
 import { HeaderDownload } from "@/components/layout/header-download";
 import { Orb } from "@/components/sirius/orb";
-import { Container } from "@/components/ui/container";
 import { landingContent } from "@/content/landing";
 
 // Set to false to replace the live orb with a static cyan dot.
@@ -14,7 +13,7 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--color-border)] bg-[rgba(18,15,11,0.9)] backdrop-blur-xl">
-      <Container className="flex h-14 items-center justify-between">
+      <div className="flex h-14 w-full items-center justify-between px-6 md:px-10">
         <Link
           href="/"
           className="flex items-center gap-2 outline-none focus-visible:ring-2 focus-visible:ring-[rgba(217,185,120,0.55)] focus-visible:ring-offset-4 focus-visible:ring-offset-[var(--color-bg)]"
@@ -44,7 +43,7 @@ export function SiteHeader() {
         <div className="flex items-center gap-3 sm:gap-4">
           <HeaderDownload label={downloadCta.label} />
         </div>
-      </Container>
+      </div>
     </header>
   );
 }
