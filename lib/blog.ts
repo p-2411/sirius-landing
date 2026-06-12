@@ -45,7 +45,7 @@ function countWords(text: string): number {
   return text.split(/\s+/).filter(Boolean).length;
 }
 
-/** Mirror of the heading ids generated for H2s so the ambient sky can observe them. */
+/** Anchor ids for H2 headings (also used to match section marks). */
 export function slugifyHeading(heading: string): string {
   return heading
     .toLowerCase()

@@ -131,10 +131,10 @@ export default async function BlogPostPage({ params }: Props) {
       </header>
 
       <section
-        className="section relative"
+        className="section"
         style={{ paddingBlockStart: "clamp(12px, 2vh, 24px)", paddingBlockEnd: "clamp(60px, 10vh, 120px)" }}
       >
-        <Container className="relative">
+        <Container>
           <div className="prose-custom max-w-[600px] mx-auto">
             <MDXContent components={mdxComponents(majorHeadings)} />
           </div>

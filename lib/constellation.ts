@@ -37,8 +37,6 @@ export interface PlateModel {
   minors: PlateMinorStar[];
   satellites: PlateSatellite[];
   dust: PlateDust[];
-  /** Fraction of total words at which each major section starts — drives ambient star placement. */
-  sectionStarts: number[];
 }
 
 export const GREEK = [
@@ -164,16 +162,5 @@ export function buildPlateModel(
     r: 0.18 + rand() * 0.22,
   }));
 
-  // Where each major section starts as a fraction of all words (intro included).
-  const sectionStarts: number[] = [];
-  // Synthetic fallback (no H2s) folds all words into introWords — that single
-  // section starts at the top of the article, not the bottom.
-  let before = structure.majors.length > 0 ? structure.introWords : 0;
-  const total = structure.totalWords || 1;
-  for (const m of majors) {
-    sectionStarts.push(Math.min(0.98, before / total));
-    before += m.words;
-  }
-
-  return { stars, minors, satellites, dust, sectionStarts };
+  return { stars, minors, satellites, dust };
 }
