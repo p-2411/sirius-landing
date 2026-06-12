@@ -124,8 +124,8 @@ export default function BlogPage() {
         </Container>
       </section>
 
-      <footer className="footer">
-        <div className="footer-base" style={{ borderTop: "none" }}>
+      <footer className="footer" style={{ borderTop: "none" }}>
+        <div className="footer-base">
           <span>Sirius</span>
           <span className="text-[var(--color-ink-4)]">
             &copy; {new Date().getFullYear()}
