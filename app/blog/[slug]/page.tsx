@@ -104,12 +104,12 @@ export default async function BlogPostPage({ params }: Props) {
       <SectionDivider />
 
       <footer className="footer">
-        <Container className="footer-base" container={false}>
+        <div className="footer-base">
           <span>Sirius</span>
           <span className="text-[var(--color-ink-4)]">
             &copy; {new Date().getFullYear()}
           </span>
-        </Container>
+        </div>
       </footer>
     </main>
   );

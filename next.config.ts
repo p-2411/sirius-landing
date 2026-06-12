@@ -1,18 +1,21 @@
 import type { NextConfig } from "next";
 import createMDX from "@next/mdx";
-import remarkGfm from "remark-gfm";
-import rehypeHighlight from "rehype-highlight";
 
 const withMDX = createMDX({
   options: {
-    remarkPlugins: [remarkGfm],
-    rehypePlugins: [rehypeHighlight],
+    // String form keeps options serializable so Turbopack (next dev) works;
+    // mdx-js-loader resolves them for the webpack build too.
+    remarkPlugins: ["remark-gfm"],
+    rehypePlugins: ["rehype-highlight"],
   },
 });
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   pageExtensions: ["ts", "tsx", "md", "mdx"],
+  turbopack: {
+    root: __dirname,
+  },
 };
 
 export default withMDX(nextConfig);
