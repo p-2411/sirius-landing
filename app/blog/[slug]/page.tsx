@@ -11,11 +11,9 @@ import { AmbientLayers } from "@/components/sirius/ambient";
 import { SiteHeader } from "@/components/layout/site-header";
 import { Container } from "@/components/ui/container";
 import { DownloadButton } from "@/components/ui/download-button";
-import { PlateFrame } from "@/components/blog/plate-frame";
-import { Plate } from "@/components/blog/plate";
 import { ChartedSky } from "@/components/blog/charted-sky";
 import { ChartedFinale } from "@/components/blog/charted-finale";
-import { buildPlateModel, GREEK } from "@/lib/constellation";
+import { buildPlateModel, GREEK, starLabel } from "@/lib/constellation";
 import { getAllPosts, getPostBySlug, getPostStructure, slugifyHeading } from "@/lib/blog";
 
 interface Props {
@@ -71,6 +69,10 @@ function mdxComponents(majorHeadings: string[]) {
   };
 }
 
+function plateNo(n: number): string {
+  return `PLATE ${String(n).padStart(2, "0")}`;
+}
+
 function plateDate(date: string): string {
   return new Date(date)
     .toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" })
@@ -103,32 +105,33 @@ export default async function BlogPostPage({ params }: Props) {
       <AmbientLayers quiet />
       <SiteHeader />
 
-      {/* Full-bleed hero banner — escapes the content column on purpose. */}
-      <article
-        className="section px-2 md:px-4"
-        style={{ paddingBlock: "clamp(10px, 1.5vh, 16px) clamp(20px, 3vh, 36px)" }}
+      {/* The Title Page — pure typography, centered axis (Quiet Folio spec §1). */}
+      <header
+        className="section"
+        style={{ paddingBlock: "clamp(36px, 7vh, 72px) 0" }}
       >
-        <PlateFrame className="p-5 md:p-7">
-          <p className="plate-meta mb-4">
-            <Link href="/blog" className="hover:text-[var(--color-ink-1)] transition-colors">
-              ← ALL PLATES
-            </Link>
-            {" · "}
-            {plateDate(post.date)} · {post.readingMinutes} MIN
-            {post.tags[0] ? ` · ${post.tags[0].toUpperCase()}` : ""}
-          </p>
-          <Plate model={model} variant="hero" />
-          <h1 className="font-display text-[clamp(1.5rem,3.2vw,2.1rem)] leading-[1.05] text-[var(--color-ink-1)] mt-4">
-            {post.title}
-          </h1>
-          <p className="text-[0.98rem] leading-relaxed text-[var(--color-ink-3)] mt-3 max-w-[600px]">
-            {post.description}
-          </p>
-          <p className="plate-meta mt-4" style={{ fontSize: "0.62rem" }}>
-            UNCHARTED · SCROLL TO BEGIN
-          </p>
-        </PlateFrame>
-      </article>
+        <Container>
+          <div className="mx-auto max-w-[640px] text-center">
+            <p className="plate-meta">
+              <Link href="/blog" className="hover:text-[var(--color-ink-1)] transition-colors">
+                ← ALL PLATES
+              </Link>
+              {" · "}
+              {plateNo(post.plateNumber)} · {plateDate(post.date)} · {post.readingMinutes} MIN
+              {post.tags[0] ? ` · ${post.tags[0].toUpperCase()}` : ""}
+            </p>
+            <h1 className="font-display font-[340] text-[clamp(2.2rem,4.5vw,2.9rem)] leading-[1.06] tracking-[-0.015em] text-[var(--color-ink-1)] mx-auto mt-5 max-w-[560px]">
+              {post.title}
+            </h1>
+            <p className="font-display italic font-[340] text-[1.125rem] leading-[1.55] text-[var(--color-ink-3)] mx-auto mt-4 max-w-[470px]">
+              {post.description}
+            </p>
+            <div className="folio-divider" aria-hidden="true">
+              ✦ ✦ ✦
+            </div>
+          </div>
+        </Container>
+      </header>
 
       <section
         className="section relative"
