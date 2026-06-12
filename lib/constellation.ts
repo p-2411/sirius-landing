@@ -98,7 +98,8 @@ export function buildPlateModel(
 
   const majorWords = majors.reduce((sum, m) => sum + m.words, 0) || 1;
 
-  // X: left→right, segment widths proportional to section length (min gap keeps labels apart).
+  // X: left→right, segment widths proportional to section length. minGap is half
+  // the average equal-segment width — prevents overlap while compression stays proportional.
   const PAD_X = 0.08;
   const SPAN_X = 1 - 2 * PAD_X;
   const minGap = majors.length > 1 ? Math.min(0.1, SPAN_X / (majors.length * 2)) : 0;
@@ -110,7 +111,19 @@ export function buildPlateModel(
     cum += majors[i].words;
   }
 
-  // Y: seeded within a band, re-rolled so consecutive stars never sit on a flat line.
+  // Remap proportionally if min-gap pushes ran past the right edge
+  // (e.g. a dominant first section followed by short closers).
+  const MAX_X = 1 - PAD_X;
+  const rawMax = xs[xs.length - 1];
+  if (rawMax > MAX_X) {
+    const scale = (MAX_X - PAD_X) / (rawMax - PAD_X);
+    for (let i = 1; i < xs.length; i++) {
+      xs[i] = PAD_X + (xs[i] - PAD_X) * scale;
+    }
+  }
+
+  // Y: seeded within a band, re-rolled to reduce flat-line clustering
+  // (best-effort: 8 attempts, then the last roll stands).
   const ys: number[] = [];
   for (let i = 0; i < majors.length; i++) {
     let y = 0.2 + 0.6 * rand();
@@ -153,7 +166,9 @@ export function buildPlateModel(
 
   // Where each major section starts as a fraction of all words (intro included).
   const sectionStarts: number[] = [];
-  let before = structure.introWords;
+  // Synthetic fallback (no H2s) folds all words into introWords — that single
+  // section starts at the top of the article, not the bottom.
+  let before = structure.majors.length > 0 ? structure.introWords : 0;
   const total = structure.totalWords || 1;
   for (const m of majors) {
     sectionStarts.push(Math.min(0.98, before / total));
