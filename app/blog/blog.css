@@ -334,3 +334,39 @@
   .charted-sky-star { transition: none; animation: none; }
   .charted-finale { transition: none; }
 }
+
+/* ── Essay page ────────────────────────────────────────────────────── */
+
+.plate-greek {
+  font-family: var(--font-mono);
+  font-size: 0.62em;
+  color: var(--color-accent);
+  letter-spacing: 0.15em;
+  margin-right: 0.7em;
+  vertical-align: 0.15em;
+}
+
+.atlas-cta {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  border: 1px solid rgba(217, 185, 120, 0.4);
+  border-radius: 8px;
+  background: linear-gradient(180deg, rgba(217, 185, 120, 0.08), rgba(217, 185, 120, 0.02));
+  padding: 22px 24px;
+}
+
+@media (max-width: 640px) {
+  .atlas-cta { flex-direction: column; align-items: flex-start; }
+}
+
+.atlas-next {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--color-border);
+  text-decoration: none;
+}
