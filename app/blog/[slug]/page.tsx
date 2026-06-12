@@ -7,7 +7,6 @@ import * as runtime from "react/jsx-runtime";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 
-import { Starfield } from "@/components/sirius/starfield";
 import { AmbientLayers } from "@/components/sirius/ambient";
 import { SiteHeader } from "@/components/layout/site-header";
 import { Container } from "@/components/ui/container";
@@ -101,9 +100,7 @@ export default async function BlogPostPage({ params }: Props) {
 
   return (
     <main className="sd relative min-h-screen overflow-x-clip">
-      <Starfield />
-      <AmbientLayers />
-      <div className="atlas-grain" aria-hidden="true" />
+      <AmbientLayers quiet />
       <SiteHeader />
 
       {/* Full-bleed hero banner — escapes the content column on purpose. */}
@@ -142,7 +139,6 @@ export default async function BlogPostPage({ params }: Props) {
           headingIds={headingIds}
         />
         <Container className="relative">
-          <div className="prose-veil">
           <div className="prose-custom max-w-[760px] mx-auto">
             <MDXContent components={mdxComponents(majorHeadings)} />
           </div>
@@ -171,7 +167,6 @@ export default async function BlogPostPage({ params }: Props) {
                 </span>
               </Link>
             )}
-          </div>
           </div>
         </Container>
       </section>
