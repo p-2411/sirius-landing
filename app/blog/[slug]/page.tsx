@@ -107,7 +107,10 @@ export default async function BlogPostPage({ params }: Props) {
       <SiteHeader />
 
       {/* Full-bleed hero banner — escapes the content column on purpose. */}
-      <article className="section px-2 md:px-4" style={{ paddingBlockStart: "clamp(10px, 1.5vh, 16px)" }}>
+      <article
+        className="section px-2 md:px-4"
+        style={{ paddingBlock: "clamp(10px, 1.5vh, 16px) clamp(20px, 3vh, 36px)" }}
+      >
         <PlateFrame className="p-5 md:p-7">
           <p className="plate-meta mb-4">
             <Link href="/blog" className="hover:text-[var(--color-ink-1)] transition-colors">
@@ -132,18 +135,18 @@ export default async function BlogPostPage({ params }: Props) {
 
       <section
         className="section relative"
-        style={{ paddingBlockStart: "clamp(28px, 4vh, 56px)", paddingBlockEnd: "clamp(60px, 10vh, 120px)" }}
+        style={{ paddingBlockStart: "clamp(12px, 2vh, 24px)", paddingBlockEnd: "clamp(60px, 10vh, 120px)" }}
       >
         <ChartedSky
           stars={model.stars.map((s, idx) => ({ x: s.x, start: model.sectionStarts[idx] }))}
           headingIds={headingIds}
         />
         <Container className="relative">
-          <div className="prose-custom max-w-[680px] mx-auto">
+          <div className="prose-custom max-w-[620px] mx-auto">
             <MDXContent components={mdxComponents(majorHeadings)} />
           </div>
 
-          <div className="max-w-[680px] mx-auto mt-16">
+          <div className="max-w-[620px] mx-auto mt-16">
             <ChartedFinale minutes={post.readingMinutes} />
 
             <div className="atlas-cta">
