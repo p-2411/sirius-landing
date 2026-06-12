@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 
 /** The whispered end-of-essay line — fades in when scrolled into view. */
-export function ChartedFinale({ minutes }: { minutes: number }) {
+export function ChartedFinale({ plateNumber, minutes }: { plateNumber: number; minutes: number }) {
   const ref = useRef<HTMLParagraphElement>(null);
   const [shown, setShown] = useState(false);
 
@@ -26,7 +26,7 @@ export function ChartedFinale({ minutes }: { minutes: number }) {
 
   return (
     <p ref={ref} className={shown ? "charted-finale is-shown" : "charted-finale"}>
-      ★ CONSTELLATION CHARTED · {minutes} MIN WELL SPENT
+      PLATE {String(plateNumber).padStart(2, "0")} CHARTED · {minutes} MIN
     </p>
   );
 }

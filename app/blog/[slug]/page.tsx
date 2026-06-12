@@ -147,19 +147,17 @@ export default async function BlogPostPage({ params }: Props) {
           </div>
 
           <div className="max-w-[600px] mx-auto mt-16">
-            <ChartedFinale minutes={post.readingMinutes} />
+            <ChartedFinale plateNumber={post.plateNumber} minutes={post.readingMinutes} />
 
             <div className="atlas-cta">
-              <div>
-                <p className="font-display text-[1.3rem] leading-snug text-[var(--color-ink-1)] m-0">
-                  Reading about AI is the slow way.{" "}
-                  <span className="accent-italic">Having one is faster.</span>
-                </p>
-                <p className="text-[0.88rem] text-[var(--color-ink-3)] mt-2 mb-0">
-                  Sirius does your briefings, outreach, and research — done before you&rsquo;re in.
-                </p>
-              </div>
-              <DownloadButton className="shrink-0" />
+              <p className="font-display text-[1.3rem] leading-snug text-[var(--color-ink-1)] m-0">
+                Reading about AI is the slow way.{" "}
+                <span className="accent-italic">Having one is faster.</span>
+              </p>
+              <p className="text-[0.88rem] text-[var(--color-ink-3)] m-0">
+                Sirius does your briefings, outreach, and research — done before you&rsquo;re in.
+              </p>
+              <DownloadButton className="mt-2" />
             </div>
 
             {next && (
