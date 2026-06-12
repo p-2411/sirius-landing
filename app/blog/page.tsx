@@ -4,7 +4,6 @@ import { Starfield } from "@/components/sirius/starfield";
 import { AmbientLayers } from "@/components/sirius/ambient";
 import { SiteHeader } from "@/components/layout/site-header";
 import { Container } from "@/components/ui/container";
-import { SectionDivider } from "@/components/ui/section-divider";
 import { PlateFrame } from "@/components/blog/plate-frame";
 import { Plate } from "@/components/blog/plate";
 import { buildPlateModel } from "@/lib/constellation";
@@ -103,7 +102,7 @@ export default function BlogPage() {
 
       <section
         className="section"
-        style={{ paddingBlock: "clamp(24px, 4vh, 44px) clamp(64px, 10vh, 120px)" }}
+        style={{ paddingBlock: "clamp(24px, 4vh, 44px) clamp(24px, 4vh, 48px)" }}
       >
         <Container>
           {posts.length === 0 ? (
@@ -124,8 +123,6 @@ export default function BlogPage() {
           )}
         </Container>
       </section>
-
-      <SectionDivider />
 
       <footer className="footer">
         <div className="footer-base">
