@@ -74,7 +74,7 @@ export default function BlogPage() {
   const [featured, ...rest] = posts;
 
   return (
-    <main className="sd relative min-h-screen overflow-x-clip">
+    <main className="sd relative flex min-h-screen flex-col overflow-x-clip">
       <Starfield />
       <AmbientLayers />
       <div className="atlas-grain" aria-hidden="true" />
@@ -124,7 +124,7 @@ export default function BlogPage() {
         </Container>
       </section>
 
-      <footer className="footer" style={{ borderTop: "none", paddingTop: "0px", paddingBottom: "28px" }}>
+      <footer className="footer mt-auto" style={{ borderTop: "none", paddingTop: "0px", paddingBottom: "28px" }}>
         <div className="footer-base" style={{ marginTop: 0 }}>
           <span>Sirius</span>
           <span className="text-[var(--color-ink-4)]">
