@@ -4,7 +4,11 @@
 const GRAIN =
   "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")";
 
-export function AmbientLayers() {
+export function AmbientLayers({ quiet = false }: { quiet?: boolean }) {
+  // "quiet" recedes the nebula and grain for reading surfaces (essay pages)
+  // while the vignette stays — it helps focus rather than distracts.
+  const nebBlue = quiet ? 0.045 : 0.1;
+  const nebGold = quiet ? 0.035 : 0.085;
   return (
     <>
       {/* drifting nebula */}
@@ -16,7 +20,7 @@ export function AmbientLayers() {
             height: "60vw",
             left: "4%",
             top: "2%",
-            background: "radial-gradient(circle, rgba(108,216,255,0.10), transparent 62%)",
+            background: `radial-gradient(circle, rgba(108,216,255,${nebBlue}), transparent 62%)`,
             animation: "sd-drift1 34s ease-in-out infinite alternate",
           }}
         />
@@ -27,7 +31,7 @@ export function AmbientLayers() {
             height: "55vw",
             right: "2%",
             top: "16%",
-            background: "radial-gradient(circle, rgba(240,179,90,0.085), transparent 60%)",
+            background: `radial-gradient(circle, rgba(240,179,90,${nebGold}), transparent 60%)`,
             animation: "sd-drift2 40s ease-in-out infinite alternate",
           }}
         />
@@ -46,8 +50,8 @@ export function AmbientLayers() {
       {/* grain */}
       <div
         aria-hidden
-        className="pointer-events-none fixed inset-0 -z-[8] opacity-[0.05] [mix-blend-mode:overlay]"
-        style={{ backgroundImage: GRAIN }}
+        className="pointer-events-none fixed inset-0 -z-[8] [mix-blend-mode:overlay]"
+        style={{ backgroundImage: GRAIN, opacity: quiet ? 0.03 : 0.05 }}
       />
 
       <style>{`

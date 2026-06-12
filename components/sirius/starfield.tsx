@@ -3,6 +3,8 @@
 import { useEffect, useRef } from "react";
 import { useReducedMotion } from "motion/react";
 
+import { cn } from "@/lib/utils";
+
 // Ported from the design's starfield.js: a sparse, twinkling field of mostly
 // cool-white stars (occasional warm gold), drawn on a fixed full-viewport
 // canvas behind all page content — quiet celestial depth, never noise.
@@ -17,7 +19,7 @@ type Star = {
   warm: boolean;
 };
 
-export function Starfield() {
+export function Starfield({ className }: { className?: string }) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const reduce = useReducedMotion();
 
@@ -97,7 +99,7 @@ export function Starfield() {
     <canvas
       ref={canvasRef}
       aria-hidden
-      className="pointer-events-none fixed inset-0 -z-10"
+      className={cn("pointer-events-none fixed inset-0 -z-10", className)}
     />
   );
 }
