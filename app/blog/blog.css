@@ -265,3 +265,6 @@
   .plate-star, .plate-satellite { animation: none; }
   .plate-path { stroke-dashoffset: 0; transition: none; }
 }
+
+/* Smaller plates crop the art shorter so the grid stays compact. */
+.plate-art--small { max-height: 120px; }
