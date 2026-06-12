@@ -1,0 +1,68 @@
+---
+title: "What AI Actually Is (No, It's Not Magic)"
+description: "A plain-English breakdown of how large language models work under the hood — embeddings, attention, and why your ChatGPT isn't thinking."
+date: "2026-06-10"
+slug: "what-ai-actually-is"
+author: "Sirius"
+---
+
+You've used ChatGPT. You've seen Claude draft an email. Maybe you've even hooked an API into your product. But if someone asked you to explain how it actually works — not "it predicts the next token," but _why that works_ — could you?
+
+Most founders can't. And that's fine — until the moment you're making a bet-your-company decision about whether to build on top of a model, fine-tune one, or wait six months.
+
+This post gives you the real mental model. No math prerequisites beyond "multiplying numbers is fast."
+
+## The core idea: everything is a vector
+
+A language model doesn't see words. It sees vectors — long lists of floating-point numbers, typically hundreds or thousands of dimensions. Every word, every sentence fragment, every concept gets turned into a point in this high-dimensional space.
+
+Here's the intuition: words that mean similar things land near each other. "King" sits close to "queen," a little further from "prince," far from "bicycle." The geometry isn't random — the distances encode meaning.
+
+When you prompt a model, it's doing the same thing: turning your words into vectors, then finding what "comes next" in that vector space. The remarkable part isn't the prediction — it's that the vector space is rich enough that "what comes next" turns out to be reasoning, creativity, and factual recall.
+
+## Embeddings: the lookup table
+
+The first step is turning tokens (word fragments) into vectors. This is done by an _embedding matrix_ — essentially a giant lookup table learned during training. Each token gets a vector that captures its statistical relationships with every other token.
+
+These embedding vectors are _context-free_. The word "bank" gets the same vector whether you mean a riverbank or a financial institution. That's where attention comes in.
+
+## Attention: the secret sauce
+
+Attention is what lets the model disambiguate "bank" by looking at surrounding words. It's the mechanism that says: "given every token in this input, how much should each one influence my understanding of every other one?"
+
+For each token, the model computes three vectors:
+- **Query**: "What am I looking for?"
+- **Key**: "What do I contain?"
+- **Value**: "What information should I pass along?"
+
+It's like a retrieval system. The query for "bank" checks against every key in the sentence. The word "river" produces a key that matches well; the word "mortgage" produces a different one. The values from matching tokens get combined, and suddenly "bank" has a _context-aware_ representation.
+
+This happens for every token, in parallel, across many "attention heads" — each head learns to pay attention to different patterns. Some heads handle grammar, some handle factual associations, some track long-range dependencies.
+
+## Transformers: stacking the blocks
+
+A transformer is just a stack of these attention blocks, plus some feed-forward neural networks between them. Each layer refines the representations. Early layers handle syntax; middle layers build semantic relationships; later layers do the high-level reasoning.
+
+The key architectural insight is that this stack is _residual_ — each layer adds to what came before, rather than replacing it. This lets gradients flow during training and means the model can learn much deeper stacks.
+
+## The training miracle
+
+None of this machinery is programmed. It's learned by showing the model trillions of words and asking it to predict the next one, over and over. The model starts with random weights and gradually discovers grammar, facts, reasoning patterns, and even something that looks like world models — all as a side effect of getting better at next-word prediction.
+
+This is the part that genuinely surprised the field: that "predict the next word" turns out to be a sufficiently rich training objective to produce general reasoning. Nobody fully understands why this works as well as it does. The "scaling hypothesis" — that bigger models trained on more data just keep getting smarter — has held up remarkably well.
+
+## What this means for you, the founder
+
+Three practical takeaways:
+
+**1. Prompt engineering is geometry, not voodoo.** When you write a prompt, you're placing the model in a specific region of its representation space. Being specific works because it narrows the neighborhood. Examples work because they provide reference points. Think of prompts as navigation, not instruction.
+
+**2. Fine-tuning changes the geometry.** When you fine-tune on domain data, you're shifting the embedding space so your concepts are closer together. This is why fine-tuning beats prompting for narrow, repetitive tasks — but also why it can make the model _worse_ at general reasoning if overdone.
+
+**3. The models are improving fast, but the fundamentals are stable.** Embeddings, attention, transformers — these have been the architecture since 2017. What's changed is scale, data quality, and post-training techniques (RLHF, constitutional AI). Bet on the fundamentals, not the latest model name.
+
+You don't need to be able to implement a transformer from scratch. But knowing the difference between an embedding and a fine-tune is the difference between guessing and engineering. And as a founder building in this space, guessing gets expensive fast.
+
+---
+
+_Next in this series: "RAG Isn't Just 'Add Documents to Your Prompt'" — why naive retrieval-augmented generation fails and how to think about retrieval as search._
