@@ -166,3 +166,101 @@
   padding: 0.45em 0.75em;
   border-bottom: 1px solid var(--color-border);
 }
+
+/* ── Star Atlas plates ─────────────────────────────────────────────── */
+
+.plate-frame {
+  position: relative;
+  border: 1px solid rgba(217, 185, 120, 0.28);
+  border-radius: 6px;
+  background: var(--color-surface-deep);
+  transition: border-color 0.4s ease;
+}
+
+.plate-corner {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border: 0 solid rgba(217, 185, 120, 0.8);
+}
+.plate-corner-tl { top: 5px; left: 5px; border-top-width: 1px; border-left-width: 1px; }
+.plate-corner-tr { top: 5px; right: 5px; border-top-width: 1px; border-right-width: 1px; }
+.plate-corner-bl { bottom: 5px; left: 5px; border-bottom-width: 1px; border-left-width: 1px; }
+.plate-corner-br { bottom: 5px; right: 5px; border-bottom-width: 1px; border-right-width: 1px; }
+
+.plate-art { display: block; width: 100%; }
+
+.plate-dust circle { fill: rgba(232, 228, 220, 0.3); }
+
+.plate-path {
+  stroke: rgba(217, 185, 120, 0.55);
+  stroke-width: 0.8;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1.1s ease;
+}
+
+.plate-star {
+  fill: #d9b978;
+  animation: plate-twinkle 3.4s ease-in-out infinite;
+}
+
+.plate-minor { fill: rgba(217, 185, 120, 0.5); }
+
+.plate-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  fill: rgba(154, 148, 138, 0.85);
+}
+
+.plate-satellite {
+  fill: #6cd8ff;
+  animation: plate-orbit linear infinite;
+}
+
+@keyframes plate-twinkle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+
+@keyframes plate-orbit {
+  to { transform: rotate(360deg); }
+}
+
+/* Card variant: line draws on hover; pre-drawn where hover doesn't exist. */
+.plate-card:hover .plate-frame { border-color: rgba(217, 185, 120, 0.65); }
+.plate-card:hover .plate-path { stroke-dashoffset: 0; }
+@media (hover: none) {
+  .plate-path { stroke-dashoffset: 0; }
+}
+
+/* Hero variant: unlit — grey stars, hidden line, dim labels. */
+.plate-art--unlit .plate-star { fill: rgba(232, 228, 220, 0.3); animation: none; }
+.plate-art--unlit .plate-minor { fill: rgba(232, 228, 220, 0.2); }
+.plate-art--unlit .plate-path { stroke: rgba(232, 228, 220, 0.12); stroke-dashoffset: 0; transition: none; }
+.plate-art--unlit .plate-label { fill: rgba(154, 148, 138, 0.45); }
+.plate-art--unlit .plate-satellite { fill: rgba(108, 216, 255, 0.35); animation: none; }
+
+/* Mono metadata line used across atlas surfaces. */
+.plate-meta {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-ink-4);
+}
+
+/* Film grain — one overlay per page. */
+.atlas-grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .plate-star, .plate-satellite { animation: none; }
+  .plate-path { stroke-dashoffset: 0; transition: none; }
+}
