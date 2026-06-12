@@ -11,9 +11,8 @@ import { AmbientLayers } from "@/components/sirius/ambient";
 import { SiteHeader } from "@/components/layout/site-header";
 import { Container } from "@/components/ui/container";
 import { DownloadButton } from "@/components/ui/download-button";
-import { ChartedSky } from "@/components/blog/charted-sky";
 import { ChartedFinale } from "@/components/blog/charted-finale";
-import { buildPlateModel, GREEK, starLabel } from "@/lib/constellation";
+import { GREEK, starLabel } from "@/lib/constellation";
 import { getAllPosts, getPostBySlug, getPostStructure, slugifyHeading } from "@/lib/blog";
 
 interface Props {
@@ -86,9 +85,7 @@ export default async function BlogPostPage({ params }: Props) {
   if (!post) notFound();
 
   const structure = getPostStructure(post.content);
-  const model = buildPlateModel(structure, post.slug, post.readingMinutes);
   const majorHeadings = structure.majors.map((m) => m.heading);
-  const headingIds = majorHeadings.map(slugifyHeading);
 
   const { default: MDXContent } = await evaluate(post.content, {
     ...runtime,
@@ -137,10 +134,6 @@ export default async function BlogPostPage({ params }: Props) {
         className="section relative"
         style={{ paddingBlockStart: "clamp(12px, 2vh, 24px)", paddingBlockEnd: "clamp(60px, 10vh, 120px)" }}
       >
-        <ChartedSky
-          stars={model.stars.map((s, idx) => ({ x: s.x, start: model.sectionStarts[idx] }))}
-          headingIds={headingIds}
-        />
         <Container className="relative">
           <div className="prose-custom max-w-[600px] mx-auto">
             <MDXContent components={mdxComponents(majorHeadings)} />

@@ -82,11 +82,11 @@ On essay pages only:
 - **One grain layer only** — remove the page-level `atlas-grain` div from the
   essay page (AmbientLayers' grain remains). Index keeps its `atlas-grain`.
 - **Delete `prose-veil`** — markup and CSS. The room is dark enough without it.
-- **Charted sky stays, quieter:** star size/glow reduced (no large bloom on
-  ignition — e.g. shadow spread roughly halved from today's
-  `0 0 12px 2px`), path opacity slightly reduced. Per-section ignition
-  behavior, IntersectionObserver wiring, and heading ids are unchanged.
-  Hidden entirely below ~900px instead of dimmed (margins don't exist there).
+- **Charted sky removed entirely** *(amended 2026-06-13, user decision after seeing
+  the dark room live)*: no constellation stars or path in the essay background at
+  any width. `components/blog/charted-sky.tsx` deleted. The atlas identity in the
+  essay body is purely typographic: Greek section marks, the ✦ ✦ ✦ divider, and
+  the finale line.
 
 Reduced-motion handling already exists and carries over; the dark room itself
 removes most motion from the page.
@@ -95,8 +95,9 @@ removes most motion from the page.
 
 Kept behavior, restyled to the 600px centered axis:
 
-- Constellation completion + warming (existing `is-complete` logic) is now the
-  page's single showpiece moment.
+- The `ChartedFinale` line fading in (own IntersectionObserver) is the quiet
+  closing moment; the constellation-completion warming went away with the
+  charted sky (amended 2026-06-13).
 - `ChartedFinale` line (`PLATE 01 CHARTED · 9 MIN`) centered.
 - CTA card: centered text layout (headline, subline, download button stacked),
   same single-CTA policy, gold-tinted border/background as today.
