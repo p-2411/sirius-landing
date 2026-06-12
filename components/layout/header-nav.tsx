@@ -1,6 +1,11 @@
 "use client";
 
-type NavItem = { id: string; label: string };
+import Link from "next/link";
+
+type NavItem = { id?: string; href?: string; label: string };
+
+const linkClass =
+  "text-[12px] font-medium uppercase tracking-[0.18em] text-[var(--color-ink-3)] transition hover:text-[var(--color-ink-1)]";
 
 export function HeaderNav({ items }: { items: readonly NavItem[] }) {
   const onClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
@@ -14,16 +19,22 @@ export function HeaderNav({ items }: { items: readonly NavItem[] }) {
 
   return (
     <nav className="hidden items-center gap-6 sm:flex">
-      {items.map((item) => (
-        <a
-          key={item.id}
-          href={`#${item.id}`}
-          onClick={(e) => onClick(e, item.id)}
-          className="text-[12px] font-medium uppercase tracking-[0.18em] text-[var(--color-ink-3)] transition hover:text-[var(--color-ink-1)]"
-        >
-          {item.label}
-        </a>
-      ))}
+      {items.map((item) =>
+        item.href ? (
+          <Link key={item.label} href={item.href} className={linkClass}>
+            {item.label}
+          </Link>
+        ) : (
+          <a
+            key={item.label}
+            href={`#${item.id}`}
+            onClick={(e) => item.id && onClick(e, item.id)}
+            className={linkClass}
+          >
+            {item.label}
+          </a>
+        ),
+      )}
     </nav>
   );
 }

@@ -14,6 +14,7 @@ export const landingContent = {
     { id: "what-it-does", label: "What it does" },
     { id: "learns-once", label: "How it works" },
     { id: "pricing", label: "Pricing" },
+    { href: "/blog", label: "Blog" },
   ],
   downloadCta: { label: "Download for Mac", href: "#cta" },
   hero: {

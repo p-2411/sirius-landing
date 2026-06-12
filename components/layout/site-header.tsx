@@ -39,15 +39,7 @@ export function SiteHeader() {
           </span>
         </Link>
 
-        <div className="flex items-center gap-6">
-          <HeaderNav items={nav} />
-          <Link
-            href="/blog"
-            className="hidden sm:inline text-[12px] font-medium uppercase tracking-[0.18em] text-[var(--color-ink-3)] transition hover:text-[var(--color-ink-1)]"
-          >
-            Blog
-          </Link>
-        </div>
+        <HeaderNav items={nav} />
 
         <div className="flex items-center gap-3 sm:gap-4">
           <HeaderDownload label={downloadCta.label} />
