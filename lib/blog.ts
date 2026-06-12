@@ -118,7 +118,7 @@ function readRawPosts(): RawPost[] {
       meta: {
         title: data.title as string,
         description: data.description as string,
-        date: data.date as string,
+        date: data.date instanceof Date ? data.date.toISOString().slice(0, 10) : (data.date as string),
         slug: data.slug as string,
         author: (data.author as string) || "Sirius",
         tags: Array.isArray(data.tags) ? (data.tags as string[]) : [],
