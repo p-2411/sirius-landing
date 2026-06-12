@@ -48,7 +48,7 @@ function textOf(node: ReactNode): string {
   return "";
 }
 
-/** H2s get an id (for the ambient sky observer) and their star's Greek letter. */
+/** H2s get an anchor id and their centered Greek catalog mark. */
 function mdxComponents(majorHeadings: string[]) {
   return {
     h2: ({ children }: { children?: ReactNode }) => {
