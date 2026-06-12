@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 // Both keep a fixed aspect so circles stay round (uniform scaling).
 const VIEW = {
   card: { w: 600, h: 220 },
-  hero: { w: 1200, h: 200 },
+  hero: { w: 1200, h: 150 },
 } as const;
 // Normalized [0,1] radii/orbits are expressed in viewBox units via this scale.
 const UNIT = 3;

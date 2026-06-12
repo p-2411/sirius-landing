@@ -108,7 +108,7 @@ export default async function BlogPostPage({ params }: Props) {
       <SiteHeader />
 
       {/* Full-bleed hero banner — escapes the content column on purpose. */}
-      <article className="section px-4 md:px-8" style={{ paddingBlockStart: "clamp(20px, 3vh, 36px)" }}>
+      <article className="section px-6 md:px-12" style={{ paddingBlockStart: "clamp(20px, 3vh, 36px)" }}>
         <p className="plate-meta">
           <Link href="/blog" className="hover:text-[var(--color-ink-1)] transition-colors">
             ← ALL PLATES
@@ -118,9 +118,9 @@ export default async function BlogPostPage({ params }: Props) {
           {post.tags[0] ? ` · ${post.tags[0].toUpperCase()}` : ""}
         </p>
 
-        <PlateFrame className="mt-5 p-6 md:p-8">
+        <PlateFrame className="mt-5 p-5 md:p-7">
           <Plate model={model} variant="hero" />
-          <h1 className="font-display text-[clamp(1.8rem,4vw,2.6rem)] leading-[1.05] text-[var(--color-ink-1)] mt-5">
+          <h1 className="font-display text-[clamp(1.5rem,3.2vw,2.1rem)] leading-[1.05] text-[var(--color-ink-1)] mt-4">
             {post.title}
           </h1>
           <p className="text-[0.98rem] leading-relaxed text-[var(--color-ink-3)] mt-3 max-w-[600px]">
