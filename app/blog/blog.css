@@ -1,9 +1,23 @@
-/* Blog post content styling — scoped under .prose-custom */
+/* Blog post content styling — scoped under .prose-custom.
+   Quiet Folio: Fraunces serif body on a ~62ch measure. */
 .prose-custom {
+  font-family: var(--font-display);
+  font-weight: 370;
   color: var(--color-ink-2);
-  line-height: 1.72;
-  font-size: 1.02rem;
+  line-height: 1.74;
+  font-size: 1.156rem;
   word-wrap: break-word;
+}
+
+/* Gold drop cap on the opening paragraph only (first-child guards against
+   posts that open with a heading). */
+.prose-custom > p:first-child::first-letter {
+  font-weight: 300;
+  font-size: 3.3em;
+  line-height: 0.83;
+  float: left;
+  margin: 0.09em 0.13em 0 0;
+  color: #d9b978;
 }
 
 .prose-custom > *:first-child {
@@ -13,24 +27,37 @@
 .prose-custom h2 {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 1.45rem;
-  line-height: 1.15;
+  font-size: 1.55rem;
+  line-height: 1.2;
   color: var(--color-ink-1);
-  margin: 2.4em 0 0.5em;
-  letter-spacing: -0.015em;
+  margin: 3em 0 1.2em;
+  letter-spacing: -0.01em;
+  text-align: center;
 }
 
 .prose-custom h2:first-child {
   margin-top: 0;
 }
 
+/* The Greek catalog mark above each H2 — `α · CORE`. */
+.prose-section-mark {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.32em;
+  color: #d9b978;
+  margin-bottom: 12px;
+}
+
 .prose-custom h3 {
   font-family: var(--font-display);
+  font-style: italic;
   font-weight: 400;
-  font-size: 1.15rem;
-  line-height: 1.25;
+  font-size: 1.2rem;
+  line-height: 1.3;
   color: var(--color-ink-1);
-  margin: 2em 0 0.4em;
+  margin: 2.2em 0 0.5em;
   letter-spacing: -0.01em;
 }
 
@@ -70,11 +97,15 @@
 }
 
 .prose-custom blockquote {
-  margin: 1.4em 0;
-  padding: 0.6em 0 0.6em 1.2em;
-  border-left: 2px solid var(--color-border-strong);
-  color: var(--color-ink-3);
+  margin: 1.8em 0;
+  padding: 0 1.4em;
+  border: 0;
+  text-align: center;
   font-style: italic;
+  font-weight: 340;
+  font-size: 1.08em;
+  line-height: 1.55;
+  color: var(--color-ink-3);
 }
 
 .prose-custom blockquote p {
@@ -151,7 +182,8 @@
   width: 100%;
   margin: 1.4em 0;
   border-collapse: collapse;
-  font-size: 0.92rem;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
 }
 
 .prose-custom th {
@@ -340,8 +372,6 @@
 @media (prefers-reduced-motion: reduce) {
   .charted-sky-path { transition: none; }
   .charted-sky-star { transition: none; animation: none; }
-  /* Must out-specify .charted-sky-star.is-lit, which re-declares the twinkle. */
-  .charted-sky-star.is-lit { animation: none; }
   .charted-finale { transition: none; }
 }
 

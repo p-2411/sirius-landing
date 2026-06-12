@@ -58,8 +58,8 @@ function mdxComponents(majorHeadings: string[]) {
       return (
         <h2 id={text ? slugifyHeading(text) : undefined}>
           {idx >= 0 && (
-            <span className="plate-greek" aria-hidden="true">
-              {GREEK[Math.min(idx, GREEK.length - 1)]}
+            <span className="prose-section-mark" aria-hidden="true">
+              {GREEK[Math.min(idx, GREEK.length - 1)]} · {starLabel(text)}
             </span>
           )}
           {children}
@@ -142,11 +142,11 @@ export default async function BlogPostPage({ params }: Props) {
           headingIds={headingIds}
         />
         <Container className="relative">
-          <div className="prose-custom max-w-[760px] mx-auto">
+          <div className="prose-custom max-w-[600px] mx-auto">
             <MDXContent components={mdxComponents(majorHeadings)} />
           </div>
 
-          <div className="max-w-[760px] mx-auto mt-16">
+          <div className="max-w-[600px] mx-auto mt-16">
             <ChartedFinale minutes={post.readingMinutes} />
 
             <div className="atlas-cta">
