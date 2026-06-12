@@ -267,7 +267,7 @@
 }
 
 /* Smaller plates crop the art shorter so the grid stays compact. */
-.plate-art--small { max-height: 120px; }
+.plate-art--small { max-height: 110px; }
 
 /* ── Ambient sky charting (essay background) ───────────────────────── */
 

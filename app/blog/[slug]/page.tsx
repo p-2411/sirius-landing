@@ -98,7 +98,6 @@ export default async function BlogPostPage({ params }: Props) {
   const all = getAllPosts();
   const i = all.findIndex((p) => p.slug === post.slug);
   const next = all.length > 1 ? (all[i + 1] ?? all[0]) : null;
-  const plateNo = `PLATE ${String(post.plateNumber).padStart(2, "0")}`;
 
   return (
     <main className="sd relative min-h-screen overflow-x-clip">
@@ -108,17 +107,16 @@ export default async function BlogPostPage({ params }: Props) {
       <SiteHeader />
 
       {/* Full-bleed hero banner — escapes the content column on purpose. */}
-      <article className="section px-6 md:px-12" style={{ paddingBlockStart: "clamp(20px, 3vh, 36px)" }}>
-        <p className="plate-meta">
-          <Link href="/blog" className="hover:text-[var(--color-ink-1)] transition-colors">
-            ← ALL PLATES
-          </Link>
-          {"  ·  "}
-          {plateNo} · {plateDate(post.date)} · {post.readingMinutes} MIN
-          {post.tags[0] ? ` · ${post.tags[0].toUpperCase()}` : ""}
-        </p>
-
-        <PlateFrame className="mt-5 p-5 md:p-7">
+      <article className="section px-2 md:px-4" style={{ paddingBlockStart: "clamp(10px, 1.5vh, 16px)" }}>
+        <PlateFrame className="p-5 md:p-7">
+          <p className="plate-meta mb-4">
+            <Link href="/blog" className="hover:text-[var(--color-ink-1)] transition-colors">
+              ← ALL PLATES
+            </Link>
+            {" · "}
+            {plateDate(post.date)} · {post.readingMinutes} MIN
+            {post.tags[0] ? ` · ${post.tags[0].toUpperCase()}` : ""}
+          </p>
           <Plate model={model} variant="hero" />
           <h1 className="font-display text-[clamp(1.5rem,3.2vw,2.1rem)] leading-[1.05] text-[var(--color-ink-1)] mt-4">
             {post.title}

@@ -1,11 +1,11 @@
 import type { PlateModel } from "@/lib/constellation";
 import { cn } from "@/lib/utils";
 
-// Card plates are chart-shaped; the hero stretches into a wide banner strip.
-// Both keep a fixed aspect so circles stay round (uniform scaling).
+// Fixed aspects keep circles round (uniform scaling): "chart" is the squarer
+// card shape, "banner" the wide strip used by full-width plates.
 const VIEW = {
-  card: { w: 600, h: 220 },
-  hero: { w: 1200, h: 150 },
+  chart: { w: 600, h: 220 },
+  banner: { w: 1200, h: 150 },
 } as const;
 // Normalized [0,1] radii/orbits are expressed in viewBox units via this scale.
 const UNIT = 3;
@@ -14,17 +14,20 @@ const UNIT = 3;
  * Renders a PlateModel as SVG.
  * - "card": index plates — constellation line draws on hover (CSS).
  * - "hero": essay header — unlit grey state, no line.
+ * Aspect defaults to banner for heroes and chart for cards.
  */
 export function Plate({
   model,
   variant,
+  aspect,
   className,
 }: {
   model: PlateModel;
   variant: "card" | "hero";
+  aspect?: keyof typeof VIEW;
   className?: string;
 }) {
-  const { w, h } = VIEW[variant];
+  const { w, h } = VIEW[aspect ?? (variant === "hero" ? "banner" : "chart")];
   const px = (x: number) => x * w;
   const py = (y: number) => y * h;
   const points = model.stars.map((s) => `${px(s.x)},${py(s.y)}`).join(" ");
