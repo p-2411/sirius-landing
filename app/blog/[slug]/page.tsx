@@ -142,11 +142,11 @@ export default async function BlogPostPage({ params }: Props) {
           headingIds={headingIds}
         />
         <Container className="relative">
-          <div className="prose-custom max-w-[620px] mx-auto">
+          <div className="prose-custom max-w-[760px] mx-auto">
             <MDXContent components={mdxComponents(majorHeadings)} />
           </div>
 
-          <div className="max-w-[620px] mx-auto mt-16">
+          <div className="max-w-[760px] mx-auto mt-16">
             <ChartedFinale minutes={post.readingMinutes} />
 
             <div className="atlas-cta">
