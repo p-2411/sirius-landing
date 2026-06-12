@@ -3,8 +3,9 @@
 **Date:** 2026-06-13
 **Status:** Approved (brainstormed with visual companion; mockups in
 `.superpowers/brainstorm/46894-1781275847/content/`)
-**Scope:** `/blog/[slug]` essay pages only. The `/blog` index, routes, MDX
-pipeline, and `lib/constellation.ts` are untouched.
+**Scope:** `/blog/[slug]` essay pages only. The `/blog` index, routes, and MDX
+pipeline are untouched. (`lib/constellation.ts` lost only the dead
+`sectionStarts` field once the charted sky was removed — see §3 amendment.)
 
 ## Why
 
