@@ -104,14 +104,19 @@ interface RawPost {
   content: string;
 }
 
+// Build-time singleton cache: getAllPosts/getPostBySlug are called repeatedly
+// (once per plate on the index), and posts can't change mid-build.
+let rawPostsCache: RawPost[] | null = null;
+
 function readRawPosts(): RawPost[] {
+  if (rawPostsCache) return rawPostsCache;
   if (!fs.existsSync(postsDirectory)) return [];
 
   const filenames = fs
     .readdirSync(postsDirectory)
     .filter((f) => f.endsWith(".mdx") || f.endsWith(".md"));
 
-  return filenames.map((filename) => {
+  rawPostsCache = filenames.map((filename) => {
     const raw = fs.readFileSync(path.join(postsDirectory, filename), "utf-8");
     const { data, content } = matter(raw);
     return {
@@ -127,6 +132,7 @@ function readRawPosts(): RawPost[] {
       content,
     };
   });
+  return rawPostsCache;
 }
 
 /** Newest first. Plate numbers are chronological: oldest post is PLATE 01. */

@@ -34,7 +34,7 @@ function modelFor(post: PostMeta) {
 
 function FeaturedPlate({ post }: { post: PostMeta }) {
   return (
-    <Link href={`/blog/${post.slug}`} className="plate-card block group outline-none">
+    <Link href={`/blog/${post.slug}`} className="plate-card block group outline-none focus-ring">
       <PlateFrame className="p-6 md:p-8">
         <Plate model={modelFor(post)} variant="card" />
         <div className="mt-4">
@@ -56,7 +56,7 @@ function FeaturedPlate({ post }: { post: PostMeta }) {
 
 function SmallPlate({ post }: { post: PostMeta }) {
   return (
-    <Link href={`/blog/${post.slug}`} className="plate-card block group outline-none">
+    <Link href={`/blog/${post.slug}`} className="plate-card block group outline-none focus-ring">
       <PlateFrame className="p-5 h-full">
         <Plate model={modelFor(post)} variant="card" className="plate-art--small" />
         <p className="plate-meta mt-3">
