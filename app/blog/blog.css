@@ -370,3 +370,9 @@
   border-top: 1px solid var(--color-border);
   text-decoration: none;
 }
+
+/* .accent-italic is scoped to .section-title in sirius-design.css — restyle for the CTA. */
+.atlas-cta .accent-italic {
+  font-style: italic;
+  color: var(--color-accent);
+}

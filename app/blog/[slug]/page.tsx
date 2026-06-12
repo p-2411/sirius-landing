@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import type { ReactNode } from "react";
+import type { ReactElement, ReactNode } from "react";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { evaluate } from "@mdx-js/mdx";
@@ -43,10 +43,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-function textOf(children: ReactNode): string {
-  if (typeof children === "string") return children;
-  if (Array.isArray(children)) {
-    return children.filter((c): c is string => typeof c === "string").join("");
+function textOf(node: ReactNode): string {
+  if (typeof node === "string") return node;
+  if (Array.isArray(node)) return node.map(textOf).join("");
+  if (node && typeof node === "object" && "props" in node) {
+    return textOf((node as ReactElement<{ children?: ReactNode }>).props.children);
   }
   return "";
 }
@@ -73,7 +74,8 @@ function mdxComponents(majorHeadings: string[]) {
 
 function plateDate(date: string): string {
   return new Date(date)
-    .toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
+    .toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" })
+    .replace(",", "")
     .toUpperCase();
 }
 

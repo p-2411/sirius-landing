@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 
 function plateDate(date: string): string {
   return new Date(date)
-    .toLocaleDateString("en-US", { month: "short", day: "numeric" })
+    .toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" })
     .toUpperCase();
 }
 
