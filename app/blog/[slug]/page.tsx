@@ -35,6 +35,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: post.description,
       type: "article",
       publishedTime: post.date,
+      // Defining openGraph here replaces the inherited object wholesale, so
+      // the root banner must be re-attached explicitly (twitter inherits fine).
+      images: ["/opengraph-image.png"],
     },
   };
 }

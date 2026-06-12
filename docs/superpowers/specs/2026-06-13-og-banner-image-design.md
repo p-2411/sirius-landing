@@ -21,7 +21,9 @@ YAGNI until per-post banner titles are wanted).
 
 1. **Asset:** one 1200×630 PNG — starry sky, dark orb, "It knows you. *It does
    the work.*" headline — captured from the live homepage with headless Chrome
-   at 1200×694 and the top 64px (site nav header) cropped off with `sips`.
+   at 1200×687 and the top 57px (site nav header) cropped off by a second
+   Chrome pass (`sips --cropOffset` shifts from center and can't reach a
+   top-anchored crop here).
    Committed as `app/opengraph-image.png` and duplicated as
    `app/twitter-image.png` (the Twitter tag needs its own convention file).
 2. **Alt text:** `app/opengraph-image.alt.txt` and `app/twitter-image.alt.txt`
