@@ -142,6 +142,7 @@ export default async function BlogPostPage({ params }: Props) {
           headingIds={headingIds}
         />
         <Container className="relative">
+          <div className="prose-veil">
           <div className="prose-custom max-w-[760px] mx-auto">
             <MDXContent components={mdxComponents(majorHeadings)} />
           </div>
@@ -170,6 +171,7 @@ export default async function BlogPostPage({ params }: Props) {
                 </span>
               </Link>
             )}
+          </div>
           </div>
         </Container>
       </section>

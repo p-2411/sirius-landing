@@ -387,3 +387,28 @@
   font-style: italic;
   color: var(--color-accent);
 }
+
+/* Readability veil: quiets the starfield behind the essay column. The dark
+   band feathers out at the sides so the charted sky stays vivid in the
+   margins where the constellation lives. */
+.prose-veil {
+  position: relative;
+}
+
+.prose-veil::before {
+  content: "";
+  position: absolute;
+  inset: -32px max(0px, calc(50% - 520px));
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(13, 11, 8, 0.78) 72px,
+    rgba(13, 11, 8, 0.78) calc(100% - 72px),
+    transparent
+  );
+  pointer-events: none;
+}
+
+.prose-veil > * {
+  position: relative;
+}
