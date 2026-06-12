@@ -1,0 +1,168 @@
+/* Blog post content styling — scoped under .prose-custom */
+.prose-custom {
+  color: var(--color-ink-2);
+  line-height: 1.72;
+  font-size: 1.02rem;
+  word-wrap: break-word;
+}
+
+.prose-custom > *:first-child {
+  margin-top: 0;
+}
+
+.prose-custom h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.45rem;
+  line-height: 1.15;
+  color: var(--color-ink-1);
+  margin: 2.4em 0 0.5em;
+  letter-spacing: -0.015em;
+}
+
+.prose-custom h2:first-child {
+  margin-top: 0;
+}
+
+.prose-custom h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.15rem;
+  line-height: 1.25;
+  color: var(--color-ink-1);
+  margin: 2em 0 0.4em;
+  letter-spacing: -0.01em;
+}
+
+.prose-custom p {
+  margin: 1em 0;
+}
+
+.prose-custom strong {
+  color: var(--color-ink-1);
+  font-weight: 600;
+}
+
+.prose-custom a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(var(--color-accent-rgb), 0.4);
+  transition: text-decoration-color 0.2s ease;
+}
+
+.prose-custom a:hover {
+  text-decoration-color: var(--color-accent);
+}
+
+.prose-custom ul,
+.prose-custom ol {
+  margin: 1em 0;
+  padding-left: 1.35em;
+}
+
+.prose-custom li {
+  margin: 0.35em 0;
+}
+
+.prose-custom li::marker {
+  color: var(--color-ink-4);
+}
+
+.prose-custom blockquote {
+  margin: 1.4em 0;
+  padding: 0.6em 0 0.6em 1.2em;
+  border-left: 2px solid var(--color-border-strong);
+  color: var(--color-ink-3);
+  font-style: italic;
+}
+
+.prose-custom blockquote p {
+  margin: 0.3em 0;
+}
+
+.prose-custom code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: rgba(var(--color-accent-rgb), 0.08);
+  color: var(--color-ink-2);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+}
+
+.prose-custom pre {
+  margin: 1.6em 0;
+  background: var(--color-surface-deep);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1em 1.2em;
+  overflow-x: auto;
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.prose-custom pre code {
+  background: transparent;
+  padding: 0;
+  color: var(--color-ink-2);
+  font-size: inherit;
+}
+
+.prose-custom hr {
+  margin: 2em 0;
+  border: 0;
+  height: 1px;
+  background: var(--color-border-strong);
+}
+
+.prose-custom em {
+  font-style: italic;
+}
+
+/* rehype-highlight theme overrides — keep it subtle in the dark UI */
+.prose-custom .hljs-keyword,
+.prose-custom .hljs-selector-tag,
+.prose-custom .hljs-type {
+  color: #9bd6e5;
+}
+
+.prose-custom .hljs-string,
+.prose-custom .hljs-attr {
+  color: #d9b978;
+}
+
+.prose-custom .hljs-comment {
+  color: rgba(206, 208, 197, 0.4);
+  font-style: italic;
+}
+
+.prose-custom .hljs-number,
+.prose-custom .hljs-literal {
+  color: #f0b35a;
+}
+
+.prose-custom .hljs-built_in,
+.prose-custom .hljs-title.class_ {
+  color: #6cd8ff;
+}
+
+/* Tables (from remark-gfm) */
+.prose-custom table {
+  width: 100%;
+  margin: 1.4em 0;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.prose-custom th {
+  text-align: left;
+  font-weight: 600;
+  color: var(--color-ink-1);
+  border-bottom: 1px solid var(--color-border-strong);
+  padding: 0.5em 0.75em;
+}
+
+.prose-custom td {
+  padding: 0.45em 0.75em;
+  border-bottom: 1px solid var(--color-border);
+}
