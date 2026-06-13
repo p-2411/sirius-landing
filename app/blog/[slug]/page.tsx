@@ -100,8 +100,31 @@ export default async function BlogPostPage({ params }: Props) {
   const i = all.findIndex((p) => p.slug === post.slug);
   const next = all.length > 1 ? (all[i + 1] ?? all[0]) : null;
 
+  const url = `https://sirius.so/blog/${post.slug}`;
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.description,
+    datePublished: post.date,
+    dateModified: post.date,
+    author: { "@type": "Organization", name: post.author, url: "https://sirius.so" },
+    publisher: {
+      "@type": "Organization",
+      name: "Sirius",
+      logo: { "@type": "ImageObject", url: "https://sirius.so/icon.png" },
+    },
+    image: "https://sirius.so/opengraph-image.png",
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
+    url,
+  };
+
   return (
     <main className="sd relative min-h-screen overflow-x-clip">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <AmbientLayers quiet />
       <SiteHeader />
 
