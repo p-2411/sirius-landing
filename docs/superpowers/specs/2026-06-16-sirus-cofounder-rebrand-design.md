@@ -75,7 +75,7 @@ copy swaps and two adapted visuals. No new architecture.
 | 1 | `how-it-learns` | It learns the business on its own. | `DaySection` shell → repurposed as 3-pillar | adapted: 3 pillars (meetings / clients / "it just knows") |
 | 2 | `relationships` | It keeps every relationship warm. | **new section** | new visual: dossier + follow-up nudge card |
 | 3 | `stack` | It works inside your whole stack. | `OneAppSection` | copy swap (replaces→becomes) |
-| 4 | `while-you-sleep` | Give it the keys once. It runs. | `DaySection` timeline + `ReliabilitySection` stats | recast timeline beats + fold reliability stats |
+| 4 | `while-you-sleep` | It's already handling these. | `DaySection` timeline (+ standing-jobs roster) | recast timeline beats + jobs roster (workflows-as-outcomes); reliability viz/stats cut |
 | 5 | `local` | Your business stays on your Mac. | `LocalSection` | copy swap, de-emphasized |
 | 6 | `right-brain` | It always uses the right brain for the job. | `RoutingSection` | light copy refresh |
 | — | `pricing` | Start free. | `PricingSection` | tagline refresh |
@@ -153,20 +153,27 @@ stack: {
 // §4 — works while you sleep (recast timeline + reliability stats)
 whileYouSleep: {
   eyebrow: "Works while you sleep",
-  title: "Give it the keys once. It runs.",
-  lead: "You set the boundaries once. After that, Sirus does the work — drafting, sending, following up, briefing — while you're asleep, commuting, or in another meeting.",
+  title: "It's already handling these.",
+  lead: "Hand it a job and it owns it — running on its own while you're asleep, commuting, or in another meeting. A few of the jobs it's keeping for founders right now:",
+  // The "workflows" concept, as outcomes. Each item = one standing job it
+  // handles for you (maps to a real cron/Gmail-triggered workflow). NEVER shown
+  // as a DAG or "steps" — just the responsibility it owns.
+  jobs: [
+    "Morning brief — every day, before you're up",
+    "Outreach to 50 new prospects — daily",
+    "Watch for anything from your top investor",
+    "Nudge every client who's gone quiet",
+  ],
   cards: [
     { id: "outreach", time: "02:00", when: "while you slept",     title: "The outreach you didn't send",  body: "Fifty prospects, each researched and written to by name. You wake up to messages already going out — and a short queue of the few that need you." },
     { id: "morning",  time: "08:00", when: "before you're in",     title: "Caught up before coffee",        body: "It reads last night's replies, your calendar, and what each client is waiting on, then tells you the three things that actually matter today." },
     { id: "brief",    time: "10:45", when: "before your 11:00",    title: "Briefed for the call",           body: "From the last meeting it sat in and every thread since, a one-page brief is waiting in the invite — who they are, what's open, what to push." },
     { id: "client",   time: "14:30", when: "client email lands",   title: "Handled before you see it",      body: "It logs what changed, drafts the reply, sends the easy one, and flags the single decision that's actually yours." },
   ],
-  // reliability proof folded in (kept from current learnsOnce)
-  stats: [
-    { v: "2+ ×", unit: "faster",        note: "It runs the steps directly instead of working them out each time." },
-    { v: "10×",  unit: "more reliable", note: "Once it's learned a task, every run follows the same path." },
-    { v: "¹⁄₁₀", unit: "the cost",      note: "No tokens spent re-thinking the same task twice." },
-  ],
+  // Closing outcome line. NO reliability diagram, NO mechanism stats —
+  // "how reliably it runs" is an implementation detail a founder doesn't care
+  // about. The timeline above IS the proof that it just happens.
+  close: "Set the boundaries once. After that it just happens — every day, while you're somewhere else.",
 }
 
 // §5 — privacy (quiet)
@@ -230,9 +237,11 @@ nav: [
 4. **§2 `relationships`** — new section + a glanceable dossier/nudge card
    visual (adapt an existing mock card style; keep secondary, outcome-led).
 5. **§3 `stack`** — `OneAppSection` copy swap (`replaces`/`becomes`).
-6. **§4 `while-you-sleep`** — recast timeline (the day cards move here) + fold
-   `ReliabilitySection` stats. New `WhileYouSleepSection` or reuse
-   `DaySection` timeline markup with new copy.
+6. **§4 `while-you-sleep`** — recast timeline (the day cards move here) + a
+   standing-jobs roster (workflows-as-outcomes). New `WhileYouSleepSection` or
+   reuse `DaySection` timeline markup with new copy. **`ReliabilitySection`
+   (loop-vs-chain + stats) is removed** — workflow reliability is now an
+   implementation detail, not shown.
 7. **§5 `local`** — `LocalSection` copy swap, items updated.
 8. **§6 `right-brain`** — light copy refresh.
 9. **Pricing / maker / CTA / footer** — copy swaps.
@@ -242,6 +251,37 @@ CSS: reuse `app/sirius-design.css` `.sd` tokens (gold `217,185,120`, cyan,
 Fraunces/Geist/JetBrains). Two new visuals get minimal scoped additions.
 
 ---
+
+## 5b. Visuals & diagrams
+
+**Governing rule:** show the *outcome* (the thing you'd wake up to), not the
+mechanism. No node/edge "knowledge-graph architecture" pictures, no pipeline
+DAGs, no loop-vs-chain. When a diagram appears, its labels are *real things in
+the founder's world* (client names, deals, promises), never tech terms
+("entity", "embedding", "step", "node").
+
+**Shared visual language (designed once, up front):** all the outcome cards
+(nudge, brief, meeting recap, outreach queue) use one card system — same frame,
+type scale, gold (`217,185,120`) / cyan (`108,216,255`) accents, JetBrains mono
+for metadata. The page should feel like one product, not seven widgets.
+
+| Section | Visual | Source | Notes |
+|---|---|---|---|
+| Hero | Orb | `orb.tsx` | Brand identity — keep |
+| §1 learns the business | **"Your world" graph** — *You* at center linked to real client/deal/meeting/promise nodes, assembling itself | new (may adapt `design-tree-mock` structure, but re-skinned with real-world labels, not tech) | The visual centerpiece. Nodes = "Dana @ Acme · follow up Fri", "Q3 numbers owed", "intro from last week's call". Reads as *"look how much it knows about your business."* No tech labels. |
+| §2 never drop a client | **Outcome nudge card** — "Reach out to Dana — 3 weeks quiet" + a drafted follow-up | new (outcome-card system) | An artifact, not a data structure |
+| §3 your whole stack | Tool orbit | `tool-orbit.tsx` | Keep orbit; **swap to founder logos** (HubSpot/Stripe/Slack/Notion/Google) |
+| §4 works while you sleep | **Standing-jobs roster** ("the jobs it's handling for you") + day timeline showing them fire | new roster list (outcome framing of workflows — no DAG/steps); `DaySection` timeline; reuse `standup-channel-mock` / `research-briefing-mock` / `outreach-inbox-mock` for beats | **No** reliability diagram, **no** stats block. Each roster item = one real cron/Gmail-triggered workflow, shown as a responsibility it owns |
+| §5 privacy | Cloud→vault lock | `LocalSection` visual | Trust visual — keep |
+| §6 right brain | none (type-led) | — | Keep |
+
+**Retire as heroes:** `workflow-dag-mock`, `design-tree-mock` (machinery). They
+may survive only as re-skinned internals if useful for the §1 graph.
+
+**Build cadence:** lock the shared card language first, then build & ship
+**section by section** with a screenshot-verify loop (build → screenshot →
+compare to spec → iterate → commit → next section), per the standing
+screenshot-before-layout-changes workflow.
 
 ## 6. Out of scope (follow-ups)
 - Interactive `/demo` rebrand (separate spec).
