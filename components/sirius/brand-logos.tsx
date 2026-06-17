@@ -112,7 +112,7 @@ export const BRAND_COLORS: Record<string, string> = {
   Perplexity: "#1FB8CD",
   Superhuman: "#DEDBD5",
   Stripe: "#635BFF",
-  Slack: "#E01E5A",
+  Slack: "#f6efdf",
   Notion: "#F6EFDF",
   Gmail: "#EA4335",
   Calendar: "#4285F4",
