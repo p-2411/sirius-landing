@@ -55,11 +55,14 @@ cofounder/relationship story *more* grounded, not less.
 | Autonomous: runs while you sleep, drafts & sends | **Real & bolder** — a **Job** (a workflow *with a trigger*: cron/Gmail/webhook/manual) runs autonomously to completion on the Mac; no draft-for-approval for Jobs. `send_email` still needs a trust grant (revocable, per-channel) | Supports the "fully autonomous" framing the user chose; "give it the keys once" = the trust grant |
 | Sits in on your meetings (live) | **Aspirational** — local Whisper transcription of recorded audio only; no live call join | Frame as product *direction*; no fake live-call UI. Transcription is real, just ahead of shipping |
 
-**Terminology shift (important for §4):** "Workflows" is now split for users into
+**Terminology shift (context for §4):** "Workflows" is now split for users into
 **Jobs** (a captured process *with a trigger* — user-facing, autonomous, shown on
 home/the Jobs page) and **Playbooks** (untriggered, Sirius's private reusable
 procedures). This *validates* our §4 framing: each "job it's handling for you" =
-literally a **Job**. We should use the word **"Jobs"** on the page.
+literally a **Job** in the product. **Copy decision: stay outcome-only** — do
+NOT use "Jobs" as a branded product label on the page; describe the outcomes
+("your morning brief, your daily outreach"). Plain lowercase "job" as ordinary
+English (e.g. "hand it a job") is fine.
 
 **Current app surfaces (for the eventual demo, not this pass):**
 - Stack: **Vite SPA + API host** (the Next.js App-Router UI was deleted).

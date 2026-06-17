@@ -25,21 +25,38 @@ changes unless the user explicitly overrides it.
 
 ## The demo must accurately represent the real app
 
-The real Sirius app lives at `../sirius/` (Next.js app under
-`/Users/parhamsepasgozar/Documents/GitHub/sirius/app`). The landing demo must
-depict something **real or realistically shippable** — never invented product
-surfaces. Ground truth from the real app:
+The real Sirius app lives at `../sirius/` (a **Vite SPA + API host** under
+`/Users/parhamsepasgozar/Documents/GitHub/sirius/app`; the old Next.js
+App-Router UI was deleted). The landing demo must depict something **real or
+realistically shippable** — never invented product surfaces. Ground truth from
+the real app (current as of 2026-06-17, after the SPA + Jobs/Playbooks overhaul):
 
-- Persistent **72px icon rail**: Work · Workflows · Feed · Settings (cyan
-  active). Keep it — it's app nav, not jargon.
-- Workflow page: two-pane (DAG left + "Chat with this workflow" right + recent
-  runs strip). Run detail (`/workflows/runs/[id]`) = an ordered **steps list**
-  with each node's inline text output / collapsed input-output JSON.
-- A run's outputs are the **files it actually writes** to the workspace
-  (real folders: `reports/ data/ companies/ founders/`) plus the final text
-  output — NOT a browser of invented sections like "Company profiles".
-- Theme matches the landing: dark, gold accent (`217,185,120`), cyan listening
-  (`108,216,255`), Fraunces display / Geist body / JetBrains mono.
+- Persistent **72px icon rail**: Work · **Jobs** · Workspace · Settings.
+  "Work" is a chat **morph on home**, not a separate page. (There is no "Feed".)
+- **Home** = voice-orb hero + greeting + a persistent composer that FLIPs into
+  chat. Below it, an **IntentLanes** feed of deterministic action cards grouped
+  into lanes: **Needs you · Failed · In motion · FYI**. This is the real
+  "review queue" / briefing surface.
+- **Jobs vs Playbooks**: a workflow *with a trigger* (cron/Gmail/webhook/manual)
+  is a **Job** (user-facing, autonomous, on home/the Jobs page); an untriggered
+  workflow is a **Playbook** (Sirus's private reusable procedure). Same
+  underlying "workflow" structure — the only difference is the trigger.
+- Job/workflow detail: two-pane (DAG left + "Chat with this workflow" right +
+  recent runs strip). Run detail = an ordered **steps list** with each node's
+  inline text output / collapsed input-output JSON.
+- **Workspace** = a flat **recent-files gallery** (PDF/DOCX/text thumbnails) of
+  what jobs actually wrote — NOT a fixed `reports/ data/ companies/ founders/`
+  folder tree, and NOT invented sections like "Company profiles".
+- **Dossiers / memory**: an `entities` store (person · org · event · project ·
+  topic) with markdown dossiers, vector embeddings, and `[[wiki-links]]` that
+  connect entities into a graph of the user's world. Plus profile / threads /
+  decisions / messages / observations layers. Per-person dossiers are the
+  closest thing to a CRM (no dedicated CRM schema/UI).
+- **Voice orb** states: Listening (violet→pink cycle), Thinking (pink/magenta),
+  Speaking (warm gold), always-on breathing. The **rail orb** stays cyan
+  (`108,216,255`).
+- Theme: dark, gold accent (`217,185,120`), cyan (`108,216,255`),
+  Fraunces display / Geist body / JetBrains mono.
 
 We may add NEW pages to the real app for better UX, but they must be a
 believable extension of this model. Before depicting any app surface, check
