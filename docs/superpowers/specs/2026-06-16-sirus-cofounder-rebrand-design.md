@@ -122,7 +122,7 @@ integrations: {
   // Founder/business-centric tools so the ROI is obvious at a glance.
   // Aspirational beyond Gmail/Cal/Drive today; the open-ended hedge covers it.
   label: "Works inside the tools you run the business in",
-  tools: ["HubSpot", "Gmail", "Calendar", "Notion", "Slack", "Google Drive", "Stripe"],
+  tools: ["Gmail", "Calendar", "Google Drive", "Notion", "Slack", "Superhuman", "Granola", "HubSpot", "Stripe", "Zapier"],
   more: "+ anything with an API",
 }
 
@@ -175,14 +175,21 @@ whileYouSleep: {
   eyebrow: "Works while you sleep",
   title: "It's already handling these.",
   lead: "Hand it a job and it owns it — running on its own while you're asleep, commuting, or in another meeting. A few of the jobs it's keeping for founders right now:",
-  // The "workflows" concept, as outcomes. Each item = one standing job it
-  // handles for you (maps to a real cron/Gmail-triggered workflow). NEVER shown
-  // as a DAG or "steps" — just the responsibility it owns.
+  // The "workflows" concept, as outcomes — rendered as the REAL Jobs roster
+  // (the app's JobRow component: status dot · Fraunces name · description ·
+  // trigger chip · activity), grouped Needs you / Active now / Standing by.
+  // Each job is a GENERALIZED RECURRING RULE (not a specific instance) — ROI
+  // lives in the verb ("chase any deal that's gone cold"); concrete numbers
+  // ("47 leads", "$240k") are RUN RESULTS that surface in the feed card, never
+  // baked into the job. NEVER shown as a DAG or "steps".
   jobs: [
-    "Morning brief — every day, before you're up",
-    "Outreach to 50 new prospects — daily",
-    "Watch for anything from your top investor",
-    "Nudge every client who's gone quiet",
+    // group, name, description (generalized), trigger, activity
+    { group: "Needs you",    name: "Prospect outreach", desc: "research & write to fresh prospects every night", trigger: "🕐 nightly",   activity: "awaiting you" },
+    { group: "Active now",   name: "Inbound triage",    desc: "qualify every new inbound lead and book the demo", trigger: "✉️ on email", activity: "3 running" },
+    { group: "Active now",   name: "Deal follow-ups",   desc: "chase any open deal that's gone quiet 5+ days",    trigger: "🕐 daily",     activity: "" },
+    { group: "Standing by",  name: "Renewal guard",     desc: "flag any account approaching its renewal date",    trigger: "🕐 daily",     activity: "2h ago" },
+    { group: "Standing by",  name: "Investor update",   desc: "draft the weekly update from live metrics",        trigger: "🕐 Mon 8:00", activity: "3d ago" },
+    { group: "Standing by",  name: "Watch: lead investor", desc: "alert & draft the moment a key contact emails", trigger: "✉️ on email", activity: "5h ago" },
   ],
   cards: [
     { id: "outreach", time: "02:00", when: "while you slept",     title: "The outreach you didn't send",  body: "Fifty prospects, each researched and written to by name. You wake up to messages already going out — and a short queue of the few that need you." },
@@ -254,14 +261,16 @@ nav: [
 3. **§1 `how-it-learns`** — repurpose `DaySection` into a 3-pillar block (new
    `pillars` data shape). Likely a new `LearnsYouSection` component reusing
    existing `.section`/`reveal` styles.
-4. **§2 `relationships`** — new section + a glanceable dossier/nudge card
-   visual (adapt an existing mock card style; keep secondary, outcome-led).
+4. **§2 `relationships`** — new section whose visual is a faithful reproduction
+   of the app's real **`EmailApprovalCard`** in the "Needs you" lane (exact
+   tokens from `cardStyle.ts`; ✉️ glyph, To/Subject zone + paper body,
+   Send/Edit/Dismiss). Build a landing-side card component mirroring it.
 5. **§3 `stack`** — `OneAppSection` copy swap (`replaces`/`becomes`).
-6. **§4 `while-you-sleep`** — recast timeline (the day cards move here) + a
-   standing-jobs roster (workflows-as-outcomes). New `WhileYouSleepSection` or
-   reuse `DaySection` timeline markup with new copy. **`ReliabilitySection`
-   (loop-vs-chain + stats) is removed** — workflow reliability is now an
-   implementation detail, not shown.
+6. **§4 `while-you-sleep`** — recast day timeline (the cards move here) **+** a
+   faithful reproduction of the real **Jobs roster** (`JobRow` density, grouped
+   Needs you / Active now / Standing by; generalized recurring jobs). New
+   `WhileYouSleepSection`. **`ReliabilitySection` (loop-vs-chain + stats) is
+   removed** — workflow reliability is now an implementation detail, not shown.
 7. **§5 `local`** — `LocalSection` copy swap, items updated.
 8. **§6 `right-brain`** — light copy refresh.
 9. **Pricing / maker / CTA / footer** — copy swaps.
@@ -280,28 +289,38 @@ DAGs, no loop-vs-chain. When a diagram appears, its labels are *real things in
 the founder's world* (client names, deals, promises), never tech terms
 ("entity", "embedding", "step", "node").
 
-**Shared visual language (designed once, up front):** all the outcome cards
-(nudge, brief, meeting recap, outreach queue) use one card system — same frame,
-type scale, gold (`217,185,120`) / cyan (`108,216,255`) accents, JetBrains mono
-for metadata. The page should feel like one product, not seven widgets.
+**Use the real app components.** §2 and §4 reproduce the app's ACTUAL UI
+faithfully (exact tokens/layout), not invented widgets. The shared visual
+language IS the app's card design language — extracted from `../sirius/`:
+- Card frame (`cardStyle.ts`): `--color-surface-1 #2C261D` bg, `1px` border
+  `rgba(232,224,200,.14)`, **3px left spine** in accent (`gold #d9b978`),
+  radius `16`, padding `14`, soft shadow, hover lift.
+- Card header: emoji glyph (✉️ email · 💬 needs-input · ⚠️ failed · 🔄 running ·
+  ✏️ diff · 📄 content) + uppercase eyebrow (accent, 10.5px) + **Fraunces** title
+  (15px/400) + muted "why" line (`ink-4`, 11.5px).
+- Tokens: surface-2 `#342D23`, surface-deep `#14110D`, ink-1 `#F6EFDF`,
+  ink-3 `rgba(206,208,197,.62)`, ink-4 `rgba(196,199,189,.40)`, border-strong
+  `rgba(232,224,200,.24)`, accent-strong `#f0c879`, cyan `#6cd8ff`,
+  success `#a7dbb2`, danger `#f0a3a3`.
+- Lanes (`lanes.ts`): **Needs you** (gold) · **Failed** (danger) · **In motion**
+  (muted) · **FYI** (cyan).
 
 | Section | Visual | Source | Notes |
 |---|---|---|---|
-| Hero | Orb | `orb.tsx` | Brand identity — keep |
-| §1 learns the business | **"Your world" graph** — *You* at center linked to real client/deal/meeting/promise nodes, assembling itself | new (may adapt `design-tree-mock` structure, but re-skinned with real-world labels, not tech) | The visual centerpiece. Nodes = "Dana @ Acme · follow up Fri", "Q3 numbers owed", "intro from last week's call". Reads as *"look how much it knows about your business."* No tech labels. |
-| §2 never drop a client | **Outcome nudge card** — "Reach out to Dana — 3 weeks quiet" + a drafted follow-up | new (outcome-card system) | An artifact, not a data structure |
-| §3 your whole stack | Tool orbit | `tool-orbit.tsx` | Keep orbit; **swap to founder logos** (HubSpot/Stripe/Slack/Notion/Google) |
-| §4 works while you sleep | **Standing-jobs roster** ("the jobs it's handling for you") + day timeline showing them fire | new roster list (outcome framing of workflows — no DAG/steps); `DaySection` timeline; reuse `standup-channel-mock` / `research-briefing-mock` / `outreach-inbox-mock` for beats | **No** reliability diagram, **no** stats block. Each roster item = one real cron/Gmail-triggered workflow, shown as a responsibility it owns |
-| §5 privacy | Cloud→vault lock | `LocalSection` visual | Trust visual — keep |
+| Hero | Orb | real voice `Orb` | Brand identity — keep |
+| §1 learns the business | **"Your world" connected-web graph** (Option B) — *You* + real-world nodes linked to *each other* (Dana → Acme → Q3 numbers) | **the one intentional concept visual** (no app screen exists); built new | Centerpiece. Nodes = real things ("Dana · Acme", "Q3 numbers owed", "intro · Tue call"). No tech labels. Grounded in the real `entity_links` data. Can animate assembling on scroll |
+| §2 never drop a client | **Real `EmailApprovalCard`** in the "Needs you" lane — ✉️ glyph, eyebrow, Fraunces title, To/Subject zone + paper body, Send/Edit/Dismiss | **real app component** (`EmailApprovalCard.tsx`, `cardStyle.ts`) | This is the literal product card. Concrete run numbers (e.g. "47 leads drafted") belong here / in the feed, not in §4 |
+| §3 your whole stack | **Tool orbit** — Sirus orb at center, founder stack orbiting on two rings | `tool-orbit.tsx` (re-logo) | Tools: Gmail · Calendar · Drive · Notion · Slack · **Superhuman · Granola** · HubSpot · Stripe · **Zapier** + "anything with an API". Aspirational/native mix — the hedge covers it |
+| §4 works while you sleep | **Real Jobs roster** (`JobRow`, grouped Needs you / Active now / Standing by) **+** the narrated day timeline | **real component** (`JobRow.tsx`) + `DaySection` timeline | Jobs = generalized recurring rules (see §4 copy). Status dot (gold awaiting · cyan running · green done) + trigger chip (🕐/✉️/🔗). Timeline kept as the emotional throughline |
+| §5 privacy | **Cloud-listens → Mac-vault** (Option A) — a thin trigger signal from the cloud into a locked "Your Mac" vault holding Client dossiers · Meeting transcripts · Conversations · Files | adapt `LocalSection` visual | Closest to the real architecture (cloud only relays triggers; data + work stay local) |
 | §6 right brain | none (type-led) | — | Keep |
 
-**Retire as heroes:** `workflow-dag-mock`, `design-tree-mock` (machinery). They
-may survive only as re-skinned internals if useful for the §1 graph.
+**Retire as heroes:** `workflow-dag-mock`, `design-tree-mock` (machinery).
 
-**Build cadence:** lock the shared card language first, then build & ship
-**section by section** with a screenshot-verify loop (build → screenshot →
-compare to spec → iterate → commit → next section), per the standing
-screenshot-before-layout-changes workflow.
+**Build cadence:** lock the shared card language first (it's the app's, already
+specified above), then build & ship **section by section** with a
+screenshot-verify loop (build → screenshot → compare to spec → iterate → commit
+→ next section), per the standing screenshot-before-layout-changes workflow.
 
 ## 6. Out of scope (follow-ups)
 - Interactive `/demo` rebrand (separate spec).
