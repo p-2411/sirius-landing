@@ -6,6 +6,7 @@ import type { CSSProperties, ReactNode } from "react";
 
 import { landingContent } from "@/content/landing";
 import { Orb } from "@/components/sirius/orb";
+import { WorldGraph } from "@/components/sirius/world-graph";
 import { DownloadButton } from "@/components/ui/download-button";
 import { ScrollLink } from "@/components/layout/scroll-link";
 import { DESIGN_LOGOS, FOOTER_LOGOS } from "@/components/sirius-design/logos";
@@ -111,41 +112,37 @@ export function SiriusHero() {
   );
 }
 
-/* ── 1 · A day, mostly handled ───────────────────────────────────────── */
-export function DaySection() {
-  const { eyebrow, title, lead, cards } = landingContent.whatItDoes;
+/* ── §1 · How it learns you ──────────────────────────────────────────── */
+export function LearnsYouSection() {
+  const { eyebrow, title, lead, pillars } = landingContent.howItLearns;
   return (
-    <section id="what-it-does" className="section" data-screen-label="What it does">
+    <section id="how-it-learns" className="section" data-screen-label="How it learns you">
       <div className="container">
-        <div className="section-head">
-          <div className="section-eyebrow reveal" style={d(0)}>
-            <span className="eyebrow-dot" aria-hidden="true" />
-            {eyebrow}
+        <div className="learns">
+          <div>
+            <div className="section-eyebrow reveal" style={d(0)}>
+              <span className="eyebrow-dot" aria-hidden="true" />
+              {eyebrow}
+            </div>
+            <h2 className="section-title reveal" style={d(0.06)}>
+              {title}
+            </h2>
+            <p className="section-lead reveal" style={d(0.12)}>
+              {lead}
+            </p>
+            <div className="pillars">
+              {pillars.map((p, i) => (
+                <div key={p.title} className="pillar reveal" style={d(0.18 + 0.06 * i)}>
+                  <h3>{p.title}</h3>
+                  <p>{p.body}</p>
+                </div>
+              ))}
+            </div>
           </div>
-          <h2 className="section-title reveal" style={d(0.06)}>
-            {withAccent(title, "mostly handled.")}
-          </h2>
-          <p className="section-lead reveal" style={d(0.12)}>
-            {lead}
-          </p>
+          <div className="reveal" style={d(0.16)}>
+            <WorldGraph className="world-graph" />
+          </div>
         </div>
-        <ol className="timeline">
-          {cards.map((c, i) => (
-            <li key={c.id} className="tl-item reveal" style={d(0.08 * i)}>
-              <div className="tl-marker" aria-hidden="true">
-                <span className="tl-dot" />
-              </div>
-              <div className="tl-time">
-                <span className="tl-clock font-display">{c.time}</span>
-                <span className="tl-when">{c.when}</span>
-              </div>
-              <div className="tl-card">
-                <h3 className="tl-title">{c.title}</h3>
-                <p className="tl-body">{c.body}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
       </div>
     </section>
   );
