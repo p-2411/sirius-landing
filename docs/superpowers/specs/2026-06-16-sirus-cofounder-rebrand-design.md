@@ -40,26 +40,43 @@ glanceable credibility prop, never the hero.
 
 ## 2. Grounding — real vs. aspirational (from `../sirius/`)
 
-Honesty guardrails so the page depicts something real or realistically
-shippable.
+**Re-grounded 2026-06-17 after the app's major overhaul** (Vite SPA migration +
+Jobs/Playbooks rename + home/voice rework). Honesty guardrails so the page
+depicts something real or realistically shippable. The overhaul made the
+cofounder/relationship story *more* grounded, not less.
 
-| Claim on page | Reality in `../sirius/` | How we frame it |
+| Claim on page | Reality in `../sirius/` (current) | How we frame it |
 |---|---|---|
-| Builds dossiers on you / business / clients | **Real** — vector-indexed dossiers (people/orgs/projects) + multi-layer memory (profile → threads/decisions → messages) | Depict honestly |
-| Connects to Gmail / Calendar / Drive | **Real** — OAuth integrations | Depict honestly |
-| Autonomous: runs while you sleep, drafts & sends | **Real but bounded** — cron/Gmail/webhook triggers run autonomously; `send_email` needs a trust grant or per-turn approval | "Give it the keys once" — trust-grant framing |
-| Reliable, same way every time (workflows) | **Real** — first run becomes a workflow; 2×/10×/⅒ stats | Keep, fold into "while you sleep" |
-| Sits in on your meetings (live) | **Aspirational** — only local Whisper transcription of recorded audio today | Frame as product *direction*; no fake live-call UI. Transcription is real, so not a lie — just ahead of shipping |
-| Connects to your CRM (HubSpot/Notion/Stripe) | **Aspirational** — Gmail/Cal/Drive/Word only today | Keep existing open-ended *"+ anything with an API"* hedge; CRM logos are glanceable props |
-| Per-client follow-up timing / outreach engine | **Assemblable** — dossiers + Gmail + triggers exist; no CRM-branded UI | Depict as outcome (a nudge card), not as a fake product surface |
+| Builds a picture of you / business / clients | **Real & stronger** — `entities` table (kinds: person, org, event, project, topic) with markdown dossier + vector embedding + `[[wiki-links]]` (`entity_links`) connecting them. Plus profile / threads / decisions / messages / observations layers | Depict honestly — this is the real engine behind §1 |
+| §1 "your world" connected-web graph | **Real structure** — `entity_links` literally form a graph of linked people/orgs/projects/topics | The connected-web (Option B) maps to a real thing; still label nodes as real-world items, no tech terms |
+| Per-client tracking / "never drop a client" | **Real bones** — a `kind='person'` dossier per contact (relationship history, wiki-linked); `todos` can attach to an entity; Gmail send + triggers | Depict as outcome (nudge card). Note: no CRM-branded UI/schema — dossiers are the contact model |
+| Connects to Gmail / Calendar / Drive | **Real** — Gmail read+send, Calendar read+create, Drive read+write | Depict honestly |
+| Connects to your CRM / other tools (HubSpot/Notion/Slack/Stripe) | **Reachable, not native** — any API via generic `http_request` node + encrypted Secrets; no first-class connectors | The *"+ anything with an API"* hedge is now literally accurate. Founder logos are glanceable aspirational props |
+| Autonomous: runs while you sleep, drafts & sends | **Real & bolder** — a **Job** (a workflow *with a trigger*: cron/Gmail/webhook/manual) runs autonomously to completion on the Mac; no draft-for-approval for Jobs. `send_email` still needs a trust grant (revocable, per-channel) | Supports the "fully autonomous" framing the user chose; "give it the keys once" = the trust grant |
+| Sits in on your meetings (live) | **Aspirational** — local Whisper transcription of recorded audio only; no live call join | Frame as product *direction*; no fake live-call UI. Transcription is real, just ahead of shipping |
 
-Real app surfaces (for any future demo work, not this pass): 72px rail =
-**Work · Workflows · Workspace · Settings** (NOT "Feed" — that label in CLAUDE.md
-is stale; briefings live on Home). Workspace folders: `reports/ data/
-companies/ founders/`.
+**Terminology shift (important for §4):** "Workflows" is now split for users into
+**Jobs** (a captured process *with a trigger* — user-facing, autonomous, shown on
+home/the Jobs page) and **Playbooks** (untriggered, Sirius's private reusable
+procedures). This *validates* our §4 framing: each "job it's handling for you" =
+literally a **Job**. We should use the word **"Jobs"** on the page.
 
-> **CLAUDE.md follow-up:** the "Feed" reference in the rail description is
-> outdated and should be corrected to "Workspace" in a later pass.
+**Current app surfaces (for the eventual demo, not this pass):**
+- Stack: **Vite SPA + API host** (the Next.js App-Router UI was deleted).
+- 72px rail = **Work · Jobs · Workspace · Settings** (`Workflows`→**Jobs**;
+  "Work" is a chat *morph* on home, not a separate page; **no "Feed"**).
+- Home = voice-orb hero + greeting + persistent composer that FLIPs into chat;
+  an **IntentLanes** feed of deterministic action cards grouped into lanes:
+  **Needs you · Failed · In motion · FYI** (this is the real "review queue").
+- Voice orb states: **Listening** (violet→pink cycle), **Thinking** (pink/
+  magenta), **Speaking** (warm gold), always-on breathing. (Rail orb stays cyan.)
+- Workspace = flat **recent-files gallery** (PDF/DOCX/text thumbnails), NOT the
+  old `reports/ data/ companies/ founders/` folder tree.
+
+> **CLAUDE.md is now stale** and should be corrected (separate pass): rail is
+> `Work · Jobs · Workspace · Settings` (not `…Workflows…Feed…`); workspace is a
+> recent-files gallery (not fixed folders); "Workflows" → "Jobs/Playbooks". The
+> theme note ("cyan listening") is only true of the rail orb now.
 
 ---
 
