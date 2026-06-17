@@ -11,7 +11,7 @@ const GROUP_COLOR: Record<string, string> = { "Needs you": T.accent, "Active now
 
 function StatusDot({ status }: { status: string }) {
   if (status === "running") {
-    return <span style={{ width: 12, height: 12, borderRadius: 999, border: `1.5px solid rgba(108,216,255,.25)`, borderTopColor: T.cyan, boxSizing: "border-box", display: "inline-block" }} />;
+    return <span style={{ width: 12, height: 12, borderRadius: 999, border: `1.5px solid rgba(108,216,255,.25)`, borderTopColor: T.cyan, boxSizing: "border-box", display: "inline-block", animation: "wys-spin 0.8s linear infinite" }} />;
   }
   const color = status === "awaiting" ? T.accent : T.success;
   const halo = status === "awaiting" ? "rgba(217,185,120,.20)" : "rgba(167,219,178,.18)";

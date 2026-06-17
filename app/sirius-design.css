@@ -250,3 +250,5 @@
 .sd .pillar h3 { font-size: clamp(1.05rem, 1.6vw, 1.25rem); color: var(--ink-1, #f6efdf); margin: 0 0 6px; font-weight: 500; }
 .sd .pillar p { color: var(--ink-3, rgba(206,208,197,0.7)); font-size: 0.95rem; line-height: 1.5; margin: 0; }
 .sd .world-graph { width: 100%; max-width: 460px; margin-inline: auto; }
+
+@keyframes wys-spin { to { transform: rotate(360deg); } }
