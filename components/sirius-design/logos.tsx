@@ -1,6 +1,7 @@
 // Real brand marks in their official colors — a direct port of the design's
 // logos.jsx, used in the hero integration strip and the footer.
 import type { ReactElement } from "react";
+import { BrandLogo, BRAND_COLORS } from "@/components/sirius/brand-logos";
 
 function LogoGmail() {
   return (
@@ -38,56 +39,6 @@ function LogoNotion() {
   );
 }
 
-function LogoGithub() {
-  return (
-    <svg viewBox="0 0 16 16" width="100%" height="100%" fill="#f6efdf" aria-hidden="true">
-      <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
-    </svg>
-  );
-}
-
-function LogoDiscord() {
-  return (
-    <svg viewBox="0 0 24 24" width="100%" height="100%" fill="#5865f2" aria-hidden="true">
-      <path d="M20.317 4.369a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.6 12.6 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.291.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.099.246.198.373.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.891.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.331c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z" />
-    </svg>
-  );
-}
-
-function LogoWord() {
-  return (
-    // Official Word mark from the real app's integration-logos; an SVG, so
-    // next/image optimization is skipped in favor of a plain element.
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      src="/word-logo.svg"
-      alt=""
-      aria-hidden="true"
-      style={{ width: "100%", height: "100%", objectFit: "contain" }}
-    />
-  );
-}
-
-function LogoGoogleDocs() {
-  return (
-    <svg viewBox="0 0 48 64" width="100%" height="100%" aria-hidden="true">
-      <path fill="#4285f4" d="M30 0H6C3.79 0 2 1.79 2 4v56c0 2.21 1.79 4 4 4h36c2.21 0 4-1.79 4-4V16L30 0z" />
-      <path fill="#a1c2fa" d="M30 0v12c0 2.21 1.79 4 4 4h12L30 0z" />
-      <path fill="#f1f1f1" d="M12 25h24v3H12zM12 32h24v3H12zM12 39h24v3H12zM12 46h16v3H12z" />
-    </svg>
-  );
-}
-
-function LogoGoogleSheets() {
-  return (
-    <svg viewBox="0 0 48 64" width="100%" height="100%" aria-hidden="true">
-      <path fill="#0f9d58" d="M30 0H6C3.79 0 2 1.79 2 4v56c0 2.21 1.79 4 4 4h36c2.21 0 4-1.79 4-4V16L30 0z" />
-      <path fill="#87ceac" d="M30 0v12c0 2.21 1.79 4 4 4h12L30 0z" />
-      <path fill="#f1f1f1" d="M13 26v20h22V26H13zm10 17h-8v-4.5h8V43zm0-6h-8v-4.5h8V37zm0-6h-8V26.5h8V31zm10 12h-8v-4.5h8V43zm0-6h-8v-4.5h8V37zm0-6h-8V26.5h8V31z" />
-    </svg>
-  );
-}
-
 function LogoGoogleDrive() {
   return (
     <svg viewBox="0 0 87.3 78" width="100%" height="100%" aria-hidden="true">
@@ -103,20 +54,25 @@ function LogoGoogleDrive() {
 
 type LogoEntry = { name: string; Mark: () => ReactElement };
 
-// Hero integration strip — the everyday tools, kept short and glanceable.
+const mono = (name: string): (() => ReactElement) =>
+  function Mono() {
+    return <BrandLogo name={name} color={BRAND_COLORS[name] ?? "#f6efdf"} className="h-full w-auto" />;
+  };
+
+// Hero integration strip — the founder stack, kept short and glanceable.
 export const DESIGN_LOGOS: LogoEntry[] = [
   { name: "Gmail", Mark: LogoGmail },
   { name: "Calendar", Mark: LogoCalendar },
   { name: "Google Drive", Mark: LogoGoogleDrive },
   { name: "Notion", Mark: LogoNotion },
-  { name: "GitHub", Mark: LogoGithub },
-  { name: "Discord", Mark: LogoDiscord },
+  { name: "Slack", Mark: mono("Slack") },
+  { name: "HubSpot", Mark: mono("HubSpot") },
 ];
 
-// Footer carries the fuller set, including the document apps.
+// Footer carries the fuller set.
 export const FOOTER_LOGOS: LogoEntry[] = [
   ...DESIGN_LOGOS,
-  { name: "Word", Mark: LogoWord },
-  { name: "Google Docs", Mark: LogoGoogleDocs },
-  { name: "Google Sheets", Mark: LogoGoogleSheets },
+  { name: "Stripe", Mark: mono("Stripe") },
+  { name: "Zapier", Mark: mono("Zapier") },
+  { name: "Superhuman", Mark: mono("Superhuman") },
 ];
