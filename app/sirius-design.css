@@ -240,6 +240,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .sd .reveal, .sd .reveal-orb, .sd .scroll-cue, .sd .scroll-cue-line, .sd .loop-arc { animation: none; opacity: 1; }
+  [style*="wys-spin"] { animation: none !important; }
 }
 
 /* §1 — how it learns you: 3 pillars + world graph */

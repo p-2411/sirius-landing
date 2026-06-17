@@ -7,7 +7,7 @@ const T = {
 };
 
 const GROUP_ORDER = ["Needs you", "Active now", "Standing by"] as const;
-const GROUP_COLOR: Record<string, string> = { "Needs you": T.accent, "Active now": T.cyan, "Standing by": T.ink3 };
+const GROUP_COLOR: Record<(typeof GROUP_ORDER)[number], string> = { "Needs you": T.accent, "Active now": T.cyan, "Standing by": T.ink3 };
 
 function StatusDot({ status }: { status: string }) {
   if (status === "running") {
@@ -31,7 +31,7 @@ export function JobsRoster() {
               <div style={{ padding: "12px 16px 6px", fontSize: 10.5, fontWeight: 600, letterSpacing: ".08em", textTransform: "uppercase", color: GROUP_COLOR[group] }}>{group}</div>
               {rows.map((j, i) => {
                 const last = group === "Standing by" && i === rows.length - 1;
-                const activityColor = j.activity === "awaiting you" ? T.accent : j.activity === "3 running" ? T.cyan : T.ink4;
+                const activityColor = j.status === "awaiting" ? T.accent : j.status === "running" ? T.cyan : T.ink4;
                 return (
                   <div key={j.name} style={{ display: "flex", alignItems: "center", gap: 12, padding: "11px 16px", borderBottom: last ? "none" : `1px solid ${T.border}`, minHeight: 46 }}>
                     <span style={{ flexShrink: 0, width: 16, display: "inline-flex", justifyContent: "center" }}><StatusDot status={j.status} /></span>
