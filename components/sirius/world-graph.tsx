@@ -10,6 +10,7 @@ const NODES: Array<{ x: number; y: number; label: string; anchor?: "start" | "mi
   { x: 250, y: 40, label: "Intro · Tue", anchor: "middle" },
 ];
 
+// Edges connect the outer nodes to each other and to YOU (the center at 190,120).
 const EDGES: Array<[number, number, number, number]> = [
   [100, 80, 80, 160],
   [80, 160, 150, 210],
