@@ -6,9 +6,10 @@ import { useReducedMotion } from "motion/react";
 import { Orb } from "@/components/sirius/orb";
 import { BrandLogo, BRAND_COLORS } from "@/components/sirius/brand-logos";
 
-// The paid tools Sirius stands in for: automation · CRM · email · agent ·
-// research. Swap any name (must match a key in brand-logos.tsx).
-const APPS = ["Zapier", "HubSpot", "Superhuman", "Claude", "Perplexity"];
+// The founder stack Sirus operates inside. Names must match keys in
+// brand-logos.tsx. Mixed native/aspirational — the "+ anything with an API"
+// hedge in the hero/footer covers it.
+const APPS = ["Gmail", "Notion", "Slack", "Superhuman", "Granola", "HubSpot", "Stripe", "Zapier"];
 
 // Tilted ring viewed slightly from above. Near logos (front) sit lower, larger,
 // brighter and in front of the orb; far logos sit higher, smaller, dimmer and

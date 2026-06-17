@@ -6,9 +6,11 @@ import type { CSSProperties, ReactNode } from "react";
 
 import { landingContent } from "@/content/landing";
 import { Orb } from "@/components/sirius/orb";
+import { WorldGraph } from "@/components/sirius/world-graph";
 import { DownloadButton } from "@/components/ui/download-button";
 import { ScrollLink } from "@/components/layout/scroll-link";
 import { DESIGN_LOGOS, FOOTER_LOGOS } from "@/components/sirius-design/logos";
+import { JobsRoster } from "@/components/sections/jobs-roster";
 
 const d = (v: number) => ({ "--d": `${v}s` }) as CSSProperties;
 
@@ -26,8 +28,8 @@ function withAccent(title: string, accent: string): ReactNode {
 
 /* ── Chrome ──────────────────────────────────────────────────────────── */
 const NAV_LINKS = [
-  { id: "what-it-does", label: "What it does" },
-  { id: "learns-once", label: "How it works" },
+  { id: "how-it-learns", label: "How it learns you" },
+  { id: "while-you-sleep", label: "What it does" },
   { id: "pricing", label: "Pricing" },
 ];
 
@@ -35,7 +37,7 @@ function CTAs() {
   return (
     <div className="cta-row">
       <DownloadButton />
-      <ScrollLink id="what-it-does" className="btn btn-ghost">
+      <ScrollLink id="how-it-learns" className="btn btn-ghost">
         See it work
         <span className="arrow" aria-hidden="true"> →</span>
       </ScrollLink>
@@ -111,11 +113,47 @@ export function SiriusHero() {
   );
 }
 
-/* ── 1 · A day, mostly handled ───────────────────────────────────────── */
-export function DaySection() {
-  const { eyebrow, title, lead, cards } = landingContent.whatItDoes;
+/* ── §1 · How it learns you ──────────────────────────────────────────── */
+export function LearnsYouSection() {
+  const { eyebrow, title, lead, pillars } = landingContent.howItLearns;
   return (
-    <section id="what-it-does" className="section" data-screen-label="What it does">
+    <section id="how-it-learns" className="section" data-screen-label="How it learns you">
+      <div className="container">
+        <div className="learns">
+          <div>
+            <div className="section-eyebrow reveal" style={d(0)}>
+              <span className="eyebrow-dot" aria-hidden="true" />
+              {eyebrow}
+            </div>
+            <h2 className="section-title reveal" style={d(0.06)}>
+              {title}
+            </h2>
+            <p className="section-lead reveal" style={d(0.12)}>
+              {lead}
+            </p>
+            <div className="pillars">
+              {pillars.map((p, i) => (
+                <div key={p.title} className="pillar reveal" style={d(0.18 + 0.06 * i)}>
+                  <h3>{p.title}</h3>
+                  <p>{p.body}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="reveal" style={d(0.16)}>
+            <WorldGraph className="world-graph" />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── §4 · Works while you sleep ──────────────────────────────────────── */
+export function WhileYouSleepSection() {
+  const { eyebrow, title, lead, cards, close } = landingContent.whileYouSleep;
+  return (
+    <section id="while-you-sleep" className="section band-deep" data-screen-label="What it does">
       <div className="container">
         <div className="section-head">
           <div className="section-eyebrow reveal" style={d(0)}>
@@ -123,13 +161,18 @@ export function DaySection() {
             {eyebrow}
           </div>
           <h2 className="section-title reveal" style={d(0.06)}>
-            {withAccent(title, "mostly handled.")}
+            {title}
           </h2>
           <p className="section-lead reveal" style={d(0.12)}>
             {lead}
           </p>
         </div>
-        <ol className="timeline">
+
+        <div className="reveal" style={d(0.16)}>
+          <JobsRoster />
+        </div>
+
+        <ol className="timeline" style={{ marginInline: "auto" }}>
           {cards.map((c, i) => (
             <li key={c.id} className="tl-item reveal" style={d(0.08 * i)}>
               <div className="tl-marker" aria-hidden="true">
@@ -146,67 +189,10 @@ export function DaySection() {
             </li>
           ))}
         </ol>
-      </div>
-    </section>
-  );
-}
 
-/* ── 2 · Guide it once (reliability) ─────────────────────────────────── */
-export function ReliabilitySection() {
-  const { eyebrow, title, body, compare, stats } = landingContent.learnsOnce;
-  return (
-    <section id="learns-once" className="section band-deep" data-screen-label="How it works">
-      <div className="container">
-        <div className="section-head">
-          <div className="section-eyebrow reveal" style={d(0)}>
-            <span className="eyebrow-dot" aria-hidden="true" />
-            {eyebrow}
-          </div>
-          <h2 className="section-title reveal" style={d(0.06)}>
-            {withAccent(title, "Then just ask.")}
-          </h2>
-          <p className="section-lead reveal" style={d(0.12)}>
-            {body}
-          </p>
-        </div>
-
-        <div className="compare reveal" style={d(0.06)}>
-          <div className="cmp-card cmp-before">
-            <span className="cmp-tag">{compare.before.tag}</span>
-            <div className="cmp-graphic cmp-loop" aria-hidden="true">
-              <span className="loop-node" />
-              <span className="loop-arc" />
-              <span className="loop-label">{compare.before.label}</span>
-            </div>
-            <p className="cmp-note">{compare.before.note}</p>
-          </div>
-          <div className="cmp-arrow" aria-hidden="true">
-            →
-          </div>
-          <div className="cmp-card cmp-after">
-            <span className="cmp-tag is-gold">{compare.after.tag}</span>
-            <div className="cmp-graphic cmp-chain" aria-hidden="true">
-              {[0, 1, 2, 3].map((n) => (
-                <span key={n} className="chain-node" />
-              ))}
-              <span className="chain-line" />
-              <span className="loop-label is-gold">{compare.after.label}</span>
-            </div>
-            <p className="cmp-note">{compare.after.note}</p>
-          </div>
-        </div>
-
-        <div className="stats">
-          {stats.map((s, i) => (
-            <div key={s.unit} className="stat reveal" style={d(0.08 * i)}>
-              <div className="stat-v font-display">
-                {s.v}
-                <span className="stat-unit">{s.unit}</span>
-              </div>
-              <p className="stat-note">{s.note}</p>
-            </div>
-          ))}
-        </div>
+        <p className="section-lead reveal" style={{ ...d(0.2), textAlign: "center", marginTop: "clamp(28px,4vh,48px)" }}>
+          {close}
+        </p>
       </div>
     </section>
   );
@@ -356,7 +342,7 @@ export function SiriusFooter() {
     <footer className="footer">
       <div className="footer-inner">
         <div className="footer-brand">
-          <a href="#hero" className="wordmark" aria-label="Sirius home">
+          <a href="#hero" className="wordmark" aria-label="Sirus home">
             <span className="relative flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-full">
               <span
                 aria-hidden="true"
@@ -368,7 +354,7 @@ export function SiriusFooter() {
               />
               <Orb className="!h-7 !w-7 relative" glowless />
             </span>
-            <span className="font-display">Sirius</span>
+            <span className="font-display">Sirus</span>
           </a>
           <p className="footer-blurb">{footer.blurb}</p>
           <div className="footer-logos" aria-hidden="true">
@@ -391,7 +377,7 @@ export function SiriusFooter() {
         </nav>
       </div>
       <div className="footer-base">
-        <span>© 2026 Sirius</span>
+        <span>© 2026 Sirus</span>
         <span>Made for people with too much to do.</span>
       </div>
     </footer>
