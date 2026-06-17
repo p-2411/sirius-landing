@@ -10,6 +10,7 @@ import { WorldGraph } from "@/components/sirius/world-graph";
 import { DownloadButton } from "@/components/ui/download-button";
 import { ScrollLink } from "@/components/layout/scroll-link";
 import { DESIGN_LOGOS, FOOTER_LOGOS } from "@/components/sirius-design/logos";
+import { JobsRoster } from "@/components/sections/jobs-roster";
 
 const d = (v: number) => ({ "--d": `${v}s` }) as CSSProperties;
 
@@ -148,11 +149,11 @@ export function LearnsYouSection() {
   );
 }
 
-/* ── 2 · Guide it once (reliability) ─────────────────────────────────── */
-export function ReliabilitySection() {
-  const { eyebrow, title, body, compare, stats } = landingContent.learnsOnce;
+/* ── §4 · Works while you sleep ──────────────────────────────────────── */
+export function WhileYouSleepSection() {
+  const { eyebrow, title, lead, cards, close } = landingContent.whileYouSleep;
   return (
-    <section id="learns-once" className="section band-deep" data-screen-label="How it works">
+    <section id="while-you-sleep" className="section band-deep" data-screen-label="What it does">
       <div className="container">
         <div className="section-head">
           <div className="section-eyebrow reveal" style={d(0)}>
@@ -160,50 +161,38 @@ export function ReliabilitySection() {
             {eyebrow}
           </div>
           <h2 className="section-title reveal" style={d(0.06)}>
-            {withAccent(title, "Then just ask.")}
+            {title}
           </h2>
           <p className="section-lead reveal" style={d(0.12)}>
-            {body}
+            {lead}
           </p>
         </div>
 
-        <div className="compare reveal" style={d(0.06)}>
-          <div className="cmp-card cmp-before">
-            <span className="cmp-tag">{compare.before.tag}</span>
-            <div className="cmp-graphic cmp-loop" aria-hidden="true">
-              <span className="loop-node" />
-              <span className="loop-arc" />
-              <span className="loop-label">{compare.before.label}</span>
-            </div>
-            <p className="cmp-note">{compare.before.note}</p>
-          </div>
-          <div className="cmp-arrow" aria-hidden="true">
-            →
-          </div>
-          <div className="cmp-card cmp-after">
-            <span className="cmp-tag is-gold">{compare.after.tag}</span>
-            <div className="cmp-graphic cmp-chain" aria-hidden="true">
-              {[0, 1, 2, 3].map((n) => (
-                <span key={n} className="chain-node" />
-              ))}
-              <span className="chain-line" />
-              <span className="loop-label is-gold">{compare.after.label}</span>
-            </div>
-            <p className="cmp-note">{compare.after.note}</p>
-          </div>
+        <div className="reveal" style={d(0.16)}>
+          <JobsRoster />
         </div>
 
-        <div className="stats">
-          {stats.map((s, i) => (
-            <div key={s.unit} className="stat reveal" style={d(0.08 * i)}>
-              <div className="stat-v font-display">
-                {s.v}
-                <span className="stat-unit">{s.unit}</span>
+        <ol className="timeline" style={{ marginInline: "auto" }}>
+          {cards.map((c, i) => (
+            <li key={c.id} className="tl-item reveal" style={d(0.08 * i)}>
+              <div className="tl-marker" aria-hidden="true">
+                <span className="tl-dot" />
               </div>
-              <p className="stat-note">{s.note}</p>
-            </div>
+              <div className="tl-time">
+                <span className="tl-clock font-display">{c.time}</span>
+                <span className="tl-when">{c.when}</span>
+              </div>
+              <div className="tl-card">
+                <h3 className="tl-title">{c.title}</h3>
+                <p className="tl-body">{c.body}</p>
+              </div>
+            </li>
           ))}
-        </div>
+        </ol>
+
+        <p className="section-lead reveal" style={{ ...d(0.2), textAlign: "center", marginTop: "clamp(28px,4vh,48px)" }}>
+          {close}
+        </p>
       </div>
     </section>
   );
