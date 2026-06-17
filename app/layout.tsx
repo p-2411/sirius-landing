@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 
 import { MotionProvider } from "@/components/ui/motion-provider";
 import { DownloadProvider } from "@/components/ui/download-modal";
+import { SITE_URL } from "@/lib/site";
 
 import "./globals.css";
 import "./sirius-design.css";
@@ -28,12 +29,12 @@ export const metadata: Metadata = {
   title: "Sirus: your AI cofounder",
   description:
     "Sirus learns your business — sits in on meetings, reads your inbox and CRM — then runs the work across the tools you already use. On your Mac.",
-  metadataBase: new URL("https://sirius.so"),
+  metadataBase: new URL(SITE_URL),
   openGraph: {
     title: "Sirus: your AI cofounder",
     description:
       "Sirus learns your business and runs the work across the tools you already use. On your Mac.",
-    url: "https://sirius.so",
+    url: SITE_URL,
     siteName: "Sirus",
     type: "website",
   },
