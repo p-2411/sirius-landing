@@ -101,11 +101,14 @@ export function WorldGraph({ className = "" }: { className?: string }) {
           <stop offset="55%" stopColor="rgba(108,216,255,0.10)" />
           <stop offset="100%" stopColor="rgba(108,216,255,0)" />
         </radialGradient>
-        {/* Edge gradient: stronger near the cyan core, fading to gold outward. */}
-        <linearGradient id="wg-edge" x1="0" y1="0" x2="1" y2="0">
+        {/* Edge gradient: radial from the YOU core so cyan always sits at the
+            centre and gold always sits at the periphery, regardless of the
+            edge's direction (left-side edges were inverted with a linear
+            gradient because objectBoundingBox runs per-edge). */}
+        <radialGradient id="wg-edge" gradientUnits="userSpaceOnUse" cx={CX} cy={CY} r={175}>
           <stop offset="0%" stopColor="rgba(108,216,255,0.55)" />
           <stop offset="100%" stopColor="rgba(217,185,120,0.55)" />
-        </linearGradient>
+        </radialGradient>
         <filter id="wg-soft" x="-40%" y="-40%" width="180%" height="180%">
           <feGaussianBlur stdDeviation="0.5" />
         </filter>
