@@ -25,23 +25,23 @@ const geist = Geist({
 });
 
 export const metadata: Metadata = {
-  title: "Sirius: your co-founder, best friend and executor all in one",
+  title: "Sirus: your AI cofounder",
   description:
-    "Across your inbox, calendar, files, and any app with an API, Sirius holds the context and does the work. Local-first, Mac.",
+    "Sirus learns your business — sits in on meetings, reads your inbox and CRM — then runs the work across the tools you already use. On your Mac.",
   metadataBase: new URL("https://sirius.so"),
   openGraph: {
-    title: "Sirius: your co-founder, best friend and executor all in one",
+    title: "Sirus: your AI cofounder",
     description:
-      "Across your inbox, calendar, files, and any app with an API, Sirius holds the context and does the work. Local-first, Mac.",
+      "Sirus learns your business and runs the work across the tools you already use. On your Mac.",
     url: "https://sirius.so",
-    siteName: "Sirius",
+    siteName: "Sirus",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sirius: your co-founder, best friend and executor all in one",
+    title: "Sirus: your AI cofounder",
     description:
-      "Across your inbox, calendar, files, and any app with an API, Sirius holds the context and does the work. Local-first, Mac.",
+      "Sirus learns your business and runs the work across the tools you already use. On your Mac.",
   },
 };
 
