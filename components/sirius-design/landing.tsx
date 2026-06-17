@@ -28,8 +28,8 @@ function withAccent(title: string, accent: string): ReactNode {
 
 /* ── Chrome ──────────────────────────────────────────────────────────── */
 const NAV_LINKS = [
-  { id: "what-it-does", label: "What it does" },
-  { id: "learns-once", label: "How it works" },
+  { id: "how-it-learns", label: "How it learns you" },
+  { id: "while-you-sleep", label: "What it does" },
   { id: "pricing", label: "Pricing" },
 ];
 
@@ -37,7 +37,7 @@ function CTAs() {
   return (
     <div className="cta-row">
       <DownloadButton />
-      <ScrollLink id="what-it-does" className="btn btn-ghost">
+      <ScrollLink id="how-it-learns" className="btn btn-ghost">
         See it work
         <span className="arrow" aria-hidden="true"> →</span>
       </ScrollLink>
@@ -342,7 +342,7 @@ export function SiriusFooter() {
     <footer className="footer">
       <div className="footer-inner">
         <div className="footer-brand">
-          <a href="#hero" className="wordmark" aria-label="Sirius home">
+          <a href="#hero" className="wordmark" aria-label="Sirus home">
             <span className="relative flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-full">
               <span
                 aria-hidden="true"
@@ -354,7 +354,7 @@ export function SiriusFooter() {
               />
               <Orb className="!h-7 !w-7 relative" glowless />
             </span>
-            <span className="font-display">Sirius</span>
+            <span className="font-display">Sirus</span>
           </a>
           <p className="footer-blurb">{footer.blurb}</p>
           <div className="footer-logos" aria-hidden="true">
@@ -377,7 +377,7 @@ export function SiriusFooter() {
         </nav>
       </div>
       <div className="footer-base">
-        <span>© 2026 Sirius</span>
+        <span>© 2026 Sirus</span>
         <span>Made for people with too much to do.</span>
       </div>
     </footer>
