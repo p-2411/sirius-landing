@@ -86,6 +86,13 @@ const BRANDS: Record<string, Brand> = {
       "M7.71 3.5 1.15 15l3.43 5.94 6.56-11.44L7.71 3.5zm8.58 0H9.42l6.56 11.5h6.87L16.29 3.5zM5.06 16 1.62 21.94l.94.06h12.3L18.3 16H5.06z",
     ],
   },
+  // Spaced alias so integrations.tools names ("Google Drive") resolve too.
+  "Google Drive": {
+    viewBox: "0 0 24 24",
+    paths: [
+      "M7.71 3.5 1.15 15l3.43 5.94 6.56-11.44L7.71 3.5zm8.58 0H9.42l6.56 11.5h6.87L16.29 3.5zM5.06 16 1.62 21.94l.94.06h12.3L18.3 16H5.06z",
+    ],
+  },
   Granola: {
     viewBox: "0 0 24 24",
     paths: [
