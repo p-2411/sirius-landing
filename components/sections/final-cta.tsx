@@ -1,24 +1,11 @@
-"use client";
-
-import { motion, useReducedMotion } from "motion/react";
+import type { CSSProperties } from "react";
 
 import { landingContent } from "@/content/landing";
 import { Orb } from "@/components/sirius/orb";
 import { DownloadButton } from "@/components/ui/download-button";
 
 export function FinalCtaSection() {
-  const reducedMotion = useReducedMotion();
   const { cta } = landingContent;
-
-  const fadeUp = (delay: number) =>
-    reducedMotion
-      ? {}
-      : {
-          initial: { opacity: 0, y: 18 },
-          whileInView: { opacity: 1, y: 0 },
-          viewport: { once: true, margin: "-15%" },
-          transition: { duration: 0.6, delay, ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number] },
-        };
 
   return (
     <section
@@ -32,20 +19,19 @@ export function FinalCtaSection() {
           <Orb className="!h-[clamp(220px,26vw,320px)] !w-[clamp(220px,26vw,320px)]" />
         </div>
 
-        <motion.h2
-          {...fadeUp(0.1)}
-          className="font-display text-balance font-normal text-[var(--color-ink-1)]"
-          style={{ fontSize: "clamp(3rem, 9vw, 7.5rem)", lineHeight: "0.9", letterSpacing: "-0.005em" }}
+        <h2
+          className="reveal font-display text-balance font-normal text-[var(--color-ink-1)]"
+          style={{ fontSize: "clamp(3rem, 9vw, 7.5rem)", lineHeight: "0.9", letterSpacing: "-0.005em", "--d": "0.05s" } as CSSProperties}
         >
           {cta.title}
-        </motion.h2>
+        </h2>
 
-        <motion.div {...fadeUp(0.2)} className="mt-12 flex flex-col items-center gap-4">
+        <div className="reveal mt-12 flex flex-col items-center gap-4" style={{ "--d": "0.12s" } as CSSProperties}>
           <DownloadButton label={cta.button} />
           <p className="text-[13px] leading-5 text-[var(--color-ink-3)]">
             {cta.sub}
           </p>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

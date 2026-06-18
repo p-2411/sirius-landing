@@ -7,7 +7,7 @@ import { landingContent } from "@/content/landing";
 // reads as the real product component.
 const T = {
   s1: "#2C261D", s2: "#342D23", deep: "#14110D",
-  ink1: "#F6EFDF", ink2: "rgba(238,232,218,.84)", ink3: "rgba(206,208,197,.62)", ink4: "rgba(196,199,189,.40)",
+  ink1: "#F6EFDF", ink2: "rgba(238,232,218,.84)", ink3: "rgba(206,208,197,.74)", ink4: "rgba(196,199,189,.64)",
   border: "rgba(232,224,200,.14)", borderS: "rgba(232,224,200,.24)", accent: "#d9b978",
 };
 

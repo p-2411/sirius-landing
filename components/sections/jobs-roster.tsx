@@ -1,7 +1,7 @@
 import { landingContent } from "@/content/landing";
 
 const T = {
-  accent: "#d9b978", cyan: "#6cd8ff", success: "#a7dbb2", ink3: "rgba(206,208,197,.62)", ink4: "rgba(196,199,189,.40)",
+  accent: "#d9b978", cyan: "#6cd8ff", success: "#a7dbb2", ink3: "rgba(206,208,197,.74)", ink4: "rgba(196,199,189,.64)",
 };
 
 const GROUP_ORDER = ["Needs you", "Active now", "Standing by"] as const;
