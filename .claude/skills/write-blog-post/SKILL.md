@@ -10,11 +10,7 @@ description: >-
 
 # Writing a Sirius blog post
 
-The Sirius blog ("Star Atlas") is plain-English AI explainers for **high-agency
-professionals — founders, investors, agency owners, freelancers — NOT
-engineers.** Every post leads with the outcome and speaks their language (deals,
-clients, hours saved), never the machinery. This skill codifies the full
-research → write → verify → publish loop. Do the steps in order.
+The Sirius blog ("Star Atlas") is plain-English AI, agent or technology related blogs for **high-agency professionals — founders, investors, agency owners, freelancers — NOT engineers.** Every post leads with the outcome and speaks their language (deals, clients, hours saved), never the machinery. This skill codifies the full research → write → verify → publish loop. Do the steps in order.
 
 ## 0. Audience & voice (hard constraint)
 
@@ -26,8 +22,7 @@ In short:
 - No engineer framing, no internal jargon, no pipeline/DAG talk.
 - Speak in deals, clients, hours, "before the meeting," "while you sleep."
 
-The benchmark for voice, length, and formatting is the post
-`content/posts/what-ai-actually-is.mdx`: concise, actionable, plain-English,
+Be concise, actionable, plain-English,
 strong point of view, scannable sentence-case H2s, no throat-clearing.
 
 ## 1. Learn what already exists
@@ -84,11 +79,7 @@ Body rules:
 
 ### Avoid AI tells
 
-No em-dash overuse; no "it's not just X, it's Y"; no rule-of-three padding; no
-inflated words (testament, pivotal, landscape, vibrant, underscore, delve,
-tapestry); no parallel bolded inline-header bullets; no generic upbeat
-conclusion; no "let's dive in" signposting. Vary sentence length. Sound human.
-
+Use the humanizer skill in this repo.
 ### Make each point once, then move on
 
 The most common failure in these posts is restating one idea three ways and
