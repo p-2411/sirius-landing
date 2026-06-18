@@ -89,6 +89,34 @@ inflated words (testament, pivotal, landscape, vibrant, underscore, delve,
 tapestry); no parallel bolded inline-header bullets; no generic upbeat
 conclusion; no "let's dive in" signposting. Vary sentence length. Sound human.
 
+### Make each point once, then move on
+
+The most common failure in these posts is restating one idea three ways and
+stretching a single point across a whole paragraph. Don't. The post can have one
+overarching argument, but each individual point should land in as few sentences
+as it takes, then stop. If a sentence only rephrases the one before it, cut it.
+
+Exception: when you're explaining a mechanism or what happens behind the scenes
+(how a model actually behaves, where data really goes), the extra sentences are
+earning their place — keep them. The test is whether each sentence adds new
+information or just re-says the last one in different words.
+
+Example of what NOT to do — three paragraphs to say "consumer plans train on
+your data by default, business plans don't":
+
+> Where your pasted data actually goes
+> On the consumer plans most people use — ChatGPT Free, Plus, and Pro — your
+> conversations are used to train OpenAI's models by default. That setting is on
+> unless you turn it off. So the contract you pasted doesn't just produce a
+> summary and vanish. It can be retained and fed into how the model learns.
+> On business plans — ChatGPT Business, Enterprise, Edu — that's reversed. Your
+> data is excluded from training by default. Same chatbot, completely different
+> deal with your information, decided by which plan you happen to be on.
+> Most people pasting sensitive work into ChatGPT are on the personal plan and
+> don't know there's a difference.
+
+That whole block is one point. Make it in two or three sentences.
+
 ## 4. Verify (MUST pass before committing, in order)
 
 ```
