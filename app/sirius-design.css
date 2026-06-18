@@ -70,7 +70,7 @@
 /* ── Hero shells ──────────────────────────────────────────────────────── */
 .sd .hero { position: relative; z-index: 3; }
 .sd .hero-inner { max-width: 1320px; margin: 0 auto; padding-inline: clamp(20px, 4vw, 56px); }
-.sd .hero-centered { min-height: calc(100vh - 90px); display: flex; align-items: center; }
+.sd .hero-centered { min-height: min(calc(100vh - 90px), 880px); display: flex; align-items: center; }
 .sd .centered-inner { display: flex; flex-direction: column; align-items: center; text-align: center; width: 100%; padding-block: clamp(10px, 2.2vh, 30px); }
 .sd .centered-orb { margin-bottom: clamp(2px, 1vh, 14px); }
 
@@ -286,7 +286,7 @@
 .sd .pillar { border-top: 1px solid rgba(var(--accent-rgb), 0.16); padding-top: 16px; }
 .sd .pillar h3 { font-size: clamp(1.05rem, 1.6vw, 1.25rem); color: var(--ink-1, #f6efdf); margin: 0 0 6px; font-weight: 500; }
 .sd .pillar p { color: var(--ink-3, rgba(206,208,197,0.7)); font-size: 0.95rem; line-height: 1.5; margin: 0; }
-.sd .world-graph { width: 100%; max-width: 460px; margin-inline: auto; overflow: visible; }
+.sd .world-graph { width: 100%; max-width: 515px; margin-inline: auto; overflow: visible; }
 
 /* world-graph (§1) — deterministic "assembling" reveal + a slow core pulse.
    Edges draw in, nodes fade up, all staggered by their --o order. Everything

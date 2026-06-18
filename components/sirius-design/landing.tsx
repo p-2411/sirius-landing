@@ -51,7 +51,7 @@ function OrbStage() {
     <div className="orb-stage">
       <div className="orb-well" aria-hidden="true" />
       <div className="orb-core">
-        <Orb interactive className="pointer-events-auto !h-[clamp(240px,33vw,320px)] !w-[clamp(240px,33vw,320px)]" />
+        <Orb interactive className="pointer-events-auto !h-[clamp(216px,29vw,288px)] !w-[clamp(216px,29vw,288px)]" />
       </div>
     </div>
   );

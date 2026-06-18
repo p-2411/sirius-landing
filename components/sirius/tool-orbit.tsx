@@ -14,7 +14,7 @@ const APPS = ["Gmail", "Notion", "Slack", "Superhuman", "Granola", "HubSpot", "S
 // Tilted ring viewed slightly from above. Near logos (front) sit lower, larger,
 // brighter and in front of the orb; far logos sit higher, smaller, dimmer and
 // pass behind it. Pure transform/opacity, so it stays smooth.
-const R = 202; // horizontal radius (px)
+const R = 180; // horizontal radius (px)
 const Y = 0.34; // vertical squash → the tilt of the ring
 const PERIOD = 40; // seconds per revolution
 
@@ -56,7 +56,7 @@ export function ToolOrbit() {
   }, [reduce]);
 
   return (
-    <div className="relative mx-auto h-[430px] w-[520px] max-w-full">
+    <div className="relative mx-auto h-[404px] w-[480px] max-w-full">
       {/* orbiting tools */}
       {APPS.map((app, i) => (
         <span
@@ -83,7 +83,7 @@ export function ToolOrbit() {
 
       {/* Sirius at the center */}
       <div className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2">
-        <Orb className="!h-[168px] !w-[168px]" />
+        <Orb className="!h-[182px] !w-[182px]" />
       </div>
     </div>
   );
