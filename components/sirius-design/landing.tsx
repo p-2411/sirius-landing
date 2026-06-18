@@ -8,6 +8,7 @@ import { landingContent } from "@/content/landing";
 import { Orb } from "@/components/sirius/orb";
 import { WorldGraph } from "@/components/sirius/world-graph";
 import { DownloadButton } from "@/components/ui/download-button";
+import { SectionLabel } from "@/components/ui/section-label";
 import { ScrollLink } from "@/components/layout/scroll-link";
 import { DESIGN_LOGOS, FOOTER_LOGOS } from "@/components/sirius-design/logos";
 import { JobsRoster } from "@/components/sections/jobs-roster";
@@ -121,10 +122,9 @@ export function LearnsYouSection() {
       <div className="container">
         <div className="learns">
           <div>
-            <div className="section-eyebrow reveal" style={d(0)}>
-              <span className="eyebrow-dot" aria-hidden="true" />
+            <SectionLabel index="01" className="reveal" style={d(0)}>
               {eyebrow}
-            </div>
+            </SectionLabel>
             <h2 className="section-title reveal" style={d(0.06)}>
               {title}
             </h2>
@@ -156,10 +156,9 @@ export function WhileYouSleepSection() {
     <section id="while-you-sleep" className="section band-deep" data-screen-label="What it does">
       <div className="container">
         <div className="section-head">
-          <div className="section-eyebrow reveal" style={d(0)}>
-            <span className="eyebrow-dot" aria-hidden="true" />
+          <SectionLabel index="04" className="reveal" style={d(0)}>
             {eyebrow}
-          </div>
+          </SectionLabel>
           <h2 className="section-title reveal" style={d(0.06)}>
             {title}
           </h2>
@@ -190,7 +189,7 @@ export function WhileYouSleepSection() {
           ))}
         </ol>
 
-        <p className="section-lead reveal" style={{ ...d(0.2), textAlign: "center", marginTop: "clamp(28px,4vh,48px)" }}>
+        <p className="section-lead reveal" style={{ ...d(0.2), marginTop: "clamp(28px,4vh,48px)" }}>
           {close}
         </p>
       </div>
@@ -205,10 +204,9 @@ export function RoutingSection() {
     <section id="right-brain" className="section band-deep" data-screen-label="Model routing">
       <div className="container">
         <div className="section-head is-center">
-          <div className="section-eyebrow reveal" style={d(0)}>
-            <span className="eyebrow-dot" aria-hidden="true" />
+          <SectionLabel index="05" className="reveal" style={d(0)}>
             {eyebrow}
-          </div>
+          </SectionLabel>
           <h2 className="section-title reveal" style={d(0.06)}>
             {withAccent(title, "right brain")}
           </h2>
@@ -223,23 +221,18 @@ export function RoutingSection() {
 
 /* ── 5 · Pricing ─────────────────────────────────────────────────────── */
 export function PricingSection() {
-  const { eyebrow, title, tiers } = landingContent.pricing;
+  const { title, tiers } = landingContent.pricing;
   return (
     <section id="pricing" className="section" data-screen-label="Pricing">
       <div className="container">
         <div className="section-head is-center">
-          <div className="section-eyebrow reveal" style={d(0)}>
-            <span className="eyebrow-dot" aria-hidden="true" />
-            {eyebrow}
-          </div>
-          <h2 className="section-title reveal" style={d(0.06)}>
+          <h2 className="section-title reveal" style={d(0)}>
             {title}
           </h2>
         </div>
         <div className="tiers">
           {tiers.map((tier, i) => (
             <div key={tier.name} className={"tier reveal" + (tier.featured ? " is-featured" : "")} style={d(0.07 * i)}>
-              {tier.featured && <span className="tier-flag">Most popular</span>}
               <div className="tier-name">{tier.name}</div>
               <div className="tier-price">
                 {tier.was && <span className="tier-was">{tier.was}</span>}
@@ -290,10 +283,9 @@ export function LocalSection() {
     <section id="local" className="section section-tight" data-screen-label="Local-first">
       <div className="container local-row">
         <div className="local-copy">
-          <div className="section-eyebrow reveal" style={d(0)}>
-            <span className="eyebrow-dot" aria-hidden="true" />
+          <SectionLabel className="reveal" style={d(0)}>
             {eyebrow}
-          </div>
+          </SectionLabel>
           <h2 className="section-title reveal" style={d(0.06)}>
             {title}
           </h2>

@@ -7,7 +7,7 @@ import { landingContent } from "@/content/landing";
 export function OneAppSection() {
   const { eyebrow, title, body } = landingContent.stack;
   return (
-    <section id="stack" className="scroll-mt-24 py-12 md:py-16">
+    <section id="stack" className="section scroll-mt-24">
       <Container>
         <div className="grid items-center gap-12 lg:grid-cols-[1fr_1fr] lg:gap-16">
           <Reveal>

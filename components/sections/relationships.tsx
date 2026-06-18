@@ -1,5 +1,6 @@
 import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/ui/reveal";
+import { SectionLabel } from "@/components/ui/section-label";
 import { landingContent } from "@/content/landing";
 
 // App theme tokens (faithful to ../sirius/app/app/globals.css) so the card
@@ -13,15 +14,12 @@ const T = {
 export function RelationshipsSection() {
   const { eyebrow, title, body, card } = landingContent.relationships;
   return (
-    <section id="relationships" className="scroll-mt-24 py-12 md:py-16">
+    <section id="relationships" className="section scroll-mt-24">
       <Container>
         <div className="grid items-center gap-12 lg:grid-cols-[1fr_1fr] lg:gap-16">
           <Reveal>
-            <div className="section-eyebrow">
-              <span className="eyebrow-dot" aria-hidden="true" />
-              {eyebrow}
-            </div>
-            <h2 className="font-display mt-6 max-w-[16ch] text-[clamp(2rem,4.4vw,3.2rem)] font-light leading-[0.98] tracking-[-0.025em] text-[var(--color-ink-1)]">
+            <SectionLabel index="02">{eyebrow}</SectionLabel>
+            <h2 className="font-display mt-7 max-w-[16ch] text-[clamp(2rem,4.4vw,3.2rem)] font-light leading-[0.98] tracking-[-0.025em] text-[var(--color-ink-1)]">
               {title}
             </h2>
             <p className="mt-6 max-w-[44ch] text-[1.05rem] leading-relaxed text-[var(--color-ink-3)]">
@@ -36,7 +34,7 @@ export function RelationshipsSection() {
                 <span style={{ height: 1, flex: 1, background: T.border }} />
                 <span style={{ fontSize: 11, color: T.ink4 }}>1</span>
               </div>
-              <div style={{ position: "relative", background: T.s1, border: `1px solid ${T.border}`, borderLeft: `3px solid ${T.accent}`, borderRadius: 16, padding: 14, boxShadow: "0 6px 18px -16px rgba(0,0,0,.5)" }}>
+              <div style={{ position: "relative", background: T.s1, border: `1px solid ${T.border}`, borderRadius: 16, padding: 14, boxShadow: "0 6px 18px -16px rgba(0,0,0,.5)" }}>
                 <div style={{ display: "flex", alignItems: "flex-start", gap: 9 }}>
                   <span aria-hidden style={{ flexShrink: 0, fontSize: 16, lineHeight: "20px", marginTop: 1 }}>✉️</span>
                   <div style={{ flex: 1, minWidth: 0 }}>

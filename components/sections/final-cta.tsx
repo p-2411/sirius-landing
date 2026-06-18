@@ -23,12 +23,12 @@ export function FinalCtaSection() {
   return (
     <section
       id="cta"
-      className="relative isolate scroll-mt-24 px-6 py-24 md:px-10 md:py-32 lg:min-h-[80vh] lg:py-36"
+      className="relative isolate scroll-mt-24 px-6 py-20 md:px-10 md:py-28"
     >
       <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_50%_36%,rgba(0,0,0,0.7)_0%,rgba(0,0,0,0.45)_32%,transparent_72%)]" />
 
       <div className="mx-auto flex max-w-[840px] flex-col items-center text-center">
-        <div className="mb-12 md:mb-16">
+        <div className="mb-7 md:mb-9">
           <Orb className="!h-[clamp(220px,26vw,320px)] !w-[clamp(220px,26vw,320px)]" />
         </div>
 

@@ -5,6 +5,7 @@
 .sd {
   --bg: #1b1712;
   --surface-1: #2c261d;
+  --surface-2: #342d23;
   --surface-deep: #14110d;
   --ink-1: #f6efdf;
   --ink-2: rgba(238, 232, 218, 0.84);
@@ -26,7 +27,7 @@
 .sd .italic { font-style: italic; }
 
 /* ── Shared section scaffolding ───────────────────────────────────────── */
-.sd .section { position: relative; z-index: 3; padding-block: clamp(84px, 12vh, 150px); }
+.sd .section { position: relative; z-index: 3; padding-block: clamp(64px, 7vh, 88px); }
 .sd .container { max-width: 1200px; margin: 0 auto; padding-inline: clamp(20px, 4vw, 56px); }
 .sd .section-eyebrow {
   display: inline-flex; align-items: center; gap: 9px; white-space: nowrap;
@@ -147,6 +148,35 @@
   .sd .tl-clock { font-size: 1.2rem; }
 }
 
+/* ── Jobs roster (depicts the real "while you sleep" job list) ────────── */
+.sd .wys-roster { background: var(--bg); border-radius: 18px; padding: 20px 18px; max-width: 640px; margin: 0 auto; font-family: var(--font-body), system-ui, sans-serif; }
+.sd .wys-card { background: var(--surface-1); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+.sd .wys-group { padding: 12px 16px 6px; font-size: 10.5px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+.sd .wys-row { display: flex; align-items: center; gap: 12px; padding: 11px 16px; border-bottom: 1px solid var(--border); min-height: 46px; }
+.sd .wys-row.is-last { border-bottom: none; }
+.sd .wys-dot { flex-shrink: 0; width: 16px; display: inline-flex; justify-content: center; }
+.sd .wys-main { flex: 1; min-width: 0; display: flex; align-items: baseline; gap: 10px; }
+.sd .wys-name { flex-shrink: 0; max-width: 48%; font-family: var(--font-display), Georgia, serif; font-size: 15px; letter-spacing: -0.01em; color: var(--ink-1); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sd .wys-desc { flex: 1; min-width: 0; font-size: 12.5px; color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sd .wys-trigger { flex-shrink: 0; display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--border); font-size: 11px; color: var(--ink-3); white-space: nowrap; }
+.sd .wys-activity { flex-shrink: 0; width: 96px; text-align: right; font-size: 12px; white-space: nowrap; }
+
+/* Narrow: each job reflows into a two-tier card — name + status on top,
+   the full (untruncated) description, then the trigger pill. */
+@media (max-width: 560px) {
+  .sd .wys-row {
+    display: grid; min-height: 0; align-items: start; column-gap: 10px; row-gap: 6px;
+    grid-template-columns: 16px 1fr auto;
+    grid-template-areas: "dot main act" "dot trig trig";
+  }
+  .sd .wys-dot { grid-area: dot; margin-top: 3px; }
+  .sd .wys-main { grid-area: main; flex-direction: column; align-items: stretch; gap: 3px; }
+  .sd .wys-name { max-width: none; white-space: normal; }
+  .sd .wys-desc { white-space: normal; overflow: visible; text-overflow: clip; line-height: 1.4; }
+  .sd .wys-activity { grid-area: act; width: auto; justify-self: end; align-self: start; }
+  .sd .wys-trigger { grid-area: trig; justify-self: start; margin-top: 2px; }
+}
+
 /* ── 2 · Reliability compare + stats ──────────────────────────────────── */
 .sd .compare { display: grid; grid-template-columns: 1fr auto 1fr; align-items: stretch; gap: clamp(14px, 2vw, 26px); margin-top: clamp(40px, 6vh, 64px); }
 .sd .cmp-card { background: rgba(255, 255, 255, 0.015); border: 1px solid var(--border); border-radius: 18px; padding: 24px; display: flex; flex-direction: column; }
@@ -179,25 +209,31 @@
 .sd .routing-lead { max-width: 760px; }
 
 /* ── 5 · Pricing ──────────────────────────────────────────────────────── */
-.sd .tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: clamp(40px, 6vh, 64px); align-items: stretch; }
-.sd .tier { position: relative; display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: 20px; padding: 28px 26px; background: rgba(255, 255, 255, 0.012); }
-.sd .tier.is-featured { border-color: rgba(var(--accent-rgb), 0.5); background: rgba(var(--accent-rgb), 0.05); box-shadow: 0 30px 80px -50px rgba(var(--accent-rgb), 0.8); transform: translateY(-8px); padding-top: 34px; }
-.sd .tier-flag { position: absolute; top: -11px; left: 26px; white-space: nowrap; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #1b1712; background: var(--accent); padding: 4px 12px; border-radius: 9999px; font-weight: 600; }
-.sd .tier-name { font-size: 14px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-3); }
+.sd .tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 2.4vw, 36px); margin-top: clamp(40px, 6vh, 64px); align-items: stretch; }
+/* Free & Max read as quiet open columns; only the recommended tier is framed. */
+.sd .tier { position: relative; display: flex; flex-direction: column; padding: 30px 16px 0; }
+.sd .tier.is-featured { border: 1px solid rgba(var(--accent-rgb), 0.55); border-radius: 20px; background: rgba(var(--accent-rgb), 0.06); box-shadow: 0 40px 90px -55px rgba(var(--accent-rgb), 0.85); transform: translateY(-12px); padding: 34px 26px 30px; }
+.sd .tier.is-featured .tier-amt { color: var(--accent); font-size: 3.2rem; }
+.sd .tier-name { font-size: 15px; letter-spacing: 0; text-transform: lowercase; color: var(--ink-2); font-weight: 500; }
 .sd .tier-price { display: flex; align-items: baseline; gap: 6px; margin-top: 14px; }
 .sd .tier-was { font-size: 1rem; color: var(--ink-4); text-decoration: line-through; }
 .sd .tier-amt { font-size: 2.8rem; color: var(--ink-1); letter-spacing: -0.02em; line-height: 1; }
 .sd .tier-suffix { font-size: 1rem; color: var(--ink-3); }
-.sd .tier-launch { margin-top: 6px; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); }
+.sd .tier-launch { margin-top: 6px; font-size: 11px; letter-spacing: 0.02em; text-transform: lowercase; color: var(--accent); }
 .sd .tier-tagline { margin: 10px 0 0; font-size: 0.95rem; color: var(--ink-2); line-height: 1.45; }
 .sd .tier-features { list-style: none; margin: 20px 0 0; padding: 20px 0 0; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 11px; flex: 1; }
 .sd .tier-features li { display: flex; gap: 10px; font-size: 0.93rem; color: var(--ink-2); line-height: 1.4; }
 .sd .tick { color: var(--accent); flex-shrink: 0; }
 .sd .tier-cta { margin-top: 24px; width: 100%; }
-@media (max-width: 860px) { .sd .tiers { grid-template-columns: 1fr; max-width: 440px; margin-inline: auto; } .sd .tier.is-featured { transform: none; } }
+@media (max-width: 860px) {
+  .sd .tiers { grid-template-columns: 1fr; max-width: 440px; margin-inline: auto; }
+  .sd .tier.is-featured { transform: none; }
+  /* Stacked: give the quiet columns a frame so each reads as its own unit. */
+  .sd .tier:not(.is-featured) { border: 1px solid var(--border); border-radius: 18px; padding: 28px 22px; }
+}
 
 /* ── 6 · Local-first vault ────────────────────────────────────────────── */
-.sd .section-tight { padding-block: clamp(60px, 9vh, 110px); }
+.sd .section-tight { padding-block: clamp(52px, 6vh, 76px); }
 .sd .local-row { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: clamp(30px, 5vw, 72px); }
 .sd .local-visual { display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 400px; margin-inline: auto; }
 .sd .cloud { display: flex; align-items: center; gap: 12px; padding: 12px 18px; border: 1px dashed var(--border-strong); border-radius: 12px; }

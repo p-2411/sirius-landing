@@ -28,9 +28,9 @@ export const landingContent = {
     tapFallback: "See it work",
   },
   howItLearns: {
-    eyebrow: "How it learns you",
+    eyebrow: "how it learns you",
     title: "It learns the business on its own.",
-    lead: "Every other assistant makes you feed it. Sirus picks it up itself — so it just knows you, your business, and everyone you work with.",
+    lead: "Any assistant is only as good as what you feed it — and keeping it current is the part nobody has time for. So instead of feeding Sirus, you let it in: to your meetings, your inbox, your CRM. From there it keeps up with your world on its own — no data entry, no catching it up.",
     pillars: [
       { title: "Sits in on your meetings", body: "It joins the call and walks out knowing what was decided, who owns what, and what happens next — no notes to write." },
       { title: "Keeps up with your clients", body: "It follows every deal, email, and conversation, so you're never the only one holding it all in your head." },
@@ -38,7 +38,7 @@ export const landingContent = {
     ],
   },
   relationships: {
-    eyebrow: "Never drop a client",
+    eyebrow: "never drops a client",
     title: "It keeps every relationship warm.",
     body: "Sirus knows when you last spoke to each client, what you promised, and who's gone quiet. It drafts the follow-up, sends it at the right moment, and surfaces the prospects worth chasing — or just tells you who to call today.",
     card: {
@@ -54,14 +54,14 @@ export const landingContent = {
     },
   },
   stack: {
-    eyebrow: "One cofounder, every tool",
+    eyebrow: "one cofounder, every tool",
     title: "It works inside your whole stack.",
     body: "Gmail, Calendar, Drive, Notion, your CRM — Sirus operates inside the tools you already use, holding one shared context across all of them. Nothing falls between systems, because there's only one mind behind them.",
     replaces: ["personal CRM", "executive assistant", "research analyst", "outreach", "ops"],
     becomes: "Sirus",
   },
   whileYouSleep: {
-    eyebrow: "Works while you sleep",
+    eyebrow: "while you sleep",
     title: "It's already handling these.",
     lead: "Hand it a job and it owns it — running on its own while you're asleep, commuting, or in another meeting. A few of the jobs it's keeping for founders right now:",
     jobs: [
@@ -81,12 +81,11 @@ export const landingContent = {
     close: "Set the boundaries once. After that it just happens — every day, while you're somewhere else.",
   },
   rightBrain: {
-    eyebrow: "Better answers, smaller bill",
+    eyebrow: "the right mind for the task",
     title: "It always uses the right brain for the job.",
     body: "Sirus isn't one model. It picks whichever frontier model fits the task, and moves to a sharper one the day it ships. You're never locked in, or stuck on last year's model.",
   },
   pricing: {
-    eyebrow: "Pricing",
     title: "Start free.",
     tiers: [
       {
@@ -110,7 +109,7 @@ export const landingContent = {
     ],
   },
   local: {
-    eyebrow: "Yours alone",
+    eyebrow: "yours alone",
     title: "Your business stays on your Mac.",
     body: "Everything it knows about your clients, your meetings, your conversations, and your files lives on your machine, not our servers. The cloud only listens for the triggers that kick off the work.",
     items: ["Clients", "Meetings", "Conversations", "Files"],
