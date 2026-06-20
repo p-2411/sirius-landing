@@ -18,9 +18,40 @@
   --accent-rgb: 240, 179, 90;
   --star: #6cd8ff;
   --star-rgb: 108, 216, 255;
+
+  /* Semantic layers of the operating system.
+     gold = the INFORMATION layer — the business, the people, what it KNOWS.
+     cyan = the OPERATION layer — the system, the compute, what it DOES.
+     They meet at the orb (the core). Every section borrows its accent from
+     the layer it belongs to, so the two-layer model reads without a diagram. */
+  --layer-info: var(--accent);
+  --layer-info-strong: var(--accent-strong);
+  --layer-info-rgb: var(--accent-rgb);
+  --layer-op: var(--star);
+  --layer-op-strong: var(--star);
+  --layer-op-rgb: var(--star-rgb);
+
+  /* Structural substrate — the faint blueprint the OS runs on. */
+  --grid-line: rgba(232, 224, 200, 0.035);
+
   position: relative;
   color: var(--ink-1);
 }
+
+/* System voice — mono labels read as telemetry from a running machine. */
+.sd .sys-label {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink-3); font-weight: 500;
+}
+.sd .sys-label .sys-ord { color: var(--ink-1); font-weight: 600; }
+.sd .sys-label .sys-rule { width: 26px; height: 1px; flex-shrink: 0; }
+.sd .sys-label.is-info .sys-ord { color: var(--layer-info); }
+.sd .sys-label.is-info .sys-rule { background: linear-gradient(90deg, var(--layer-info), transparent); }
+.sd .sys-label.is-op .sys-ord { color: var(--layer-op); }
+.sd .sys-label.is-op .sys-rule { background: linear-gradient(90deg, var(--layer-op), transparent); }
+.sd .sys-label.is-neutral .sys-rule { background: linear-gradient(90deg, var(--ink-3), transparent); }
 
 .sd a { color: inherit; text-decoration: none; }
 .sd .font-display { font-family: var(--font-display); }
@@ -330,22 +361,22 @@
   animation: sd-loop-flow 7s linear infinite;
 }
 .sd .loop-label-k {
-  fill: var(--color-ink-1, #f6efdf);
+  fill: var(--ink-1);
   font-family: var(--font-body), system-ui, sans-serif;
   font-size: 14px; font-weight: 600; letter-spacing: -0.01em;
 }
 .sd .loop-label-sub {
-  fill: var(--color-ink-3, rgba(206,208,197,.74));
+  fill: var(--ink-3);
   font-family: var(--font-body), system-ui, sans-serif;
   font-size: 11px;
 }
 .sd .loop-center-k {
-  fill: var(--color-accent, #d9b978);
+  fill: var(--ink-2);
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
 }
 .sd .loop-center-sub {
-  fill: var(--color-ink-3, rgba(206,208,197,.74));
+  fill: var(--ink-3);
   font-family: var(--font-body), system-ui, sans-serif; font-size: 12px;
 }
 @keyframes sd-loop-flow { to { stroke-dashoffset: -100; } }
@@ -358,11 +389,11 @@
 /* §5 — team constellation */
 .sd .team-svg { width: 100%; max-width: 420px; height: auto; margin-inline: auto; display: block; }
 .sd .team-initials {
-  fill: var(--color-ink-1, #f6efdf);
+  fill: var(--ink-1);
   font-family: var(--font-body), system-ui, sans-serif; font-size: 13px; font-weight: 600;
 }
 .sd .team-center-sub {
-  fill: var(--color-accent, #d9b978);
+  fill: var(--layer-info);
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
 }

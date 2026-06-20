@@ -30,8 +30,8 @@ export function TeamConstellation({ className }: { className?: string }) {
             <text x={p.x} y={p.y + 4} textAnchor="middle" className="team-initials">{p.initials}</text>
           </g>
         ))}
-        <circle cx={C} cy={C} r={40} fill="rgba(217,185,120,.10)" stroke="rgba(217,185,120,.55)" strokeWidth="1.5" />
-        <circle cx={C} cy={C} r={9} fill="#d9b978" />
+        <circle cx={C} cy={C} r={40} fill="rgba(240,179,90,.10)" stroke="rgba(240,179,90,.55)" strokeWidth="1.5" />
+        <circle cx={C} cy={C} r={9} fill="#f0b35a" />
         <text x={C} y={C + 60} textAnchor="middle" className="team-center-sub">the shared brain</text>
       </svg>
     </div>

@@ -11,6 +11,25 @@ export function AmbientLayers({ quiet = false }: { quiet?: boolean }) {
   const nebGold = quiet ? 0.035 : 0.085;
   return (
     <>
+      {/* structural substrate — the faint blueprint the OS runs on. Landing
+          only (reading surfaces pass quiet). Masked to fade out toward the
+          bottom so it reads as a field the content sits on, not wallpaper. */}
+      {!quiet && (
+        <div
+          aria-hidden
+          className="pointer-events-none fixed inset-0 -z-[9]"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(232,224,200,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(232,224,200,0.035) 1px, transparent 1px)",
+            backgroundSize: "clamp(48px, 5vw, 72px) clamp(48px, 5vw, 72px)",
+            maskImage:
+              "radial-gradient(125% 90% at 50% 0%, #000 0%, rgba(0,0,0,0.5) 45%, transparent 78%)",
+            WebkitMaskImage:
+              "radial-gradient(125% 90% at 50% 0%, #000 0%, rgba(0,0,0,0.5) 45%, transparent 78%)",
+          }}
+        />
+      )}
+
       {/* drifting nebula */}
       <div aria-hidden className="pointer-events-none fixed inset-[-20%] -z-[9] blur-[40px]">
         <span

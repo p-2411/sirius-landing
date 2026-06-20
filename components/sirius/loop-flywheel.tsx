@@ -5,16 +5,19 @@
 const C = 200;
 const R = 120;
 
+// Top + right belong to the information layer (gold — what it knows); bottom +
+// left belong to the operation layer (cyan — what it does). The two halves meet
+// to close the loop, so the colour split IS the two-layer model.
 type Tone = "cyan" | "gold";
 const NODES: { key: string; label: string; sub: string; x: number; y: number; tone: Tone; lx: number; ly: number; anchor: "start" | "middle" | "end" }[] = [
-  { key: "information", label: "Information", sub: "it learns everything", x: C, y: C - R, tone: "cyan", lx: C, ly: C - R - 30, anchor: "middle" },
+  { key: "information", label: "Information", sub: "it learns everything", x: C, y: C - R, tone: "gold", lx: C, ly: C - R - 30, anchor: "middle" },
   { key: "insight", label: "Insight", sub: "it spots the gaps", x: C + R, y: C, tone: "gold", lx: C + R + 16, ly: C - 4, anchor: "start" },
-  { key: "operation", label: "Operation", sub: "it does the work", x: C, y: C + R, tone: "gold", lx: C, ly: C + R + 26, anchor: "middle" },
+  { key: "operation", label: "Operation", sub: "it does the work", x: C, y: C + R, tone: "cyan", lx: C, ly: C + R + 26, anchor: "middle" },
   { key: "outcome", label: "Outcome", sub: "it feeds back", x: C - R, y: C, tone: "cyan", lx: C - R - 16, ly: C - 4, anchor: "end" },
 ];
 
-const hex = (t: Tone) => (t === "cyan" ? "#6cd8ff" : "#d9b978");
-const halo = (t: Tone) => (t === "cyan" ? "rgba(108,216,255,.30)" : "rgba(217,185,120,.30)");
+const hex = (t: Tone) => (t === "cyan" ? "#6cd8ff" : "#f0b35a");
+const halo = (t: Tone) => (t === "cyan" ? "rgba(108,216,255,.30)" : "rgba(240,179,90,.30)");
 
 export function LoopFlywheel({ className }: { className?: string }) {
   return (
@@ -24,6 +27,12 @@ export function LoopFlywheel({ className }: { className?: string }) {
       aria-label="A loop: the information layer learns everything, spots the gaps as insight, the operation layer does the work, and every outcome feeds back into what it knows — so it compounds."
     >
       <svg viewBox="0 0 400 400" className="loop-svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="loop-flow-grad" x1="0.5" y1="0" x2="0.5" y2="1">
+            <stop offset="0%" stopColor="#f0b35a" />
+            <stop offset="100%" stopColor="#6cd8ff" />
+          </linearGradient>
+        </defs>
         <circle cx={C} cy={C} r={R} fill="none" stroke="rgba(232,224,200,.14)" strokeWidth="1.5" />
         <circle
           className="loop-flow"
@@ -31,7 +40,7 @@ export function LoopFlywheel({ className }: { className?: string }) {
           cy={C}
           r={R}
           fill="none"
-          stroke="rgba(108,216,255,.85)"
+          stroke="url(#loop-flow-grad)"
           strokeWidth="2.5"
           strokeLinecap="round"
           pathLength={100}

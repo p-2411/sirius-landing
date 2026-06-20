@@ -113,7 +113,7 @@ export function InformationLayerSection() {
       <div className="container">
         <div className="learns">
           <div>
-            <SectionLabel index="01" className="reveal" style={d(0)}>
+            <SectionLabel variant="layer" tone="info" ordinal="01" className="reveal" style={d(0)}>
               {eyebrow}
             </SectionLabel>
             <h2 className="section-title reveal" style={d(0.06)}>
@@ -147,7 +147,7 @@ export function OperationLayerSection() {
     <section id="does" className="section band-deep" data-screen-label="What it does">
       <div className="container">
         <div className="section-head">
-          <SectionLabel index="02" className="reveal" style={d(0)}>
+          <SectionLabel variant="layer" tone="op" ordinal="02" className="reveal" style={d(0)}>
             {eyebrow}
           </SectionLabel>
           <h2 className="section-title reveal" style={d(0.06)}>
@@ -173,7 +173,7 @@ export function LoopSection() {
       <div className="container">
         <div className="learns">
           <div>
-            <SectionLabel index="04" className="reveal" style={d(0)}>
+            <SectionLabel tone="neutral" className="reveal" style={d(0)}>
               {eyebrow}
             </SectionLabel>
             <h2 className="section-title reveal" style={d(0.06)}>
@@ -203,7 +203,7 @@ export function ForYourTeamSection() {
             <TeamConstellation className="team-figure" />
           </div>
           <div>
-            <SectionLabel index="05" className="reveal" style={d(0)}>
+            <SectionLabel tone="neutral" className="reveal" style={d(0)}>
               {eyebrow}
             </SectionLabel>
             <h2 className="section-title reveal" style={d(0.06)}>

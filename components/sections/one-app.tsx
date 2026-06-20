@@ -11,7 +11,7 @@ export function OneAppSection() {
       <Container>
         <div className="grid items-center gap-12 lg:grid-cols-[1fr_1fr] lg:gap-16">
           <Reveal>
-            <SectionLabel index="03" tone="warm">
+            <SectionLabel tone="neutral">
               {eyebrow}
             </SectionLabel>
             <h2 className="font-display mt-7 max-w-[18ch] text-[clamp(2.2rem,5vw,3.6rem)] font-light leading-[0.95] tracking-[-0.028em] text-[var(--color-ink-1)]">

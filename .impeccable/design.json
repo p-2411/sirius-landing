@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-18T00:00:00Z",
+  "title": "Design System: Sirius",
+  "extensions": {
+    "colorMeta": {
+      "lamplight-gold": {
+        "role": "primary",
+        "displayName": "Lamplight Gold",
+        "canonical": "#F0B35A",
+        "tonalRamp": ["#241806", "#3D2C12", "#5E4520", "#84632F", "#9F6B2F", "#C68C42", "#F0B35A", "#FFD083"]
+      },
+      "signal-cyan": {
+        "role": "secondary",
+        "displayName": "Signal Cyan",
+        "canonical": "#6CD8FF",
+        "tonalRamp": ["#06222E", "#0B3647", "#114F66", "#1E6E8C", "#2A87C0", "#4FB4E6", "#6CD8FF", "#BDEEFF"]
+      },
+      "near-black": {
+        "role": "neutral",
+        "displayName": "Near-Black Warm",
+        "canonical": "#1B1712",
+        "tonalRamp": ["#14110D", "#1B1712", "#2C261D", "#342D23", "#4A4035", "#6E6253", "#9E9482", "#F6EFDF"]
+      },
+      "ink-primary": {
+        "role": "neutral",
+        "displayName": "Warm Off-White Ink",
+        "canonical": "#F6EFDF",
+        "tonalRamp": ["#C4C7BD", "#CED0C5", "#D8D6CB", "#E2DDD0", "#EEE8DA", "#F2ECDC", "#F6EFDF", "#FBF7EE"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero headline only; Fraunces, italic gold for the emotional beat." },
+      "headline": { "displayName": "Headline", "purpose": "Section titles." },
+      "label": { "displayName": "Section Label", "purpose": "Lowercase worded label + gold ordinal; the narrative-arc cadence." }
+    },
+    "shadows": [
+      { "name": "gold-hover-glow", "value": "0 10px 30px -14px rgba(240,179,90,0.45)", "purpose": "Warm bloom on ghost-button hover. State-only." },
+      { "name": "featured-lift", "value": "0 40px 90px -55px rgba(240,179,90,0.85)", "purpose": "Sets the single featured pricing tier above its neighbors (paired with translateY(-12px))." }
+    ],
+    "motion": [
+      { "name": "ease-reveal", "value": "cubic-bezier(0.22, 1, 0.36, 1)", "purpose": "Transform-only entrance slide (.reveal); 0.75s, transform only so content is never hidden." },
+      { "name": "ease-state", "value": "ease", "purpose": "Default 0.2s easing for button color/border state transitions." }
+    ],
+    "breakpoints": [
+      { "name": "roster-reflow", "value": "560px" },
+      { "name": "nav-collapse", "value": "720px" },
+      { "name": "two-column", "value": "900px" },
+      { "name": "desktop", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Flat warm-gold CTA, near-black text, fully pill. No glow at rest.",
+      "html": "<button class=\"ds-btn-primary\">Download for Mac</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; height: 2.75rem; padding-inline: 1.75rem; border: none; border-radius: 9999px; background: #F0B35A; color: #1B1712; font-family: var(--font-body, system-ui, sans-serif); font-weight: 500; letter-spacing: 0.01em; cursor: pointer; transition: background-color 0.2s ease, transform 0.12s ease; } .ds-btn-primary:hover { background: #FFD083; } .ds-btn-primary:active { background: #E6A647; transform: scale(0.985); } .ds-btn-primary:focus-visible { outline: 2px solid rgba(240,179,90,0.6); outline-offset: 2px; }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Transparent with a warm hairline that warms to gold and blooms on hover.",
+      "html": "<button class=\"ds-btn-ghost\">See it work</button>",
+      "css": ".ds-btn-ghost { display: inline-flex; align-items: center; justify-content: center; height: 2.75rem; padding-inline: 1.5rem; border-radius: 9999px; background: transparent; color: #F6EFDF; border: 1px solid rgba(232,224,200,0.24); font-family: var(--font-body, system-ui, sans-serif); font-weight: 500; letter-spacing: 0.01em; cursor: pointer; transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.25s ease; } .ds-btn-ghost:hover { border-color: rgba(240,179,90,0.55); background: rgba(240,179,90,0.06); box-shadow: 0 10px 30px -14px rgba(240,179,90,0.45); } .ds-btn-ghost:focus-visible { outline: 2px solid rgba(240,179,90,0.6); outline-offset: 2px; }"
+    },
+    {
+      "name": "Section Label",
+      "kind": "custom",
+      "refersTo": "label",
+      "description": "The narrative-arc cadence: gold Fraunces ordinal + gold→transparent hairline + lowercase untracked label. Numbers run only on the capability arc.",
+      "html": "<p class=\"ds-section-label\"><span class=\"ds-sl-ordinal\">04</span><span class=\"ds-sl-rule\"></span><span class=\"ds-sl-text\">while you sleep</span></p>",
+      "css": ".ds-section-label { display: inline-flex; align-items: center; gap: 12px; margin: 0; line-height: 1; color: #EEE8DA; } .ds-sl-ordinal { font-family: var(--font-display, Georgia, serif); font-size: 1.1rem; color: #F0B35A; } .ds-sl-rule { width: 28px; height: 1px; background: linear-gradient(90deg, #F0B35A, transparent); } .ds-sl-text { font-family: var(--font-body, system-ui, sans-serif); font-size: 13px; font-weight: 500; letter-spacing: 0.005em; }"
+    },
+    {
+      "name": "Featured Pricing Tier",
+      "kind": "card",
+      "refersTo": "tier-featured",
+      "description": "The only framed pricing card (Pro). Gold hairline, 6% gold tint, lifted, gold price. No 'Most Popular' pill.",
+      "html": "<div class=\"ds-tier\"><div class=\"ds-tier-name\">pro</div><div class=\"ds-tier-price\"><span class=\"ds-tier-was\">$30</span><span class=\"ds-tier-amt\">$20</span><span class=\"ds-tier-suffix\">/mo</span></div><div class=\"ds-tier-launch\">launch price</div></div>",
+      "css": ".ds-tier { display: inline-flex; flex-direction: column; width: 260px; padding: 34px 26px 30px; border: 1px solid rgba(240,179,90,0.55); border-radius: 20px; background: rgba(240,179,90,0.06); box-shadow: 0 40px 90px -55px rgba(240,179,90,0.85); font-family: var(--font-body, system-ui, sans-serif); } .ds-tier-name { font-size: 15px; color: #EEE8DA; } .ds-tier-price { display: flex; align-items: baseline; gap: 6px; margin-top: 14px; } .ds-tier-was { color: #C4C7BD; text-decoration: line-through; } .ds-tier-amt { font-family: var(--font-display, Georgia, serif); font-size: 3.2rem; line-height: 1; color: #F0B35A; } .ds-tier-suffix { font-size: 1rem; color: #CED0C5; } .ds-tier-launch { margin-top: 6px; font-size: 11px; letter-spacing: 0.02em; color: #F0B35A; }"
+    },
+    {
+      "name": "Jobs Roster Row",
+      "kind": "card",
+      "refersTo": "jobs-roster",
+      "description": "One job in the 'while you sleep' roster — status dot, Fraunces name, description, trigger pill, activity.",
+      "html": "<div class=\"ds-row\"><span class=\"ds-dot\"></span><div class=\"ds-main\"><span class=\"ds-name\">Prospect outreach</span><span class=\"ds-desc\">research &amp; write to fresh prospects every night</span></div><span class=\"ds-trigger\">nightly</span><span class=\"ds-activity\">awaiting you</span></div>",
+      "css": ".ds-row { display: flex; align-items: center; gap: 12px; padding: 11px 16px; background: #2C261D; border-radius: 12px; font-family: var(--font-body, system-ui, sans-serif); } .ds-dot { flex-shrink: 0; width: 7px; height: 7px; border-radius: 999px; background: #F0B35A; box-shadow: 0 0 0 3px rgba(217,185,120,0.2); } .ds-main { flex: 1; min-width: 0; display: flex; align-items: baseline; gap: 10px; } .ds-name { font-family: var(--font-display, Georgia, serif); font-size: 15px; color: #F6EFDF; } .ds-desc { font-size: 12.5px; color: #CED0C5; } .ds-trigger { display: inline-flex; padding: 3px 9px; border-radius: 999px; background: #342D23; border: 1px solid rgba(232,224,200,0.14); font-size: 11px; color: #CED0C5; } .ds-activity { font-size: 12px; color: #F0B35A; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Calm Frontier",
+    "overview": "Sirius is frontier AI shown unhurried. The whole surface sits on a warm near-black lit by a single warm gold and a single live cyan — the palette of a powerful instrument idling in a dark room, not a launch countdown. Ambition is real but carried by craft and restraint, not volume: one living orb, one deliberate reveal, generous quiet around editorial type. The feeling is calm conviction — something powerful is already working for you — never breathless hype. It rejects both the busy automation-tool look (DAGs, node graphs, run logs) and the crypto/AI-hype look (neon, synthwave, edgy-dark theatrics).",
+    "keyCharacteristics": [
+      "Warm near-black canvas; one gold + one cyan do all the talking.",
+      "Editorial serif display (Fraunces) against clean sans body (Geist).",
+      "Flat and tonal — depth from surface tints and hairlines, not shadows.",
+      "Motion is signature but gentle; reveals never hide content.",
+      "Outcome over machinery; the deliverable is always the hero."
+    ],
+    "rules": [
+      { "name": "The Two-Voice Rule", "body": "Gold and cyan are the only chromatic colors. Everything else is the warm neutral ramp (outside semantic success/warning/danger).", "section": "colors" },
+      { "name": "The Cyan-Is-Alive Rule", "body": "Cyan is reserved for things that are living or working — the orb, the 'you' core, 'running' states. Never decoration; its scarcity makes the orb read as alive.", "section": "colors" },
+      { "name": "The One-Voice Rule", "body": "The gold accent stays sparse — a CTA, an ordinal, one framed tier. When everything is gold, nothing is.", "section": "colors" },
+      { "name": "The Sentence-Case Label Rule", "body": "Section labels are lowercase, untracked, paired with a gold ordinal. Tracked uppercase kickers are forbidden — the AI-grammar tell this system retired.", "section": "typography" },
+      { "name": "The Italic-Is-Emotion Rule", "body": "Fraunces italic (in gold) is reserved for the emotional beat. Don't italicize for decoration.", "section": "typography" },
+      { "name": "The Flat-By-Default Rule", "body": "Surfaces are flat at rest. Any shadow is a response to state or hierarchy and is always a soft gold/black bloom — never a gray drop shadow on a rounded rectangle.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do lead with the outcome, not the machinery — the finished deliverable and the time it saved. A busy founder should feel the value in 3 seconds.",
+      "Do speak the user's language (deals, clients, 'while you sleep') — never 'workflow orchestration' or 'agent steps.'",
+      "Do keep gold and cyan sparse and meaningful; carry warmth through type, the orb, and copy.",
+      "Do use full hairline borders, background tints, leading ordinals, or nothing to separate content.",
+      "Do keep reveals transform-only (slide, never opacity-gated) so content is always visible.",
+      "Do hold WCAG AA — body text >=4.5:1; watch Ink Tertiary/Quaternary on raised surfaces."
+    ],
+    "donts": [
+      "Don't look like a busy automation tool (Zapier / n8n): no pipeline DAGs, node graphs, step types, or run logs as the hero.",
+      "Don't look like crypto / AI hype: no neon glow, synthwave gradients, 'revolutionary,' edgy-dark theatrics.",
+      "Don't use generic SaaS-template grammar: no gradient-blob heroes, identical feature-card grids, the hero-metric template, or a 'Most Popular' pricing pill.",
+      "Don't put a tracked uppercase eyebrow above every section. Use the lowercase numbered-arc label cadence.",
+      "Don't use a colored side-stripe (border-left > 1px) on any card or callout.",
+      "Don't use gradient text, glassmorphism-by-default, or gray drop shadows on rounded rectangles.",
+      "Don't show what we are (the machinery) instead of what it does for you."
+    ]
+  }
+}
