@@ -11,6 +11,7 @@ import {
   RoutingSection,
   PricingSection,
   LocalSection,
+  MakerSection,
   SiriusFooter,
 } from "@/components/sirius-design/landing";
 import { RelationshipsSection } from "@/components/sections/relationships";
@@ -36,6 +37,7 @@ export default function HomePage() {
       <SectionDivider />
       <LocalSection />
       <SectionDivider />
+      <MakerSection />
       <FinalCtaSection />
       <SiriusFooter />
     </main>

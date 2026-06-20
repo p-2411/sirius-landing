@@ -362,6 +362,25 @@ export function LocalSection() {
   );
 }
 
+/* ── §7 · Maker quote ────────────────────────────────────────────────── */
+export function MakerSection() {
+  const { quote, signature } = landingContent.maker;
+  return (
+    <section className="section section-tight" data-screen-label="Why we built it">
+      <div className="container">
+        <figure className="mx-auto max-w-[60ch] text-center">
+          <blockquote className="font-display reveal text-[clamp(1.4rem,3vw,2.1rem)] font-light leading-[1.3] tracking-[-0.015em] text-[var(--color-ink-1)]" style={d(0)}>
+            &ldquo;{quote}&rdquo;
+          </blockquote>
+          <figcaption className="reveal mt-6 text-[13px] uppercase tracking-[0.18em] text-[var(--color-ink-3)]" style={d(0.1)}>
+            {signature}
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+  );
+}
+
 /* ── Footer ──────────────────────────────────────────────────────────── */
 export function SiriusFooter() {
   const { footer } = landingContent;

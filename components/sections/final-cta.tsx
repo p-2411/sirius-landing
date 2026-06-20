@@ -2,7 +2,7 @@ import type { CSSProperties } from "react";
 
 import { landingContent } from "@/content/landing";
 import { Orb } from "@/components/sirius/orb";
-import { DownloadButton } from "@/components/ui/download-button";
+import { WaitlistForm } from "@/components/ui/waitlist-form";
 
 export function FinalCtaSection() {
   const { cta } = landingContent;
@@ -26,8 +26,8 @@ export function FinalCtaSection() {
           {cta.title}
         </h2>
 
-        <div className="reveal mt-12 flex flex-col items-center gap-4" style={{ "--d": "0.12s" } as CSSProperties}>
-          <DownloadButton label={cta.button} />
+        <div className="reveal mt-12 flex w-full max-w-[440px] flex-col items-center gap-4" style={{ "--d": "0.12s" } as CSSProperties}>
+          <WaitlistForm />
           <p className="text-[13px] leading-5 text-[var(--color-ink-3)]">
             {cta.sub}
           </p>
