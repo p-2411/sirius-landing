@@ -105,6 +105,28 @@
 .sd .centered-inner { display: flex; flex-direction: column; align-items: center; text-align: center; width: 100%; padding-block: clamp(10px, 2.2vh, 30px); }
 .sd .centered-orb { margin-bottom: clamp(2px, 1vh, 14px); }
 
+/* ── Hero: category eyebrow + the OS core (orb + two-layer ring) ───────── */
+.sd .hero-eyebrow {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: clamp(10.5px, 1.1vw, 12px); letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--ink-3); margin: 0 0 clamp(18px, 3vh, 30px);
+}
+.sd .hero-core { display: flex; flex-direction: column; align-items: center; gap: clamp(12px, 1.8vh, 20px); }
+.sd .layer-tag {
+  display: inline-flex; align-items: center; gap: 9px;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+}
+.sd .layer-tag-k { font-weight: 600; }
+.sd .layer-tag-sub { color: var(--ink-3); letter-spacing: 0.08em; }
+.sd .layer-tag.is-info .layer-tag-k { color: var(--layer-info); }
+.sd .layer-tag.is-op .layer-tag-k { color: var(--layer-op); }
+.sd .layer-tag::before, .sd .layer-tag::after {
+  content: ""; width: 16px; height: 1px; background: var(--border-strong);
+}
+.sd .core-ring { position: absolute; inset: -13%; width: 126%; height: 126%; z-index: 1; pointer-events: none; }
+.sd .core-arc { filter: drop-shadow(0 0 5px rgba(var(--accent-rgb), 0.18)); }
+
 /* ── Orb stage (dark well — kept dark, no blue bloom) ─────────────────── */
 .sd .orb-stage { position: relative; display: flex; align-items: center; justify-content: center; overflow: visible; }
 .sd .orb-well {
@@ -122,9 +144,10 @@
   color: var(--ink-3); margin-bottom: 16px; font-weight: 500;
 }
 .sd .eyebrow-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px rgba(var(--accent-rgb), 0.7); }
-.sd .headline { margin: 0; font-weight: 400; line-height: 1.06; letter-spacing: -0.03em; font-size: clamp(1.7rem, 5.8vw, 4.5rem); color: var(--ink-1); }
+.sd .headline { margin: 0; font-weight: 400; line-height: 1.06; letter-spacing: -0.03em; font-size: clamp(1.5rem, 5.8vw, 4.5rem); color: var(--ink-1); }
 .sd .is-centered .headline { letter-spacing: -0.032em; }
-.sd .headline-line { display: block; white-space: nowrap; }
+/* Wrap, don't clip — nowrap + a tall clamp overflowed the h1 on <390px. */
+.sd .headline-line { display: block; text-wrap: balance; }
 .sd .headline-line.accent { color: var(--accent); }
 .sd .headline-line.italic { font-style: italic; font-variation-settings: "opsz" 144; }
 .sd .sub { margin: 22px 0 0; max-width: 540px; font-size: clamp(1.04rem, 1.35vw, 1.2rem); line-height: 1.6; color: var(--ink-2); text-wrap: pretty; }

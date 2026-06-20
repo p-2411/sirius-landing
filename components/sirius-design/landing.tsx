@@ -39,13 +39,32 @@ function CTAs() {
   );
 }
 
-function OrbStage() {
+// The orb is the OS core. A gold half-ring (information — what it knows) arcs
+// over the top, a cyan half-ring (operation — what it does) under the bottom;
+// they meet at the orb. The two layers of the product, made literal.
+function HeroCore() {
   return (
-    <div className="orb-stage">
-      <div className="orb-well" aria-hidden="true" />
-      <div className="orb-core">
-        <Orb interactive className="pointer-events-auto !h-[clamp(216px,29vw,288px)] !w-[clamp(216px,29vw,288px)]" />
+    <div className="hero-core">
+      <p className="layer-tag is-info reveal" style={d(0.02)}>
+        <span className="layer-tag-k">Information</span>
+        <span className="layer-tag-sub">what it knows</span>
+      </p>
+      <div className="orb-stage">
+        <div className="orb-well" aria-hidden="true" />
+        <svg className="core-ring" viewBox="0 0 200 200" aria-hidden="true">
+          <path className="core-arc" d="M20 100A80 80 0 0 1 180 100" fill="none" stroke="var(--layer-info)" strokeOpacity="0.55" strokeWidth="1.5" strokeLinecap="round" />
+          <path className="core-arc" d="M180 100A80 80 0 0 1 20 100" fill="none" stroke="var(--layer-op)" strokeOpacity="0.55" strokeWidth="1.5" strokeLinecap="round" />
+          <circle cx="20" cy="100" r="2.5" fill="var(--ink-2)" />
+          <circle cx="180" cy="100" r="2.5" fill="var(--ink-2)" />
+        </svg>
+        <div className="orb-core">
+          <Orb interactive className="pointer-events-auto !h-[clamp(216px,29vw,288px)] !w-[clamp(216px,29vw,288px)]" />
+        </div>
       </div>
+      <p className="layer-tag is-op reveal" style={d(0.02)}>
+        <span className="layer-tag-k">Operation</span>
+        <span className="layer-tag-sub">what it does</span>
+      </p>
     </div>
   );
 }
@@ -71,12 +90,15 @@ function Integrations() {
 
 /* ── Hero ────────────────────────────────────────────────────────────── */
 export function SiriusHero() {
-  const { title, titleAccent, description } = landingContent.hero;
+  const { eyebrow, title, titleAccent, description } = landingContent.hero;
   return (
     <section id="hero" className="hero hero-centered" data-screen-label="Hero">
       <div className="hero-inner centered-inner">
+        <p className="hero-eyebrow reveal" style={d(0)}>
+          {eyebrow}
+        </p>
         <div className="centered-orb reveal-orb">
-          <OrbStage />
+          <HeroCore />
         </div>
         <div className="hero-text is-centered">
           <h1 className="headline font-display">
