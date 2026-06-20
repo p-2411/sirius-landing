@@ -95,19 +95,4 @@ export const landingContent = {
   footer: {
     blurb: "The operating system for your business. It learns how your company runs, then runs it with you — across the tools you already use.",
   },
-
-  // ── DEPRECATED — referenced only by sections removed in Task 11. Do not extend. ──
-  downloadCta: { label: "Request access", href: "#cta" },
-  howItLearns: {
-    eyebrow: "how it learns you", title: "It learns the business on its own.", lead: "",
-    pillars: [] as { title: string; body: string }[],
-  },
-  whileYouSleep: {
-    eyebrow: "", title: "", lead: "",
-    cards: [] as { id: string; time: string; when: string; title: string; body: string }[],
-    close: "",
-  },
-  rightBrain: { eyebrow: "", title: "", body: "" },
-  pricing: { title: "", tiers: [] as { name: string; was: string; price: string; priceSuffix: string; tagline: string; features: string[]; cta: string; featured: boolean }[] },
-  local: { eyebrow: "", title: "", body: "", items: [] as string[] },
 } as const;

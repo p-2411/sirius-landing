@@ -3,7 +3,6 @@ import { Fraunces, Geist } from "next/font/google";
 import type { ReactNode } from "react";
 
 import { MotionProvider } from "@/components/ui/motion-provider";
-import { DownloadProvider } from "@/components/ui/download-modal";
 import { SITE_URL } from "@/lib/site";
 
 import "./globals.css";
@@ -51,7 +50,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en" className={`${fraunces.variable} ${geist.variable}`}>
       <body>
         <MotionProvider>
-          <DownloadProvider>{children}</DownloadProvider>
+          {children}
         </MotionProvider>
       </body>
     </html>

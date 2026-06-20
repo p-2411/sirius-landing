@@ -10,7 +10,6 @@ import rehypeHighlight from "rehype-highlight";
 import { AmbientLayers } from "@/components/sirius/ambient";
 import { SiteHeader } from "@/components/layout/site-header";
 import { Container } from "@/components/ui/container";
-import { DownloadButton } from "@/components/ui/download-button";
 import { ChartedFinale } from "@/components/blog/charted-finale";
 import { GREEK, starLabel } from "@/lib/constellation";
 import { getAllPosts, getPostBySlug, getPostStructure, slugifyHeading } from "@/lib/blog";
@@ -176,7 +175,7 @@ export default async function BlogPostPage({ params }: Props) {
               <p className="text-[0.88rem] text-[var(--color-ink-3)] m-0">
                 Sirius does your briefings, outreach, and research — done before you&rsquo;re in.
               </p>
-              <DownloadButton className="mt-2" />
+              <Link href="/#cta" className="btn btn-primary mt-2 inline-flex">Request access</Link>
             </div>
 
             {next && (

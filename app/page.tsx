@@ -8,9 +8,6 @@ import {
   OperationLayerSection,
   LoopSection,
   ForYourTeamSection,
-  RoutingSection,
-  PricingSection,
-  LocalSection,
   MakerSection,
   SiriusFooter,
 } from "@/components/sirius-design/landing";
@@ -27,15 +24,11 @@ export default function HomePage() {
       <SiriusHero />
       <SectionDivider />
       <InformationLayerSection />
-      <RelationshipsSection />
-      <OneAppSection />
       <OperationLayerSection />
+      <RelationshipsSection />
       <LoopSection />
       <ForYourTeamSection />
-      <RoutingSection />
-      <PricingSection />
-      <SectionDivider />
-      <LocalSection />
+      <OneAppSection />
       <SectionDivider />
       <MakerSection />
       <FinalCtaSection />

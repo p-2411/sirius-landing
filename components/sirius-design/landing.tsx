@@ -2,12 +2,11 @@
 // mirror the prototype (styles live in app/sirius-design.css, scoped under .sd);
 // copy is read from content/landing.ts. The one-app and final-CTA sections are
 // intentionally OURS (rendered from page.tsx), and the orb sits in a dark well.
-import type { CSSProperties, ReactNode } from "react";
+import type { CSSProperties } from "react";
 
 import { landingContent } from "@/content/landing";
 import { Orb } from "@/components/sirius/orb";
 import { WorldGraph } from "@/components/sirius/world-graph";
-import { DownloadButton } from "@/components/ui/download-button";
 import { SectionLabel } from "@/components/ui/section-label";
 import { ScrollLink } from "@/components/layout/scroll-link";
 import { DESIGN_LOGOS, FOOTER_LOGOS } from "@/components/sirius-design/logos";
@@ -16,18 +15,6 @@ import { LoopFlywheel } from "@/components/sirius/loop-flywheel";
 import { TeamConstellation } from "@/components/sirius/team-constellation";
 
 const d = (v: number) => ({ "--d": `${v}s` }) as CSSProperties;
-
-function withAccent(title: string, accent: string): ReactNode {
-  const i = title.indexOf(accent);
-  if (i === -1) return title;
-  return (
-    <>
-      {title.slice(0, i)}
-      <span className="accent-italic">{accent}</span>
-      {title.slice(i + accent.length)}
-    </>
-  );
-}
 
 /* ── Chrome ──────────────────────────────────────────────────────────── */
 const NAV_LINKS = [
@@ -225,136 +212,6 @@ export function ForYourTeamSection() {
             <p className="section-lead reveal" style={d(0.12)}>
               {lead}
             </p>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ── 4 · Right brain (type-led) ──────────────────────────────────────── */
-export function RoutingSection() {
-  const { eyebrow, title, body } = landingContent.rightBrain;
-  return (
-    <section id="right-brain" className="section band-deep" data-screen-label="Model routing">
-      <div className="container">
-        <div className="section-head is-center">
-          <SectionLabel index="05" className="reveal" style={d(0)}>
-            {eyebrow}
-          </SectionLabel>
-          <h2 className="section-title reveal" style={d(0.06)}>
-            {withAccent(title, "right brain")}
-          </h2>
-          <p className="section-lead reveal" style={d(0.12)}>
-            {body}
-          </p>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ── 5 · Pricing ─────────────────────────────────────────────────────── */
-export function PricingSection() {
-  const { title, tiers } = landingContent.pricing;
-  return (
-    <section id="pricing" className="section" data-screen-label="Pricing">
-      <div className="container">
-        <div className="section-head is-center">
-          <h2 className="section-title reveal" style={d(0)}>
-            {title}
-          </h2>
-        </div>
-        <div className="tiers">
-          {tiers.map((tier, i) => (
-            <div key={tier.name} className={"tier reveal" + (tier.featured ? " is-featured" : "")} style={d(0.07 * i)}>
-              <div className="tier-name">{tier.name}</div>
-              <div className="tier-price">
-                {tier.was && <span className="tier-was">{tier.was}</span>}
-                <span className="tier-amt font-display">{tier.price}</span>
-                {tier.priceSuffix && <span className="tier-suffix">{tier.priceSuffix}</span>}
-              </div>
-              {tier.was && <div className="tier-launch">Launch price</div>}
-              <p className="tier-tagline">{tier.tagline}</p>
-              <ul className="tier-features">
-                {tier.features.map((f) => (
-                  <li key={f}>
-                    <span className="tick" aria-hidden="true">
-                      ✓
-                    </span>
-                    {f}
-                  </li>
-                ))}
-              </ul>
-              <DownloadButton label={tier.cta} variant={tier.featured ? "primary" : "ghost"} className="tier-cta" />
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ── 6 · Local-first vault ───────────────────────────────────────────── */
-function LockGlyph() {
-  return (
-    <svg className="vault-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
-      <rect x="5" y="11" width="14" height="9" rx="2" />
-      <path d="M8 11V8a4 4 0 0 1 8 0v3" />
-    </svg>
-  );
-}
-function CloudGlyph() {
-  return (
-    <svg className="cloud-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
-      <path d="M7 18h10a4 4 0 0 0 .5-7.97A6 6 0 0 0 6 9.5 3.5 3.5 0 0 0 7 18z" />
-    </svg>
-  );
-}
-
-export function LocalSection() {
-  const { eyebrow, title, body, items } = landingContent.local;
-  return (
-    <section id="local" className="section section-tight" data-screen-label="Local-first">
-      <div className="container local-row">
-        <div className="local-copy">
-          <SectionLabel className="reveal" style={d(0)}>
-            {eyebrow}
-          </SectionLabel>
-          <h2 className="section-title reveal" style={d(0.06)}>
-            {title}
-          </h2>
-          <p className="section-lead reveal" style={d(0.12)}>
-            {body}
-          </p>
-        </div>
-        <div className="local-visual reveal" style={d(0.12)} aria-hidden="true">
-          <div className="cloud">
-            <CloudGlyph />
-            <span className="cloud-text">
-              <span className="cloud-k">Cloud</span>
-              <span className="cloud-sub">listens for triggers</span>
-            </span>
-          </div>
-          <div className="local-link" />
-          <div className="vault">
-            <div className="vault-bar">
-              <span className="vault-dots">
-                <i />
-                <i />
-                <i />
-              </span>
-              <span className="vault-name">Your Mac</span>
-              <LockGlyph />
-            </div>
-            <div className="vault-items">
-              {items.map((x) => (
-                <span key={x} className="vault-item">
-                  <span className="vi-dot" />
-                  {x}
-                </span>
-              ))}
-            </div>
           </div>
         </div>
       </div>
