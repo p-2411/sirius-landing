@@ -4,7 +4,7 @@ import { SiteHeader } from "@/components/layout/site-header";
 import { SectionDivider } from "@/components/ui/section-divider";
 import {
   SiriusHero,
-  LearnsYouSection,
+  InformationLayerSection,
   WhileYouSleepSection,
   RoutingSection,
   PricingSection,
@@ -23,7 +23,7 @@ export default function HomePage() {
       <SiteHeader />
       <SiriusHero />
       <SectionDivider />
-      <LearnsYouSection />
+      <InformationLayerSection />
       <RelationshipsSection />
       <OneAppSection />
       <WhileYouSleepSection />

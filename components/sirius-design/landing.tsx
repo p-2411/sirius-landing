@@ -116,11 +116,11 @@ export function SiriusHero() {
   );
 }
 
-/* ── §1 · How it learns you ──────────────────────────────────────────── */
-export function LearnsYouSection() {
-  const { eyebrow, title, lead, pillars } = landingContent.howItLearns;
+/* ── §2 · Information layer — "What it knows" ────────────────────────── */
+export function InformationLayerSection() {
+  const { eyebrow, title, lead, pillars } = landingContent.informationLayer;
   return (
-    <section id="how-it-learns" className="section" data-screen-label="How it learns you">
+    <section id="knows" className="section" data-screen-label="What it knows">
       <div className="container">
         <div className="learns">
           <div>
