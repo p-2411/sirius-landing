@@ -12,6 +12,7 @@ import { SectionLabel } from "@/components/ui/section-label";
 import { ScrollLink } from "@/components/layout/scroll-link";
 import { DESIGN_LOGOS, FOOTER_LOGOS } from "@/components/sirius-design/logos";
 import { JobsRoster } from "@/components/sections/jobs-roster";
+import { LoopFlywheel } from "@/components/sirius/loop-flywheel";
 
 const d = (v: number) => ({ "--d": `${v}s` }) as CSSProperties;
 
@@ -170,6 +171,33 @@ export function OperationLayerSection() {
         </div>
         <div className="reveal" style={d(0.16)}>
           <JobsRoster />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── §4 · The loop ───────────────────────────────────────────────────── */
+export function LoopSection() {
+  const { eyebrow, title, lead } = landingContent.theLoop;
+  return (
+    <section id="loop" className="section" data-screen-label="The loop">
+      <div className="container">
+        <div className="learns">
+          <div>
+            <SectionLabel index="04" className="reveal" style={d(0)}>
+              {eyebrow}
+            </SectionLabel>
+            <h2 className="section-title reveal" style={d(0.06)}>
+              {title}
+            </h2>
+            <p className="section-lead reveal" style={d(0.12)}>
+              {lead}
+            </p>
+          </div>
+          <div className="reveal" style={d(0.16)}>
+            <LoopFlywheel className="loop-figure" />
+          </div>
         </div>
       </div>
     </section>

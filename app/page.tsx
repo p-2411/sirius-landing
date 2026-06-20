@@ -6,6 +6,7 @@ import {
   SiriusHero,
   InformationLayerSection,
   OperationLayerSection,
+  LoopSection,
   RoutingSection,
   PricingSection,
   LocalSection,
@@ -27,6 +28,7 @@ export default function HomePage() {
       <RelationshipsSection />
       <OneAppSection />
       <OperationLayerSection />
+      <LoopSection />
       <RoutingSection />
       <PricingSection />
       <SectionDivider />
