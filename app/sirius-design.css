@@ -322,4 +322,35 @@
   .sd .wg-pulse { animation: none; opacity: 0; }
 }
 
+/* §4 — loop flywheel */
+.sd .loop-svg { width: 100%; max-width: 420px; height: auto; margin-inline: auto; display: block; }
+.sd .loop-flow {
+  stroke-dasharray: 22 78;
+  stroke-dashoffset: 0;
+  animation: sd-loop-flow 7s linear infinite;
+}
+.sd .loop-label-k {
+  fill: var(--color-ink-1, #f6efdf);
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 14px; font-weight: 600; letter-spacing: -0.01em;
+}
+.sd .loop-label-sub {
+  fill: var(--color-ink-3, rgba(206,208,197,.74));
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 11px;
+}
+.sd .loop-center-k {
+  fill: var(--color-accent, #d9b978);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+}
+.sd .loop-center-sub {
+  fill: var(--color-ink-3, rgba(206,208,197,.74));
+  font-family: var(--font-body), system-ui, sans-serif; font-size: 12px;
+}
+@keyframes sd-loop-flow { to { stroke-dashoffset: -100; } }
+@media (prefers-reduced-motion: reduce) {
+  .sd .loop-flow { animation: none; }
+}
+
 @keyframes sd-wys-spin { to { transform: rotate(360deg); } }
