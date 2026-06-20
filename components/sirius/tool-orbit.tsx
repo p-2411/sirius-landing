@@ -21,16 +21,20 @@ const PERIOD = 40; // seconds per revolution
 export function ToolOrbit() {
   const reduce = useReducedMotion();
   const els = useRef<Array<HTMLSpanElement | null>>([]);
+  const wrap = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const place = (seconds: number) => {
       const n = APPS.length;
+      // Radius tracks the container so logos never clip on narrow screens.
+      const w = wrap.current?.clientWidth ?? R * 2;
+      const r = Math.max(104, Math.min(R, w / 2 - 40));
       for (let i = 0; i < n; i++) {
         const el = els.current[i];
         if (!el) continue;
         const a = (i / n) * Math.PI * 2 + (seconds / PERIOD) * Math.PI * 2;
-        const x = Math.cos(a) * R;
-        const y = Math.sin(a) * R * Y;
+        const x = Math.cos(a) * r;
+        const y = Math.sin(a) * r * Y;
         const near = (Math.sin(a) + 1) / 2; // 0 (back) → 1 (front)
         const scale = 0.64 + near * 0.54;
         el.style.transform = `translate(-50%, -50%) translate(${x}px, ${y}px) scale(${scale})`;

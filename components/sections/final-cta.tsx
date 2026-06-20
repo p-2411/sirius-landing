@@ -29,6 +29,9 @@ export function FinalCtaSection() {
         <div className="reveal mt-12 flex w-full max-w-[440px] flex-col items-center gap-4" style={{ "--d": "0.12s" } as CSSProperties}>
           <WaitlistForm />
           <p className="text-[13px] leading-5 text-[var(--color-ink-3)]">
+            Your email, then your name — about 15 seconds. No spam; we&rsquo;ll be in touch.
+          </p>
+          <p className="text-[12.5px] leading-5 text-[var(--color-ink-3)]">
             {cta.sub}
           </p>
         </div>

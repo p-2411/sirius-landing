@@ -146,18 +146,18 @@ export function WorldGraph({ className = "" }: { className?: string }) {
 
       {/* The YOU core. */}
       <g className="wg-core">
-        <circle cx={CX} cy={CY} r={34} fill="url(#wg-halo)" />
-        <circle cx={CX} cy={CY} r={11} fill="url(#wg-core)" />
-        <circle cx={CX} cy={CY} r={11} fill="none" stroke="rgba(189,238,255,0.55)" strokeWidth={0.75} />
-        <circle className="wg-pulse" cx={CX} cy={CY} r={11} fill="none" stroke="rgba(108,216,255,0.5)" strokeWidth={1} />
+        <circle cx={CX} cy={CY} r={38} fill="url(#wg-halo)" />
+        <circle cx={CX} cy={CY} r={14} fill="url(#wg-core)" />
+        <circle cx={CX} cy={CY} r={14} fill="none" stroke="rgba(189,238,255,0.55)" strokeWidth={0.75} />
+        <circle className="wg-pulse" cx={CX} cy={CY} r={14} fill="none" stroke="rgba(108,216,255,0.5)" strokeWidth={1} />
         <text
           x={CX}
           y={CY + 0.5}
           textAnchor="middle"
           dominantBaseline="middle"
           fontFamily="var(--font-mono, ui-monospace), monospace"
-          fontSize={7.5}
-          letterSpacing="0.14em"
+          fontSize={9}
+          letterSpacing="0.06em"
           fontWeight={600}
           fill="#06222e"
         >

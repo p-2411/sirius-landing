@@ -43,12 +43,12 @@ export const landingContent = {
     title: "It closes the gaps it finds.",
     lead: "Knowing isn't the point — doing is. From that picture, Sirius acts on what's falling through: it drafts the follow-up nobody sent, chases the deal that went quiet, builds the automation you kept meaning to set up. Real work, shipped across your apps — not another dashboard telling you what's wrong.",
     jobs: [
-      { group: "Needs you",   name: "Prospect outreach",     desc: "research & write to fresh prospects every night",  trigger: "🕐 nightly",   activity: "awaiting you", status: "awaiting" },
-      { group: "Active now",  name: "Inbound triage",        desc: "qualify every new inbound lead and book the demo", trigger: "✉️ on email", activity: "3 running",    status: "running" },
-      { group: "Active now",  name: "Deal follow-ups",       desc: "chase any open deal that's gone quiet 5+ days",     trigger: "🕐 daily",     activity: "",             status: "running" },
-      { group: "Standing by", name: "Renewal guard",         desc: "flag any account approaching its renewal date",     trigger: "🕐 daily",     activity: "2h ago",       status: "done" },
-      { group: "Standing by", name: "Investor update",       desc: "draft the weekly update from live metrics",         trigger: "🕐 Mon 8:00", activity: "3d ago",       status: "done" },
-      { group: "Standing by", name: "Watch: lead investor",  desc: "alert & draft the moment a key contact emails",     trigger: "✉️ on email", activity: "5h ago",       status: "done" },
+      { group: "Needs you",   name: "Prospect outreach",     desc: "research & write to fresh prospects every night",  trigger: "nightly",   activity: "awaiting you", status: "awaiting" },
+      { group: "Active now",  name: "Inbound triage",        desc: "qualify every new inbound lead and book the demo", trigger: "on email", activity: "3 running",    status: "running" },
+      { group: "Active now",  name: "Deal follow-ups",       desc: "chase any open deal that's gone quiet 5+ days",     trigger: "daily",     activity: "",             status: "running" },
+      { group: "Standing by", name: "Renewal guard",         desc: "flag any account approaching its renewal date",     trigger: "daily",     activity: "2h ago",       status: "done" },
+      { group: "Standing by", name: "Investor update",       desc: "draft the weekly update from live metrics",         trigger: "Mon 8:00", activity: "3d ago",       status: "done" },
+      { group: "Standing by", name: "Watch: lead investor",  desc: "alert & draft the moment a key contact emails",     trigger: "on email", activity: "5h ago",       status: "done" },
     ],
   },
   relationships: {
@@ -73,7 +73,7 @@ export const landingContent = {
     lead: "This is what makes it an operating system and not a tool: the two layers feed each other. Everything Sirius does — every email sent, every deal moved, every automation that runs — flows back into what it knows. The picture sharpens, the gaps get clearer, and it ships more on its own. The longer it runs, the more it runs for you.",
   },
   perEmployee: {
-    eyebrow: "for everyone, not just the org",
+    eyebrow: "for every person, too",
     title: "Everyone gets their own Sirius.",
     lead: "Each person on your team gets a Sirius that knows them. It takes notes in their meetings, handles their inbox, and builds the small automations they never found time for. And every bit of that work quietly feeds the same shared picture — so the whole company gets smarter every time one person gets help.",
   },
