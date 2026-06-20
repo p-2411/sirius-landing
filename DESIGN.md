@@ -1,5 +1,5 @@
 ---
-name: Sirus
+name: Sirius
 description: Your AI cofounder — a dark, warm-gold marketing surface that is calmly, confidently futuristic.
 colors:
   near-black: "#1B1712"
@@ -96,13 +96,13 @@ components:
     padding: "34px 26px 30px"
 ---
 
-# Design System: Sirus
+# Design System: Sirius
 
 ## 1. Overview
 
 **Creative North Star: "The Calm Frontier"**
 
-Sirus is frontier AI shown unhurried. The whole surface sits on a warm near-black
+Sirius is frontier AI shown unhurried. The whole surface sits on a warm near-black
 (`#1B1712`) lit by a single warm gold and a single live cyan — the palette of a
 powerful instrument idling in a dark room, not a launch countdown. Ambition is
 real here (this is an autonomous AI cofounder), but it is carried by **craft and

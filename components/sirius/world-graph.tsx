@@ -1,4 +1,4 @@
-// §1 visual — "your world," the relationship map Sirus builds on its own.
+// §1 visual — "your world," the relationship map Sirius builds on its own.
 // YOU sit at a glowing core; around you are the real people, companies, deals
 // and commitments it has connected. Shown as an outcome, never as machinery —
 // labels are always real-world things, never tech terms. Deterministic layout
@@ -87,7 +87,7 @@ export function WorldGraph({ className = "" }: { className?: string }) {
       viewBox="0 0 380 250"
       className={`wg ${className}`.trim()}
       role="img"
-      aria-label="A map of your world that Sirus builds itself — Dana at Acme, the Acme Series A, your Q3 numbers due Tuesday, the Globex renewal, a warm intro from Priya, and your Monday standup, all connected to you at the centre."
+      aria-label="A map of your world that Sirius builds itself — Dana at Acme, the Acme Series A, your Q3 numbers due Tuesday, the Globex renewal, a warm intro from Priya, and your Monday standup, all connected to you at the centre."
     >
       <defs>
         {/* Soft cyan glow for the YOU core — echoes the hero orb. */}

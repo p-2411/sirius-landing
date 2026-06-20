@@ -39,7 +39,7 @@ the real app (current as of 2026-06-17, after the SPA + Jobs/Playbooks overhaul)
   "review queue" / briefing surface.
 - **Jobs vs Playbooks**: a workflow *with a trigger* (cron/Gmail/webhook/manual)
   is a **Job** (user-facing, autonomous, on home/the Jobs page); an untriggered
-  workflow is a **Playbook** (Sirus's private reusable procedure). Same
+  workflow is a **Playbook** (Sirius's private reusable procedure). Same
   underlying "workflow" structure — the only difference is the trigger.
 - Job/workflow detail: two-pane (DAG left + "Chat with this workflow" right +
   recent runs strip). Run detail = an ordered **steps list** with each node's

@@ -16,7 +16,7 @@ me trust it enough to join the waitlist or download.
 
 ## Product Purpose
 
-The marketing surface for **Sirus** — "your AI cofounder." It exists to sell the
+The marketing surface for **Sirius** — "your AI cofounder." It exists to sell the
 outcome: an agent that learns your business itself (meetings, CRM, inbox) and
 runs work autonomously across your tools while you sleep. Success is a visitor
 *feeling* the value in three seconds and converting (waitlist / download), having
@@ -59,7 +59,7 @@ you. Aspirational, never breathless.
 - **Depict only what's real or realistically shippable.** Every app surface shown
   must trace to `../sirius/` (or be a believable extension of that model). No
   invented product surfaces; check ground truth before depicting.
-- **Frame the product as learning YOU**, not as another automation tool — Sirus
+- **Frame the product as learning YOU**, not as another automation tool — Sirius
   builds a picture of your world (people, orgs, clients) and acts from it.
 - **Ambition through craft, not volume.** One living, deliberate gesture (the
   orb, a single reveal) carries more conviction than a louder page. Restraint is

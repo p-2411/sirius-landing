@@ -6,7 +6,7 @@ import { useReducedMotion } from "motion/react";
 import { Orb } from "@/components/sirius/orb";
 import { BrandLogo, BRAND_COLORS } from "@/components/sirius/brand-logos";
 
-// The founder stack Sirus operates inside. Names must match keys in
+// The founder stack Sirius operates inside. Names must match keys in
 // brand-logos.tsx. Mixed native/aspirational — the "+ anything with an API"
 // hedge in the hero/footer covers it.
 const APPS = ["Gmail", "Notion", "Slack", "Superhuman", "Granola", "HubSpot", "Stripe", "Zapier"];
