@@ -354,3 +354,15 @@
 }
 
 @keyframes sd-wys-spin { to { transform: rotate(360deg); } }
+
+/* §5 — team constellation */
+.sd .team-svg { width: 100%; max-width: 420px; height: auto; margin-inline: auto; display: block; }
+.sd .team-initials {
+  fill: var(--color-ink-1, #f6efdf);
+  font-family: var(--font-body), system-ui, sans-serif; font-size: 13px; font-weight: 600;
+}
+.sd .team-center-sub {
+  fill: var(--color-accent, #d9b978);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+}
