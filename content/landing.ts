@@ -1,46 +1,60 @@
-// Landing copy — see docs/superpowers/specs/2026-06-16-sirus-cofounder-rebrand-design.md
+// Landing copy — see docs/superpowers/specs/2026-06-20-business-os-redesign-design.md
 export const landingContent = {
   meta: {
-    wordmark: "Sirus",
-    tagline: "Your AI cofounder. It learns the business, then runs it with you.",
-  },
-  integrations: {
-    label: "Works inside the tools you run the business in",
-    tools: ["Gmail", "Calendar", "Google Drive", "Notion", "Slack", "Superhuman", "Granola", "HubSpot", "Stripe", "Zapier"],
-    more: "+ anything with an API",
+    wordmark: "Sirius",
+    tagline: "The operating system for your business.",
   },
   nav: [
-    { id: "how-it-learns", label: "How it learns you" },
-    { id: "while-you-sleep", label: "What it does" },
-    { id: "pricing", label: "Pricing" },
+    { id: "knows", label: "What it knows" },
+    { id: "does", label: "What it does" },
+    { id: "loop", label: "The loop" },
+    { id: "team", label: "For your team" },
     { href: "/blog", label: "Blog" },
   ],
-  downloadCta: { label: "Download for Mac", href: "#cta" },
+  requestCta: { label: "Request access", href: "#cta" },
+  integrations: {
+    label: "Runs inside the tools you already run on",
+    tools: ["Slack", "Gmail", "Calendar", "Google Drive", "Notion", "HubSpot", "Salesforce", "Stripe", "Zoom", "Granola"],
+    more: "+ anything with an API",
+  },
   hero: {
-    eyebrow: "Your AI cofounder",
-    title: "Stop explaining yourself.",
-    titleAccent: "Your cofounder already knows.",
+    eyebrow: "The operating system for your business",
+    title: "It knows how your business runs.",
+    titleAccent: "So it runs it.",
     description:
-      "Sirus sits in on your meetings, reads your inbox and CRM, and builds the full picture — you, your business, every client — then runs the work across the tools you already use.",
-    proof: "Free to start — and it runs on your Mac.",
+      "Sirius learns your business from the inside — every meeting, every message, every client — and holds it as one picture nobody's ever had the time to keep. It sees what's slipping, then does the work to fix it, across the tools you already use.",
+    proof: "Now rolling out to teams.",
     micHint: "say anything — watch it go to work",
     micPrivacy: "Your voice stays in your browser. We're not listening.",
     tapFallback: "See it work",
   },
-  howItLearns: {
-    eyebrow: "how it learns you",
-    title: "It learns the business on its own.",
-    lead: "Any assistant is only as good as what you feed it — and keeping it current is the part nobody has time for. So instead of feeding Sirus, you let it in: to your meetings, your inbox, your CRM. From there it keeps up with your world on its own — no data entry, no catching it up.",
+  informationLayer: {
+    eyebrow: "the information layer",
+    title: "One picture of the whole business.",
+    lead: "Everything your company knows is scattered — across inboxes, calls, threads, and a CRM nobody keeps current. Sirius pulls it together on its own. Every meeting it sits in, every Slack message, every email and client interaction feeds one living picture of how the business actually works — who's involved, what was promised, where it's stuck.",
     pillars: [
-      { title: "Sits in on your meetings", body: "It joins the call and walks out knowing what was decided, who owns what, and what happens next — no notes to write." },
-      { title: "Keeps up with your clients", body: "It follows every deal, email, and conversation, so you're never the only one holding it all in your head." },
-      { title: "It just knows", body: "Ask it about a deal, a person, or a promise you made three weeks ago — it already has the answer." },
+      { title: "Sits in on the meetings", body: "It joins the call and walks out knowing what was decided, who owns what, and what happens next." },
+      { title: "Reads every channel", body: "Inbox, Slack, the CRM — it keeps up with all of it so nobody has to be the one holding it in their head." },
+      { title: "Finds what's slipping", body: "It connects the threads and surfaces the gaps: the promise nobody kept, the deal gone quiet, the work falling between systems." },
+    ],
+  },
+  operationLayer: {
+    eyebrow: "the operation layer",
+    title: "It closes the gaps it finds.",
+    lead: "Knowing isn't the point — doing is. From that picture, Sirius acts on what's falling through: it drafts the follow-up nobody sent, chases the deal that went quiet, builds the automation you kept meaning to set up. Real work, shipped across your apps — not another dashboard telling you what's wrong.",
+    jobs: [
+      { group: "Needs you",   name: "Prospect outreach",     desc: "research & write to fresh prospects every night",  trigger: "🕐 nightly",   activity: "awaiting you", status: "awaiting" },
+      { group: "Active now",  name: "Inbound triage",        desc: "qualify every new inbound lead and book the demo", trigger: "✉️ on email", activity: "3 running",    status: "running" },
+      { group: "Active now",  name: "Deal follow-ups",       desc: "chase any open deal that's gone quiet 5+ days",     trigger: "🕐 daily",     activity: "",             status: "running" },
+      { group: "Standing by", name: "Renewal guard",         desc: "flag any account approaching its renewal date",     trigger: "🕐 daily",     activity: "2h ago",       status: "done" },
+      { group: "Standing by", name: "Investor update",       desc: "draft the weekly update from live metrics",         trigger: "🕐 Mon 8:00", activity: "3d ago",       status: "done" },
+      { group: "Standing by", name: "Watch: lead investor",  desc: "alert & draft the moment a key contact emails",     trigger: "✉️ on email", activity: "5h ago",       status: "done" },
     ],
   },
   relationships: {
-    eyebrow: "never drops a client",
+    eyebrow: "one gap, closed",
     title: "It keeps every relationship warm.",
-    body: "Sirus knows when you last spoke to each client, what you promised, and who's gone quiet. It drafts the follow-up, sends it at the right moment, and surfaces the prospects worth chasing — or just tells you who to call today.",
+    body: "Sirius knows when you last spoke to each client, what you promised, and who's gone quiet. It drafts the follow-up, sends it at the right moment, and surfaces the prospects worth chasing — or just tells you who to call today.",
     card: {
       lane: "Needs you",
       eyebrow: "Follow-up ready",
@@ -53,78 +67,47 @@ export const landingContent = {
       actions: ["Send", "Edit", "Dismiss"],
     },
   },
+  theLoop: {
+    eyebrow: "the loop",
+    title: "Every action makes it smarter.",
+    lead: "This is what makes it an operating system and not a tool: the two layers feed each other. Everything Sirius does — every email sent, every deal moved, every automation that runs — flows back into what it knows. The picture sharpens, the gaps get clearer, and it ships more on its own. The longer it runs, the more it runs for you.",
+  },
+  perEmployee: {
+    eyebrow: "for everyone, not just the org",
+    title: "Everyone gets their own Sirius.",
+    lead: "Each person on your team gets a Sirius that knows them. It takes notes in their meetings, handles their inbox, and builds the small automations they never found time for. And every bit of that work quietly feeds the same shared picture — so the whole company gets smarter every time one person gets help.",
+  },
   stack: {
-    eyebrow: "one cofounder, every tool",
-    title: "It works inside your whole stack.",
-    body: "Gmail, Calendar, Drive, Notion, your CRM — Sirus operates inside the tools you already use, holding one shared context across all of them. Nothing falls between systems, because there's only one mind behind them.",
-    replaces: ["personal CRM", "executive assistant", "research analyst", "outreach", "ops"],
-    becomes: "Sirus",
-  },
-  whileYouSleep: {
-    eyebrow: "while you sleep",
-    title: "It's already handling these.",
-    lead: "Hand it a job and it owns it — running on its own while you're asleep, commuting, or in another meeting. A few of the jobs it's keeping for founders right now:",
-    jobs: [
-      { group: "Needs you",   name: "Prospect outreach",     desc: "research & write to fresh prospects every night",  trigger: "🕐 nightly",   activity: "awaiting you", status: "awaiting" },
-      { group: "Active now",  name: "Inbound triage",        desc: "qualify every new inbound lead and book the demo", trigger: "✉️ on email", activity: "3 running",    status: "running" },
-      { group: "Active now",  name: "Deal follow-ups",       desc: "chase any open deal that's gone quiet 5+ days",     trigger: "🕐 daily",     activity: "",             status: "running" },
-      { group: "Standing by", name: "Renewal guard",         desc: "flag any account approaching its renewal date",     trigger: "🕐 daily",     activity: "2h ago",       status: "done" },
-      { group: "Standing by", name: "Investor update",       desc: "draft the weekly update from live metrics",         trigger: "🕐 Mon 8:00", activity: "3d ago",       status: "done" },
-      { group: "Standing by", name: "Watch: lead investor",  desc: "alert & draft the moment a key contact emails",     trigger: "✉️ on email", activity: "5h ago",       status: "done" },
-    ],
-    cards: [
-      { id: "outreach", time: "02:00", when: "while you slept",   title: "The outreach you didn't send", body: "Fifty prospects, each researched and written to by name. You wake up to messages already going out — and a short queue of the few that need you." },
-      { id: "morning",  time: "08:00", when: "before you're in",   title: "Caught up before coffee",      body: "It reads last night's replies, your calendar, and what each client is waiting on, then tells you the three things that actually matter today." },
-      { id: "brief",    time: "10:45", when: "before your 11:00",  title: "Briefed for the call",         body: "From the last meeting it sat in and every thread since, a one-page brief is waiting in the invite — who they are, what's open, what to push." },
-      { id: "client",   time: "14:30", when: "client email lands", title: "Handled before you see it",    body: "It logs what changed, drafts the reply, sends the easy one, and flags the single decision that's actually yours." },
-    ],
-    close: "Set the boundaries once. After that it just happens — every day, while you're somewhere else.",
-  },
-  rightBrain: {
-    eyebrow: "the right mind for the task",
-    title: "It always uses the right brain for the job.",
-    body: "Sirus isn't one model. It picks whichever frontier model fits the task, and moves to a sharper one the day it ships. You're never locked in, or stuck on last year's model.",
-  },
-  pricing: {
-    title: "Start free.",
-    tiers: [
-      {
-        name: "Free", was: "", price: "$0", priceSuffix: "",
-        tagline: "Try your cofounder, free.",
-        features: ["Voice, chat, and jobs", "Runs locally on your Mac", "Limited monthly usage"],
-        cta: "Download for Mac", featured: false,
-      },
-      {
-        name: "Pro", was: "$30", price: "$20", priceSuffix: "/mo",
-        tagline: "The same Sirus, all day.",
-        features: ["Everything in Free", "Much higher usage limits"],
-        cta: "Download for Mac", featured: true,
-      },
-      {
-        name: "Max", was: "", price: "$50", priceSuffix: "/mo",
-        tagline: "For founders who run on it.",
-        features: ["Everything in Pro", "Top usage limits", "Early access to new features"],
-        cta: "Download for Mac", featured: false,
-      },
-    ],
-  },
-  local: {
-    eyebrow: "yours alone",
-    title: "Your business stays on your Mac.",
-    body: "Everything it knows about your clients, your meetings, your conversations, and your files lives on your machine, not our servers. The cloud only listens for the triggers that kick off the work.",
-    items: ["Clients", "Meetings", "Conversations", "Files"],
+    eyebrow: "one mind, every tool",
+    title: "It lives where the work already happens.",
+    body: "Slack, Gmail, Calendar, Drive, Notion, your CRM — Sirius operates inside the tools your company already uses, holding one shared context across all of them. Nothing falls between systems, because there's only one mind behind them.",
   },
   maker: {
     quote:
-      "We didn't want another tool to manage. We wanted a cofounder — someone who already knew the business, kept every client straight, and did the work without being asked twice. Nothing we tried remembered us, so we built the one that does.",
-    signature: "— the people building Sirus",
+      "We were tired of tools that made us feed them. Every CRM, every tracker, every app needed us to keep it current — and none of them did anything with what they knew. We wanted the opposite: something that learns the business on its own, and then actually runs it. Nothing we tried did, so we built it.",
+    signature: "— the people building Sirius",
   },
   cta: {
-    title: "Meet your cofounder.",
-    button: "Download for Mac",
-    sub: "macOS · Apple silicon",
+    title: "Put your business on Sirius.",
+    button: "Request access",
+    sub: "Early access · rolling out to teams now",
   },
   footer: {
-    blurb: "Your AI cofounder. It learns the business and runs the work, across the tools you already use. On your Mac.",
+    blurb: "The operating system for your business. It learns how your company runs, then runs it with you — across the tools you already use.",
   },
+
+  // ── DEPRECATED — referenced only by sections removed in Task 11. Do not extend. ──
+  downloadCta: { label: "Request access", href: "#cta" },
+  howItLearns: {
+    eyebrow: "how it learns you", title: "It learns the business on its own.", lead: "",
+    pillars: [] as { title: string; body: string }[],
+  },
+  whileYouSleep: {
+    eyebrow: "", title: "", lead: "",
+    cards: [] as { id: string; time: string; when: string; title: string; body: string }[],
+    close: "",
+  },
+  rightBrain: { eyebrow: "", title: "", body: "" },
+  pricing: { title: "", tiers: [] as { name: string; was: string; price: string; priceSuffix: string; tagline: string; features: string[]; cta: string; featured: boolean }[] },
+  local: { eyebrow: "", title: "", body: "", items: [] as string[] },
 } as const;

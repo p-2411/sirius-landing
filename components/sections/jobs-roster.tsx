@@ -17,7 +17,7 @@ function StatusDot({ status }: { status: string }) {
 }
 
 export function JobsRoster() {
-  const { jobs } = landingContent.whileYouSleep;
+  const { jobs } = landingContent.operationLayer;
   return (
     <div className="wys-roster">
       <div className="wys-card">
