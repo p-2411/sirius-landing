@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { HeaderNav } from "@/components/layout/header-nav";
-import { HeaderDownload } from "@/components/layout/header-download";
+import { ScrollLink } from "@/components/layout/scroll-link";
 import { Orb } from "@/components/sirius/orb";
 import { landingContent } from "@/content/landing";
 
@@ -9,7 +9,7 @@ import { landingContent } from "@/content/landing";
 const HEADER_ORB = true;
 
 export function SiteHeader() {
-  const { meta, nav, downloadCta } = landingContent;
+  const { meta, nav, requestCta } = landingContent;
 
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--color-border)] bg-[rgba(18,15,11,0.9)] backdrop-blur-xl">
@@ -41,7 +41,13 @@ export function SiteHeader() {
         <HeaderNav items={nav} />
 
         <div className="flex items-center gap-3 sm:gap-4">
-          <HeaderDownload label={downloadCta.label} />
+          <ScrollLink
+            id="cta"
+            className="group inline-flex cursor-pointer items-center gap-1.5 text-[13px] font-medium text-[var(--color-accent)] outline-none transition-colors hover:text-[var(--color-accent-strong)] focus-visible:ring-2 focus-visible:ring-[rgba(217,185,120,0.55)] focus-visible:ring-offset-4 focus-visible:ring-offset-[var(--color-bg)]"
+          >
+            {requestCta.label}
+            <span aria-hidden="true" className="inline-flex motion-safe:transition-transform motion-safe:duration-200 group-hover:translate-x-0.5">→</span>
+          </ScrollLink>
         </div>
       </div>
     </header>

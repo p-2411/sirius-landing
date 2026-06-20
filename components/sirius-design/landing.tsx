@@ -29,16 +29,20 @@ function withAccent(title: string, accent: string): ReactNode {
 
 /* ── Chrome ──────────────────────────────────────────────────────────── */
 const NAV_LINKS = [
-  { id: "how-it-learns", label: "How it learns you" },
-  { id: "while-you-sleep", label: "What it does" },
-  { id: "pricing", label: "Pricing" },
+  { id: "knows", label: "What it knows" },
+  { id: "does", label: "What it does" },
+  { id: "loop", label: "The loop" },
+  { id: "team", label: "For your team" },
 ];
 
 function CTAs() {
+  const { requestCta } = landingContent;
   return (
     <div className="cta-row">
-      <DownloadButton />
-      <ScrollLink id="how-it-learns" className="btn btn-ghost">
+      <ScrollLink id="cta" className="btn btn-primary">
+        {requestCta.label}
+      </ScrollLink>
+      <ScrollLink id="knows" className="btn btn-ghost">
         See it work
         <span className="arrow" aria-hidden="true"> →</span>
       </ScrollLink>
@@ -101,9 +105,7 @@ export function SiriusHero() {
             <CTAs />
           </div>
           <div className="proof reveal" style={d(0.54)}>
-            <span className="proof-line">Free to start</span>
-            <span className="proof-dot" aria-hidden="true" />
-            <span className="proof-line">Runs entirely on your Mac</span>
+            <span className="proof-line">{landingContent.hero.proof}</span>
           </div>
         </div>
         <div className="reveal" style={d(0.64)}>
@@ -334,7 +336,7 @@ export function SiriusFooter() {
     <footer className="footer">
       <div className="footer-inner">
         <div className="footer-brand">
-          <a href="#hero" className="wordmark" aria-label="Sirus home">
+          <a href="#hero" className="wordmark" aria-label="Sirius home">
             <span className="relative flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-full">
               <span
                 aria-hidden="true"
@@ -346,7 +348,7 @@ export function SiriusFooter() {
               />
               <Orb className="!h-7 !w-7 relative" glowless />
             </span>
-            <span className="font-display">Sirus</span>
+            <span className="font-display">Sirius</span>
           </a>
           <p className="footer-blurb">{footer.blurb}</p>
           <div className="footer-logos" aria-hidden="true">
@@ -369,7 +371,7 @@ export function SiriusFooter() {
         </nav>
       </div>
       <div className="footer-base">
-        <span>© 2026 Sirus</span>
+        <span>© 2026 Sirius</span>
         <span>Made for people with too much to do.</span>
       </div>
     </footer>
