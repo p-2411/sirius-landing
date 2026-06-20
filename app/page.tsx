@@ -5,7 +5,7 @@ import { SectionDivider } from "@/components/ui/section-divider";
 import {
   SiriusHero,
   InformationLayerSection,
-  WhileYouSleepSection,
+  OperationLayerSection,
   RoutingSection,
   PricingSection,
   LocalSection,
@@ -26,7 +26,7 @@ export default function HomePage() {
       <InformationLayerSection />
       <RelationshipsSection />
       <OneAppSection />
-      <WhileYouSleepSection />
+      <OperationLayerSection />
       <RoutingSection />
       <PricingSection />
       <SectionDivider />

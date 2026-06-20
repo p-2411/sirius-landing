@@ -18,7 +18,7 @@ export function RelationshipsSection() {
       <Container>
         <div className="grid items-center gap-12 lg:grid-cols-[1fr_1fr] lg:gap-16">
           <Reveal>
-            <SectionLabel index="02">{eyebrow}</SectionLabel>
+            <SectionLabel index="03">{eyebrow}</SectionLabel>
             <h2 className="font-display mt-7 max-w-[16ch] text-[clamp(2rem,4.4vw,3.2rem)] font-light leading-[0.98] tracking-[-0.025em] text-[var(--color-ink-1)]">
               {title}
             </h2>

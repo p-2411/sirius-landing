@@ -151,14 +151,14 @@ export function InformationLayerSection() {
   );
 }
 
-/* ── §4 · Works while you sleep ──────────────────────────────────────── */
-export function WhileYouSleepSection() {
-  const { eyebrow, title, lead, cards, close } = landingContent.whileYouSleep;
+/* ── §3 · Operation layer — "What it does" ───────────────────────────── */
+export function OperationLayerSection() {
+  const { eyebrow, title, lead } = landingContent.operationLayer;
   return (
-    <section id="while-you-sleep" className="section band-deep" data-screen-label="What it does">
+    <section id="does" className="section band-deep" data-screen-label="What it does">
       <div className="container">
         <div className="section-head">
-          <SectionLabel index="04" className="reveal" style={d(0)}>
+          <SectionLabel index="02" className="reveal" style={d(0)}>
             {eyebrow}
           </SectionLabel>
           <h2 className="section-title reveal" style={d(0.06)}>
@@ -168,32 +168,9 @@ export function WhileYouSleepSection() {
             {lead}
           </p>
         </div>
-
         <div className="reveal" style={d(0.16)}>
           <JobsRoster />
         </div>
-
-        <ol className="timeline" style={{ marginInline: "auto" }}>
-          {cards.map((c, i) => (
-            <li key={c.id} className="tl-item reveal" style={d(0.08 * i)}>
-              <div className="tl-marker" aria-hidden="true">
-                <span className="tl-dot" />
-              </div>
-              <div className="tl-time">
-                <span className="tl-clock font-display">{c.time}</span>
-                <span className="tl-when">{c.when}</span>
-              </div>
-              <div className="tl-card">
-                <h3 className="tl-title">{c.title}</h3>
-                <p className="tl-body">{c.body}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
-
-        <p className="section-lead reveal" style={{ ...d(0.2), marginTop: "clamp(28px,4vh,48px)" }}>
-          {close}
-        </p>
       </div>
     </section>
   );
