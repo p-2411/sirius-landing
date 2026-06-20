@@ -7,6 +7,7 @@ import {
   InformationLayerSection,
   OperationLayerSection,
   LoopSection,
+  ForYourTeamSection,
   RoutingSection,
   PricingSection,
   LocalSection,
@@ -29,6 +30,7 @@ export default function HomePage() {
       <OneAppSection />
       <OperationLayerSection />
       <LoopSection />
+      <ForYourTeamSection />
       <RoutingSection />
       <PricingSection />
       <SectionDivider />
