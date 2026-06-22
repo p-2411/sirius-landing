@@ -7,6 +7,7 @@ import { SITE_URL } from "@/lib/site";
 
 import "./globals.css";
 import "./sirius-design.css";
+import "./os.css";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
