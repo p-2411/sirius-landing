@@ -16,6 +16,12 @@
   @keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
   @keyframes reticleBreathe{0%,100%{transform:scale(1) rotate(0deg)}50%{transform:scale(1.1) rotate(8deg)}}
   @media (pointer:fine){.sirus{cursor:none}.sirus a{cursor:none}}
+  [hidden]{display:none!important}
+  #contactEmail::placeholder{color:rgba(255,255,255,.4)}
+  #contactEmail:focus{border-bottom-color:#fff}
+  #contactForm.is-busy{opacity:.55;pointer-events:none}
+  #contactSubmit{transition:transform .25s ease}
+  @media (hover:hover){#contactSubmit:hover{transform:translateX(3px)}}
   .sbtn{position:relative;transition:transform .25s ease}
   .sbtn::after{content:"";position:absolute;left:0;bottom:0;height:1.5px;width:100%;background:currentColor;transform:scaleX(0);transform-origin:left center;transition:transform .32s ease}
   @media (hover:hover){.sbtn:hover{transform:translateY(-2px)}.sbtn:hover::after{transform:scaleX(1)}}
@@ -50,7 +56,7 @@
       <a href="#top" data-cursor style="text-decoration:none;color:#fff;font-size:21px;font-weight:500;letter-spacing:-.01em">Sirus</a>
       <div class="nav-links" style="display:flex;align-items:center;gap:clamp(20px,3vw,44px)">
         <a href="#how" class="sbtn nav-how" data-cursor style="text-decoration:none;color:#fff;font-size:11px;font-weight:500;letter-spacing:.19em;text-transform:uppercase">How it works</a>
-        <a href="#cta" class="sbtn" data-cursor data-body style="text-decoration:none;color:#fff;font-size:11px;font-weight:500;letter-spacing:.19em;text-transform:uppercase;display:inline-flex;align-items:center;gap:7px">Get in touch <span style="font-size:13px">&rarr;</span></a>
+        <a href="#top" data-contact-jump class="sbtn" data-cursor data-body style="text-decoration:none;color:#fff;font-size:11px;font-weight:500;letter-spacing:.19em;text-transform:uppercase;display:inline-flex;align-items:center;gap:7px">Get in touch <span style="font-size:13px">&rarr;</span></a>
       </div>
     </div>
   </nav>
@@ -59,10 +65,22 @@
   <header id="top" style="max-width:1440px;margin:0 auto;padding:clamp(64px,11vh,128px) clamp(28px,5vw,64px) clamp(56px,9vh,112px);position:relative">
     <h1 data-blend style="font-weight:400;font-size:clamp(40px,6.4vw,73px);line-height:1.0;letter-spacing:-.018em;margin-top:0;max-width:16ch;animation:rise .7s .05s both">The operating system<br><span data-body style="font-style:italic;color:#777777">for your business.</span></h1>
 
-    <div style="display:flex;flex-wrap:wrap;gap:48px 80px;align-items:flex-end;margin-top:clamp(36px,6vh,64px)">
-      <p style="font-size:14px;line-height:1.85;letter-spacing:.019em;color:#fff;max-width:400px;animation:rise .7s .1s both">Sirus sees your business from every corner and learns every corner. Then, it creates custom agents and automations that work across your tools to cut the manual work.</p>
-      <div style="display:flex;flex-direction:column;gap:14px;animation:rise .7s .16s both">
-        <a href="#cta" class="sbtn" data-cursor style="text-decoration:none;color:#fff;font-size:11px;font-weight:500;letter-spacing:.19em;text-transform:uppercase;display:inline-flex;align-items:center;gap:9px;padding:9px 0">Get in touch <span style="font-size:13px">&rarr;</span></a>
+    <div class="hero-sub" style="display:flex;flex-wrap:wrap;gap:40px 64px;align-items:flex-end;justify-content:space-between;max-width:720px;margin-top:clamp(36px,6vh,64px)">
+      <p style="flex:1 1 320px;font-size:14px;line-height:1.85;letter-spacing:.019em;color:#fff;max-width:440px;animation:rise .7s .1s both">Sirus sees your business from every corner. Every message, meeting, client and interaction builds its knowledge of your company. Then, it creates custom agents and automations that work across your tools to cut the manual work.</p>
+      <div style="flex:0 0 auto;width:300px;max-width:100%;animation:rise .7s .16s both">
+        <form id="contactForm" novalidate>
+          <button type="button" id="contactToggle" class="sbtn" data-cursor
+            style="background:none;border:none;cursor:none;color:#fff;font-size:11px;font-weight:500;letter-spacing:.19em;text-transform:uppercase;display:inline-flex;align-items:center;gap:9px;padding:4px 0">Get in touch <span style="font-size:13px">&rarr;</span></button>
+          <div id="contactFields" hidden style="display:flex;align-items:center;gap:10px;border-bottom:1.5px solid rgba(255,255,255,.28)">
+            <input id="contactEmail" type="email" required autocomplete="email" placeholder="you@company.com" data-body aria-label="Your email"
+              style="flex:1 1 auto;min-width:0;background:transparent;border:none;color:#fff;font-family:inherit;font-size:16px;letter-spacing:.01em;padding:10px 2px;outline:none;cursor:none">
+            <button type="submit" id="contactSubmit" aria-label="Send" data-cursor
+              style="flex:0 0 auto;background:none;border:none;cursor:none;color:#fff;font-size:20px;line-height:1;display:inline-flex;align-items:center;padding:6px 2px">&rarr;</button>
+          </div>
+          <input type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none">
+        </form>
+        <p id="contactError" hidden style="margin-top:6px;font-size:13px;letter-spacing:.01em;color:#ff8086"></p>
+        <p id="contactSuccess" hidden style="margin:0;font-size:15px;line-height:1.5;letter-spacing:.01em;color:#fff"></p>
       </div>
     </div>
 
@@ -76,7 +94,7 @@
     <div class="grid-split" style="display:grid;grid-template-columns:minmax(0,300px) 1fr;gap:40px 80px;align-items:start;border-top:1px solid #333;padding-top:clamp(40px,6vh,64px)">
       <div class="side" style="position:sticky;top:120px">
         <div data-blend style="font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#fff">How it works</div>
-        <p style="font-size:14px;line-height:1.85;letter-spacing:.019em;color:#999;margin-top:20px;max-width:280px">Two layers, one loop. The information layer knows your business, the operating layer acts across it, and every interaction feeds back into the information layer.</p>
+        <p style="font-size:14px;line-height:1.85;letter-spacing:.019em;color:#999;margin-top:20px;max-width:280px">The information layer knows your business, and informs the operating layer on what to act across. Every interaction feeds back into the loop.</p>
       </div>
 
       <div>
@@ -87,7 +105,7 @@
           </div>
           <div>
             <h3 class="how-title" data-blend style="font-weight:400;font-size:clamp(28px,3.4vw,52px);line-height:1.08;letter-spacing:-.015em;color:#555555;transition:color .45s">Learns your business</h3>
-            <p style="font-size:14px;line-height:1.85;letter-spacing:.019em;color:#999;margin-top:14px;max-width:520px">Every conversation and email feeds back into the information layer, which you can query at anytime.</p>
+            <p style="font-size:14px;line-height:1.85;letter-spacing:.019em;color:#999;margin-top:14px;max-width:520px">Every conversation, meeting, client and action feeds back into the information layer, to build an understanding of your company which you can query at anytime.</p>
           </div>
           <div style="font-size:10px;font-weight:500;letter-spacing:.19em;text-transform:uppercase;color:#777;white-space:nowrap;padding-top:6px">Memory</div>
         </div>
@@ -111,7 +129,7 @@
           </div>
           <div>
             <h3 class="how-title" data-blend style="font-weight:400;font-size:clamp(28px,3.4vw,52px);line-height:1.08;letter-spacing:-.015em;color:#555555;transition:color .45s">Takes it off your plate</h3>
-            <p style="font-size:14px;line-height:1.85;letter-spacing:.019em;color:#999;margin-top:14px;max-width:520px">It builds the automations and agents on top of your existing tools, and each action feeds back into the information layer.</p>
+            <p style="font-size:14px;line-height:1.85;letter-spacing:.019em;color:#999;margin-top:14px;max-width:520px">With your approval, it autonomously builds the automations and agents on top of your existing tools, and each action feeds back into the information layer.</p>
           </div>
           <div style="font-size:10px;font-weight:500;letter-spacing:.19em;text-transform:uppercase;color:#777;white-space:nowrap;padding-top:6px">Action</div>
         </div>
@@ -157,8 +175,9 @@
     <div data-bg-light style="background:#f2f2f2;color:#000;border-radius:33.76px;padding:clamp(48px,9vh,112px) clamp(32px,6vw,96px)">
       <div data-body style="font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#666">Get started</div>
       <h2 data-blend style="font-weight:400;font-size:clamp(34px,5.2vw,73px);line-height:1.0;letter-spacing:-.018em;margin-top:28px;max-width:18ch">Run your business<br><span data-body style="font-style:italic;color:#999">on Sirus.</span></h2>
+
       <div style="display:flex;flex-wrap:wrap;gap:20px 48px;margin-top:clamp(36px,6vh,56px)">
-        <a href="#" class="sbtn" data-cursor data-body style="text-decoration:none;color:#000;font-size:11px;font-weight:500;letter-spacing:.19em;text-transform:uppercase;display:inline-flex;align-items:center;gap:9px;padding-bottom:8px">Get in touch <span style="font-size:13px">&rarr;</span></a>
+        <a href="#top" data-contact-jump class="sbtn" data-cursor data-body style="text-decoration:none;color:#000;font-size:11px;font-weight:500;letter-spacing:.19em;text-transform:uppercase;display:inline-flex;align-items:center;gap:9px;padding-bottom:8px">Get in touch <span style="font-size:13px">&rarr;</span></a>
       </div>
     </div>
   </section>
@@ -266,6 +285,78 @@
       window.addEventListener('pointerup', endDrag);
     });
   }
+
+  // ===== "Get in touch" → inline email capture (Airtable via /api/contact) =====
+  var form = document.getElementById('contactForm');
+  var openContact = function () {};
+  if (form) {
+    var toggle = document.getElementById('contactToggle');
+    var fields = document.getElementById('contactFields');
+    var emailInput = document.getElementById('contactEmail');
+    var errorEl = document.getElementById('contactError');
+    var successEl = document.getElementById('contactSuccess');
+    var honeypot = form.querySelector('[name="company"]');
+    var mountedAt = Date.now();
+    var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    // Reveal the email field; "Get in touch" button gives way to the send arrow.
+    openContact = function () {
+      if (toggle) toggle.hidden = true;
+      if (fields) fields.hidden = false;
+      if (emailInput) emailInput.focus({ preventScroll: true });
+    };
+    if (toggle) toggle.addEventListener('click', openContact);
+
+    var showError = function (msg) {
+      if (!errorEl) return;
+      errorEl.textContent = msg;
+      errorEl.hidden = false;
+    };
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (form.classList.contains('is-busy')) return;
+      if (errorEl) errorEl.hidden = true;
+
+      var email = (emailInput && emailInput.value || '').trim();
+      if (!EMAIL_RE.test(email)) {
+        showError('Please enter a valid email address.');
+        if (emailInput) emailInput.focus();
+        return;
+      }
+
+      form.classList.add('is-busy');
+      fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: email,
+          company: honeypot ? honeypot.value : '',
+          elapsedMs: Date.now() - mountedAt
+        })
+      }).then(function (res) {
+        if (!res.ok) throw new Error('bad status ' + res.status);
+        return res.json();
+      }).then(function (data) {
+        if (!data || !data.ok) throw new Error('not ok');
+        form.hidden = true;
+        if (successEl) {
+          successEl.textContent = "We'll be in touch at " + email + ' shortly!';
+          successEl.hidden = false;
+        }
+      }).catch(function () {
+        form.classList.remove('is-busy');
+        showError('Something went wrong. Please try again.');
+      });
+    });
+  }
+
+  // Nav / bottom "Get in touch" links jump to the hero form, reveal + focus it.
+  Array.prototype.slice.call(document.querySelectorAll('[data-contact-jump]')).forEach(function (a) {
+    a.addEventListener('click', function () {
+      setTimeout(openContact, 480);
+    });
+  });
 
   // custom cursor — viewfinder reticle
   var fine = window.matchMedia && window.matchMedia('(pointer: fine)').matches;
