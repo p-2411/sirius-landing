@@ -10,7 +10,7 @@
 <style>
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{background:#000000;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  body{background:#000000;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
   ::selection{background:#fff;color:#000}
   .sirus{font-feature-settings:'ss01';font-optical-sizing:auto}
   @keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
@@ -19,13 +19,26 @@
   .sbtn{position:relative;transition:transform .25s ease}
   .sbtn::after{content:"";position:absolute;left:0;bottom:0;height:1.5px;width:100%;background:currentColor;transform:scaleX(0);transform-origin:left center;transition:transform .32s ease}
   @media (hover:hover){.sbtn:hover{transform:translateY(-2px)}.sbtn:hover::after{transform:scaleX(1)}}
+  /* ---- responsive / mobile ---- */
+  @media (max-width:760px){
+    .grid-split{grid-template-columns:1fr !important;gap:28px 0 !important}
+    .side{position:static !important;top:auto !important}
+    .how-row{grid-template-columns:1fr !important;gap:8px !important;padding:30px 0 !important}
+    .how-row .how-meta{flex-direction:row;gap:10px}
+  }
+  /* hide the desktop scroll-rail on touch devices */
+  @media (max-width:760px),(pointer:coarse){.railwrap{display:none !important}}
+  @media (max-width:520px){
+    .nav-how{display:none !important}
+    .nav-inner{gap:16px !important}
+  }
 </style>
 </head>
 <body>
 <div class="sirus" style="background:#000000;color:#ffffff;font-family:'Inter',system-ui,sans-serif;min-height:100vh;font-size:14px;line-height:1.85;position:relative">
 
   <!-- mini scrollbar (right edge) -->
-  <div style="position:fixed;right:20px;top:50%;transform:translateY(-50%);z-index:40;display:flex;flex-direction:column;align-items:center;gap:18px">
+  <div class="railwrap" style="position:fixed;right:20px;top:50%;transform:translateY(-50%);z-index:40;display:flex;flex-direction:column;align-items:center;gap:18px">
     <div id="track" style="position:relative;width:3px;height:160px;background:#262626;border-radius:3px;cursor:none">
       <div id="thumb" style="position:absolute;left:0;top:0;width:3px;height:40px;background:#ffffff;border-radius:3px;transform:translateY(0px);will-change:transform,height"></div>
     </div>
@@ -33,10 +46,10 @@
 
   <!-- ===== NAV ===== -->
   <nav style="position:sticky;top:0;z-index:50;background:rgba(0,0,0,.84);backdrop-filter:blur(8px);border-bottom:1px solid #1f1f1f">
-    <div style="max-width:1440px;margin:0 auto;padding:22px clamp(28px,5vw,64px);display:flex;align-items:center;justify-content:space-between;gap:32px">
+    <div class="nav-inner" style="max-width:1440px;margin:0 auto;padding:22px clamp(28px,5vw,64px);display:flex;align-items:center;justify-content:space-between;gap:32px">
       <a href="#top" data-cursor style="text-decoration:none;color:#fff;font-size:21px;font-weight:500;letter-spacing:-.01em">Sirus</a>
-      <div style="display:flex;align-items:center;gap:clamp(20px,3vw,44px)">
-        <a href="#how" class="sbtn" data-cursor style="text-decoration:none;color:#fff;font-size:11px;font-weight:500;letter-spacing:.19em;text-transform:uppercase">How it works</a>
+      <div class="nav-links" style="display:flex;align-items:center;gap:clamp(20px,3vw,44px)">
+        <a href="#how" class="sbtn nav-how" data-cursor style="text-decoration:none;color:#fff;font-size:11px;font-weight:500;letter-spacing:.19em;text-transform:uppercase">How it works</a>
         <a href="#cta" class="sbtn" data-cursor data-body style="text-decoration:none;color:#fff;font-size:11px;font-weight:500;letter-spacing:.19em;text-transform:uppercase;display:inline-flex;align-items:center;gap:7px">Get in touch <span style="font-size:13px">&rarr;</span></a>
       </div>
     </div>
@@ -60,8 +73,8 @@
 
   <!-- ===== HOW IT WORKS — scroll-driven index ===== -->
   <section id="how" style="max-width:1440px;margin:0 auto;padding:0 clamp(28px,5vw,64px) clamp(80px,14vh,160px)">
-    <div style="display:grid;grid-template-columns:minmax(0,300px) 1fr;gap:40px 80px;align-items:start;border-top:1px solid #333;padding-top:clamp(40px,6vh,64px)">
-      <div style="position:sticky;top:120px">
+    <div class="grid-split" style="display:grid;grid-template-columns:minmax(0,300px) 1fr;gap:40px 80px;align-items:start;border-top:1px solid #333;padding-top:clamp(40px,6vh,64px)">
+      <div class="side" style="position:sticky;top:120px">
         <div data-blend style="font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#fff">How it works</div>
         <p style="font-size:14px;line-height:1.85;letter-spacing:.019em;color:#999;margin-top:20px;max-width:280px">Two layers, one loop. One learns the business, the other acts on it, and every pass makes the next one smarter.</p>
       </div>
@@ -108,8 +121,8 @@
 
   <!-- ===== PERSONAL SIRUS ===== -->
   <section id="personal" style="max-width:1440px;margin:0 auto;padding:0 clamp(28px,5vw,64px) clamp(80px,14vh,160px)">
-    <div style="display:grid;grid-template-columns:minmax(0,300px) 1fr;gap:40px 80px;align-items:start;border-top:1px solid #333;padding-top:clamp(40px,6vh,64px)">
-      <div style="position:sticky;top:120px">
+    <div class="grid-split" style="display:grid;grid-template-columns:minmax(0,300px) 1fr;gap:40px 80px;align-items:start;border-top:1px solid #333;padding-top:clamp(40px,6vh,64px)">
+      <div class="side" style="position:sticky;top:120px">
         <div data-blend style="font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#fff">For everyone</div>
         <p style="font-size:14px;line-height:1.85;letter-spacing:.019em;color:#999;margin-top:20px;max-width:280px">Sirus isn't one tool your team shares. Everyone gets their own agent, shaped around how they actually work.</p>
       </div>
