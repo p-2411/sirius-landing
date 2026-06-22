@@ -4,6 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sirus — The business operating system</title>
+<noscript><style>
+  /* No JS: reveal the email field directly and hide the JS-only toggle button. */
+  #contactToggle{display:none!important}
+  #contactFields{display:flex!important}
+</style></noscript>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;1,14..32,400;1,14..32,500&display=swap" rel="stylesheet">
@@ -15,7 +20,7 @@
   .sirus{font-feature-settings:'ss01';font-optical-sizing:auto}
   @keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
   @keyframes reticleBreathe{0%,100%{transform:scale(1) rotate(0deg)}50%{transform:scale(1.1) rotate(8deg)}}
-  @media (pointer:fine){.sirus{cursor:none}.sirus a{cursor:none}}
+  @media (pointer:fine){.cursor-hidden,.cursor-hidden a,.cursor-hidden input,.cursor-hidden button,.cursor-hidden #track{cursor:none}}
   [hidden]{display:none!important}
   #contactEmail::placeholder{color:rgba(255,255,255,.4)}
   #contactEmail:focus{border-bottom-color:#fff}
@@ -25,6 +30,13 @@
   .sbtn{position:relative;transition:transform .25s ease}
   .sbtn::after{content:"";position:absolute;left:0;bottom:0;height:1.5px;width:100%;background:currentColor;transform:scaleX(0);transform-origin:left center;transition:transform .32s ease}
   @media (hover:hover){.sbtn:hover{transform:translateY(-2px)}.sbtn:hover::after{transform:scaleX(1)}}
+  /* focus-visible: keyboard users get a clear ring; currentColor adapts to light/dark sections */
+  a:focus-visible,button:focus-visible,#contactEmail:focus-visible,#track:focus-visible{outline:2px solid currentColor;outline-offset:3px;border-radius:2px}
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
+    [style*="animation:rise"]{opacity:1 !important;transform:none !important}
+  }
   /* ---- responsive / mobile ---- */
   @media (max-width:760px){
     .grid-split{grid-template-columns:1fr !important;gap:28px 0 !important}
@@ -45,7 +57,7 @@
 
   <!-- mini scrollbar (right edge) -->
   <div class="railwrap" style="position:fixed;right:20px;top:50%;transform:translateY(-50%);z-index:40;display:flex;flex-direction:column;align-items:center;gap:18px">
-    <div id="track" style="position:relative;width:3px;height:160px;background:#262626;border-radius:3px;cursor:none">
+    <div id="track" style="position:relative;width:3px;height:160px;background:#262626;border-radius:3px">
       <div id="thumb" style="position:absolute;left:0;top:0;width:3px;height:40px;background:#ffffff;border-radius:3px;transform:translateY(0px);will-change:transform,height"></div>
     </div>
   </div>
@@ -66,16 +78,16 @@
     <h1 data-blend style="font-weight:400;font-size:clamp(40px,6.4vw,73px);line-height:1.0;letter-spacing:-.018em;margin-top:0;max-width:16ch;animation:rise .7s .05s both">The operating system<br><span data-body style="font-style:italic;color:#777777">for your business.</span></h1>
 
     <div class="hero-sub" style="display:flex;flex-wrap:wrap;gap:40px 64px;align-items:flex-end;justify-content:space-between;max-width:720px;margin-top:clamp(36px,6vh,64px)">
-      <p style="flex:1 1 320px;font-size:14px;line-height:1.85;letter-spacing:.019em;color:#fff;max-width:440px;animation:rise .7s .1s both">Sirus sees your business from every corner. Every message, meeting, client and interaction builds its knowledge of your company. Then, it creates custom agents and automations that work across your tools to cut the manual work.</p>
+      <p style="flex:1 1 320px;font-size:14px;line-height:1.85;letter-spacing:.019em;color:#fff;max-width:440px;animation:rise .7s .1s both">Sirus sees your business from every corner. Every message, meeting, client and interaction builds its knowledge of your company. Then, it creates custom agents and automations that work across your tools to cut out the manual work.</p>
       <div style="flex:0 0 auto;width:300px;max-width:100%;animation:rise .7s .16s both">
-        <form id="contactForm" novalidate>
+        <form id="contactForm" action="/api/contact" method="POST">
           <button type="button" id="contactToggle" class="sbtn" data-cursor
-            style="background:none;border:none;cursor:none;color:#fff;font-size:11px;font-weight:500;letter-spacing:.19em;text-transform:uppercase;display:inline-flex;align-items:center;gap:9px;padding:4px 0">Get in touch <span style="font-size:13px">&rarr;</span></button>
+            style="background:none;border:none;color:#fff;font-size:11px;font-weight:500;letter-spacing:.19em;text-transform:uppercase;display:inline-flex;align-items:center;gap:9px;padding:4px 0">Get in touch <span style="font-size:13px">&rarr;</span></button>
           <div id="contactFields" hidden style="display:flex;align-items:center;gap:10px;border-bottom:1.5px solid rgba(255,255,255,.28)">
-            <input id="contactEmail" type="email" required autocomplete="email" placeholder="you@company.com" data-body aria-label="Your email"
-              style="flex:1 1 auto;min-width:0;background:transparent;border:none;color:#fff;font-family:inherit;font-size:16px;letter-spacing:.01em;padding:10px 2px;outline:none;cursor:none">
+            <input id="contactEmail" name="email" type="email" required autocomplete="email" placeholder="you@company.com" data-body aria-label="Your email"
+              style="flex:1 1 auto;min-width:0;background:transparent;border:none;color:#fff;font-family:inherit;font-size:16px;letter-spacing:.01em;padding:10px 2px;outline:none">
             <button type="submit" id="contactSubmit" aria-label="Send" data-cursor
-              style="flex:0 0 auto;background:none;border:none;cursor:none;color:#fff;font-size:20px;line-height:1;display:inline-flex;align-items:center;padding:6px 2px">&rarr;</button>
+              style="flex:0 0 auto;background:none;border:none;color:#fff;font-size:20px;line-height:1;display:inline-flex;align-items:center;padding:6px 2px">&rarr;</button>
           </div>
           <input type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none">
         </form>
@@ -93,8 +105,8 @@
   <section id="how" style="max-width:1440px;margin:0 auto;padding:0 clamp(28px,5vw,64px) clamp(80px,14vh,160px)">
     <div class="grid-split" style="display:grid;grid-template-columns:minmax(0,300px) 1fr;gap:40px 80px;align-items:start;border-top:1px solid #333;padding-top:clamp(40px,6vh,64px)">
       <div class="side" style="position:sticky;top:120px">
-        <div data-blend style="font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#fff">How it works</div>
-        <p style="font-size:14px;line-height:1.85;letter-spacing:.019em;color:#999;margin-top:20px;max-width:280px">The information layer knows your business, and informs the operating layer on what to act across. Every interaction feeds back into the loop.</p>
+        <h2 data-blend style="margin:0;font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#fff">How it works</h2>
+        <p style="font-size:14px;line-height:1.85;letter-spacing:.019em;color:#999;margin-top:20px;max-width:280px">The information layer knows your business, and tells the operating layer what to act on. Every interaction feeds back into the loop.</p>
       </div>
 
       <div>
@@ -105,7 +117,7 @@
           </div>
           <div>
             <h3 class="how-title" data-blend style="font-weight:400;font-size:clamp(28px,3.4vw,52px);line-height:1.08;letter-spacing:-.015em;color:#555555;transition:color .45s">Learns your business</h3>
-            <p style="font-size:14px;line-height:1.85;letter-spacing:.019em;color:#999;margin-top:14px;max-width:520px">Every conversation, meeting, client and action feeds back into the information layer, to build an understanding of your company which you can query at anytime.</p>
+            <p style="font-size:14px;line-height:1.85;letter-spacing:.019em;color:#999;margin-top:14px;max-width:520px">Every conversation, meeting, client and action feeds back into the information layer, to build an understanding of your company which you can query at any time.</p>
           </div>
           <div style="font-size:10px;font-weight:500;letter-spacing:.19em;text-transform:uppercase;color:#777;white-space:nowrap;padding-top:6px">Memory</div>
         </div>
@@ -147,21 +159,21 @@
 
       <div>
         <h2 data-blend style="font-weight:400;font-size:clamp(28px,3.6vw,52px);line-height:1.08;letter-spacing:-.015em;color:#fff;max-width:18ch">A Sirus for everyone<br><span data-body style="font-style:italic;color:#777777">on your team.</span></h2>
-        <p style="font-size:14px;line-height:1.85;letter-spacing:.019em;color:#999;margin-top:22px;max-width:520px">Each person gets an agent that learns helps them work, paired with your company's full context.</p>
+        <p style="font-size:14px;line-height:1.85;letter-spacing:.019em;color:#999;margin-top:22px;max-width:520px">Each teammate gets an agent that learns how they work, paired with your company's full context.</p>
 
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;margin-top:clamp(40px,7vh,72px);background:#1f1f1f;border:1px solid #1f1f1f">
           <div style="background:#000;padding:28px clamp(20px,2vw,28px)">
-            <div style="font-size:10px;font-weight:500;letter-spacing:.19em;text-transform:uppercase;color:#777">01 / Inbox</div>
+            <div style="font-size:10px;font-weight:500;letter-spacing:.19em;text-transform:uppercase;color:#777">Inbox</div>
             <h3 style="font-weight:400;font-size:18px;line-height:1.25;letter-spacing:-.01em;color:#fff;margin-top:16px">Runs their inbox</h3>
             <p style="font-size:13px;line-height:1.75;letter-spacing:.015em;color:#999;margin-top:10px">Sorts and drafts, and chases the replies that actually matter.</p>
           </div>
           <div style="background:#000;padding:28px clamp(20px,2vw,28px)">
-            <div style="font-size:10px;font-weight:500;letter-spacing:.19em;text-transform:uppercase;color:#777">02 / Meetings</div>
+            <div style="font-size:10px;font-weight:500;letter-spacing:.19em;text-transform:uppercase;color:#777">Meetings</div>
             <h3 style="font-weight:400;font-size:18px;line-height:1.25;letter-spacing:-.01em;color:#fff;margin-top:16px">Takes their notes</h3>
-            <p style="font-size:13px;line-height:1.75;letter-spacing:.015em;color:#999;margin-top:10px">Captures every meeting word for word, so nobody writes it down again.</p>
+            <p style="font-size:13px;line-height:1.75;letter-spacing:.015em;color:#999;margin-top:10px">Captures every meeting in full, so nobody scrambles to take notes again.</p>
           </div>
           <div style="background:#000;padding:28px clamp(20px,2vw,28px)">
-            <div style="font-size:10px;font-weight:500;letter-spacing:.19em;text-transform:uppercase;color:#777">03 / Tasks</div>
+            <div style="font-size:10px;font-weight:500;letter-spacing:.19em;text-transform:uppercase;color:#777">Tasks</div>
             <h3 style="font-weight:400;font-size:18px;line-height:1.25;letter-spacing:-.01em;color:#fff;margin-top:16px">Builds their automations</h3>
             <p style="font-size:13px;line-height:1.75;letter-spacing:.015em;color:#999;margin-top:10px">It reaches into the tools they connect and turns their repetitive work into automations they never have to touch.</p>
           </div>
@@ -172,7 +184,7 @@
 
   <!-- ===== CTA — light inverted block ===== -->
   <section id="cta" style="max-width:1440px;margin:0 auto;padding:0 clamp(28px,5vw,64px) clamp(48px,8vh,96px)">
-    <div data-bg-light style="background:#f2f2f2;color:#000;border-radius:33.76px;padding:clamp(48px,9vh,112px) clamp(32px,6vw,96px)">
+    <div data-bg-light style="background:#f2f2f2;color:#000;border-radius:32px;padding:clamp(48px,9vh,112px) clamp(32px,6vw,96px)">
       <div data-body style="font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#666">Get started</div>
       <h2 data-blend style="font-weight:400;font-size:clamp(34px,5.2vw,73px);line-height:1.0;letter-spacing:-.018em;margin-top:28px;max-width:18ch">Run your business<br><span data-body style="font-style:italic;color:#999">on Sirus.</span></h2>
 
@@ -290,6 +302,9 @@
   var form = document.getElementById('contactForm');
   var openContact = function () {};
   if (form) {
+    // JS is on: take over native validation so we can show the custom inline error.
+    // (Without JS the form keeps native required/email validation + posts directly.)
+    form.setAttribute('novalidate', '');
     var toggle = document.getElementById('contactToggle');
     var fields = document.getElementById('contactFields');
     var emailInput = document.getElementById('contactEmail');
@@ -306,6 +321,15 @@
       if (emailInput) emailInput.focus({ preventScroll: true });
     };
     if (toggle) toggle.addEventListener('click', openContact);
+
+    // Esc collapses the email field back to the button (emergency exit).
+    if (emailInput) emailInput.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && toggle && fields) {
+        fields.hidden = true;
+        toggle.hidden = false;
+        toggle.focus();
+      }
+    });
 
     var showError = function (msg) {
       if (!errorEl) return;
@@ -341,7 +365,7 @@
         if (!data || !data.ok) throw new Error('not ok');
         form.hidden = true;
         if (successEl) {
-          successEl.textContent = "We'll be in touch at " + email + ' shortly!';
+          successEl.textContent = 'Thanks — a real person will reply to ' + email + ' within one business day.';
           successEl.hidden = false;
         }
       }).catch(function () {
@@ -363,6 +387,12 @@
   var blend = document.getElementById('ringBlend');
   var solid = document.getElementById('ringSolid');
   if (fine && blend && solid) {
+    // Hide the native cursor only now that the custom reticle is confirmed live —
+    // if this script never runs, the OS cursor stays visible.
+    var root = document.querySelector('.sirus');
+    if (root) root.classList.add('cursor-hidden');
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var ease = reduceMotion ? 1 : 0.22;
     var blendPath = blend.querySelector('path');
     var solidPath = solid.querySelector('path');
     var mx = -100, my = -100, rx = -100, ry = -100, mode = '', lastMode = null;
@@ -375,7 +405,7 @@
       else mode = 'blend';
     });
     var loop = function () {
-      rx += (mx - rx) * 0.22; ry += (my - ry) * 0.22;
+      rx += (mx - rx) * ease; ry += (my - ry) * ease;
       var tf = 'translate(' + rx + 'px,' + ry + 'px)';
       blend.style.transform = tf; solid.style.transform = tf;
       if (mode !== lastMode) {
