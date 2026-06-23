@@ -27,6 +27,9 @@
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{background:#000000;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
+  /* hide the native scrollbar — only the custom scroll-rail shows (scrolling still works) */
+  html,body{scrollbar-width:none;-ms-overflow-style:none}
+  html::-webkit-scrollbar,body::-webkit-scrollbar{width:0;height:0;display:none}
   ::selection{background:#fff;color:#000}
   .sirus{font-feature-settings:'ss01';font-optical-sizing:auto}
   @keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
