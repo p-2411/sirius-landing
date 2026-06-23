@@ -143,7 +143,7 @@
           </div>
           <div>
             <h3 class="how-title" data-blend style="font-weight:400;font-size:clamp(28px,3.4vw,52px);line-height:1.08;letter-spacing:-.015em;color:#555555;transition:color .45s">Learns your business</h3>
-            <p style="font-size:14px;line-height:1.85;letter-spacing:.019em;color:#999;margin-top:14px;max-width:520px">Every conversation, meeting, client and action feeds back into the information layer, to build an understanding of your company which you can query at any time.</p>
+            <p style="font-size:14px;line-height:1.85;letter-spacing:.019em;color:#999;margin-top:14px;max-width:520px">Every conversation, meeting, client and action feeds into its understanding of your company which you can query at any time.</p>
           </div>
           <div style="font-size:10px;font-weight:500;letter-spacing:.19em;text-transform:uppercase;color:#777;white-space:nowrap;padding-top:6px">Memory</div>
         </div>
@@ -421,32 +421,25 @@
     // if this script never runs, the OS cursor stays visible.
     var root = document.querySelector('.sirus');
     if (root) root.classList.add('cursor-hidden');
-    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var ease = reduceMotion ? 1 : 0.22;
     var blendPath = blend.querySelector('path');
     var solidPath = solid.querySelector('path');
-    var mx = -100, my = -100, rx = -100, ry = -100, mode = '', lastMode = null;
+    var lastMode = null;
+    var setMode = function (mode) {
+      if (mode === lastMode) return;
+      if (mode === 'blend') { if (blendPath) blendPath.style.fill = '#fff'; if (solidPath) solidPath.style.fill = 'transparent'; }
+      else if (mode === 'bodylight') { if (blendPath) blendPath.style.fill = 'transparent'; if (solidPath) solidPath.style.fill = '#000'; }
+      else { if (blendPath) blendPath.style.fill = 'transparent'; if (solidPath) solidPath.style.fill = '#fff'; }
+      lastMode = mode;
+    };
     window.addEventListener('mousemove', function (e) {
-      mx = e.clientX; my = e.clientY;
+      // track the pointer exactly — no smoothing, no lag
+      var tf = 'translate(' + e.clientX + 'px,' + e.clientY + 'px)';
+      blend.style.transform = tf; solid.style.transform = tf;
       var t = e.target;
       var bodyEl = t && t.closest && t.closest('[data-body]');
       if (!bodyEl && t && t.tagName === 'P') bodyEl = t;
-      if (bodyEl) mode = (bodyEl.closest('[data-bg-light]') ? 'bodylight' : 'bodydark');
-      else mode = 'blend';
+      setMode(bodyEl ? (bodyEl.closest('[data-bg-light]') ? 'bodylight' : 'bodydark') : 'blend');
     });
-    var loop = function () {
-      rx += (mx - rx) * ease; ry += (my - ry) * ease;
-      var tf = 'translate(' + rx + 'px,' + ry + 'px)';
-      blend.style.transform = tf; solid.style.transform = tf;
-      if (mode !== lastMode) {
-        if (mode === 'blend') { if (blendPath) blendPath.style.fill = '#fff'; if (solidPath) solidPath.style.fill = 'transparent'; }
-        else if (mode === 'bodylight') { if (blendPath) blendPath.style.fill = 'transparent'; if (solidPath) solidPath.style.fill = '#000'; }
-        else { if (blendPath) blendPath.style.fill = 'transparent'; if (solidPath) solidPath.style.fill = '#fff'; }
-        lastMode = mode;
-      }
-      requestAnimationFrame(loop);
-    };
-    requestAnimationFrame(loop);
   } else {
     if (blend) blend.style.display = 'none';
     if (solid) solid.style.display = 'none';
