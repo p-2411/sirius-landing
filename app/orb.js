@@ -30,7 +30,11 @@
     nodes = []; edges = [];
 
     var area = W * H;
-    var Nsurf = Math.max(52, Math.min(92, Math.round(area / 5900)));
+    // trim density on phones — fewer nodes keep the O(n^2) edge pass smooth/battery-friendly
+    var mobile = window.innerWidth <= 900;
+    var Nsurf = mobile
+      ? Math.max(34, Math.min(58, Math.round(area / 8200)))
+      : Math.max(52, Math.min(92, Math.round(area / 5900)));
     var golden = Math.PI * (3 - Math.sqrt(5));
     for (var i = 0; i < Nsurf; i++) {
       var yy = 1 - (i / (Nsurf - 1)) * 2;

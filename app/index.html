@@ -64,10 +64,10 @@
     .nav-how{display:none !important}
     .nav-inner{gap:16px !important}
   }
-  /* hero: collapse to single column and drop the signal-field visual on small screens */
+  /* hero: collapse to single column; orb on top, text beneath (natural flow) */
   @media (max-width:900px){
-    .hero-grid{grid-template-columns:1fr !important}
-    .hero-visual{display:none !important}
+    .hero-grid{display:flex !important;flex-direction:column !important;gap:clamp(24px,4vh,40px) !important}
+    .hero-visual{order:-1 !important;min-height:0 !important;height:clamp(280px,45svh,440px) !important}
   }
 </style>
 </head>
