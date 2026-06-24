@@ -56,13 +56,28 @@
     .grid-split{grid-template-columns:1fr !important;gap:28px 0 !important}
     .side{position:static !important;top:auto !important}
     .how-row{grid-template-columns:1fr !important;gap:8px !important;padding:30px 0 !important}
-    .how-row .how-meta{flex-direction:row;gap:10px}
+    /* smaller brand lockup on mobile */
+    .nav-brand img{height:21px !important}
+    .nav-brand span{font-size:18px !important}
+    /* CTA card — purpose-built mobile composition */
+    .cta-card{border-radius:24px !important;padding:44px 26px !important}
+    .cta-title{white-space:normal !important;flex-direction:column !important;align-items:flex-start !important;
+      gap:18px !important;line-height:1.14 !important;font-size:31px !important;margin-top:22px !important}
+    .cta-mark{height:36px !important}
+    .cta-words{display:block}
+    .cta-actions{margin-top:34px !important}
   }
+  /* team cards: 3-across only when there's room, otherwise a clean single column —
+     never 2 columns (which would leave an empty grey orphan cell) */
+  @media (max-width:1024px){.team-grid{grid-template-columns:1fr !important}}
   /* hide the desktop scroll-rail on touch devices */
   @media (max-width:760px),(pointer:coarse){.railwrap{display:none !important}}
   @media (max-width:520px){
     .nav-how{display:none !important}
-    .nav-inner{gap:16px !important}
+    .nav-inner{gap:16px !important;padding-left:20px !important;padding-right:20px !important}
+    .nav-brand img{height:20px !important}
+    .nav-brand span{font-size:17px !important}
+    .nav-cta{letter-spacing:.12em !important}
   }
   /* hero: collapse to single column; orb on top, text beneath (natural flow) */
   @media (max-width:900px){
@@ -84,13 +99,13 @@
   <!-- ===== NAV ===== -->
   <nav style="position:sticky;top:0;z-index:50;background:rgba(0,0,0,.84);backdrop-filter:blur(8px);border-bottom:1px solid #1f1f1f">
     <div class="nav-inner" style="max-width:1440px;margin:0 auto;padding:22px clamp(28px,5vw,64px);display:flex;align-items:center;justify-content:space-between;gap:32px">
-      <a href="#top" data-cursor aria-label="Sirus — home" style="text-decoration:none;display:inline-flex;align-items:center;gap:10px">
+      <a href="#top" class="nav-brand" data-cursor aria-label="Sirus — home" style="text-decoration:none;display:inline-flex;align-items:center;gap:10px">
         <img src="/sirus-mark.png" alt="" aria-hidden="true" style="height:26px;width:auto;display:block;filter:invert(1)">
         <span style="color:#fff;font-size:21px;font-weight:500;font-feature-settings:'ss01';letter-spacing:-.02em">Sirus</span>
       </a>
       <div class="nav-links" style="display:flex;align-items:center;gap:clamp(20px,3vw,44px)">
         <a href="#how" class="sbtn nav-how" data-cursor style="text-decoration:none;color:#fff;font-size:11px;font-weight:500;letter-spacing:.19em;text-transform:uppercase">How it works</a>
-        <a href="#top" data-contact-jump class="sbtn" data-cursor data-body style="text-decoration:none;color:#fff;font-size:11px;font-weight:500;letter-spacing:.19em;text-transform:uppercase;display:inline-flex;align-items:center;gap:7px">Get in touch <span style="font-size:13px">&rarr;</span></a>
+        <a href="#top" data-contact-jump class="sbtn nav-cta" data-cursor data-body style="text-decoration:none;color:#fff;font-size:11px;font-weight:500;letter-spacing:.19em;text-transform:uppercase;display:inline-flex;align-items:center;gap:7px">Get in touch <span style="font-size:13px">&rarr;</span></a>
       </div>
     </div>
   </nav>
@@ -190,7 +205,7 @@
         <h2 data-blend style="font-weight:400;font-size:clamp(28px,3.6vw,52px);line-height:1.08;letter-spacing:-.015em;color:#fff;max-width:18ch">A Sirus for everyone<br><span data-body style="font-style:italic;color:#777777">on your team.</span></h2>
         <p style="font-size:14px;line-height:1.85;letter-spacing:.019em;color:#999;margin-top:22px;max-width:520px">Each teammate gets an agent that learns how they work, paired with your company's full context.</p>
 
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;margin-top:clamp(40px,7vh,72px);background:#1f1f1f;border:1px solid #1f1f1f">
+        <div class="team-grid" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;margin-top:clamp(40px,7vh,72px);background:#1f1f1f;border:1px solid #1f1f1f">
           <div style="background:#000;padding:28px clamp(20px,2vw,28px)">
             <div style="font-size:10px;font-weight:500;letter-spacing:.19em;text-transform:uppercase;color:#777">Inbox</div>
             <h3 style="font-weight:400;font-size:18px;line-height:1.25;letter-spacing:-.01em;color:#fff;margin-top:16px">Runs their inbox</h3>
@@ -213,15 +228,15 @@
 
   <!-- ===== CTA — light inverted block ===== -->
   <section id="cta" style="max-width:1440px;margin:0 auto;padding:0 clamp(28px,5vw,64px) clamp(48px,8vh,96px)">
-    <div data-bg-light style="background:#f2f2f2;color:#000;border-radius:32px;padding:clamp(48px,9vh,112px) clamp(32px,6vw,96px)">
+    <div class="cta-card" data-bg-light style="background:#f2f2f2;color:#000;border-radius:32px;padding:clamp(48px,9vh,112px) clamp(32px,6vw,96px)">
       <div data-body style="font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#666">Get started</div>
-      <h2 data-blend style="font-weight:400;font-size:clamp(24px,3.6vw,48px);line-height:1.0;letter-spacing:-.018em;margin-top:28px;display:flex;align-items:center;gap:.46em;white-space:nowrap">
-        <img src="/sirus-mark.png" alt="Sirus" style="height:.82em;width:auto;display:inline-block;flex:0 0 auto">
-        <span>Run your business. Faster. Cheaper</span>
+      <h2 class="cta-title" data-blend style="font-weight:400;font-size:clamp(24px,3.6vw,48px);line-height:1.0;letter-spacing:-.018em;margin-top:28px;display:flex;align-items:center;gap:.46em;white-space:nowrap">
+        <img class="cta-mark" src="/sirus-mark.png" alt="Sirus" style="height:.82em;width:auto;display:inline-block;flex:0 0 auto">
+        <span class="cta-words">Run your business. <span style="font-style:italic;color:#8a8a8a">Faster. Cheaper</span></span>
       </h2>
 
-      <div style="display:flex;flex-wrap:wrap;gap:20px 48px;margin-top:clamp(36px,6vh,56px)">
-        <a href="#top" data-contact-jump class="sbtn" data-cursor data-body style="text-decoration:none;color:#000;font-size:11px;font-weight:500;letter-spacing:.19em;text-transform:uppercase;display:inline-flex;align-items:center;gap:9px;padding-bottom:8px">Get in touch now <span style="font-size:13px">&rarr;</span></a>
+      <div class="cta-actions" style="display:flex;flex-wrap:wrap;gap:20px 48px;margin-top:clamp(36px,6vh,56px)">
+        <a href="#top" data-contact-jump class="sbtn cta-btn" data-cursor data-body style="text-decoration:none;color:#000;font-size:11px;font-weight:500;letter-spacing:.19em;text-transform:uppercase;display:inline-flex;align-items:center;gap:9px;padding-bottom:8px">Get in touch now <span style="font-size:13px">&rarr;</span></a>
       </div>
     </div>
   </section>
