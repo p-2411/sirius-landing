@@ -413,8 +413,10 @@
         form.hidden = true;
         if (successEl) {
           var safeEmail = email.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-          successEl.innerHTML = 'Thanks. We will be in touch at <span style="text-decoration:underline">' + safeEmail + '</span> soon.';
+          successEl.innerHTML = 'Thanks. We will be in touch at ' + safeEmail + ' soon.';
           successEl.hidden = false;
+          // let the confirmation span the full row instead of the narrow form column
+          if (successEl.parentElement) successEl.parentElement.style.width = '100%';
         }
       }).catch(function () {
         form.classList.remove('is-busy');
