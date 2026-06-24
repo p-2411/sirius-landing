@@ -131,7 +131,7 @@
           <input type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none">
         </form>
         <p id="contactError" hidden style="margin-top:6px;font-size:13px;letter-spacing:.01em;color:#ff8086"></p>
-        <p id="contactSuccess" hidden style="margin:0;font-size:15px;line-height:1.5;letter-spacing:.01em;color:#fff"></p>
+        <p id="contactSuccess" hidden style="margin:0;font-size:15px;line-height:1.5;letter-spacing:.01em;color:#fff;font-weight:600"></p>
       </div>
     </div>
 
@@ -413,7 +413,7 @@
         form.hidden = true;
         if (successEl) {
           var safeEmail = email.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-          successEl.innerHTML = 'Thanks. We will be in touch at <strong>' + safeEmail + '</strong> soon.';
+          successEl.innerHTML = 'Thanks. We will be in touch at <span style="text-decoration:underline">' + safeEmail + '</span> soon.';
           successEl.hidden = false;
         }
       }).catch(function () {
