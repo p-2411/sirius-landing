@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Terms of Service — Sirus</title>
+<meta name="description" content="The terms that govern your use of the Sirus app and website.">
+<link rel="canonical" href="https://www.trysirus.com/terms">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" href="/sirus-mark.png">
+<!-- PostHog (cookieless). Project API key is public/client-side by design. -->
+<script>
+  !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug getPageViewId captureTraceFeedback captureTraceMetric".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+  posthog.init('phc_yti6EQAg7PZkKkctK5zxuodZoRLxV2YL2wXwnSpVjYeV', {
+    api_host: 'https://us.i.posthog.com',
+    persistence: 'memory',
+    disable_session_recording: true
+  });
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;1,14..32,400&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:#000;color:#cfcfcf;font-family:'Inter',system-ui,sans-serif;font-size:15px;line-height:1.85;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
+  .sirus{font-feature-settings:'ss01';font-optical-sizing:auto}
+  ::selection{background:#fff;color:#000}
+  a{color:#fff;text-decoration:underline;text-underline-offset:2px;text-decoration-color:rgba(255,255,255,.32);transition:text-decoration-color .2s}
+  a:hover{text-decoration-color:#fff}
+  a:focus-visible{outline:2px solid currentColor;outline-offset:3px;border-radius:2px}
+
+  nav{position:sticky;top:0;z-index:50;background:rgba(0,0,0,.84);backdrop-filter:blur(8px);border-bottom:1px solid #1f1f1f}
+  .nav-inner{max-width:1100px;margin:0 auto;padding:20px clamp(22px,5vw,48px);display:flex;align-items:center;justify-content:space-between;gap:24px}
+  .nav-brand{text-decoration:none;display:inline-flex;align-items:center;gap:10px}
+  .nav-brand img{height:24px;width:auto;display:block;filter:invert(1)}
+  .nav-brand span{color:#fff;font-size:20px;font-weight:500;font-feature-settings:'ss01';letter-spacing:-.02em}
+  .nav-links{display:flex;align-items:center;gap:clamp(18px,3vw,32px)}
+  .nav-links a{text-decoration:none;color:#fff;font-size:11px;font-weight:500;letter-spacing:.19em;text-transform:uppercase}
+
+  .article{max-width:760px;margin:0 auto;padding:clamp(44px,7vh,80px) clamp(22px,5vw,48px) clamp(56px,9vh,104px)}
+  .eyebrow{font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#777}
+  h1{font-weight:400;font-size:clamp(34px,5.4vw,56px);line-height:1.04;letter-spacing:-.018em;color:#fff;margin-top:18px}
+  .meta{margin-top:20px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#777}
+  .lede{margin-top:28px;font-size:16px;line-height:1.8;color:#d6d6d6}
+
+  .toc{margin-top:40px;padding:24px 26px;border:1px solid #1f1f1f;border-radius:14px;background:#0a0a0a}
+  .toc .toc-h{display:block;font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#777;margin-bottom:16px}
+  .toc ol{list-style:none;counter-reset:toc;columns:2;column-gap:36px}
+  .toc li{counter-increment:toc;font-size:13px;line-height:1.75;break-inside:avoid}
+  .toc li::before{content:counter(toc,decimal-leading-zero);color:#555;margin-right:10px;font-variant-numeric:tabular-nums}
+  .toc a{text-decoration:none;color:#bbb}
+  .toc a:hover{color:#fff}
+
+  section{margin-top:clamp(38px,5.5vh,60px);padding-top:30px;border-top:1px solid #1f1f1f;scroll-margin-top:90px}
+  section h2{font-weight:500;font-size:clamp(19px,2.4vw,24px);line-height:1.22;letter-spacing:-.01em;color:#fff;display:flex;gap:14px;align-items:baseline}
+  section h2 .num{font-size:12px;font-weight:500;color:#555;letter-spacing:.06em;font-variant-numeric:tabular-nums;flex:0 0 auto}
+  h3{font-weight:500;font-size:15px;color:#fff;margin-top:30px;letter-spacing:.005em}
+  p{margin-top:16px}
+  ul,ol.list{margin-top:16px;padding-left:0;list-style:none}
+  ul li,ol.list li{position:relative;padding-left:22px;margin-top:9px}
+  ul li::before{content:"";position:absolute;left:3px;top:12px;width:5px;height:5px;background:#5f5f5f;border-radius:50%}
+  ol.list{counter-reset:li}
+  ol.list li{counter-increment:li}
+  ol.list li::before{content:counter(li);position:absolute;left:0;top:0;color:#777;font-variant-numeric:tabular-nums;font-size:13px}
+  strong{color:#fff;font-weight:500}
+  .callout{margin-top:22px;padding:18px 20px;border:1px solid #2a2a2a;border-left:2px solid #8a8a8a;border-radius:10px;background:#0b0b0b;font-size:14px;line-height:1.8;color:#cfcfcf}
+  .callout strong{color:#fff}
+
+  footer{max-width:1100px;margin:0 auto;padding:32px clamp(22px,5vw,48px) 48px;border-top:1px solid #1f1f1f;display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px 24px;align-items:center}
+  footer .legal-links{display:flex;gap:22px;flex-wrap:wrap}
+  footer a{text-decoration:none;color:#777;font-size:10px;letter-spacing:.18em;text-transform:uppercase}
+  footer a:hover{color:#fff}
+  footer .copy{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#777}
+
+  @media (max-width:600px){.toc ol{columns:1}}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="sirus">
+
+  <nav>
+    <div class="nav-inner">
+      <a href="/" class="nav-brand" aria-label="Sirus — home">
+        <img src="/sirus-mark.png" alt="" aria-hidden="true">
+        <span>Sirus</span>
+      </a>
+      <div class="nav-links">
+        <a href="/privacy">Privacy</a>
+        <a href="/#top">Get in touch</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="article">
+    <div class="eyebrow">Legal</div>
+    <h1>Terms of Service</h1>
+    <div class="meta">Last updated 30 June 2026</div>
+
+    <p class="lede">These terms are the agreement between you and Sirus. They explain what Sirus does, what you can expect from us, and what we expect from you — including some important points about AI output and the actions Sirus can take on your behalf. Please read them.</p>
+
+    <div class="callout">
+      <strong>The short version.</strong> Sirus is an AI assistant for your business, still in active development. You own your content; we just process it to run the service. Sirus connects to tools you authorise and can take actions — like sending email — when you set it up to. AI output can be wrong, so review it before you rely on it. You're responsible for what you configure Sirus to do. We provide the service "as is", and our liability is limited, except where the law says it can't be. This summary is not part of the terms; the sections below are.
+    </div>
+
+    <div class="toc" aria-label="Contents">
+      <span class="toc-h">Contents</span>
+      <ol>
+        <li><a href="#acceptance">Acceptance of these terms</a></li>
+        <li><a href="#service">The service</a></li>
+        <li><a href="#eligibility">Eligibility &amp; authority</a></li>
+        <li><a href="#accounts">Your installation &amp; security</a></li>
+        <li><a href="#billing">Subscriptions, credits &amp; payment</a></li>
+        <li><a href="#content">Your content &amp; data</a></li>
+        <li><a href="#connected">Connected accounts &amp; third parties</a></li>
+        <li><a href="#ai">AI features &amp; accuracy</a></li>
+        <li><a href="#actions">Automations &amp; autonomous actions</a></li>
+        <li><a href="#acceptable">Acceptable use</a></li>
+        <li><a href="#ip">Intellectual property</a></li>
+        <li><a href="#beta">Beta &amp; changes to the service</a></li>
+        <li><a href="#disclaimer">Disclaimers</a></li>
+        <li><a href="#liability">Limitation of liability</a></li>
+        <li><a href="#indemnity">Indemnity</a></li>
+        <li><a href="#termination">Suspension &amp; termination</a></li>
+        <li><a href="#law">Governing law &amp; disputes</a></li>
+        <li><a href="#general">General</a></li>
+        <li><a href="#contact">Contact us</a></li>
+      </ol>
+    </div>
+
+    <section id="acceptance">
+      <h2><span class="num">01</span> Acceptance of these terms</h2>
+      <p>Sirus ("Sirus", "we", "us", or "our") is operated by <strong>Parham Sepasgozar</strong>, an individual sole trader based in New South Wales, Australia. By downloading, installing, accessing, or using the Sirus app or the website at trysirus.com (together, the "Service"), you agree to these Terms of Service and to our <a href="/privacy">Privacy Policy</a>, which is incorporated here by reference. If you do not agree, do not use the Service.</p>
+    </section>
+
+    <section id="service">
+      <h2><span class="num">02</span> The service</h2>
+      <p>Sirus is a desktop application that learns about your business and works alongside you. Among other things, it can answer questions, build and maintain a knowledge base about your business, draft and send communications, capture and transcribe meetings you choose to record, connect to tools you use, and create and run automations and AI agents. Features change as the Service develops, and not every feature is available to every user.</p>
+    </section>
+
+    <section id="eligibility">
+      <h2><span class="num">03</span> Eligibility &amp; authority</h2>
+      <ul>
+        <li>You must be at least <strong>18 years old</strong> and able to enter a binding contract.</li>
+        <li>Sirus is intended for <strong>business and professional use</strong>, not personal or household use.</li>
+        <li>If you use Sirus for an organisation, you represent that you are <strong>authorised to act for that organisation</strong> and to bind it to these terms.</li>
+        <li>You represent that you have the right and authority to connect the accounts you connect and to have the resulting data processed by Sirus and its providers.</li>
+      </ul>
+    </section>
+
+    <section id="accounts">
+      <h2><span class="num">04</span> Your installation &amp; security</h2>
+      <p>Sirus identifies your installation with a credential stored on your device rather than a username and password. You are responsible for keeping your device and that credential secure, and for all activity that occurs through your installation. If you become a business customer, you may receive an activation code; keep it confidential and use it only as intended. Tell us promptly at <a href="mailto:parham@trysirus.com">parham@trysirus.com</a> if you suspect unauthorised use.</p>
+    </section>
+
+    <section id="billing">
+      <h2><span class="num">05</span> Subscriptions, credits &amp; payment</h2>
+      <ul>
+        <li><strong>Plans.</strong> Sirus is offered on paid monthly subscription plans (currently AUD/USD $20, $50, and $120 per month), each of which grants a monthly allowance of usage credits. Credits are consumed as you use AI features, based on the work performed. Current pricing is shown at the point of purchase.</li>
+        <li><strong>Payment.</strong> Payments are processed by Stripe. By subscribing, you authorise us, through Stripe, to charge your payment method on a recurring basis.</li>
+        <li><strong>Auto-renewal.</strong> Subscriptions renew automatically each billing period until you cancel. You can cancel at any time, effective at the end of the current period.</li>
+        <li><strong>No partial refunds.</strong> Except where required by law, fees are non-refundable and we do not provide refunds or credits for partial periods, unused credits, or downgrades.</li>
+        <li><strong>Changes to pricing.</strong> We may change pricing or plan features. We will give reasonable notice of changes that affect your subscription, and changes take effect at your next renewal.</li>
+        <li><strong>Taxes.</strong> Fees are exclusive of taxes unless stated; you are responsible for any applicable taxes.</li>
+        <li><strong>Beta pricing.</strong> While Sirus is in beta, plans, credits, and pricing may change as the Service develops.</li>
+      </ul>
+      <div class="callout"><strong>Australian Consumer Law.</strong> Nothing in these terms excludes, restricts, or modifies any guarantee, right, or remedy you have under the Australian Consumer Law or other law that cannot lawfully be excluded. Where we are permitted to limit our liability for a breach of such a guarantee, we do so as set out in <a href="#liability">Limitation of liability</a>.</div>
+    </section>
+
+    <section id="content">
+      <h2><span class="num">06</span> Your content &amp; data</h2>
+      <p><strong>You own your content.</strong> As between you and us, you retain all rights to the content you create in or provide to Sirus, and to the data you connect. We do not claim ownership of it.</p>
+      <p>You grant us a limited, non-exclusive licence to access, store, process, and transmit your content and connected data <strong>only as needed to provide and improve the Service for you</strong> — for example, sending relevant context to an AI provider to answer you, or syncing a connected account. We do not sell your content and we do not use it to train our own models. Our handling of personal data, including data about other people you bring in, is described in the <a href="/privacy">Privacy Policy</a> and, for business customers, governed by its data-processing terms under which we act as your processor.</p>
+      <p>You are responsible for your content and for keeping your own backups. In on-device mode, your content lives on your computer and is subject to the same risks as any local data (loss, hardware failure, etc.).</p>
+    </section>
+
+    <section id="connected">
+      <h2><span class="num">07</span> Connected accounts &amp; third parties</h2>
+      <p>Sirus lets you connect third-party services such as Google (Gmail, Calendar, Drive), Microsoft (Outlook), Slack, and CRM or commerce tools. When you connect a service:</p>
+      <ul>
+        <li>You authorise Sirus to access and act on that account as described at the time you connect it, and you can disconnect or revoke access at any time.</li>
+        <li>You must comply with that provider's own terms, and your use of their data through Sirus remains subject to those terms.</li>
+        <li>Those services are operated by third parties, not by us. We are not responsible for their availability, accuracy, or acts, and your relationship with them is your own.</li>
+      </ul>
+      <p>The Service also depends on third-party infrastructure and AI providers. We are not liable for outages, changes, or failures of those providers, though we will make reasonable efforts to keep the Service working.</p>
+    </section>
+
+    <section id="ai">
+      <h2><span class="num">08</span> AI features &amp; accuracy</h2>
+      <div class="callout">
+        <strong>AI output can be wrong.</strong> Sirus uses generative AI, which can produce information that is inaccurate, incomplete, outdated, or fabricated ("hallucinated"), and can misread your data. Output is <strong>not professional advice</strong> (legal, financial, tax, medical, or otherwise). You must review AI output and use your own judgement before relying on it or acting on it, especially for important decisions or anything sent to others. You are responsible for the decisions you make using Sirus.
+      </div>
+      <p>Because AI behaviour is probabilistic, the same request may produce different results, and we do not warrant that any output will be accurate, reliable, or fit for a particular purpose.</p>
+    </section>
+
+    <section id="actions">
+      <h2><span class="num">09</span> Automations &amp; autonomous actions</h2>
+      <p>A core feature of Sirus is that it can <strong>take actions on your behalf</strong> — for example, sending emails, replying to messages, creating or editing calendar events and documents, and running automations and agents on a schedule or trigger that you set up.</p>
+      <ul>
+        <li>These actions happen because <strong>you configure, approve, and authorise them</strong>. You are responsible for the automations and agents you create or enable and for their effects.</li>
+        <li>You should review automations before enabling them, test with care, and use available approval and review controls, particularly for actions that contact other people or change data.</li>
+        <li>To the extent permitted by law, <strong>we are not liable for actions Sirus takes that you have configured or authorised</strong>, including messages sent, data changed, or third-party charges incurred.</li>
+        <li>You are responsible for ensuring the actions you automate comply with applicable laws — including laws on electronic messaging and spam (such as the Spam Act 2003 (Cth) and equivalents) and on privacy.</li>
+      </ul>
+    </section>
+
+    <section id="acceptable">
+      <h2><span class="num">10</span> Acceptable use</h2>
+      <p>You agree not to, and not to allow anyone else to:</p>
+      <ul>
+        <li>Use the Service for anything unlawful, harmful, deceptive, or infringing, or to violate anyone's privacy or rights.</li>
+        <li><strong>Record meetings or calls without the right to do so.</strong> If you use Sirus to record or transcribe meetings or calls, you must comply with all applicable recording, wiretapping, and surveillance laws and obtain any consent required from other participants <em>before</em> recording them. You are solely responsible for your recordings.</li>
+        <li>Process data you do not have the right to process, or connect accounts you are not authorised to connect.</li>
+        <li>Send spam or unlawful communications, or use Sirus to harass or deceive others.</li>
+        <li>Attempt to break, overload, circumvent, or abuse the Service, our usage limits, our proxy, or our security, or access it other than through the interfaces we provide.</li>
+        <li>Reverse engineer, decompile, or attempt to extract source code or model credentials, except to the extent this restriction is prohibited by law.</li>
+        <li>Resell, sublicense, or provide the Service to third parties as your own without our written permission.</li>
+        <li>Use the Service to develop a competing product, or in a way that violates the terms of our AI or infrastructure providers.</li>
+      </ul>
+    </section>
+
+    <section id="ip">
+      <h2><span class="num">11</span> Intellectual property</h2>
+      <p>The Service, including the Sirus software, design, and the "Sirus" name and marks, is owned by us and protected by law. Subject to these terms, we grant you a limited, non-exclusive, non-transferable, revocable licence to install and use the app for your internal business purposes while your subscription is active. We reserve all rights not expressly granted.</p>
+      <p>If you send us feedback or suggestions, you grant us a perpetual, royalty-free licence to use them to improve the Service, without obligation to you.</p>
+    </section>
+
+    <section id="beta">
+      <h2><span class="num">12</span> Beta &amp; changes to the service</h2>
+      <p>Sirus is offered as an early-stage, evolving product. Features may be added, changed, or removed, and the Service may contain bugs or behave unexpectedly. We may modify or discontinue the Service, or any feature, at any time. We will try to give reasonable notice of significant changes, but we are not liable to you for changes to or discontinuation of the Service, except as required by law.</p>
+    </section>
+
+    <section id="disclaimer">
+      <h2><span class="num">13</span> Disclaimers</h2>
+      <p>To the maximum extent permitted by law, the Service is provided <strong>"as is" and "as available"</strong>, without warranties of any kind, whether express, implied, or statutory, including implied warranties of merchantability, fitness for a particular purpose, title, and non-infringement. We do not warrant that the Service will be uninterrupted, secure, error-free, or that any output, automation, or sync will be accurate or complete. This section does not exclude any guarantees or rights that cannot lawfully be excluded, including under the Australian Consumer Law.</p>
+    </section>
+
+    <section id="liability">
+      <h2><span class="num">14</span> Limitation of liability</h2>
+      <p>To the maximum extent permitted by law:</p>
+      <ul>
+        <li>Neither party is liable for any <strong>indirect, incidental, special, consequential, or punitive damages</strong>, or for any loss of profits, revenue, data, goodwill, or business opportunity, arising out of or relating to the Service, even if advised of the possibility.</li>
+        <li>Our <strong>total aggregate liability</strong> for all claims relating to the Service is limited to the greater of (a) the amount you paid us for the Service in the <strong>twelve months</strong> before the event giving rise to the claim, or (b) AUD $100.</li>
+      </ul>
+      <p>Where the Australian Consumer Law or other non-excludable law applies and we are permitted to limit our liability for breach of a consumer guarantee, our liability is limited, at our option, to re-supplying the relevant service or paying the cost of having it re-supplied. Some jurisdictions do not allow certain limitations, so some of the above may not apply to you.</p>
+    </section>
+
+    <section id="indemnity">
+      <h2><span class="num">15</span> Indemnity</h2>
+      <p>To the extent permitted by law, you agree to indemnify and hold us harmless from claims, losses, liabilities, and reasonable expenses (including legal costs) arising out of or related to: your content and connected data; your use of the Service; the automations and actions you configure; your breach of these terms; or your violation of any law or third-party right.</p>
+    </section>
+
+    <section id="termination">
+      <h2><span class="num">16</span> Suspension &amp; termination</h2>
+      <p>You may stop using the Service and cancel your subscription at any time. We may suspend or terminate your access if you breach these terms, if required for security or legal reasons, or if we discontinue the Service, giving notice where reasonable (and immediately where necessary, such as for serious breach or risk).</p>
+      <p>On termination, your right to use the Service ends. Your on-device content remains on your device. For hosted workspace data, we will, on request and where feasible, give you a reasonable opportunity to export your data before deletion, subject to our <a href="/privacy">Privacy Policy</a> and any legal retention requirements. Sections that by their nature should survive termination (including ownership, disclaimers, liability limits, indemnity, and governing law) survive.</p>
+    </section>
+
+    <section id="law">
+      <h2><span class="num">17</span> Governing law &amp; disputes</h2>
+      <p>These terms are governed by the laws of <strong>New South Wales, Australia</strong>, without regard to conflict-of-laws rules. You and we submit to the <strong>non-exclusive jurisdiction of the courts of New South Wales</strong> and the courts competent to hear appeals from them. Before starting formal proceedings, please contact us at <a href="mailto:parham@trysirus.com">parham@trysirus.com</a> so we can try to resolve the matter. Nothing in this section limits any right you have to bring a claim in your local jurisdiction where applicable law gives you that right.</p>
+    </section>
+
+    <section id="general">
+      <h2><span class="num">18</span> General</h2>
+      <ul>
+        <li><strong>Entire agreement.</strong> These terms and the Privacy Policy are the entire agreement between you and us about the Service and supersede prior discussions.</li>
+        <li><strong>Severability.</strong> If any provision is found unenforceable, the rest remains in effect.</li>
+        <li><strong>No waiver.</strong> Our failure to enforce a provision is not a waiver of it.</li>
+        <li><strong>Assignment.</strong> You may not assign these terms without our consent; we may assign them in connection with a merger, acquisition, or sale of the business.</li>
+        <li><strong>Force majeure.</strong> We are not liable for delays or failures caused by events beyond our reasonable control.</li>
+        <li><strong>Changes to these terms.</strong> We may update these terms; we will revise the "Last updated" date and, for material changes, take reasonable steps to notify you. Continued use after an update means you accept the revised terms.</li>
+        <li><strong>Notices.</strong> We may give notice through the app, the website, or by email. You can reach us at the addresses below.</li>
+      </ul>
+    </section>
+
+    <section id="contact">
+      <h2><span class="num">19</span> Contact us</h2>
+      <p>For questions about these terms, or any legal or privacy matter, email <a href="mailto:parham@trysirus.com">parham@trysirus.com</a>.</p>
+      <p>Sirus is operated by Parham Sepasgozar, New South Wales, Australia.</p>
+    </section>
+  </main>
+
+  <footer>
+    <span class="copy">© 2026 Sirus</span>
+    <span class="legal-links">
+      <a href="/">Home</a>
+      <a href="/privacy">Privacy</a>
+      <a href="/terms">Terms</a>
+    </span>
+  </footer>
+
+</div>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

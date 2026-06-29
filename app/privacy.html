@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy — Sirus</title>
+<meta name="description" content="How Sirus collects, uses, shares, and protects your information.">
+<link rel="canonical" href="https://www.trysirus.com/privacy">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" href="/sirus-mark.png">
+<!-- PostHog (cookieless). Project API key is public/client-side by design. -->
+<script>
+  !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug getPageViewId captureTraceFeedback captureTraceMetric".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+  posthog.init('phc_yti6EQAg7PZkKkctK5zxuodZoRLxV2YL2wXwnSpVjYeV', {
+    api_host: 'https://us.i.posthog.com',
+    persistence: 'memory',
+    disable_session_recording: true
+  });
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;1,14..32,400&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:#000;color:#cfcfcf;font-family:'Inter',system-ui,sans-serif;font-size:15px;line-height:1.85;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
+  .sirus{font-feature-settings:'ss01';font-optical-sizing:auto}
+  ::selection{background:#fff;color:#000}
+  a{color:#fff;text-decoration:underline;text-underline-offset:2px;text-decoration-color:rgba(255,255,255,.32);transition:text-decoration-color .2s}
+  a:hover{text-decoration-color:#fff}
+  a:focus-visible{outline:2px solid currentColor;outline-offset:3px;border-radius:2px}
+
+  nav{position:sticky;top:0;z-index:50;background:rgba(0,0,0,.84);backdrop-filter:blur(8px);border-bottom:1px solid #1f1f1f}
+  .nav-inner{max-width:1100px;margin:0 auto;padding:20px clamp(22px,5vw,48px);display:flex;align-items:center;justify-content:space-between;gap:24px}
+  .nav-brand{text-decoration:none;display:inline-flex;align-items:center;gap:10px}
+  .nav-brand img{height:24px;width:auto;display:block;filter:invert(1)}
+  .nav-brand span{color:#fff;font-size:20px;font-weight:500;font-feature-settings:'ss01';letter-spacing:-.02em}
+  .nav-links{display:flex;align-items:center;gap:clamp(18px,3vw,32px)}
+  .nav-links a{text-decoration:none;color:#fff;font-size:11px;font-weight:500;letter-spacing:.19em;text-transform:uppercase}
+
+  .article{max-width:760px;margin:0 auto;padding:clamp(44px,7vh,80px) clamp(22px,5vw,48px) clamp(56px,9vh,104px)}
+  .eyebrow{font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#777}
+  h1{font-weight:400;font-size:clamp(34px,5.4vw,56px);line-height:1.04;letter-spacing:-.018em;color:#fff;margin-top:18px}
+  .meta{margin-top:20px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#777}
+  .lede{margin-top:28px;font-size:16px;line-height:1.8;color:#d6d6d6}
+
+  .toc{margin-top:40px;padding:24px 26px;border:1px solid #1f1f1f;border-radius:14px;background:#0a0a0a}
+  .toc .toc-h{display:block;font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#777;margin-bottom:16px}
+  .toc ol{list-style:none;counter-reset:toc;columns:2;column-gap:36px}
+  .toc li{counter-increment:toc;font-size:13px;line-height:1.75;break-inside:avoid}
+  .toc li::before{content:counter(toc,decimal-leading-zero);color:#555;margin-right:10px;font-variant-numeric:tabular-nums}
+  .toc a{text-decoration:none;color:#bbb}
+  .toc a:hover{color:#fff}
+
+  section{margin-top:clamp(38px,5.5vh,60px);padding-top:30px;border-top:1px solid #1f1f1f;scroll-margin-top:90px}
+  section h2{font-weight:500;font-size:clamp(19px,2.4vw,24px);line-height:1.22;letter-spacing:-.01em;color:#fff;display:flex;gap:14px;align-items:baseline}
+  section h2 .num{font-size:12px;font-weight:500;color:#555;letter-spacing:.06em;font-variant-numeric:tabular-nums;flex:0 0 auto}
+  h3{font-weight:500;font-size:15px;color:#fff;margin-top:30px;letter-spacing:.005em}
+  p{margin-top:16px}
+  ul,ol.list{margin-top:16px;padding-left:0;list-style:none}
+  ul li,ol.list li{position:relative;padding-left:22px;margin-top:9px}
+  ul li::before{content:"";position:absolute;left:3px;top:12px;width:5px;height:5px;background:#5f5f5f;border-radius:50%}
+  ol.list{counter-reset:li}
+  ol.list li{counter-increment:li}
+  ol.list li::before{content:counter(li);position:absolute;left:0;top:0;color:#777;font-variant-numeric:tabular-nums;font-size:13px}
+  strong{color:#fff;font-weight:500}
+  .callout{margin-top:22px;padding:18px 20px;border:1px solid #2a2a2a;border-left:2px solid #8a8a8a;border-radius:10px;background:#0b0b0b;font-size:14px;line-height:1.8;color:#cfcfcf}
+  .callout strong{color:#fff}
+
+  .tbl-wrap{margin-top:22px;overflow-x:auto;border:1px solid #1f1f1f;border-radius:12px}
+  table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:620px}
+  th,td{text-align:left;padding:12px 14px;border-bottom:1px solid #1a1a1a;vertical-align:top;line-height:1.6}
+  th{font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:#888;background:#0a0a0a}
+  td{color:#bcbcbc}
+  td strong{color:#fff;font-weight:500}
+  tr:last-child td{border-bottom:none}
+
+  footer{max-width:1100px;margin:0 auto;padding:32px clamp(22px,5vw,48px) 48px;border-top:1px solid #1f1f1f;display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px 24px;align-items:center}
+  footer .legal-links{display:flex;gap:22px;flex-wrap:wrap}
+  footer a{text-decoration:none;color:#777;font-size:10px;letter-spacing:.18em;text-transform:uppercase}
+  footer a:hover{color:#fff}
+  footer .copy{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#777}
+
+  @media (max-width:600px){.toc ol{columns:1}}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="sirus">
+
+  <nav>
+    <div class="nav-inner">
+      <a href="/" class="nav-brand" aria-label="Sirus — home">
+        <img src="/sirus-mark.png" alt="" aria-hidden="true">
+        <span>Sirus</span>
+      </a>
+      <div class="nav-links">
+        <a href="/terms">Terms</a>
+        <a href="/#top">Get in touch</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="article">
+    <div class="eyebrow">Legal</div>
+    <h1>Privacy Policy</h1>
+    <div class="meta">Last updated 30 June 2026</div>
+
+    <p class="lede">This policy explains what information Sirus collects, how we use and share it, and the choices and rights you have. Sirus is built privacy-first: much of your content stays on your own device.</p>
+
+    <div class="callout">
+      <strong>The short version.</strong> Sirus is a desktop app that learns your business and works alongside you. Your chats and documents are stored on your Mac, and the knowledge Sirus builds about your business is also kept in a private workspace we host for you. To answer you and run automations, Sirus sends the relevant content to AI providers and, with your permission, connects to your email, calendar, and other tools. It can also record and transcribe meetings you choose to capture, processing the audio on your device. We don't sell your data, we don't use it to train our own models, and the app contains no analytics or telemetry. This website (trysirus.com) uses cookieless analytics. The details are below.
+    </div>
+
+    <div class="toc" aria-label="Contents">
+      <span class="toc-h">Contents</span>
+      <ol>
+        <li><a href="#who">Who we are</a></li>
+        <li><a href="#scope">What this policy covers</a></li>
+        <li><a href="#collect">Information we collect</a></li>
+        <li><a href="#ai">AI processing &amp; your content</a></li>
+        <li><a href="#use">How we use information</a></li>
+        <li><a href="#share">How we share information</a></li>
+        <li><a href="#location">Where your data is stored</a></li>
+        <li><a href="#others">Data about other people</a></li>
+        <li><a href="#security">Security</a></li>
+        <li><a href="#retention">Data retention</a></li>
+        <li><a href="#rights">Your rights &amp; choices</a></li>
+        <li><a href="#regional">Regional rights (EEA/UK, California, Australia)</a></li>
+        <li><a href="#cookies">Cookies &amp; analytics</a></li>
+        <li><a href="#children">Children</a></li>
+        <li><a href="#changes">Changes to this policy</a></li>
+        <li><a href="#contact">Contact us</a></li>
+      </ol>
+    </div>
+
+    <section id="who">
+      <h2><span class="num">01</span> Who we are</h2>
+      <p>Sirus ("Sirus", "we", "us", or "our") is operated by <strong>Parham Sepasgozar</strong>, an individual sole trader based in New South Wales, Australia. We provide the Sirus desktop application and the website at <strong>trysirus.com</strong>.</p>
+      <p>For any privacy question, or to exercise your rights, contact us at <a href="mailto:parham@trysirus.com">parham@trysirus.com</a>. We are the data controller for the information described in this policy.</p>
+    </section>
+
+    <section id="scope">
+      <h2><span class="num">02</span> What this policy covers</h2>
+      <p>This policy applies to two distinct environments, which collect very different amounts of information:</p>
+      <ul>
+        <li><strong>The website</strong> (trysirus.com) — our public marketing site, where you can read about Sirus and leave your email to get in touch.</li>
+        <li><strong>The Sirus app</strong> — the macOS desktop application you download and run on your own computer. The app stores some of your content in a local database on your Mac, and some in a hosted workspace (a cloud database we provision and run for your business). The two work together; this is not a setting you switch between.</li>
+      </ul>
+      <p>Where it matters, we say which environment we're talking about.</p>
+    </section>
+
+    <section id="collect">
+      <h2><span class="num">03</span> Information we collect</h2>
+
+      <h3>A. From the website</h3>
+      <ul>
+        <li><strong>Your email address</strong>, if you submit it through the "Get in touch" form. We use it to reply to you and to let you know when Sirus is available. The submission is delivered to us by email through our email provider (Resend). We are not currently storing website signups in any separate database.</li>
+        <li><strong>Basic analytics</strong> — pages viewed, approximate location (from IP, not stored), device/browser type, and how far you scroll. This is collected without cookies and without recording your session. See <a href="#cookies">Cookies &amp; analytics</a>.</li>
+      </ul>
+
+      <h3>B. From the app — account &amp; device information</h3>
+      <ul>
+        <li><strong>Install identifier.</strong> When the app first runs, it registers with our service and receives a random install ID and secret, which are stored encrypted in your macOS Keychain. These identify your installation so we can meter usage and apply your subscription — there is no email-and-password login.</li>
+        <li><strong>A one-way hardware hash.</strong> We derive a non-reversible (HMAC) hash of a hardware identifier to limit abuse and duplicate sign-ups. We never store your raw hardware identifier.</li>
+        <li><strong>An optional display name</strong> you choose to personalise the app.</li>
+        <li><strong>Business activation details</strong>, if you are onboarded as a business customer (a business identifier and the configuration needed to connect your hosted workspace).</li>
+      </ul>
+
+      <h3>C. From the app — content you create</h3>
+      <ul>
+        <li><strong>Your conversations</strong> with Sirus, including messages and the assistant's replies.</li>
+        <li><strong>Knowledge Sirus builds</strong> about your business — entities (people, companies, projects), notes and "dossiers", relationships, tasks, and observations.</li>
+        <li><strong>Documents, files, workflows, and automations</strong> you create or that Sirus creates with you.</li>
+        <li><strong>Search indexes</strong> (numerical "embeddings") derived from the above so Sirus can recall relevant context.</li>
+      </ul>
+      <p>Some of this content is stored in a local database on your Mac (for example, your conversations), and some — such as your business knowledge graph, an activity log, and workflow runs — is stored in the hosted workspace we run for your business.</p>
+
+      <h3>D. From the app — voice and meeting recordings</h3>
+      <p>Sirus includes voice and meeting features that capture audio, and only when you choose to use them:</p>
+      <ul>
+        <li><strong>Voice input.</strong> When you hold the orb to talk, Sirus records your microphone so it can understand what you say.</li>
+        <li><strong>Meeting capture.</strong> When you start capturing a meeting, Sirus records the meeting audio — your microphone and, where you enable it, the audio you hear from other participants (your system audio) — so it can transcribe and summarise the meeting.</li>
+      </ul>
+      <p>This audio is <strong>transcribed on your device</strong> using a local speech-to-text model; the audio itself is not uploaded to us or to any third party for transcription. The resulting transcript and summary are treated like your other content — stored on your device and in your workspace, and sent to AI providers only when needed to transcribe text, summarise, or answer questions about the meeting.</p>
+      <p><strong>Recording other people.</strong> Meeting capture can record people other than you. You are responsible for whom you record and for obtaining any consent the law requires before recording — see our <a href="/terms">Terms of Service</a>.</p>
+
+      <h3>E. From the app — connected accounts</h3>
+      <p>Sirus is most useful when you connect your own tools. You choose what to connect, and you can disconnect at any time. When you connect an account, Sirus may access:</p>
+      <ul>
+        <li><strong>Email</strong> (Gmail via Google, or Outlook via Microsoft) — message headers and content, so Sirus can read, summarise, draft, and (when you ask) send mail.</li>
+        <li><strong>Calendar</strong> (Google or Microsoft) — events and details.</li>
+        <li><strong>Files</strong> (Google Drive, Docs, and Sheets) — documents you point Sirus to.</li>
+        <li><strong>Workspace and business tools</strong> you connect, such as Slack, HighLevel, or Maropost — messages, contacts, orders, and similar records.</li>
+      </ul>
+      <p>The access tokens that authorise this are stored encrypted — in your macOS Keychain and, where background syncing is needed, encrypted in our proxy service. <strong>This data often includes personal information about other people</strong> (your colleagues, contacts, and customers). Please read <a href="#others">Data about other people</a>.</p>
+
+      <h3>F. From the app — usage &amp; billing</h3>
+      <ul>
+        <li><strong>Usage metering.</strong> For each AI request we record which provider and model was used, the number of tokens processed, an estimated cost, and where in the app the request came from. We use this to manage credits and your subscription. We do <strong>not</strong> store the content of your prompts in these usage records.</li>
+        <li><strong>Payment information.</strong> Subscriptions are handled by Stripe. Stripe collects and processes your payment details directly; we receive your subscription status, plan, and a customer reference — never your full card number.</li>
+      </ul>
+    </section>
+
+    <section id="ai">
+      <h2><span class="num">04</span> AI processing &amp; your content</h2>
+      <p>Sirus is an AI assistant, so to answer you it must send relevant content to AI model providers. You should understand clearly what this means:</p>
+      <ul>
+        <li>When you chat with Sirus or run an automation, the relevant context — which <strong>may include the text of your emails, documents, and other connected data</strong> — is sent through our service to an AI provider to generate a response.</li>
+        <li>AI requests are routed through our own secure proxy, which holds the provider API keys and meters usage. Your installation never holds those keys directly.</li>
+        <li>Depending on the task and model selected, the provider may be <strong>Anthropic</strong>, <strong>Google</strong> (Gemini), or <strong>DeepSeek</strong>. Text we read aloud is sent to <strong>OpenAI</strong> for speech synthesis.</li>
+      </ul>
+      <div class="callout">
+        <strong>Training.</strong> We do not use your content to train our own models, and we do not sell it. Our AI providers process your content to return a result to you. Their handling of data differs, and at least one model option (DeepSeek) is operated outside Australia, the EU, and the US, under different data-protection standards. If you handle highly sensitive information, review the provider terms and choose your models and connected data accordingly. See <a href="#location">Where your data is stored</a> and the sub-processor list in <a href="#share">How we share information</a>.
+      </div>
+    </section>
+
+    <section id="use">
+      <h2><span class="num">05</span> How we use information</h2>
+      <p>We use the information we collect to:</p>
+      <ul>
+        <li>Provide the app and website, and the features you ask for — answering questions, building knowledge about your business, drafting and sending mail, and running automations and agents you set up.</li>
+        <li>Connect to the third-party accounts you authorise and sync the data needed to do the work.</li>
+        <li>Meter usage, apply credits, and manage your subscription and payments.</li>
+        <li>Maintain security, prevent abuse and fraud, and debug problems.</li>
+        <li>Communicate with you about the service, including replying to your enquiries.</li>
+        <li>Comply with our legal obligations and enforce our <a href="/terms">Terms of Service</a>.</li>
+        <li>Understand, at an aggregate level, how the website is used so we can improve it.</li>
+      </ul>
+    </section>
+
+    <section id="share">
+      <h2><span class="num">06</span> How we share information</h2>
+      <p>We do not sell your personal information. We share it only with the service providers ("sub-processors") that make Sirus work, and where required by law. The providers below act on our or your behalf to deliver specific functions:</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>Provider</th><th>Purpose</th><th>What it may receive</th><th>Region</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Anthropic</strong></td><td>AI model (Claude)</td><td>Your prompts and the context you include, which may contain email/document content</td><td>USA</td></tr>
+            <tr><td><strong>Google</strong> (Gemini)</td><td>AI model</td><td>Same as above, when a Gemini model is used</td><td>USA</td></tr>
+            <tr><td><strong>DeepSeek</strong></td><td>AI model</td><td>Same as above, when a DeepSeek model is used</td><td>China</td></tr>
+            <tr><td><strong>OpenAI</strong></td><td>Text-to-speech</td><td>Text you have Sirus read aloud</td><td>USA</td></tr>
+            <tr><td><strong>Google</strong> (Workspace APIs)</td><td>Email, calendar &amp; files you connect</td><td>The Gmail, Calendar, and Drive data you authorise</td><td>USA</td></tr>
+            <tr><td><strong>Microsoft</strong> (Graph)</td><td>Email &amp; calendar you connect</td><td>The Outlook and Calendar data you authorise</td><td>USA / global</td></tr>
+            <tr><td><strong>Slack, HighLevel, Maropost</strong></td><td>Workspace &amp; business tools you connect</td><td>Messages, contacts, orders and similar records you authorise</td><td>USA / your store</td></tr>
+            <tr><td><strong>Stripe</strong></td><td>Payments &amp; subscriptions</td><td>Your email and payment details; subscription status</td><td>USA / global</td></tr>
+            <tr><td><strong>Cloudflare</strong></td><td>Proxy hosting &amp; usage metering</td><td>Install identifier and request content in transit; usage metrics; encrypted connection tokens</td><td>Global</td></tr>
+            <tr><td><strong>Supabase</strong></td><td>Hosted workspace database (connected workspaces only)</td><td>Your business knowledge graph, activity log, and workflow data</td><td>Your project's region</td></tr>
+            <tr><td><strong>Railway</strong></td><td>Hosted workspace compute (connected workspaces only)</td><td>Processes your workspace data to run syncs and automations</td><td>USA / region</td></tr>
+            <tr><td><strong>Resend</strong></td><td>Website signup notifications</td><td>The email address you submit on the website</td><td>USA</td></tr>
+            <tr><td><strong>PostHog</strong></td><td>Website analytics (cookieless)</td><td>Anonymous website usage events; approximate location</td><td>USA</td></tr>
+            <tr><td><strong>Vercel</strong></td><td>Website hosting &amp; analytics</td><td>Standard web request logs and aggregate analytics</td><td>USA / global</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>We may also disclose information if required by law, to respond to lawful requests, to protect our rights, safety, or property or those of others, or in connection with a sale or transfer of the business (in which case we will require the recipient to honour this policy).</p>
+    </section>
+
+    <section id="location">
+      <h2><span class="num">07</span> Where your data is stored</h2>
+      <ul>
+        <li><strong>On your device.</strong> Your conversations, much of your knowledge base, your documents, and search indexes are stored in a local database on your Mac, and leave it only as needed to provide a feature you use (for example, sending context to an AI provider to answer you).</li>
+        <li><strong>In our proxy.</strong> Our usage-metering and account service runs on Cloudflare and holds your install record, usage metrics, and encrypted connection tokens.</li>
+        <li><strong>In your hosted workspace.</strong> Your business knowledge graph, activity log, and workflow data are stored in a database (Supabase) and processed by compute (Railway) that we provision and run for your business.</li>
+      </ul>
+      <p><strong>International transfers.</strong> We are based in Australia, but our providers operate globally, primarily in the United States, and one AI option (DeepSeek) operates in China. This means your information may be transferred to and processed in countries with different data-protection laws than your own. Where required, we rely on appropriate safeguards (such as the providers' standard contractual clauses) for these transfers.</p>
+    </section>
+
+    <section id="others">
+      <h2><span class="num">08</span> Data about other people</h2>
+      <p>When you connect your email, calendar, messaging, or business tools, Sirus necessarily processes personal information about people who are not you — your colleagues, contacts, and customers. <strong>For that information, you (or your business) are the controller and we act as your processor</strong>, handling it under your instructions to provide the service.</p>
+      <p>You are responsible for ensuring you have the right to connect those accounts and to have that data processed by Sirus and our sub-processors, and for meeting any notice or consent obligations you owe to those individuals under applicable law. Our handling of that data is also governed by the data-processing terms in our <a href="/terms">Terms of Service</a>.</p>
+    </section>
+
+    <section id="security">
+      <h2><span class="num">09</span> Security</h2>
+      <ul>
+        <li>Connection tokens and stored secrets are <strong>encrypted at rest</strong>; on your device they are held in the macOS Keychain.</li>
+        <li>Traffic between the app, our proxy, and providers is encrypted in transit (TLS).</li>
+        <li>The app contains <strong>no analytics, telemetry, or crash-reporting</strong> that sends your content to us.</li>
+        <li>Voice and meeting audio is transcribed by a speech-to-text model that runs <strong>locally on your device</strong>; recordings are not uploaded for transcription.</li>
+        <li>Business activity is recorded in an append-only log designed so history cannot be silently altered.</li>
+      </ul>
+      <p>No system is perfectly secure, and we cannot guarantee absolute security. If we become aware of a breach that affects your personal information, we will notify you and any regulator as required by law (including the Notifiable Data Breaches scheme under the Australian Privacy Act).</p>
+    </section>
+
+    <section id="retention">
+      <h2><span class="num">10</span> Data retention</h2>
+      <ul>
+        <li><strong>On-device content</strong> stays on your Mac until you delete it or remove the app. You are always in control of this data.</li>
+        <li><strong>Meeting and voice recordings and their transcripts</strong> are stored with your other content and remain until you delete them. You can delete a recording or transcript at any time.</li>
+        <li><strong>Hosted workspace data</strong> is retained while your account is active. After your account is closed, we will delete or de-identify it on request, ordinarily within 30 days, unless we are required to keep it for legal reasons.</li>
+        <li><strong>Account, usage, and billing records</strong> are retained for as long as needed to run your account and, for tax and financial records, for up to <strong>seven years</strong> as required by Australian law.</li>
+        <li><strong>Website signup emails</strong> are kept until you ask us to delete them or they are no longer needed to contact you.</li>
+      </ul>
+    </section>
+
+    <section id="rights">
+      <h2><span class="num">11</span> Your rights &amp; choices</h2>
+      <p>Wherever you live, you can:</p>
+      <ul>
+        <li><strong>Access, correct, or delete</strong> your information — much of it directly in the app, and the rest by contacting us.</li>
+        <li><strong>Disconnect any connected account</strong> at any time, which stops further access and lets you revoke our tokens (you can also revoke access from your Google, Microsoft, or other provider account settings).</li>
+        <li><strong>Cancel your subscription</strong> at any time.</li>
+        <li><strong>Ask us a question</strong> or make a complaint about how we handle your data.</li>
+      </ul>
+      <p>To make a request, email <a href="mailto:parham@trysirus.com">parham@trysirus.com</a>. We will respond within the timeframe required by applicable law. We may need to verify your identity first.</p>
+    </section>
+
+    <section id="regional">
+      <h2><span class="num">12</span> Regional rights</h2>
+
+      <h3>European Economic Area &amp; United Kingdom (GDPR)</h3>
+      <p>If you are in the EEA or UK, our legal bases for processing your personal data are: <strong>performance of a contract</strong> (to provide the app and website you ask for), <strong>legitimate interests</strong> (to secure, support, and improve the service), <strong>consent</strong> (for example, when you connect an account or submit your email), and <strong>legal obligation</strong>. You have the right to access, rectify, erase, restrict, and port your data, to object to processing, and to withdraw consent at any time. You may lodge a complaint with your local supervisory authority. Where we process personal data of others on your behalf, we do so as a processor under the data-processing terms in our Terms of Service.</p>
+
+      <h3>California (CCPA/CPRA)</h3>
+      <p>If you are a California resident, you have the right to know what personal information we collect and how we use and share it, to request access and deletion, to correct inaccurate information, and to be free from discrimination for exercising your rights. <strong>We do not sell or share your personal information</strong> as those terms are defined under California law, and we do not use sensitive personal information for purposes beyond providing the service. The categories we collect and our purposes are described above. To exercise your rights, contact <a href="mailto:parham@trysirus.com">parham@trysirus.com</a>.</p>
+
+      <h3>Australia (Privacy Act &amp; APPs)</h3>
+      <p>We handle personal information in accordance with the Australian Privacy Principles. You may request access to and correction of your personal information, and you may complain to us at <a href="mailto:parham@trysirus.com">parham@trysirus.com</a>. If you are not satisfied with our response, you may contact the Office of the Australian Information Commissioner (OAIC) at <a href="https://www.oaic.gov.au" rel="noopener">oaic.gov.au</a>.</p>
+    </section>
+
+    <section id="cookies">
+      <h2><span class="num">13</span> Cookies &amp; analytics</h2>
+      <p><strong>The app</strong> does not use cookies or advertising trackers, and contains no analytics or telemetry.</p>
+      <p><strong>The website</strong> (trysirus.com) uses privacy-friendly, <strong>cookieless</strong> analytics through PostHog and Vercel. We measure page views, approximate location, device and browser type, time on page, and scroll depth, in order to understand interest and improve the site. PostHog is configured not to set cookies, not to use local storage, and not to record your session. We do not use the website for advertising or cross-site tracking.</p>
+    </section>
+
+    <section id="children">
+      <h2><span class="num">14</span> Children</h2>
+      <p>Sirus is a tool for businesses and is not directed to children. It is not intended for anyone under 18, and we do not knowingly collect personal information from children. If you believe a child has provided us with personal information, contact us and we will delete it.</p>
+    </section>
+
+    <section id="changes">
+      <h2><span class="num">15</span> Changes to this policy</h2>
+      <p>We may update this policy as the service evolves or the law changes. When we do, we will revise the "Last updated" date above, and for material changes we will take reasonable steps to let you know. Your continued use of Sirus after an update means you accept the revised policy.</p>
+    </section>
+
+    <section id="contact">
+      <h2><span class="num">16</span> Contact us</h2>
+      <p>For privacy questions, requests, or complaints, email <a href="mailto:parham@trysirus.com">parham@trysirus.com</a>.</p>
+      <p>Sirus is operated by Parham Sepasgozar, New South Wales, Australia.</p>
+    </section>
+  </main>
+
+  <footer>
+    <span class="copy">© 2026 Sirus</span>
+    <span class="legal-links">
+      <a href="/">Home</a>
+      <a href="/privacy">Privacy</a>
+      <a href="/terms">Terms</a>
+    </span>
+  </footer>
+
+</div>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
