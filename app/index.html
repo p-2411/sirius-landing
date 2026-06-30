@@ -50,6 +50,8 @@
     html{scroll-behavior:auto}
     *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
     [style*="animation:rise"]{opacity:1 !important;transform:none !important}
+    .js-reveal [data-reveal]{opacity:1 !important;transform:none !important}
+    .feed-track{animation:none !important;transform:none !important}
   }
   /* ---- responsive / mobile ---- */
   @media (max-width:760px){
@@ -84,6 +86,61 @@
     .hero-grid{display:flex !important;flex-direction:column !important;gap:clamp(24px,4vh,40px) !important}
     .hero-visual{order:-1 !important;min-height:0 !important;height:clamp(280px,45svh,440px) !important}
   }
+
+  /* ===== scroll-reveal (progressive — no-JS leaves everything visible) ===== */
+  .js-reveal [data-reveal]{opacity:0;transform:translateY(18px)}
+  .js-reveal [data-reveal].in{opacity:1;transform:none;transition:opacity .8s ease,transform .8s ease}
+
+  /* grid items must be allowed to shrink below content min-width, or the 1fr
+     track refuses to narrow on mobile and long lines overflow (clipped by body) */
+  .grid-split>*{min-width:0}
+  .how-row>*{min-width:0}
+
+  /* ===== integration strip ===== */
+  .logo{display:inline-flex;align-items:center;color:rgba(255,255,255,.36);transition:color .34s ease,transform .34s ease}
+  .logo svg{height:21px;width:auto;display:block;fill:currentColor}
+  @media (hover:hover){.logo:hover{color:#fff;transform:translateY(-2px)}}
+
+  /* ===== loop diagram ===== */
+  .loop-svg{width:100%;max-width:264px;height:auto;margin-top:30px;display:block}
+  .loop-flow{stroke-dasharray:4 5;animation:loopDash 1.5s linear infinite}
+  @keyframes loopDash{to{stroke-dashoffset:-18}}
+
+  /* ===== live activity console ===== */
+  @keyframes livePulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.72)}}
+  .live-dot{width:6px;height:6px;border-radius:50%;background:#fff;display:inline-block;animation:livePulse 2.4s ease-in-out infinite}
+  .console{border:1px solid #1f1f1f;border-radius:18px;background:#0a0a0a;overflow:hidden;margin-top:clamp(32px,5vh,52px)}
+  .console-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 22px;border-bottom:1px solid #1a1a1a}
+  .feed-mask{position:relative;height:312px;overflow:hidden;
+    -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 15%,#000 85%,transparent 100%);
+            mask-image:linear-gradient(180deg,transparent 0,#000 15%,#000 85%,transparent 100%)}
+  .feed-track{display:flex;flex-direction:column;animation:feedScroll 30s linear infinite;will-change:transform}
+  @keyframes feedScroll{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+  @media (hover:hover){.feed-mask:hover .feed-track{animation-play-state:paused}}
+  .feed-row{display:grid;grid-template-columns:16px 1fr auto;gap:15px;align-items:baseline;padding:14px 22px;border-top:1px solid #141414}
+  .feed-mark{font-size:9px;color:#555;line-height:1.4}
+  .feed-text{font-size:13px;letter-spacing:.012em;color:#888;min-width:0}
+  .feed-time{font-size:10px;letter-spacing:.06em;color:#3f3f3f;white-space:nowrap;font-variant-numeric:tabular-nums}
+  .feed-row.call .feed-text{color:#fff}
+  .feed-row.call .feed-mark{color:#fff}
+  .feed-tag{font-size:9px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:#000;background:#fff;padding:3px 8px;border-radius:100px;white-space:nowrap}
+  .feed-tag.wait{color:#fff;background:transparent;border:1px solid #3a3a3a}
+
+  /* ===== proof metrics ===== */
+  .metric-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:48px 32px}
+  .metric-num{font-weight:400;font-size:clamp(40px,4.6vw,66px);line-height:1;letter-spacing:-.02em;color:#fff;font-variant-numeric:tabular-nums}
+  .metric-label{font-size:12px;line-height:1.65;letter-spacing:.015em;color:#888;margin-top:16px;max-width:20ch}
+
+  /* ===== new-section responsive ===== */
+  @media (max-width:760px){
+    .integ-row{flex-direction:column !important;align-items:flex-start !important;gap:28px !important}
+    .integ-row>p{flex:0 0 auto !important;max-width:none !important}
+    .feed-mask{height:268px}
+    .feed-row{padding:14px 18px}
+    .metric-grid{grid-template-columns:1fr 1fr !important;gap:40px 28px !important}
+    .quote-grid{grid-template-columns:1fr !important}
+  }
+  @media (max-width:460px){.metric-grid{grid-template-columns:1fr !important}}
 </style>
 </head>
 <body>
@@ -145,12 +202,40 @@
     </div>
   </header>
 
+  <!-- ===== INTEGRATION STRIP ===== -->
+  <section id="integrations" style="max-width:1440px;margin:0 auto;padding:0 clamp(28px,5vw,64px) clamp(60px,11vh,118px)">
+    <div class="integ-row" data-reveal style="border-top:1px solid #1f1f1f;padding-top:clamp(34px,5vh,54px);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:36px 64px">
+      <p data-body style="flex:0 1 300px;font-size:14px;line-height:1.85;letter-spacing:.019em;color:#999;margin:0">No migration. Sirus reaches into the tools you already run.</p>
+      <div class="logo-row" role="img" aria-label="Works with Gmail, Outlook, Google Calendar, Slack, Notion, Google Drive, Zoom and Microsoft Teams" style="display:flex;flex-wrap:wrap;align-items:center;gap:clamp(26px,3.2vw,50px)">
+        <span class="logo" title="Gmail"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></svg></span>
+        <span class="logo" title="Microsoft Outlook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.88 12.04q0 .45-.11.87-.1.41-.33.74-.22.33-.58.52-.37.2-.87.2t-.85-.2q-.35-.21-.57-.55-.22-.33-.33-.75-.1-.42-.1-.86t.1-.87q.1-.43.34-.76.22-.34.59-.54.36-.2.87-.2t.86.2q.35.21.57.55.22.34.31.77.1.43.1.88zM24 12v9.38q0 .46-.33.8-.33.32-.8.32H7.13q-.46 0-.8-.33-.32-.33-.32-.8V18H1q-.41 0-.7-.3-.3-.29-.3-.7V7q0-.41.3-.7Q.58 6 1 6h6.5V2.55q0-.44.3-.75.3-.3.75-.3h12.9q.44 0 .75.3.3.3.3.75V10.85l1.24.72h.01q.1.07.18.18.07.12.07.25zm-6-8.25v3h3v-3zm0 4.5v3h3v-3zm0 4.5v1.83l3.05-1.83zm-5.25-9v3h3.75v-3zm0 4.5v3h3.75v-3zm0 4.5v2.03l2.41 1.5 1.34-.8v-2.73zM9 3.75V6h2l.13.01.12.04v-2.3zM5.98 15.98q.9 0 1.6-.3.7-.32 1.19-.86.48-.55.73-1.28.25-.74.25-1.61 0-.83-.25-1.55-.24-.71-.71-1.24t-1.15-.83q-.68-.3-1.55-.3-.92 0-1.64.3-.71.3-1.2.85-.5.54-.75 1.3-.25.74-.25 1.63 0 .85.26 1.56.26.72.74 1.23.48.52 1.17.81.69.3 1.56.3zM7.5 21h12.39L12 16.08V17q0 .41-.3.7-.29.3-.7.3H7.5zm15-.13v-7.24l-5.9 3.54Z"/></svg></span>
+        <span class="logo" title="Google Calendar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.316 5.684H24v12.632h-5.684V5.684zM5.684 24h12.632v-5.684H5.684V24zM18.316 5.684V0H1.895A1.894 1.894 0 0 0 0 1.895v16.421h5.684V5.684h12.632zm-7.207 6.25v-.065c.272-.144.5-.349.687-.617s.279-.595.279-.982c0-.379-.099-.72-.3-1.025a2.05 2.05 0 0 0-.832-.714 2.703 2.703 0 0 0-1.197-.257c-.6 0-1.094.156-1.481.467-.386.311-.65.671-.793 1.078l1.085.452c.086-.249.224-.461.413-.633.189-.172.445-.257.767-.257.33 0 .602.088.816.264a.86.86 0 0 1 .322.703c0 .33-.12.589-.36.778-.24.19-.535.284-.886.284h-.567v1.085h.633c.407 0 .748.109 1.02.327.272.218.407.499.407.843 0 .336-.129.614-.387.832s-.565.327-.924.327c-.351 0-.651-.103-.897-.311-.248-.208-.422-.502-.521-.881l-1.096.452c.178.616.505 1.082.977 1.401.472.319.984.478 1.538.477a2.84 2.84 0 0 0 1.293-.291c.382-.193.684-.458.902-.794.218-.336.327-.72.327-1.149 0-.429-.115-.797-.344-1.105a2.067 2.067 0 0 0-.881-.689zm2.093-1.931l.602.913L15 10.045v5.744h1.187V8.446h-.827l-2.158 1.557z"/></svg></span>
+        <span class="logo" title="Slack"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52zM15.165 17.688a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z"/></svg></span>
+        <span class="logo" title="Notion"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.046-.326L17.86 1.968c-.42-.326-.981-.7-2.055-.607L3.01 2.295c-.466.046-.56.28-.374.466zm.793 3.08v13.904c0 .747.373 1.027 1.214.98l14.523-.84c.841-.046.935-.56.935-1.167V6.354c0-.606-.233-.933-.748-.887l-15.177.887c-.56.047-.747.327-.747.933zm14.337.745c.093.42 0 .84-.42.888l-.7.14v10.264c-.608.327-1.168.514-1.635.514-.748 0-.935-.234-1.495-.933l-4.577-7.186v6.952L12.21 19s0 .84-1.168.84l-3.222.186c-.093-.186 0-.653.327-.746l.84-.233V9.854L7.822 9.76c-.094-.42.14-1.026.793-1.073l3.456-.233 4.764 7.279v-6.44l-1.215-.139c-.093-.514.28-.887.747-.933zM1.936 1.035l13.31-.98c1.634-.14 2.055-.047 3.082.7l4.249 2.986c.7.513.934.653.934 1.213v16.378c0 1.026-.373 1.634-1.68 1.726l-15.458.934c-.98.047-1.448-.093-1.962-.747l-3.129-4.06c-.56-.747-.793-1.306-.793-1.96V2.667c0-.839.374-1.54 1.447-1.632z"/></svg></span>
+        <span class="logo" title="Google Drive"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.01 1.485c-2.082 0-3.754.02-3.743.047.01.02 1.708 3.001 3.774 6.62l3.76 6.574h3.76c2.081 0 3.753-.02 3.742-.047-.005-.02-1.708-3.001-3.775-6.62l-3.76-6.574zm-4.76 1.73a789.828 789.861 0 0 0-3.63 6.319L0 15.868l1.89 3.298 1.885 3.297 3.62-6.335 3.618-6.33-1.88-3.287C8.1 4.704 7.255 3.22 7.25 3.214zm2.259 12.653-.203.348c-.114.198-.96 1.672-1.88 3.287a423.93 423.948 0 0 1-1.698 2.97c-.01.026 3.24.042 7.222.042h7.244l1.796-3.157c.992-1.734 1.85-3.23 1.906-3.323l.104-.167h-7.249z"/></svg></span>
+        <span class="logo" title="Zoom"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.033 14.649H.743a.74.74 0 0 1-.686-.458.74.74 0 0 1 .16-.808L3.19 10.41H1.06A1.06 1.06 0 0 1 0 9.35h3.957c.301 0 .57.18.686.458a.74.74 0 0 1-.161.808L1.51 13.59h2.464c.585 0 1.06.475 1.06 1.06zM24 11.338c0-1.14-.927-2.066-2.066-2.066-.61 0-1.158.265-1.537.686a2.061 2.061 0 0 0-1.536-.686c-1.14 0-2.066.926-2.066 2.066v3.311a1.06 1.06 0 0 0 1.06-1.06v-2.251a1.004 1.004 0 0 1 2.013 0v2.251c0 .586.474 1.06 1.06 1.06v-3.311a1.004 1.004 0 0 1 2.012 0v2.251c0 .586.475 1.06 1.06 1.06zM16.265 12a2.728 2.728 0 1 1-5.457 0 2.728 2.728 0 0 1 5.457 0zm-1.06 0a1.669 1.669 0 1 0-3.338 0 1.669 1.669 0 0 0 3.338 0zm-4.82 0a2.728 2.728 0 1 1-5.458 0 2.728 2.728 0 0 1 5.457 0zm-1.06 0a1.669 1.669 0 1 0-3.338 0 1.669 1.669 0 0 0 3.338 0z"/></svg></span>
+        <span class="logo" title="Microsoft Teams"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.625 8.127q-.55 0-1.025-.205-.475-.205-.832-.563-.358-.357-.563-.832Q18 6.053 18 5.502q0-.54.205-1.02t.563-.837q.357-.358.832-.563.474-.205 1.025-.205.54 0 1.02.205t.837.563q.358.357.563.837.205.48.205 1.02 0 .55-.205 1.025-.205.475-.563.832-.357.358-.837.563-.48.205-1.02.205zm0-3.75q-.469 0-.797.328-.328.328-.328.797 0 .469.328.797.328.328.797.328.469 0 .797-.328.328-.328.328-.797 0-.469-.328-.797-.328-.328-.797-.328zM24 10.002v5.578q0 .774-.293 1.46-.293.685-.803 1.194-.51.51-1.195.803-.686.293-1.459.293-.445 0-.908-.105-.463-.106-.85-.329-.293.95-.855 1.729-.563.78-1.319 1.336-.756.557-1.67.861-.914.305-1.898.305-1.148 0-2.162-.398-1.014-.399-1.805-1.102-.79-.703-1.312-1.664t-.674-2.086h-5.8q-.411 0-.704-.293T0 16.881V6.873q0-.41.293-.703t.703-.293h8.59q-.34-.715-.34-1.5 0-.727.275-1.365.276-.639.75-1.114.475-.474 1.114-.75.638-.275 1.365-.275t1.365.275q.639.276 1.114.75.474.475.75 1.114.275.638.275 1.365t-.275 1.365q-.276.639-.75 1.113-.475.475-1.114.75-.638.276-1.365.276-.188 0-.375-.024-.188-.023-.375-.058v1.078h10.875q.469 0 .797.328.328.328.328.797zM12.75 2.373q-.41 0-.78.158-.368.158-.638.434-.27.275-.428.639-.158.363-.158.773 0 .41.158.78.159.368.428.638.27.27.639.428.369.158.779.158.41 0 .773-.158.364-.159.64-.428.274-.27.433-.639.158-.369.158-.779 0-.41-.158-.773-.159-.364-.434-.64-.275-.275-.639-.433-.363-.158-.773-.158zM6.937 9.814h2.25V7.94H2.814v1.875h2.25v6h1.875zm10.313 7.313v-6.75H12v6.504q0 .41-.293.703t-.703.293H8.309q.152.809.556 1.5.405.691.985 1.19.58.497 1.318.779.738.281 1.582.281.926 0 1.746-.352.82-.351 1.436-.966.615-.616.966-1.43.352-.815.352-1.752zm5.25-1.547v-5.203h-3.75v6.855q.305.305.691.452.387.146.809.146.469 0 .879-.176.41-.175.715-.48.304-.305.48-.715t.176-.879Z"/></svg></span>
+      </div>
+    </div>
+  </section>
+
   <!-- ===== HOW IT WORKS — scroll-driven index ===== -->
   <section id="how" style="max-width:1440px;margin:0 auto;padding:0 clamp(28px,5vw,64px) clamp(80px,14vh,160px)">
     <div class="grid-split" style="display:grid;grid-template-columns:minmax(0,300px) 1fr;gap:40px 80px;align-items:start;border-top:1px solid #333;padding-top:clamp(40px,6vh,64px)">
       <div class="side" style="position:sticky;top:120px">
         <h2 data-blend style="margin:0;font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#fff">How it works</h2>
         <p style="font-size:14px;line-height:1.85;letter-spacing:.019em;color:#999;margin-top:20px;max-width:280px">The information layer knows your business, and tells the operating layer what to act on. Every interaction feeds back into the loop.</p>
+        <svg class="loop-svg" viewBox="0 0 240 188" fill="none" role="img" aria-label="The information layer directs the operation layer; every action feeds back into the loop" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="loopArrow" markerWidth="7" markerHeight="7" refX="3" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 Z" fill="#888"/></marker>
+          </defs>
+          <rect x="20" y="16" width="200" height="44" rx="11" fill="#0c0c0c" stroke="#333"/>
+          <text x="120" y="42" text-anchor="middle" fill="#fff" style="font-family:Inter,sans-serif;font-size:12px;font-weight:500;letter-spacing:.01em">Information layer</text>
+          <rect x="20" y="128" width="200" height="44" rx="11" fill="#0c0c0c" stroke="#333"/>
+          <text x="120" y="154" text-anchor="middle" fill="#fff" style="font-family:Inter,sans-serif;font-size:12px;font-weight:500;letter-spacing:.01em">Operation layer</text>
+          <path class="loop-flow" d="M150 60 C 172 80, 172 108, 152 127" stroke="#666" stroke-width="1.4" marker-end="url(#loopArrow)"/>
+          <path class="loop-flow" d="M90 128 C 68 108, 68 80, 88 61" stroke="#666" stroke-width="1.4" marker-end="url(#loopArrow)"/>
+        </svg>
       </div>
 
       <div>
@@ -193,8 +278,61 @@
     </div>
   </section>
 
+  <!-- ===== AGENT ACTIVITY — live console ===== -->
+  <section id="activity" style="max-width:1440px;margin:0 auto;padding:0 clamp(28px,5vw,64px) clamp(80px,14vh,160px)">
+    <div class="grid-split" style="display:grid;grid-template-columns:minmax(0,300px) 1fr;gap:40px 80px;align-items:start;border-top:1px solid #333;padding-top:clamp(40px,6vh,64px)">
+      <div class="side" style="position:sticky;top:120px">
+        <div data-blend style="font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#fff">In the loop</div>
+        <p style="font-size:14px;line-height:1.85;letter-spacing:.019em;color:#999;margin-top:20px;max-width:280px">Sirus works in the background all day. You only step in where your judgement is needed.</p>
+      </div>
+
+      <div style="min-width:0">
+        <h2 data-blend data-reveal style="font-weight:400;font-size:clamp(28px,3.6vw,52px);line-height:1.08;letter-spacing:-.015em;color:#fff;max-width:16ch">Your agents do the work.<br><span data-body style="font-style:italic;color:#777777">You make the calls.</span></h2>
+        <p data-body data-reveal style="font-size:clamp(15px,1.5vw,18px);line-height:1.6;letter-spacing:.012em;color:#777;margin-top:24px;max-width:560px">This week, Sirus read 318 emails, wrote 24 drafts and sat through 9 meetings. <span style="color:#fff">You approved 3.</span></p>
+
+        <div class="console" data-reveal aria-hidden="true">
+          <div class="console-head">
+            <span style="font-size:10px;font-weight:500;letter-spacing:.19em;text-transform:uppercase;color:#777">Activity</span>
+            <span style="display:inline-flex;align-items:center;gap:8px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#999"><span class="live-dot"></span>Live</span>
+          </div>
+          <div class="feed-mask">
+            <div class="feed-track">
+              <!-- copy 1 -->
+              <div class="feed-row"><span class="feed-mark">&#9656;</span><span class="feed-text">Triaged 47 new emails <span style="color:#555">&middot; Inbox</span></span><span class="feed-time">09:02</span></div>
+              <div class="feed-row"><span class="feed-mark">&#9656;</span><span class="feed-text">Drafted reply <span style="color:#555">&middot; Acme renewal</span></span><span class="feed-time">09:04</span></div>
+              <div class="feed-row call"><span class="feed-mark">&#9679;</span><span class="feed-text">Flagged for you <span style="color:#888">&middot; Contract over $10k</span></span><span class="feed-tag wait">Needs you</span></div>
+              <div class="feed-row"><span class="feed-mark">&#9656;</span><span class="feed-text">Summarised meeting <span style="color:#555">&middot; Product sync</span></span><span class="feed-time">09:21</span></div>
+              <div class="feed-row"><span class="feed-mark">&#9656;</span><span class="feed-text">Updated CRM <span style="color:#555">&middot; 12 new contacts</span></span><span class="feed-time">09:24</span></div>
+              <div class="feed-row call"><span class="feed-mark">&#10003;</span><span class="feed-text">Approved <span style="color:#888">&middot; Send Acme proposal</span></span><span class="feed-tag">Approved</span></div>
+              <div class="feed-row"><span class="feed-mark">&#9656;</span><span class="feed-text">Chased 3 stale threads <span style="color:#555">&middot; Inbox</span></span><span class="feed-time">09:30</span></div>
+              <div class="feed-row"><span class="feed-mark">&#9656;</span><span class="feed-text">Built automation <span style="color:#555">&middot; Weekly report</span></span><span class="feed-time">09:38</span></div>
+              <div class="feed-row call"><span class="feed-mark">&#9679;</span><span class="feed-text">Flagged for you <span style="color:#888">&middot; Refund request</span></span><span class="feed-tag wait">Needs you</span></div>
+              <div class="feed-row"><span class="feed-mark">&#9656;</span><span class="feed-text">Extracted action items <span style="color:#555">&middot; Client call</span></span><span class="feed-time">09:45</span></div>
+              <div class="feed-row"><span class="feed-mark">&#9656;</span><span class="feed-text">Matched invoice <span style="color:#555">&middot; Vendor 284</span></span><span class="feed-time">09:51</span></div>
+              <div class="feed-row"><span class="feed-mark">&#9656;</span><span class="feed-text">Logged 9 receipts <span style="color:#555">&middot; Expenses</span></span><span class="feed-time">09:58</span></div>
+              <!-- copy 2 (seamless loop) -->
+              <div class="feed-row"><span class="feed-mark">&#9656;</span><span class="feed-text">Triaged 47 new emails <span style="color:#555">&middot; Inbox</span></span><span class="feed-time">09:02</span></div>
+              <div class="feed-row"><span class="feed-mark">&#9656;</span><span class="feed-text">Drafted reply <span style="color:#555">&middot; Acme renewal</span></span><span class="feed-time">09:04</span></div>
+              <div class="feed-row call"><span class="feed-mark">&#9679;</span><span class="feed-text">Flagged for you <span style="color:#888">&middot; Contract over $10k</span></span><span class="feed-tag wait">Needs you</span></div>
+              <div class="feed-row"><span class="feed-mark">&#9656;</span><span class="feed-text">Summarised meeting <span style="color:#555">&middot; Product sync</span></span><span class="feed-time">09:21</span></div>
+              <div class="feed-row"><span class="feed-mark">&#9656;</span><span class="feed-text">Updated CRM <span style="color:#555">&middot; 12 new contacts</span></span><span class="feed-time">09:24</span></div>
+              <div class="feed-row call"><span class="feed-mark">&#10003;</span><span class="feed-text">Approved <span style="color:#888">&middot; Send Acme proposal</span></span><span class="feed-tag">Approved</span></div>
+              <div class="feed-row"><span class="feed-mark">&#9656;</span><span class="feed-text">Chased 3 stale threads <span style="color:#555">&middot; Inbox</span></span><span class="feed-time">09:30</span></div>
+              <div class="feed-row"><span class="feed-mark">&#9656;</span><span class="feed-text">Built automation <span style="color:#555">&middot; Weekly report</span></span><span class="feed-time">09:38</span></div>
+              <div class="feed-row call"><span class="feed-mark">&#9679;</span><span class="feed-text">Flagged for you <span style="color:#888">&middot; Refund request</span></span><span class="feed-tag wait">Needs you</span></div>
+              <div class="feed-row"><span class="feed-mark">&#9656;</span><span class="feed-text">Extracted action items <span style="color:#555">&middot; Client call</span></span><span class="feed-time">09:45</span></div>
+              <div class="feed-row"><span class="feed-mark">&#9656;</span><span class="feed-text">Matched invoice <span style="color:#555">&middot; Vendor 284</span></span><span class="feed-time">09:51</span></div>
+              <div class="feed-row"><span class="feed-mark">&#9656;</span><span class="feed-text">Logged 9 receipts <span style="color:#555">&middot; Expenses</span></span><span class="feed-time">09:58</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ===== PERSONAL SIRUS ===== -->
-  <section id="personal" style="max-width:1440px;margin:0 auto;padding:0 clamp(28px,5vw,64px) clamp(80px,14vh,160px)">
+  <!-- TEMPORARILY HIDDEN (per request) — remove the `hidden` attribute below to restore. -->
+  <section id="personal" hidden style="max-width:1440px;margin:0 auto;padding:0 clamp(28px,5vw,64px) clamp(80px,14vh,160px)">
     <div class="grid-split" style="display:grid;grid-template-columns:minmax(0,300px) 1fr;gap:40px 80px;align-items:start;border-top:1px solid #333;padding-top:clamp(40px,6vh,64px)">
       <div class="side" style="position:sticky;top:120px">
         <div data-blend style="font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#fff">For everyone</div>
@@ -221,6 +359,52 @@
             <h3 style="font-weight:400;font-size:18px;line-height:1.25;letter-spacing:-.01em;color:#fff;margin-top:16px">Builds their automations</h3>
             <p style="font-size:13px;line-height:1.75;letter-spacing:.015em;color:#999;margin-top:10px">It reaches into the tools they connect and turns their repetitive work into automations they never have to touch.</p>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PROOF — metrics + testimonials ===== -->
+  <!-- NOTE: metric magnitudes (4x / 42% / 3x / $120K) and testimonial quotes are PLACEHOLDERS
+       mirroring the competitor's framing. Swap for real, attributed customer results before launch. -->
+  <section id="proof" style="max-width:1440px;margin:0 auto;padding:0 clamp(28px,5vw,64px) clamp(80px,14vh,160px)">
+    <div class="grid-split" style="display:grid;grid-template-columns:minmax(0,300px) 1fr;gap:40px 80px;align-items:start;border-top:1px solid #333;padding-top:clamp(40px,6vh,64px)">
+      <div class="side" style="position:sticky;top:120px">
+        <div data-blend style="font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#fff">Proof</div>
+        <p style="font-size:14px;line-height:1.85;letter-spacing:.019em;color:#999;margin-top:20px;max-width:280px">The first teams to put Sirus on their repetitive work are already running leaner.</p>
+      </div>
+
+      <div style="min-width:0">
+        <!-- metrics TEMPORARILY HIDDEN (per request). To restore: remove `hidden` below,
+             and re-add to the .quote-grid style: margin-top:clamp(48px,8vh,88px);border-top:1px solid #1f1f1f;padding-top:clamp(36px,5vh,52px) -->
+        <div class="metric-grid" hidden>
+          <div data-reveal>
+            <div class="metric-num" data-count="4" data-suffix="&times;">0&times;</div>
+            <div class="metric-label">faster turnaround on the work agents run</div>
+          </div>
+          <div data-reveal>
+            <div class="metric-num" data-count="42" data-suffix="%">0%</div>
+            <div class="metric-label">less time spent on repetitive busywork</div>
+          </div>
+          <div data-reveal>
+            <div class="metric-num" data-count="3" data-suffix="&times;">0&times;</div>
+            <div class="metric-label">more work shipped by the same team</div>
+          </div>
+          <div data-reveal>
+            <div class="metric-num" data-prefix="$" data-count="120" data-suffix="K">$0K</div>
+            <div class="metric-label">saved a year, on average</div>
+          </div>
+        </div>
+
+        <div class="quote-grid" data-reveal style="display:grid;grid-template-columns:1fr 1fr;gap:40px 64px">
+          <blockquote style="margin:0">
+            <p style="font-size:clamp(16px,1.7vw,20px);line-height:1.5;letter-spacing:-.005em;color:#fff;font-weight:400">&ldquo;Sirus took the busywork three of us used to fight over. We finally do the work that grows the company.&rdquo;</p>
+            <footer data-body style="margin-top:18px;font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:#777">Head of Operations &middot; 40-person agency</footer>
+          </blockquote>
+          <blockquote style="margin:0">
+            <p style="font-size:clamp(16px,1.7vw,20px);line-height:1.5;letter-spacing:-.005em;color:#fff;font-weight:400">&ldquo;It learned how we work in a week. Now I approve a handful of things a day and the rest just runs.&rdquo;</p>
+            <footer data-body style="margin-top:18px;font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:#777">Founder &middot; B2B SaaS</footer>
+          </blockquote>
         </div>
       </div>
     </div>
@@ -467,6 +651,49 @@
   } else {
     if (blend) blend.style.display = 'none';
     if (solid) solid.style.display = 'none';
+  }
+})();
+</script>
+<script>
+(function () {
+  var root = document.querySelector('.sirus');
+  if (root) root.classList.add('js-reveal');
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function countUp(el) {
+    if (el.dataset.done) return; el.dataset.done = '1';
+    var target = parseFloat(el.getAttribute('data-count')) || 0;
+    var pre = el.getAttribute('data-prefix') || '';
+    var suf = el.getAttribute('data-suffix') || '';
+    if (reduce) { el.innerHTML = pre + target + suf; return; }
+    var dur = 1300, start = null;
+    function step(ts) {
+      if (start === null) start = ts;
+      var p = Math.min(1, (ts - start) / dur);
+      var v = Math.round(target * (1 - Math.pow(1 - p, 3)));
+      el.innerHTML = pre + v + suf;
+      if (p < 1) requestAnimationFrame(step); else el.innerHTML = pre + target + suf;
+    }
+    requestAnimationFrame(step);
+  }
+
+  var reveals = [].slice.call(document.querySelectorAll('[data-reveal]'));
+  var nums = [].slice.call(document.querySelectorAll('.metric-num'));
+
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        if (e.target.hasAttribute('data-reveal')) e.target.classList.add('in');
+        if (e.target.classList.contains('metric-num')) countUp(e.target);
+        io.unobserve(e.target);
+      });
+    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.15 });
+    reveals.forEach(function (el) { io.observe(el); });
+    nums.forEach(function (el) { io.observe(el); });
+  } else {
+    reveals.forEach(function (el) { el.classList.add('in'); });
+    nums.forEach(countUp);
   }
 })();
 </script>
