@@ -20,13 +20,27 @@
   var rect = null, mx = -9999, my = -9999, mEngaged = false, mStr = 0, mInside = false;
   var autoRY = 0.6, rx = -0.25, ry = 0.6, trx = -0.25, tryy = 0.6;
 
-  function build() {
+  // Size the backing store + geometry to the canvas box. The generated field is
+  // PRESERVED across resizes: node coordinates just rescale with R (a resize is
+  // a scale, never a re-roll of the randomness).
+  function fit() {
     rect = canvas.getBoundingClientRect();
     W = Math.max(1, rect.width); H = Math.max(1, rect.height);
     canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     cx = W * 0.5; cy = H * 0.5;
+    var prevR = R;
     R = Math.min(W, H) * 0.45; focal = R * 2.9;
+    if (prevR > 0 && nodes.length) {
+      var k = R / prevR;
+      for (var i = 0; i < nodes.length; i++) {
+        nodes[i].X *= k; nodes[i].Y *= k; nodes[i].Z *= k;
+      }
+    }
+  }
+
+  function build() {
+    fit();
     nodes = []; edges = [];
 
     var area = W * H;
@@ -196,13 +210,13 @@
   window.addEventListener('resize', function () {
     clearTimeout(rt);
     rt = setTimeout(function () {
-      // Mobile URL-bar collapse fires resize without changing the canvas box —
-      // rebuilding then re-randomizes the field mid-scroll (visible glitch).
-      // Only rebuild when the canvas itself actually changed size.
+      // A resize never regenerates the field — fit() rescales the existing
+      // nodes to the new radius and re-sizes the raster, so the orb is stable
+      // through mobile URL-bar collapse, rotation, and window resizing alike.
       var r2 = canvas.getBoundingClientRect();
       if (Math.round(r2.width) === Math.round(W) && Math.round(r2.height) === Math.round(H)) return;
       dpr = Math.min(window.devicePixelRatio || 1, 2);
-      build(); project();
+      fit(); project();
       if (reduce) draw();
     }, 160);
   });
