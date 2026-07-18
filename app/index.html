@@ -62,10 +62,11 @@
     /* "Or just ask" pins too: scroll grows the visual to full size, then it
        shrinks again as the track releases */
     #ask>div{height:190vh}
-    /* content scrolls naturally to the top, then locks just under the nav;
-       the text column starts centered beside the card (JS translate) and
-       glides to the top as the track progresses */
-    #ask .ask-grid{position:sticky;top:clamp(84px,11vh,116px);align-items:start !important}
+    /* Nested sticky, no synthetic motion: the card locks first, the text column
+       (offset to start centered beside it) keeps scrolling 1:1 until it reaches
+       the same lock line, then both hold while the card grows. */
+    #ask .ask-grid{height:100%;align-items:start !important}
+    #ask .ask-grid>div:first-child,#ask .scale-card{position:sticky;top:clamp(120px,16vh,170px)}
   }
   /* pricing morph: the live monthly price shrinks/dims into the slashed price
      while the annual price slides in from the right (grid-track width anim) */
@@ -746,15 +747,13 @@ message: "Looking to automate our client onboarding…"</pre></div><div style="m
         }
         t = 1 - Math.pow(1 - t, 2);
         scaleCard.style.transform = 'scale(' + (0.82 + 0.12 * t) + ')';
-        // the text column starts centered beside the card and glides to the
-        // top of the section on the same eased progress as the card's growth
+        // the text column starts centered beside the card (a layout offset, so
+        // its rise to the lock line is plain 1:1 scroll — no synthetic motion)
         if (askText) {
-          if (askPinned) {
-            var colGap = Math.max(0, (scaleCard.offsetHeight - askText.offsetHeight) / 2);
-            askText.style.transform = 'translateY(' + (colGap * (1 - t)).toFixed(1) + 'px)';
-          } else {
-            askText.style.transform = '';
-          }
+          var mv = askPinned
+            ? Math.round(Math.max(0, (scaleCard.offsetHeight - askText.offsetHeight) / 2)) + 'px'
+            : '';
+          if (askText.style.marginTop !== mv) askText.style.marginTop = mv;
         }
       }
       // pinned how-it-works: scroll progress through the track picks the mode
