@@ -184,6 +184,11 @@
   /* primary pills: monochrome ink inversion — a dark fill expands from the pointer,
      the label flips white, a keyline holds the pill's edge on black */
   .btn-solid{position:relative;overflow:hidden;border:1px solid #fff;transition:transform .2s var(--eo)}
+  /* ghost pill — the quiet twin of the solid CTA (Log in) */
+  .btn-ghost{border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:9px 19px;transition:transform .35s var(--eo),border-color .35s var(--eo),background .35s var(--eo)}
+  .sbtn.btn-ghost::after{display:none}
+  @media (hover:hover){.btn-ghost:hover{border-color:rgba(255,255,255,.45);background:rgba(255,255,255,.04)}}
+  .btn-ghost:active{transform:scale(.96)}
   .btn-solid::before{content:"";position:absolute;left:var(--mx,50%);top:var(--my,50%);width:12px;height:12px;border-radius:50%;background:#000;transform:translate(-50%,-50%) scale(0);transition:transform .55s var(--eo)}
   .btn-solid .sbtn-label{position:relative;z-index:1;transition:color .4s var(--eo)}
   @media (hover:hover){
@@ -268,8 +273,10 @@
       <div class="nav-links" style="display:flex;align-items:center;gap:clamp(20px,3vw,44px)">
         <a href="#how" class="sbtn nav-how" data-cursor="" style="text-decoration:none;color:#fff;font-size:11px;font-weight:500;letter-spacing:.19em;text-transform:uppercase">How it works</a>
         <a href="#pricing" class="sbtn nav-how" data-cursor="" style="text-decoration:none;color:#fff;font-size:11px;font-weight:500;letter-spacing:.19em;text-transform:uppercase">Pricing</a>
-        <a href="https://app.trysirus.com" class="sbtn" data-cursor="" style="text-decoration:none;color:#8a8a8a;font-size:11px;font-weight:500;letter-spacing:.19em;text-transform:uppercase">Log in</a>
-        <a href="https://app.trysirus.com" class="sbtn btn-solid nav-cta" data-cursor="" style="text-decoration:none;background:#fff;color:#000;border-radius:999px;padding:10px 20px;font-size:11px;font-weight:500;letter-spacing:.19em;text-transform:uppercase;display:inline-flex;align-items:center;gap:7px"><span class="sbtn-label" style="display:inline-flex;align-items:center;gap:7px">Sign up <span style="font-size:13px">→</span></span></a>
+        <span style="display:inline-flex;align-items:center;gap:10px">
+          <a href="https://app.trysirus.com" class="sbtn btn-ghost" data-cursor="" style="text-decoration:none;color:#fff;font-size:11px;font-weight:500;letter-spacing:.19em;text-transform:uppercase;display:inline-flex;align-items:center">Log in</a>
+          <a href="https://app.trysirus.com" class="sbtn btn-solid nav-cta" data-cursor="" style="text-decoration:none;background:#fff;color:#000;border-radius:999px;padding:10px 20px;font-size:11px;font-weight:500;letter-spacing:.19em;text-transform:uppercase;display:inline-flex;align-items:center;gap:7px"><span class="sbtn-label" style="display:inline-flex;align-items:center;gap:7px">Sign up <span style="font-size:13px">→</span></span></a>
+        </span>
       </div>
     </div>
   </nav>
