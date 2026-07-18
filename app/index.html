@@ -957,6 +957,19 @@ message: "Looking to automate our client onboarding…"</pre></div><div style="m
     counts.forEach(function (el) { statIo.observe(el); });
   })();
 
+  // While the how-it-works track is pinned, clamp oversized wheel deltas so a
+  // fast fling can't phase through the Automations → Agents story. Small
+  // (trackpad) deltas pass through untouched; everywhere else scroll is native.
+  window.addEventListener('wheel', function (e) {
+    if (e.ctrlKey || e.deltaMode !== 0) return; // pinch-zoom / line-mode wheels
+    if (reduceMotion || !howPin || !howPin.matches || !howTrackEl) return;
+    var r = howTrackEl.getBoundingClientRect();
+    if (!(r.top < 0 && r.bottom > window.innerHeight)) return; // not pinned
+    if (Math.abs(e.deltaY) <= 100) return;
+    e.preventDefault();
+    window.scrollBy({ top: e.deltaY > 0 ? 100 : -100, left: 0, behavior: 'instant' });
+  }, { passive: false });
+
   // Primary pills: the ink fill grows from where the pointer enters and
   // retracts toward where it leaves.
   Array.prototype.slice.call(document.querySelectorAll('.btn-solid')).forEach(function (b) {
