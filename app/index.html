@@ -16,8 +16,12 @@
   });
 </script>
 <noscript><style>
-  /* No JS: reveal the contact email field directly (the Sign up pill is a plain link and keeps working). */
+  /* No JS: reveal the contact email field directly (the Sign up pill is a plain link and keeps working),
+     and neutralize the scroll-reveal system so nothing stays hidden. */
   #contactFields{display:flex!important}
+  .rv,.rv-rule{opacity:1!important;transform:none!important;filter:none!important}
+  .rv-rule::before{transform:scaleX(1)!important}
+  .tf-item{opacity:1!important;transform:none!important;animation:none!important}
 </style></noscript>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -34,17 +38,31 @@
   @keyframes reticleBreathe{0%,100%{transform:scale(1) rotate(0deg)}50%{transform:scale(1.1) rotate(8deg)}}
   @media (pointer:fine){.cursor-hidden,.cursor-hidden a,.cursor-hidden input,.cursor-hidden button,.cursor-hidden #track{cursor:none}}
   [hidden]{display:none!important}
+  :root{--eo:cubic-bezier(.16,1,.3,1)}
+  /* scroll-reveal system — transform/opacity only, fires once per element */
+  .rv{opacity:0;transform:translateY(22px);transition:opacity .75s var(--eo),transform .75s var(--eo),filter .75s var(--eo);transition-delay:var(--d,0s)}
+  .rv.in{opacity:1;transform:none}
+  .rv-blur{filter:blur(10px)}
+  .rv-blur.in{filter:blur(0)}
+  .rv-scale{transform:translateY(22px) scale(.985)}
+  .rv-scale.in{transform:none}
+  /* section hairlines draw in from the left as they arrive */
+  .rv-rule{position:relative;border-top-color:transparent !important}
+  .rv-rule::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;background:#333;transform:scaleX(0);transform-origin:left center;transition:transform 1.2s var(--eo);transition-delay:var(--d,0s)}
+  .rv-rule.in::before{transform:scaleX(1)}
+  @keyframes maskUp{from{transform:translateY(115%)}to{transform:none}}
+  @keyframes scrollPulse{0%,100%{opacity:.55}50%{opacity:1}}
   @keyframes logoscroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
   @media (hover:hover){.logo-band:hover .logo-marquee{animation-play-state:paused}}
   .ver-btn{background:none;border:none;padding:7px 15px;border-radius:999px;font-family:inherit;font-size:10px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:#8a8a8a;cursor:pointer;transition:background .25s,color .25s}
   .ver-btn.is-on{background:#fff;color:#000}
-  .mode-btn{background:none;border:none;padding:8px 18px;border-radius:999px;font-family:inherit;font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:#8a8a8a;cursor:pointer;transition:background .25s,color .25s}
+  .mode-btn{background:none;border:none;padding:8px 18px;border-radius:999px;font-family:inherit;font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:#8a8a8a;cursor:pointer;transition:background .3s var(--eo),color .3s var(--eo),transform .2s var(--eo)}
   .mode-btn.is-on{background:#fff;color:#000}
-  .mode-panel{position:absolute;inset:0;opacity:0;transition:opacity .5s ease;pointer-events:none}
-  .mode-panel.is-on{opacity:1;pointer-events:auto}
+  .mode-panel{position:absolute;inset:0;opacity:0;transform:translateY(10px);transition:opacity .5s var(--eo),transform .5s var(--eo);pointer-events:none}
+  .mode-panel.is-on{opacity:1;pointer-events:auto;transform:none}
   @media (max-width:900px){.mode-panel{position:static;display:none}.mode-panel.is-on{display:block}#how .bs-wrap{min-height:0 !important}}
   .tf-item{opacity:0;transform:translateY(10px)}
-  .mode-panel.is-on .tf-item{animation:tfIn .55s cubic-bezier(.2,.7,.2,1) forwards}
+  #how .rv-rule.in .mode-panel.is-on .tf-item{animation:tfIn .6s var(--eo) forwards}
   @keyframes tfIn{to{opacity:1;transform:none}}
   .ws-row{transition:background .3s ease}
   @media (hover:hover){.ws-row:hover{background:#0d0d0d}}
@@ -125,14 +143,20 @@
   #contactForm.is-busy{opacity:.55;pointer-events:none}
   #contactSubmit{transition:transform .25s ease}
   @media (hover:hover){#contactSubmit:hover{transform:translateX(3px)}}
-  .sbtn{position:relative;transition:transform .25s ease}
-  .sbtn::after{content:"";position:absolute;left:0;bottom:0;height:1.5px;width:100%;background:currentColor;transform:scaleX(0);transform-origin:left center;transition:transform .32s ease}
+  .sbtn{position:relative;transition:transform .35s var(--eo)}
+  .sbtn::after{content:"";position:absolute;left:0;bottom:0;height:1.5px;width:100%;background:currentColor;transform:scaleX(0);transform-origin:left center;transition:transform .45s var(--eo)}
+  /* arrows nudge on hover; solid pills compress on press */
+  .sbtn>span:last-child,.btn-solid .sbtn-label>span:last-child{display:inline-block;transition:transform .45s var(--eo)}
+  @media (hover:hover){.sbtn:hover>span:last-child,.btn-solid:hover .sbtn-label>span:last-child{transform:translateX(3px)}}
+  .btn-solid{transition:transform .2s var(--eo)}
+  .btn-solid:active{transform:scale(.96)}
+  .mode-btn:active,.ver-btn:active,.bill-label:active{transform:scale(.94)}
   @media (hover:hover){.sbtn:hover{transform:translateY(-2px)}.sbtn:hover::after{transform:scaleX(1)}}
   .sbtn.btn-solid::after{display:none}
   .btn-solid .sbtn-label{position:relative}
   .btn-solid .sbtn-label::after{content:"";position:absolute;left:0;bottom:-2px;height:1.5px;width:100%;background:currentColor;transform:scaleX(0);transform-origin:left center;transition:transform .32s ease}
   @media (hover:hover){.btn-solid:hover .sbtn-label::after{transform:scaleX(1)}}
-  .btn-solid .sbtn-label{transition:transform .25s ease}
+  .btn-solid .sbtn-label{transition:transform .35s var(--eo)}
   @media (hover:hover){.sbtn.btn-solid:hover{transform:none}.btn-solid:hover .sbtn-label{transform:translateY(-1px)}.sbtn.btn-solid:hover::after{transform:none}}
   a:focus-visible,button:focus-visible,#contactEmail:focus-visible,#track:focus-visible{outline:2px solid currentColor;outline-offset:3px;border-radius:2px}
   @media (prefers-reduced-motion:reduce){
@@ -217,9 +241,9 @@
   <header id="top" style="max-width:1440px;margin:0 auto;padding:clamp(48px,8vh,96px) clamp(28px,5vw,64px) clamp(4px,1vh,12px);position:relative">
     <div class="hero-grid" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,clamp(340px,38vw,560px));gap:clamp(32px,5vw,72px);align-items:center">
      <div class="hero-text">
-      <h1 data-blend="" style="font-weight:400;font-size:clamp(40px,6.4vw,73px);line-height:1.0;letter-spacing:-.018em;margin-top:0;animation:rise .7s .05s both">The automation layer <span data-body="" style="font-style:italic;color:#777">for your business.</span></h1>
-      <p style="font-size:14px;line-height:1.85;letter-spacing:.019em;color:#fff;max-width:460px;margin-top:clamp(32px,5vh,52px);animation:rise .7s .1s both">Sirus learns how everything works, then ships agents that handle the busywork. You and your team focus on the business.</p>
-      <div style="width:320px;max-width:100%;margin-top:clamp(28px,4vh,40px);animation:rise .7s .16s both">
+      <h1 data-blend="" style="font-weight:400;font-size:clamp(40px,6.4vw,73px);line-height:1.0;letter-spacing:-.018em;margin-top:0"><span style="display:block;overflow:hidden;padding-bottom:.1em;margin-bottom:-.1em"><span style="display:inline-block;animation:maskUp .85s cubic-bezier(.16,1,.3,1) .08s both">The automation layer</span></span><span style="display:block;overflow:hidden;padding-bottom:.12em;margin-bottom:-.12em"><span data-body="" style="display:inline-block;font-style:italic;color:#777;animation:maskUp .85s cubic-bezier(.16,1,.3,1) .2s both">for your business.</span></span></h1>
+      <p style="font-size:14px;line-height:1.85;letter-spacing:.019em;color:#fff;max-width:460px;margin-top:clamp(32px,5vh,52px);animation:rise .8s cubic-bezier(.16,1,.3,1) .3s both">Sirus learns how everything works, then ships agents that handle the busywork. You and your team focus on the business.</p>
+      <div style="width:320px;max-width:100%;margin-top:clamp(28px,4vh,40px);animation:rise .8s cubic-bezier(.16,1,.3,1) .42s both">
         <form id="contactForm" action="/api/contact" method="POST">
           <a href="https://app.trysirus.com" id="contactToggle" class="sbtn btn-solid" data-cursor="" style="text-decoration:none;background:#fff;color:#000;border-radius:999px;padding:10px 20px;font-size:11px;font-weight:500;letter-spacing:.19em;text-transform:uppercase;display:inline-flex;align-items:center;gap:7px;font-family:inherit;line-height:1.85"><span class="sbtn-label" style="display:inline-flex;align-items:center;gap:7px">Sign up <span style="font-size:13px">→</span></span></a>
           <div id="contactFields" hidden="hidden" style="display:flex;align-items:center;gap:10px;border-bottom:1.5px solid rgba(255,255,255,.28)">
@@ -232,11 +256,11 @@
         <p id="contactSuccess" hidden="hidden" style="margin:0;font-size:14px;line-height:1.5;letter-spacing:.01em;color:#fff;font-weight:600"></p>
       </div>
      </div>
-     <div class="hero-visual" aria-hidden="true" style="position:relative;align-self:stretch;min-height:clamp(380px,60vh,560px);animation:rise .7s .22s both">
+     <div class="hero-visual" aria-hidden="true" style="position:relative;align-self:stretch;min-height:clamp(380px,60vh,560px);animation:rise .9s cubic-bezier(.16,1,.3,1) .25s both">
        <canvas id="signalField" style="position:absolute;inset:0;width:100%;height:100%;display:block"></canvas>
      </div>
     </div>
-    <div data-body="" style="margin-top:clamp(40px,8vh,96px);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#777">
+    <div data-body="" style="margin-top:clamp(40px,8vh,96px);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#777;animation:rise .8s cubic-bezier(.16,1,.3,1) .6s both,scrollPulse 3.2s ease-in-out 1.8s infinite">
       <span style="color:#444">[</span>&nbsp;Scroll&nbsp;<span style="color:#444">]</span>
     </div>
       
@@ -244,19 +268,19 @@
   </header>
 
   <section id="how" style="max-width:1440px;margin:0 auto;padding:clamp(40px,6vh,80px) clamp(28px,5vw,64px)">
-    <div style="border-top:1px solid #333;padding-top:clamp(48px,7vh,88px)">
+    <div class="rv-rule" style="border-top:1px solid #333;padding-top:clamp(48px,7vh,88px)">
       <div class="bs-grid" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,clamp(430px,53vw,672px));column-gap:clamp(40px,6vw,80px);row-gap:clamp(28px,4vh,44px);align-items:start">
-        <div>
+        <div class="rv">
           <div style="font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#fff">How it works</div>
           <h2 data-blend="" style="font-weight:400;font-size:clamp(26px,3.6vw,48px);line-height:1.04;letter-spacing:-.018em;color:#fff;margin:22px 0 0;max-width:16ch;text-wrap:balance">Describe the work. Sirus builds it.</h2>
           </div>
-        <div style="align-self:end;justify-self:end">
+        <div class="rv" style="--d:.1s;align-self:end;justify-self:end">
           <div style="display:inline-flex;align-items:center;gap:2px;border:1px solid #2b2b2b;border-radius:999px;padding:4px;background:#0b0b0b">
             <button type="button" class="mode-btn is-on" data-mode="0" data-cursor="">Automations</button>
             <button type="button" class="mode-btn" data-mode="1" data-cursor="">Agents</button>
           </div>
         </div>
-        <div>
+        <div class="rv" style="--d:.15s">
           <p style="font-size:14px;line-height:1.8;color:#999;margin:0;max-width:44ch">Sirus turns your request into an automation that runs on its own, or an agent that handles the task for you.</p>
           <div style="position:relative;min-height:380px;margin-top:clamp(24px,3.5vh,36px)">
             <div class="mode-panel is-on" data-mode="0">
@@ -298,7 +322,7 @@
             </div>
             </div>
           </div></div>
-        <div>
+        <div class="rv" style="--d:.2s">
           <div class="appscreen-box" style="position:relative;aspect-ratio:1440/960">
             <div class="mode-panel is-on" data-mode="0">
               <div class="tf-item" style="animation-delay:.24s;border:1px solid #242424;border-radius:12px;overflow:hidden;position:relative;height:100%;background:#060606"><div style="position:absolute;top:0;left:0;width:1440px;height:960px;transform-origin:top left" data-appscreen="auto-live"><div style="position:absolute;top:0;left:0;right:0;height:44px;display:flex;align-items:center;padding:0 20px;background:#0e0e0e;border-bottom:1px solid #1c1c1c"><span style="display:inline-flex;gap:8px"><span style="width:12px;height:12px;border-radius:50%;background:#ff5f57"></span><span style="width:12px;height:12px;border-radius:50%;background:#febc2e"></span><span style="width:12px;height:12px;border-radius:50%;background:#28c840"></span></span><span style="position:absolute;left:0;right:0;text-align:center;font-size:12px;color:#5e5e5e;pointer-events:none">Sirus</span></div><div style="position:absolute;top:44px;left:0;right:0;bottom:0"><div style="position:absolute;top:0;left:0;right:0;height:82px;display:flex;align-items:center;gap:13px;padding:0 40px;background:#0a0a0a;border-bottom:1px solid #202020">
@@ -335,14 +359,14 @@ message: "Looking to automate our client onboarding…"</pre></div><div style="m
   </section>
 
   <section id="ask" style="max-width:1440px;margin:0 auto;padding:clamp(40px,6vh,80px) clamp(28px,5vw,64px)">
-    <div style="border-top:1px solid #333;padding-top:clamp(48px,7vh,88px)">
+    <div class="rv-rule" style="border-top:1px solid #333;padding-top:clamp(48px,7vh,88px)">
       <div class="ask-grid" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,clamp(360px,44vw,560px));gap:clamp(40px,6vw,88px);align-items:center">
-        <div>
+        <div class="rv">
           <div style="font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#fff">Ask</div>
           <h2 data-blend="" style="font-weight:400;font-size:clamp(26px,3.6vw,48px);line-height:1.04;letter-spacing:-.018em;color:#fff;margin-top:22px;max-width:16ch;text-wrap:balance">Or just ask.</h2>
           <p style="font-size:14px;line-height:1.8;color:#999;margin-top:22px;max-width:42ch">For one-off work, ask in plain language. Sirus knows your business and acts across your tools.</p>
         </div>
-        <div style="border:1px solid #242424;border-radius:22px;overflow:hidden;background:radial-gradient(130% 130% at 80% 0%,#171717,#050505)">
+        <div class="rv" style="--d:.12s;border:1px solid #242424;border-radius:22px;overflow:hidden;background:radial-gradient(130% 130% at 80% 0%,#171717,#050505)">
           <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:13px 16px;border-bottom:1px solid #1c1c1c">
             <span style="font-size:10px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#c4c4c4">Sirus</span>
             <span style="display:inline-flex;align-items:center;gap:8px;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#7a7a7a"><span class="mdot mdot-live"></span>Online</span>
@@ -354,14 +378,14 @@ message: "Looking to automate our client onboarding…"</pre></div><div style="m
   </section>
 
   <section id="selfhealing" style="max-width:1440px;margin:0 auto;padding:clamp(40px,6vh,80px) clamp(28px,5vw,64px)">
-    <div class="heal-grid" style="border-top:1px solid #333;padding-top:clamp(48px,7vh,88px);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,clamp(340px,42vw,540px));gap:clamp(40px,6vw,88px);align-items:center">
-      <div>
+    <div class="heal-grid rv-rule" style="border-top:1px solid #333;padding-top:clamp(48px,7vh,88px);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,clamp(340px,42vw,540px));gap:clamp(40px,6vw,88px);align-items:center">
+      <div class="rv">
         <div style="font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#fff">Self-healing</div>
         <h2 data-blend="" style="font-weight:400;font-size:clamp(26px,3.6vw,48px);line-height:1.04;letter-spacing:-.018em;margin-top:22px;max-width:14ch;text-wrap:balance">Built by Sirus. <span style="font-style:italic;color:#777">Maintained by Sirus.</span></h2>
         <p style="font-size:14px;line-height:1.8;color:#999;margin-top:22px;max-width:46ch">When an automation breaks, Sirus investigates and repairs it. You only hear about it when a fix isn't safe.</p>
       </div>
 
-      <div style="border:1px solid #242424;border-radius:22px;overflow:hidden;background:radial-gradient(130% 120% at 72% 12%,#151515,#050505);padding:clamp(24px,3vw,34px)">
+      <div class="rv" style="--d:.12s;border:1px solid #242424;border-radius:22px;overflow:hidden;background:radial-gradient(130% 120% at 72% 12%,#151515,#050505);padding:clamp(24px,3vw,34px)">
         <div style="display:flex;align-items:center;gap:10px">
           <span class="st st-healing" style="width:7px;height:7px"></span>
           <span style="flex:1;font-size:10px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#63c08d">Sirus is healing this</span>
@@ -388,17 +412,17 @@ message: "Looking to automate our client onboarding…"</pre></div><div style="m
 
 
   <section id="proof" style="max-width:1440px;margin:0 auto;padding:clamp(40px,6vh,80px) clamp(28px,5vw,64px)">
-    <div style="border-top:1px solid #333;padding-top:clamp(48px,7vh,88px)">
+    <div class="rv-rule" style="border-top:1px solid #333;padding-top:clamp(48px,7vh,88px)">
       <div class="proof-stats" style="display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(48px,7vw,120px)">
-        <div style="flex:0 1 auto">
-          <div style="font-weight:400;font-size:clamp(38px,5vw,72px);line-height:.9;letter-spacing:-.035em;color:#fff">1–6<span style="font-size:.3em;color:#777;letter-spacing:.01em;margin-left:.32em">hrs</span></div>
+        <div class="rv" style="flex:0 1 auto">
+          <div style="font-weight:400;font-size:clamp(38px,5vw,72px);line-height:.9;letter-spacing:-.035em;color:#fff;font-variant-numeric:tabular-nums"><span data-count="6" data-start="1" data-prefix="1–">1–6</span><span style="font-size:.3em;color:#777;letter-spacing:.01em;margin-left:.32em">hrs</span></div>
           <div style="font-size:14px;line-height:1.7;letter-spacing:.015em;color:#999;margin-top:20px;max-width:22ch">saved per automation, every week</div>
         </div>
-        <div style="flex:0 1 auto">
-          <div style="font-weight:400;font-size:clamp(38px,5vw,72px);line-height:.9;letter-spacing:-.035em;color:#fff">85<span style="font-size:.3em;color:#777;letter-spacing:.01em;margin-left:.32em">%</span></div>
+        <div class="rv" style="--d:.12s;flex:0 1 auto">
+          <div style="font-weight:400;font-size:clamp(38px,5vw,72px);line-height:.9;letter-spacing:-.035em;color:#fff;font-variant-numeric:tabular-nums"><span data-count="85">85</span><span style="font-size:.3em;color:#777;letter-spacing:.01em;margin-left:.32em">%</span></div>
           <div style="font-size:14px;line-height:1.7;letter-spacing:.015em;color:#999;margin-top:20px;max-width:22ch">of breaks repaired before you notice</div>
         </div>
-        <div style="flex:0 1 auto">
+        <div class="rv" style="--d:.24s;flex:0 1 auto">
           <div style="font-weight:400;font-size:clamp(38px,5vw,72px);line-height:.9;letter-spacing:-.035em;color:#fff">Minutes</div>
           <div style="font-size:14px;line-height:1.7;letter-spacing:.015em;color:#999;margin-top:20px;max-width:22ch">to build</div>
         </div>
@@ -408,8 +432,8 @@ message: "Looking to automate our client onboarding…"</pre></div><div style="m
 
   <section id="vouch" style="padding:clamp(40px,6vh,80px) clamp(28px,5vw,64px) clamp(28px,4vh,48px)">
     <div style="max-width:920px;margin:0 auto;text-align:center">
-      <blockquote style="margin:0;font-weight:400;font-size:clamp(26px,3.7vw,48px);line-height:1.3;letter-spacing:-.018em;color:#fff;text-wrap:balance">“It found the busywork on its own and built the automations to handle it. When one breaks, it usually fixes itself before I even see it.”</blockquote>
-      <div style="display:inline-flex;align-items:center;margin-top:clamp(32px,5vh,48px)">
+      <blockquote class="rv rv-blur" style="margin:0;font-weight:400;font-size:clamp(26px,3.7vw,48px);line-height:1.3;letter-spacing:-.018em;color:#fff;text-wrap:balance">“It found the busywork on its own and built the automations to handle it. When one breaks, it usually fixes itself before I even see it.”</blockquote>
+      <div class="rv" style="--d:.25s;display:inline-flex;align-items:center;margin-top:clamp(32px,5vh,48px)">
         <span style="font-size:16px;color:#888;margin-right:13px">—</span>
         <img src="/cassian-logo.png" alt="Cassian" style="height:36px;width:auto;display:block;margin-right:7px">
         <span style="font-size:16px;font-weight:500;letter-spacing:-.01em;color:#fff;font-feature-settings:'ss01'">Cassian</span>
@@ -419,9 +443,9 @@ message: "Looking to automate our client onboarding…"</pre></div><div style="m
 
 
   <section id="pricing" style="max-width:1440px;margin:0 auto;padding:clamp(40px,6vh,80px) clamp(28px,5vw,64px) clamp(56px,8vh,104px)">
-    <div style="border-top:1px solid #333;padding-top:clamp(48px,7vh,88px)">
-      <div style="font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#fff">Pricing</div>
-      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:28px;flex-wrap:wrap;margin-top:22px">
+    <div class="rv-rule" style="border-top:1px solid #333;padding-top:clamp(48px,7vh,88px)">
+      <div class="rv" style="font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#fff">Pricing</div>
+      <div class="rv" style="--d:.08s;display:flex;align-items:flex-end;justify-content:space-between;gap:28px;flex-wrap:wrap;margin-top:22px">
         <h2 data-blend="" style="font-weight:400;font-size:clamp(26px,3.6vw,48px);line-height:1.04;letter-spacing:-.018em;max-width:16ch;text-wrap:balance">Start free.</h2>
 
         <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding-bottom:6px">
@@ -433,7 +457,7 @@ message: "Looking to automate our client onboarding…"</pre></div><div style="m
         </div>
       </div>
 
-      <div style="margin-top:clamp(32px,5vh,56px);border:1px solid #242424;border-radius:20px;overflow:hidden">
+      <div class="rv" style="--d:.16s;margin-top:clamp(32px,5vh,56px);border:1px solid #242424;border-radius:20px;overflow:hidden">
        <div style="overflow-x:auto">
         <div style="min-width:900px;display:grid;grid-template-columns:1.35fr 1fr 1fr 1fr 1fr 1fr">
          <div style="padding:28px 24px"></div>
@@ -500,7 +524,7 @@ message: "Looking to automate our client onboarding…"</pre></div><div style="m
   </section>
 
   <section id="cta" style="max-width:1440px;margin:0 auto;padding:0 clamp(28px,5vw,64px) clamp(48px,8vh,96px)">
-    <div class="cta-card" data-bg-light="" style="background:#f2f2f2;color:#000;border-radius:32px;padding:clamp(48px,9vh,112px) clamp(32px,6vw,96px)">
+    <div class="cta-card rv rv-scale" data-bg-light="" style="background:#f2f2f2;color:#000;border-radius:32px;padding:clamp(48px,9vh,112px) clamp(32px,6vw,96px)">
       <div data-body="" style="font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#666">Get started</div>
       <h2 class="cta-title" data-blend="" style="font-weight:400;font-size:clamp(24px,3.6vw,48px);line-height:1.0;letter-spacing:-.018em;margin-top:28px;display:flex;align-items:center;gap:.46em;white-space:nowrap">
         <img class="cta-mark" src="/sirus-mark.png" alt="Sirus" style="height:.82em;width:auto;display:inline-block;flex:0 0 auto">
@@ -513,7 +537,7 @@ message: "Looking to automate our client onboarding…"</pre></div><div style="m
     </div>
   </section>
 
-  <footer style="max-width:1440px;margin:0 auto;padding:32px clamp(28px,5vw,64px) 48px;border-top:1px solid #1f1f1f;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px 28px">
+  <footer class="rv" style="max-width:1440px;margin:0 auto;padding:32px clamp(28px,5vw,64px) 48px;border-top:1px solid #1f1f1f;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px 28px">
     <span style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#777">© 2026 Sirus</span>
     <span style="display:inline-flex;gap:24px;flex-wrap:wrap;justify-self:center">
       <a href="/privacy" class="sbtn" data-cursor="" style="text-decoration:none;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#777">Privacy</a>
@@ -811,7 +835,41 @@ message: "Looking to automate our client onboarding…"</pre></div><div style="m
       if (solid) solid.style.display = 'none';
     }
 
-    // Automations / Agents pill toggle
+    // Scroll reveals — .rv/.rv-rule get .in once as they enter; stats count up.
+  (function () {
+    var els = Array.prototype.slice.call(document.querySelectorAll('.rv,.rv-rule'));
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var countUp = function (el) {
+      var end = parseInt(el.getAttribute('data-count'), 10);
+      var start = parseInt(el.getAttribute('data-start') || '0', 10);
+      var prefix = el.getAttribute('data-prefix') || '';
+      if (reduce || !isFinite(end)) { el.textContent = prefix + end; return; }
+      var t0 = null, dur = end < 10 ? 600 : 1100;
+      var step = function (ts) {
+        if (!t0) t0 = ts;
+        var p = Math.min(1, (ts - t0) / dur);
+        p = 1 - Math.pow(1 - p, 3);
+        el.textContent = prefix + Math.round(start + (end - start) * p);
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+    var reveal = function (el) {
+      el.classList.add('in');
+      Array.prototype.slice.call(el.querySelectorAll('[data-count]')).forEach(countUp);
+    };
+    if (!('IntersectionObserver' in window)) { els.forEach(reveal); return; }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        reveal(en.target);
+        io.unobserve(en.target);
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    els.forEach(function (el) { io.observe(el); });
+  })();
+
+  // Automations / Agents pill toggle
     var modeBtns = Array.prototype.slice.call(document.querySelectorAll('#how .mode-btn'));
     var modePanels = Array.prototype.slice.call(document.querySelectorAll('#how .mode-panel'));
     modeBtns.forEach(function (b) {
