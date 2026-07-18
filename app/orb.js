@@ -192,6 +192,11 @@
   window.addEventListener('resize', function () {
     clearTimeout(rt);
     rt = setTimeout(function () {
+      // Mobile URL-bar collapse fires resize without changing the canvas box —
+      // rebuilding then re-randomizes the field mid-scroll (visible glitch).
+      // Only rebuild when the canvas itself actually changed size.
+      var r2 = canvas.getBoundingClientRect();
+      if (Math.round(r2.width) === Math.round(W) && Math.round(r2.height) === Math.round(H)) return;
       dpr = Math.min(window.devicePixelRatio || 1, 2);
       build(); project();
       if (reduce) draw();
