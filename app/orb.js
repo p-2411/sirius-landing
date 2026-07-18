@@ -179,11 +179,15 @@
   if (reduce) { draw(); }
   else rafId = requestAnimationFrame(step);
 
-  window.addEventListener('mousemove', function (e) {
-    mx = e.clientX; my = e.clientY; rect = canvas.getBoundingClientRect();
-    mInside = (mx > rect.left && mx < rect.right && my > rect.top && my < rect.bottom);
-  }, { passive: true });
-  window.addEventListener('mouseout', function () { mInside = false; mEngaged = false; });
+  // Cursor magnetism is a fine-pointer affordance — on touch devices synthetic
+  // mousemove from taps would make the orb lurch, so it stays auto-rotate only.
+  if (window.matchMedia && window.matchMedia('(pointer: fine)').matches) {
+    window.addEventListener('mousemove', function (e) {
+      mx = e.clientX; my = e.clientY; rect = canvas.getBoundingClientRect();
+      mInside = (mx > rect.left && mx < rect.right && my > rect.top && my < rect.bottom);
+    }, { passive: true });
+    window.addEventListener('mouseout', function () { mInside = false; mEngaged = false; });
+  }
 
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(function (es) { inView = es[0].isIntersecting; }, { threshold: 0 }).observe(canvas);
