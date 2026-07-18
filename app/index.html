@@ -726,26 +726,22 @@ message: "Looking to automate our client onboarding…"</pre></div><div style="m
         setActive(i);
         if (howBar) howBar.style.transform = 'scaleX(' + Math.min(1, Math.max(0, p)) + ')';
       }
-      // "Or just ask" card: pinned track (desktop) — scroll grows the visual to
-      // full size, plateaus mid-track, shrinks on release. Unpinned viewports
-      // fall back to distance-from-center scaling.
+      // "Or just ask" card: grows from small to its max over the first stretch
+      // of the pinned track, then KEEPS that size (no shrink on release). Max
+      // sits below natural size so it never crowds the nav.
       if (scaleCard && !reduceMotion) {
-        var s;
+        var t;
         if (howPin && howPin.matches && askTrack) {
           var ar = askTrack.getBoundingClientRect();
           var arange = Math.max(1, askTrack.offsetHeight - winH);
           var ap = Math.min(1, Math.max(0, -ar.top / arange));
-          var edge = ap < 0.5 ? ap : 1 - ap;
-          var t = Math.min(1, edge / 0.35);
-          t = 1 - Math.pow(1 - t, 2);
-          s = 0.86 + 0.14 * t;
+          t = Math.min(1, ap / 0.45);
         } else {
           var sr = scaleCard.getBoundingClientRect();
-          var dist = Math.abs((sr.top + sr.bottom) / 2 - winH / 2) / (winH / 2);
-          var st = Math.max(0, Math.min(1, (dist - 0.22) / 0.78));
-          s = 1 - 0.14 * st * st;
+          t = Math.max(0, Math.min(1, (winH - sr.top) / (winH * 0.65)));
         }
-        scaleCard.style.transform = 'scale(' + s + ')';
+        t = 1 - Math.pow(1 - t, 2);
+        scaleCard.style.transform = 'scale(' + (0.82 + 0.12 * t) + ')';
       }
       // pinned how-it-works: scroll progress through the track picks the mode
       if (howPin && howPin.matches && howTrackEl && setHowMode) {
