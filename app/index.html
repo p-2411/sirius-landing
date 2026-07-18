@@ -50,6 +50,16 @@
   .rv-rule{position:relative;border-top-color:transparent !important}
   .rv-rule::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;background:#333;transform:scaleX(0);transform-origin:left center;transition:transform 1.2s var(--eo);transition-delay:var(--d,0s)}
   .rv-rule.in::before{transform:scaleX(1)}
+  /* replayable card life — product cards answer the cursor */
+  .lift{transition:transform .5s var(--eo),border-color .5s var(--eo),box-shadow .5s var(--eo),opacity .75s var(--eo),filter .75s var(--eo)}
+  .lift.in{transition-delay:0s}
+  @media (hover:hover){.lift:hover{transform:translateY(-4px);border-color:#333 !important;box-shadow:0 28px 56px -28px rgba(0,0,0,.85)}}
+  /* how-it-works scrollytelling: the section pins and scroll advances
+     Automations → Agents before the page releases (desktop only) */
+  @media (min-width:901px) and (min-height:800px){
+    #how .rv-rule{height:225vh}
+    #how .bs-grid{position:sticky;top:0;min-height:100vh;align-content:center}
+  }
   @keyframes maskUp{from{transform:translateY(115%)}to{transform:none}}
   @keyframes scrollPulse{0%,100%{opacity:.55}50%{opacity:1}}
   @keyframes logoscroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
@@ -372,7 +382,7 @@ message: "Looking to automate our client onboarding…"</pre></div><div style="m
           <h2 data-blend="" style="font-weight:400;font-size:clamp(26px,3.6vw,48px);line-height:1.04;letter-spacing:-.018em;color:#fff;margin-top:22px;max-width:16ch;text-wrap:balance">Or just ask.</h2>
           <p style="font-size:14px;line-height:1.8;color:#999;margin-top:22px;max-width:42ch">For one-off work, ask in plain language. Sirus knows your business and acts across your tools.</p>
         </div>
-        <div class="rv" style="--d:.12s;border:1px solid #242424;border-radius:22px;overflow:hidden;background:radial-gradient(130% 130% at 80% 0%,#171717,#050505)">
+        <div class="rv rv-blur lift" style="--d:.12s;border:1px solid #242424;border-radius:22px;overflow:hidden;background:radial-gradient(130% 130% at 80% 0%,#171717,#050505)">
           <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:13px 16px;border-bottom:1px solid #1c1c1c">
             <span style="font-size:10px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#c4c4c4">Sirus</span>
             <span style="display:inline-flex;align-items:center;gap:8px;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#7a7a7a"><span class="mdot mdot-live"></span>Online</span>
@@ -391,7 +401,7 @@ message: "Looking to automate our client onboarding…"</pre></div><div style="m
         <p style="font-size:14px;line-height:1.8;color:#999;margin-top:22px;max-width:46ch">When an automation breaks, Sirus investigates and repairs it. You only hear about it when a fix isn't safe.</p>
       </div>
 
-      <div class="rv" style="--d:.12s;border:1px solid #242424;border-radius:22px;overflow:hidden;background:radial-gradient(130% 120% at 72% 12%,#151515,#050505);padding:clamp(24px,3vw,34px)">
+      <div class="rv rv-blur lift" style="--d:.12s;border:1px solid #242424;border-radius:22px;overflow:hidden;background:radial-gradient(130% 120% at 72% 12%,#151515,#050505);padding:clamp(24px,3vw,34px)">
         <div style="display:flex;align-items:center;gap:10px">
           <span class="st st-healing" style="width:7px;height:7px"></span>
           <span style="flex:1;font-size:10px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#63c08d">Sirus is healing this</span>
@@ -657,6 +667,8 @@ message: "Looking to automate our client onboarding…"</pre></div><div style="m
     var trackH = 160;
     var track = document.getElementById('track');
     var thumb = document.getElementById('thumb');
+    // shared with the Automations/Agents toggle wired further down
+    var howMode, setHowMode, howPin, howTrackEl;
     var howSection = document.getElementById('how');
     var steps = Array.prototype.slice.call(document.querySelectorAll('.how-step'));
     var vizzes = Array.prototype.slice.call(document.querySelectorAll('.viz'));
@@ -708,6 +720,16 @@ message: "Looking to automate our client onboarding…"</pre></div><div style="m
         var i = Math.min(steps.length - 1, Math.max(0, Math.floor(p * steps.length)));
         setActive(i);
         if (howBar) howBar.style.transform = 'scaleX(' + Math.min(1, Math.max(0, p)) + ')';
+      }
+      // pinned how-it-works: scroll progress through the track picks the mode
+      if (howPin && howPin.matches && howTrackEl && setHowMode) {
+        var hr = howTrackEl.getBoundingClientRect();
+        var hrange = Math.max(1, howTrackEl.offsetHeight - winH);
+        var hp = -hr.top / hrange;
+        if (hp >= 0 && hp <= 1) {
+          var hm = hp < 0.5 ? '0' : '1';
+          if (hm !== howMode) setHowMode(hm);
+        }
       }
     }
 
@@ -887,14 +909,28 @@ message: "Looking to automate our client onboarding…"</pre></div><div style="m
     b.addEventListener('pointerleave', setOrigin);
   });
 
-  // Automations / Agents pill toggle
+  // Automations / Agents toggle — driven by the pills AND by scroll while the
+  // section is pinned (scroll advances Automations → Agents before releasing).
     var modeBtns = Array.prototype.slice.call(document.querySelectorAll('#how .mode-btn'));
     var modePanels = Array.prototype.slice.call(document.querySelectorAll('#how .mode-panel'));
+    howMode = '0';
+    setHowMode = function (m) {
+      howMode = m;
+      modeBtns.forEach(function (x) { x.classList.toggle('is-on', x.getAttribute('data-mode') === m); });
+      modePanels.forEach(function (p) { p.classList.toggle('is-on', p.getAttribute('data-mode') === m); });
+    };
+    howPin = window.matchMedia('(min-width:901px) and (min-height:800px)');
+    howTrackEl = document.querySelector('#how .rv-rule');
     modeBtns.forEach(function (b) {
       b.addEventListener('click', function () {
         var m = b.getAttribute('data-mode');
-        modeBtns.forEach(function (x) { x.classList.toggle('is-on', x === b); });
-        modePanels.forEach(function (p) { p.classList.toggle('is-on', p.getAttribute('data-mode') === m); });
+        if (howPin.matches && howTrackEl) {
+          // jump to the matching stage of the pinned track so scroll agrees
+          var top = howTrackEl.getBoundingClientRect().top + window.scrollY;
+          var range = Math.max(1, howTrackEl.offsetHeight - window.innerHeight);
+          window.scrollTo({ top: Math.round(top + (m === '1' ? range * 0.8 : range * 0.2)), behavior: 'smooth' });
+        }
+        setHowMode(m);
       });
     });
 
