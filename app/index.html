@@ -62,8 +62,10 @@
     /* "Or just ask" pins too: scroll grows the visual to full size, then it
        shrinks again as the track releases */
     #ask>div{height:190vh}
-    /* content scrolls naturally to the top, then locks just under the nav */
-    #ask .ask-grid{position:sticky;top:clamp(84px,11vh,116px)}
+    /* content scrolls naturally to the top, then locks just under the nav;
+       the text column reads from the top of the card, not its center */
+    #ask .ask-grid{position:sticky;top:clamp(84px,11vh,116px);align-items:start !important}
+    #ask .ask-grid>div:first-child{padding-top:clamp(8px,2vh,24px)}
   }
   /* pricing morph: the live monthly price shrinks/dims into the slashed price
      while the annual price slides in from the right (grid-track width anim) */
