@@ -58,8 +58,23 @@
      Automations → Agents before the page releases (desktop only) */
   @media (min-width:901px) and (min-height:800px){
     #how .rv-rule{height:225vh}
-    #how .bs-grid{position:sticky;top:0;min-height:100vh;align-content:center}
+    #how .bs-grid{position:sticky;top:0;min-height:100vh;align-content:center;padding-top:clamp(84px,11vh,116px)}
+    /* "Or just ask" pins too: scroll grows the visual to full size, then it
+       shrinks again as the track releases */
+    #ask>div{height:190vh}
+    #ask .ask-grid{position:sticky;top:0;min-height:100vh;align-content:center;padding-top:clamp(64px,9vh,100px)}
   }
+  /* pricing morph: the live monthly price shrinks/dims into the slashed price
+     while the annual price slides in from the right (grid-track width anim) */
+  .p-was{position:relative;font-weight:400;font-size:clamp(28px,2.8vw,40px);letter-spacing:-.03em;color:#fff;transition:font-size .45s var(--eo),color .45s var(--eo)}
+  .p-was .strike2{position:absolute;left:-1px;right:-1px;top:54%;height:1.5px;background:#7a7a7a;transform:scaleX(0);transform-origin:left center;transition:transform .3s var(--eo)}
+  .pmx.is-annual .p-was{font-size:clamp(20px,2vw,26px);color:#5f5f5f}
+  .pmx.is-annual .p-was .strike2{transform:scaleX(1);transition-delay:.2s}
+  .pmx .p-was,.pmx .p-nowrap{flex:0 0 auto}
+  .p-nowrap{display:inline-grid;grid-template-columns:0fr;transition:grid-template-columns .5s var(--eo)}
+  .p-now{min-width:0;overflow:hidden;display:inline-block;opacity:0;transform:translateX(18px);transition:opacity .35s var(--eo),transform .5s var(--eo);font-weight:400;font-size:clamp(28px,2.8vw,40px);letter-spacing:-.03em;color:#fff}
+  .pmx.is-annual .p-nowrap{grid-template-columns:1fr}
+  .pmx.is-annual .p-now{opacity:1;transform:none;transition-delay:.1s}
   @keyframes maskUp{from{transform:translateY(115%)}to{transform:none}}
   @keyframes scrollPulse{0%,100%{opacity:.55}50%{opacity:1}}
   @keyframes logoscroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
@@ -257,9 +272,9 @@
   <header id="top" style="max-width:1440px;margin:0 auto;padding:clamp(48px,8vh,96px) clamp(28px,5vw,64px) clamp(4px,1vh,12px);position:relative">
     <div class="hero-grid" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,clamp(340px,38vw,560px));gap:clamp(32px,5vw,72px);align-items:center">
      <div class="hero-text">
-      <h1 data-blend="" style="font-weight:400;font-size:clamp(40px,6.4vw,73px);line-height:1.0;letter-spacing:-.018em;margin-top:0"><span style="display:block;overflow:hidden;padding-bottom:.1em;margin-bottom:-.1em"><span style="display:inline-block;animation:maskUp .85s cubic-bezier(.16,1,.3,1) .08s both">The automation layer</span></span><span style="display:block;overflow:hidden;padding-bottom:.12em;margin-bottom:-.12em"><span data-body="" style="display:inline-block;font-style:italic;color:#777;animation:maskUp .85s cubic-bezier(.16,1,.3,1) .2s both">for your business.</span></span></h1>
-      <p style="font-size:14px;line-height:1.85;letter-spacing:.019em;color:#fff;max-width:460px;margin-top:clamp(32px,5vh,52px);animation:rise .8s cubic-bezier(.16,1,.3,1) .3s both">Sirus learns how everything works, then ships agents that handle the busywork. You and your team focus on the business.</p>
-      <div style="width:320px;max-width:100%;margin-top:clamp(28px,4vh,40px);animation:rise .8s cubic-bezier(.16,1,.3,1) .42s both">
+      <h1 data-blend="" style="font-weight:400;font-size:clamp(40px,6.4vw,73px);line-height:1.0;letter-spacing:-.018em;margin-top:0">The automation layer <span data-body="" style="font-style:italic;color:#777">for your business.</span></h1>
+      <p style="font-size:14px;line-height:1.85;letter-spacing:.019em;color:#fff;max-width:460px;margin-top:clamp(32px,5vh,52px)">Sirus learns how everything works, then ships agents that handle the busywork. You and your team focus on the business.</p>
+      <div style="width:320px;max-width:100%;margin-top:clamp(28px,4vh,40px)">
         <form id="contactForm" action="/api/contact" method="POST">
           <a href="https://app.trysirus.com" id="contactToggle" class="sbtn btn-solid" data-cursor="" style="text-decoration:none;background:#fff;color:#000;border-radius:999px;padding:10px 20px;font-size:11px;font-weight:500;letter-spacing:.19em;text-transform:uppercase;display:inline-flex;align-items:center;gap:7px;font-family:inherit;line-height:1.85"><span class="sbtn-label" style="display:inline-flex;align-items:center;gap:7px">Sign up <span style="font-size:13px">→</span></span></a>
           <div id="contactFields" hidden="hidden" style="display:flex;align-items:center;gap:10px;border-bottom:1.5px solid rgba(255,255,255,.28)">
@@ -272,11 +287,11 @@
         <p id="contactSuccess" hidden="hidden" style="margin:0;font-size:14px;line-height:1.5;letter-spacing:.01em;color:#fff;font-weight:600"></p>
       </div>
      </div>
-     <div class="hero-visual" aria-hidden="true" style="position:relative;align-self:stretch;min-height:clamp(380px,60vh,560px);animation:rise .9s cubic-bezier(.16,1,.3,1) .25s both">
+     <div class="hero-visual" aria-hidden="true" style="position:relative;align-self:stretch;min-height:clamp(380px,60vh,560px)">
        <canvas id="signalField" style="position:absolute;inset:0;width:100%;height:100%;display:block"></canvas>
      </div>
     </div>
-    <div data-body="" style="margin-top:clamp(40px,8vh,96px);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#777;animation:rise .8s cubic-bezier(.16,1,.3,1) .6s both,scrollPulse 3.2s ease-in-out 1.8s infinite">
+    <div data-body="" style="margin-top:clamp(40px,8vh,96px);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#777;animation:scrollPulse 3.2s ease-in-out infinite">
       <span style="color:#444">[</span>&nbsp;Scroll&nbsp;<span style="color:#444">]</span>
     </div>
       
@@ -375,14 +390,14 @@ message: "Looking to automate our client onboarding…"</pre></div><div style="m
   </section>
 
   <section id="ask" style="max-width:1440px;margin:0 auto;padding:clamp(40px,6vh,80px) clamp(28px,5vw,64px)">
-    <div class="rv-rule" style="border-top:1px solid #333;padding-top:clamp(48px,7vh,88px)">
+    <div style="padding-top:clamp(20px,4vh,44px)">
       <div class="ask-grid" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,clamp(360px,44vw,560px));gap:clamp(40px,6vw,88px);align-items:center">
         <div class="rv">
           <div style="font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#fff">Ask</div>
           <h2 data-blend="" style="font-weight:400;font-size:clamp(26px,3.6vw,48px);line-height:1.04;letter-spacing:-.018em;color:#fff;margin-top:22px;max-width:16ch;text-wrap:balance">Or just ask.</h2>
           <p style="font-size:14px;line-height:1.8;color:#999;margin-top:22px;max-width:42ch">For one-off work, ask in plain language. Sirus knows your business and acts across your tools.</p>
         </div>
-        <div class="rv rv-blur lift" style="--d:.12s;border:1px solid #242424;border-radius:22px;overflow:hidden;background:radial-gradient(130% 130% at 80% 0%,#171717,#050505)">
+        <div class="scale-card" style="border:1px solid #242424;border-radius:22px;overflow:hidden;background:radial-gradient(130% 130% at 80% 0%,#171717,#050505);will-change:transform">
           <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:13px 16px;border-bottom:1px solid #1c1c1c">
             <span style="font-size:10px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#c4c4c4">Sirus</span>
             <span style="display:inline-flex;align-items:center;gap:8px;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#7a7a7a"><span class="mdot mdot-live"></span>Online</span>
@@ -473,7 +488,7 @@ message: "Looking to automate our client onboarding…"</pre></div><div style="m
         </div>
       </div>
 
-      <div class="rv" style="--d:.16s;margin-top:clamp(32px,5vh,56px);border:1px solid #242424;border-radius:20px;overflow:hidden">
+      <div style="margin-top:clamp(32px,5vh,56px);border:1px solid #242424;border-radius:20px;overflow:hidden">
        <div style="overflow-x:auto">
         <div style="min-width:900px;display:grid;grid-template-columns:1.35fr 1fr 1fr 1fr 1fr 1fr">
          <div style="padding:28px 24px"></div>
@@ -485,17 +500,17 @@ message: "Looking to automate our client onboarding…"</pre></div><div style="m
          <div style="padding:28px 24px;background:#0f0f0f;position:relative">
            <span style="position:absolute;top:16px;right:18px;font-size:9px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:#000;background:#fff;border-radius:999px;padding:3px 9px">Popular</span>
            <div style="font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:#fff">Pro</div>
-           <div style="margin-top:14px;display:flex;align-items:baseline;gap:7px"><span class="pm-old" style="position:relative;flex:0 0 auto;font-weight:400;font-size:clamp(20px,2vw,26px);letter-spacing:-.02em;color:#5f5f5f;opacity:0;transform:translateY(1px);transition:opacity .32s ease,transform .32s ease">$19<span class="strike" style="position:absolute;left:-1px;right:-1px;top:54%;height:1.5px;background:#7a7a7a;transform:scaleX(0);transform-origin:left;transition:transform .42s cubic-bezier(.4,0,.2,1) .05s"></span></span><span class="pm-cur" data-monthly="$19" data-annual="$15" style="position:relative;z-index:1;font-weight:400;font-size:clamp(28px,2.8vw,40px);letter-spacing:-.03em"><span class="pm-cur-inner" style="display:inline-block;transition:transform .34s cubic-bezier(.34,1.4,.64,1),opacity .3s ease">$19</span></span><span style="position:relative;z-index:2;padding-left:5px;background:#0f0f0f;font-size:13px;color:#8a8a8a">/mo</span></div>
+           <div class="pmx" style="margin-top:14px;display:flex;align-items:baseline;gap:7px"><span class="p-was">$19<span class="strike2"></span></span><span class="p-nowrap"><span class="p-now">$15</span></span><span style="font-size:13px;color:#8a8a8a">/mo</span></div>
            <div class="price-note" data-annual="$182 billed yearly" style="font-size:12px;color:#8a8a8a;margin-top:6px;min-height:16px"></div>
          </div>
          <div style="padding:28px 24px">
            <div style="font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:#c4c4c4">Builder</div>
-           <div style="margin-top:14px;display:flex;align-items:baseline;gap:7px"><span class="pm-old" style="position:relative;flex:0 0 auto;font-weight:400;font-size:clamp(20px,2vw,26px);letter-spacing:-.02em;color:#5f5f5f;opacity:0;transform:translateY(1px);transition:opacity .32s ease,transform .32s ease">$59<span class="strike" style="position:absolute;left:-1px;right:-1px;top:54%;height:1.5px;background:#7a7a7a;transform:scaleX(0);transform-origin:left;transition:transform .42s cubic-bezier(.4,0,.2,1) .05s"></span></span><span class="pm-cur" data-monthly="$59" data-annual="$47" style="position:relative;z-index:1;font-weight:400;font-size:clamp(28px,2.8vw,40px);letter-spacing:-.03em"><span class="pm-cur-inner" style="display:inline-block;transition:transform .34s cubic-bezier(.34,1.4,.64,1),opacity .3s ease">$59</span></span><span style="position:relative;z-index:2;padding-left:5px;background:#000000;font-size:13px;color:#8a8a8a">/mo</span></div>
+           <div class="pmx" style="margin-top:14px;display:flex;align-items:baseline;gap:7px"><span class="p-was">$59<span class="strike2"></span></span><span class="p-nowrap"><span class="p-now">$47</span></span><span style="font-size:13px;color:#8a8a8a">/mo</span></div>
            <div class="price-note" data-annual="$566 billed yearly" style="font-size:12px;color:#8a8a8a;margin-top:6px;min-height:16px"></div>
          </div>
          <div style="padding:28px 24px">
            <div style="font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:#c4c4c4">Business</div>
-           <div style="margin-top:14px;display:flex;align-items:baseline;gap:7px"><span class="pm-old" style="position:relative;flex:0 0 auto;font-weight:400;font-size:clamp(20px,2vw,26px);letter-spacing:-.02em;color:#5f5f5f;opacity:0;transform:translateY(1px);transition:opacity .32s ease,transform .32s ease">$129<span class="strike" style="position:absolute;left:-1px;right:-1px;top:54%;height:1.5px;background:#7a7a7a;transform:scaleX(0);transform-origin:left;transition:transform .42s cubic-bezier(.4,0,.2,1) .05s"></span></span><span class="pm-cur" data-monthly="$129" data-annual="$103" style="position:relative;z-index:1;font-weight:400;font-size:clamp(28px,2.8vw,40px);letter-spacing:-.03em"><span class="pm-cur-inner" style="display:inline-block;transition:transform .34s cubic-bezier(.34,1.4,.64,1),opacity .3s ease">$129</span></span><span style="position:relative;z-index:2;padding-left:5px;background:#000000;font-size:13px;color:#8a8a8a">/mo</span></div>
+           <div class="pmx" style="margin-top:14px;display:flex;align-items:baseline;gap:7px"><span class="p-was">$129<span class="strike2"></span></span><span class="p-nowrap"><span class="p-now">$103</span></span><span style="font-size:13px;color:#8a8a8a">/mo</span></div>
            <div class="price-note" data-annual="$1,238 billed yearly" style="font-size:12px;color:#8a8a8a;margin-top:6px;min-height:16px"></div>
          </div>
          <div style="padding:28px 24px">
@@ -622,22 +637,8 @@ message: "Looking to automate our client onboarding…"</pre></div><div style="m
         labels.forEach(function (el) {
           el.style.color = (el.getAttribute('data-period') === period) ? '#fff' : '#8a8a8a';
         });
-        document.querySelectorAll('.pm-cur').forEach(function (wrap) {
-          var inner = wrap.querySelector('.pm-cur-inner');
-          var v = wrap.getAttribute('data-' + period);
-          var el = wrap.parentElement.querySelector('.pm-old');
-          var strike = el && el.querySelector('.strike');
-          if (!inner || !v) return;
-          if (el) {
-            el.style.transition = 'none';
-            el.style.opacity = annual ? '1' : '0';
-            el.style.transform = annual ? 'translateY(0)' : 'translateY(1px)';
-            if (strike) { strike.style.transition = 'none'; strike.style.transform = annual ? 'scaleX(1)' : 'scaleX(0)'; }
-          }
-          inner.style.transition = 'none';
-          inner.textContent = v;
-          inner.style.opacity = '1';
-          inner.style.transform = 'translateX(0)';
+        document.querySelectorAll('.pmx').forEach(function (el) {
+          el.classList.toggle('is-annual', annual);
         });
         notes.forEach(function (el) {
           el.style.transition = 'opacity .28s ease';
@@ -669,6 +670,9 @@ message: "Looking to automate our client onboarding…"</pre></div><div style="m
     var thumb = document.getElementById('thumb');
     // shared with the Automations/Agents toggle wired further down
     var howMode, setHowMode, howPin, howTrackEl;
+    var scaleCard = document.querySelector('.scale-card');
+    var askTrack = document.querySelector('#ask > div');
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var howSection = document.getElementById('how');
     var steps = Array.prototype.slice.call(document.querySelectorAll('.how-step'));
     var vizzes = Array.prototype.slice.call(document.querySelectorAll('.viz'));
@@ -720,6 +724,27 @@ message: "Looking to automate our client onboarding…"</pre></div><div style="m
         var i = Math.min(steps.length - 1, Math.max(0, Math.floor(p * steps.length)));
         setActive(i);
         if (howBar) howBar.style.transform = 'scaleX(' + Math.min(1, Math.max(0, p)) + ')';
+      }
+      // "Or just ask" card: pinned track (desktop) — scroll grows the visual to
+      // full size, plateaus mid-track, shrinks on release. Unpinned viewports
+      // fall back to distance-from-center scaling.
+      if (scaleCard && !reduceMotion) {
+        var s;
+        if (howPin && howPin.matches && askTrack) {
+          var ar = askTrack.getBoundingClientRect();
+          var arange = Math.max(1, askTrack.offsetHeight - winH);
+          var ap = Math.min(1, Math.max(0, -ar.top / arange));
+          var edge = ap < 0.5 ? ap : 1 - ap;
+          var t = Math.min(1, edge / 0.35);
+          t = 1 - Math.pow(1 - t, 2);
+          s = 0.86 + 0.14 * t;
+        } else {
+          var sr = scaleCard.getBoundingClientRect();
+          var dist = Math.abs((sr.top + sr.bottom) / 2 - winH / 2) / (winH / 2);
+          var st = Math.max(0, Math.min(1, (dist - 0.22) / 0.78));
+          s = 1 - 0.14 * st * st;
+        }
+        scaleCard.style.transform = 'scale(' + s + ')';
       }
       // pinned how-it-works: scroll progress through the track picks the mode
       if (howPin && howPin.matches && howTrackEl && setHowMode) {
@@ -873,7 +898,9 @@ message: "Looking to automate our client onboarding…"</pre></div><div style="m
       var prefix = el.getAttribute('data-prefix') || '';
       if (reduce || !isFinite(end)) { el.textContent = prefix + end; return; }
       var t0 = null, dur = end < 10 ? 600 : 1100;
+      var token = (el._cnt = (el._cnt || 0) + 1);
       var step = function (ts) {
+        if (token !== el._cnt) return;
         if (!t0) t0 = ts;
         var p = Math.min(1, (ts - t0) / dur);
         p = 1 - Math.pow(1 - p, 3);
@@ -882,11 +909,13 @@ message: "Looking to automate our client onboarding…"</pre></div><div style="m
       };
       requestAnimationFrame(step);
     };
-    var reveal = function (el) {
-      el.classList.add('in');
-      Array.prototype.slice.call(el.querySelectorAll('[data-count]')).forEach(countUp);
-    };
-    if (!('IntersectionObserver' in window)) { els.forEach(reveal); return; }
+    var reveal = function (el) { el.classList.add('in'); };
+    var counts = Array.prototype.slice.call(document.querySelectorAll('[data-count]'));
+    if (!('IntersectionObserver' in window)) {
+      els.forEach(reveal);
+      counts.forEach(countUp);
+      return;
+    }
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
         if (!en.isIntersecting) return;
@@ -895,6 +924,11 @@ message: "Looking to automate our client onboarding…"</pre></div><div style="m
       });
     }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
     els.forEach(function (el) { io.observe(el); });
+    // stats re-count every time they come back into view
+    var statIo = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) countUp(en.target); });
+    }, { threshold: 0.6 });
+    counts.forEach(function (el) { statIo.observe(el); });
   })();
 
   // Primary pills: the ink fill grows from where the pointer enters and
