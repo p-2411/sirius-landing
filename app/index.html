@@ -63,9 +63,9 @@
        shrinks again as the track releases */
     #ask>div{height:190vh}
     /* content scrolls naturally to the top, then locks just under the nav;
-       the text column reads from the top of the card, not its center */
+       the text column starts centered beside the card (JS translate) and
+       glides to the top as the track progresses */
     #ask .ask-grid{position:sticky;top:clamp(84px,11vh,116px);align-items:start !important}
-    #ask .ask-grid>div:first-child{padding-top:clamp(8px,2vh,24px)}
   }
   /* pricing morph: the live monthly price shrinks/dims into the slashed price
      while the annual price slides in from the right (grid-track width anim) */
@@ -477,9 +477,9 @@ message: "Looking to automate our client onboarding…"</pre></div><div style="m
 
 
   <section id="pricing" style="max-width:1440px;margin:0 auto;padding:clamp(40px,6vh,80px) clamp(28px,5vw,64px) clamp(56px,8vh,104px)">
-    <div class="rv-rule" style="border-top:1px solid #333;padding-top:clamp(48px,7vh,88px)">
-      <div class="rv" style="font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#fff">Pricing</div>
-      <div class="rv" style="--d:.08s;display:flex;align-items:flex-end;justify-content:space-between;gap:28px;flex-wrap:wrap;margin-top:22px">
+    <div style="border-top:1px solid #333;padding-top:clamp(48px,7vh,88px)">
+      <div style="font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#fff">Pricing</div>
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:28px;flex-wrap:wrap;margin-top:22px">
         <h2 data-blend="" style="font-weight:400;font-size:clamp(26px,3.6vw,48px);line-height:1.04;letter-spacing:-.018em;max-width:16ch;text-wrap:balance">Start free.</h2>
 
         <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding-bottom:6px">
@@ -675,6 +675,7 @@ message: "Looking to automate our client onboarding…"</pre></div><div style="m
     var howMode, setHowMode, howPin, howTrackEl;
     var scaleCard = document.querySelector('.scale-card');
     var askTrack = document.querySelector('#ask > div');
+    var askText = document.querySelector('#ask .ask-grid > div:first-child');
     var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var howSection = document.getElementById('how');
     var steps = Array.prototype.slice.call(document.querySelectorAll('.how-step'));
@@ -733,7 +734,8 @@ message: "Looking to automate our client onboarding…"</pre></div><div style="m
       // sits below natural size so it never crowds the nav.
       if (scaleCard && !reduceMotion) {
         var t;
-        if (howPin && howPin.matches && askTrack) {
+        var askPinned = howPin && howPin.matches && askTrack;
+        if (askPinned) {
           var ar = askTrack.getBoundingClientRect();
           var arange = Math.max(1, askTrack.offsetHeight - winH);
           var ap = Math.min(1, Math.max(0, -ar.top / arange));
@@ -744,6 +746,16 @@ message: "Looking to automate our client onboarding…"</pre></div><div style="m
         }
         t = 1 - Math.pow(1 - t, 2);
         scaleCard.style.transform = 'scale(' + (0.82 + 0.12 * t) + ')';
+        // the text column starts centered beside the card and glides to the
+        // top of the section on the same eased progress as the card's growth
+        if (askText) {
+          if (askPinned) {
+            var colGap = Math.max(0, (scaleCard.offsetHeight - askText.offsetHeight) / 2);
+            askText.style.transform = 'translateY(' + (colGap * (1 - t)).toFixed(1) + 'px)';
+          } else {
+            askText.style.transform = '';
+          }
+        }
       }
       // pinned how-it-works: scroll progress through the track picks the mode
       if (howPin && howPin.matches && howTrackEl && setHowMode) {
