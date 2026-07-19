@@ -212,10 +212,12 @@
     .nav-brand img{height:21px !important}
     .nav-brand span{font-size:18px !important}
     .cta-card{border-radius:24px !important;padding:44px 26px !important}
-    .cta-title{white-space:normal !important;flex-direction:column !important;align-items:flex-start !important;
-      gap:18px !important;line-height:1.14 !important;font-size:31px !important;margin-top:22px !important}
-    .cta-mark{height:36px !important}
-    .cta-words{display:block}
+    /* Horse + "Start building now." stay on ONE line: keep the row and scale
+       the whole lockup with the viewport instead of stacking it. The mark
+       rides the font size (.82em) so the pair shrinks together. */
+    .cta-title{gap:.4em !important;line-height:1.14 !important;font-size:clamp(19px,6.2vw,31px) !important;margin-top:22px !important}
+    .cta-mark{height:.82em !important}
+    .cta-words{display:inline}
     .cta-actions{margin-top:34px !important;justify-content:center !important}
   }
   @media (max-width:680px){.proof-stats{flex-direction:column;gap:48px !important}}
