@@ -50,15 +50,25 @@ const server = http.createServer((req, res) => {
     return;
   }
 
+  // Mirror Vercel's cleanUrls (vercel.json): `/terms` serves terms.html, and
+  // `/terms.html` redirects to the clean URL — so local behaves like prod.
+  if (pathname.endsWith(".html")) {
+    const clean = pathname.slice(0, -".html".length);
+    res.statusCode = 308;
+    res.setHeader("Location", clean === "/index" || clean === "" ? "/" : clean);
+    res.end();
+    return;
+  }
   const rel = pathname === "/" ? "/index.html" : pathname;
   const file = path.join(APP_DIR, rel);
-  fs.readFile(file, (err, data) => {
+  const resolved = path.extname(file) ? file : `${file}.html`;
+  fs.readFile(resolved, (err, data) => {
     if (err) {
       res.statusCode = 404;
       res.end("Not found");
       return;
     }
-    res.setHeader("Content-Type", TYPES[path.extname(file)] || "application/octet-stream");
+    res.setHeader("Content-Type", TYPES[path.extname(resolved)] || "application/octet-stream");
     res.end(data);
   });
 });
