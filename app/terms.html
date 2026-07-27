@@ -96,29 +96,31 @@
   <main class="article">
     <div class="eyebrow">Legal</div>
     <h1>Terms of Service</h1>
-    <div class="meta">Last updated 30 June 2026</div>
+    <div class="meta">Last updated 27 July 2026</div>
 
-    <p class="lede">These terms are the agreement between you and Sirus. They explain what Sirus does, what you can expect from us, and what we expect from you — including some important points about AI output and the actions Sirus can take on your behalf. Please read them.</p>
+    <p class="lede">These terms are the agreement between you and Sirus. They cover the Sirus website, web app, desktop app, automations, custom agents, connected services, and related features. Please read them before using the Service.</p>
 
     <div class="callout">
-      <strong>The short version.</strong> Sirus is an AI assistant for your business, still in active development. You own your content; we just process it to run the service. Sirus connects to tools you authorise and can take actions — like sending email — when you set it up to. AI output can be wrong, so review it before you rely on it. You're responsible for what you configure Sirus to do. We provide the service "as is", and our liability is limited, except where the law says it can't be. This summary is not part of the terms; the sections below are.
+      <strong>Important beta notice.</strong> Sirus can create and run automations and agents, take actions in connected services, attempt to repair failed workflows, and, in the desktop app, read or write files and run shell commands when those tools are invoked. AI and software can make mistakes. Review and test workflows before enabling them, use least-privilege connections and available approval controls, monitor important runs, and keep independent backups. Do not rely on Sirus as the sole control for critical operations. This summary is not a substitute for the terms below.
     </div>
 
     <div class="toc" aria-label="Contents">
       <span class="toc-h">Contents</span>
       <ol>
-        <li><a href="#acceptance">Acceptance of these terms</a></li>
-        <li><a href="#service">The service</a></li>
+        <li><a href="#acceptance">Acceptance &amp; parties</a></li>
+        <li><a href="#service">The Service</a></li>
         <li><a href="#eligibility">Eligibility &amp; authority</a></li>
-        <li><a href="#accounts">Your installation &amp; security</a></li>
+        <li><a href="#accounts">Accounts, workspaces &amp; security</a></li>
         <li><a href="#billing">Subscriptions, credits &amp; payment</a></li>
-        <li><a href="#content">Your content &amp; data</a></li>
-        <li><a href="#connected">Connected accounts &amp; third parties</a></li>
-        <li><a href="#ai">AI features &amp; accuracy</a></li>
-        <li><a href="#actions">Automations &amp; autonomous actions</a></li>
+        <li><a href="#content">Customer Content</a></li>
+        <li><a href="#connected">Connected services</a></li>
+        <li><a href="#ai">AI features &amp; output</a></li>
+        <li><a href="#actions">Automations, agents &amp; local tools</a></li>
+        <li><a href="#responsibilities">Your responsibilities</a></li>
         <li><a href="#acceptable">Acceptable use</a></li>
+        <li><a href="#processing">Business data processing</a></li>
         <li><a href="#ip">Intellectual property</a></li>
-        <li><a href="#beta">Beta &amp; changes to the service</a></li>
+        <li><a href="#beta">Beta, availability &amp; changes</a></li>
         <li><a href="#disclaimer">Disclaimers</a></li>
         <li><a href="#liability">Limitation of liability</a></li>
         <li><a href="#indemnity">Indemnity</a></li>
@@ -130,155 +132,195 @@
     </div>
 
     <section id="acceptance">
-      <h2><span class="num">01</span> Acceptance of these terms</h2>
-      <p>Sirus ("Sirus", "we", "us", or "our") is operated by <strong>Parham Sepasgozar</strong>, an individual sole trader based in New South Wales, Australia. By downloading, installing, accessing, or using the Sirus app or the website at trysirus.com (together, the "Service"), you agree to these Terms of Service and to our <a href="/privacy">Privacy Policy</a>, which is incorporated here by reference. If you do not agree, do not use the Service.</p>
+      <h2><span class="num">01</span> Acceptance &amp; parties</h2>
+      <p>Sirus ("Sirus", "we", "us", or "our") is a product operated by <strong>Parham Mohammad Ebrahimzadeh Sepasgozar</strong>, an individual sole trader (ABN 58 713 255 101) based in New South Wales, Australia. These Terms of Service apply when you access or use trysirus.com, the Sirus web or desktop applications, APIs, automations, agents, or related services (together, the "Service"). By creating an account, accepting an invitation, purchasing a plan, or using the Service, you agree to these terms and acknowledge our <a href="/privacy">Privacy Policy</a>. If you do not agree, do not use the Service.</p>
+      <p>If you use the Service for a business or other organisation, "you" includes that organisation and you represent that you have authority to bind it. If you are invited into a customer's workspace as an agency, consultant, employee, or contractor, that customer's workspace terms and permissions also apply to your use.</p>
     </section>
 
     <section id="service">
-      <h2><span class="num">02</span> The service</h2>
-      <p>Sirus is a desktop application that learns about your business and works alongside you. Among other things, it can answer questions, build and maintain a knowledge base about your business, draft and send communications, capture and transcribe meetings you choose to record, connect to tools you use, and create and run automations and AI agents. Features change as the Service develops, and not every feature is available to every user.</p>
+      <h2><span class="num">02</span> The Service</h2>
+      <p>Sirus is a business automation platform operated through a natural-language interface. It can help users create, edit, and run workflows and custom agents; connect business software and data sources; maintain workspace knowledge; answer questions; and perform one-off or recurring work across authorised tools. Sirus may select implementation steps from the outcome you describe. The desktop app provides the same hosted Service with optional access to local filesystem and shell tools.</p>
+      <p>Features, integrations, models, limits, and availability depend on your plan and may change as the Service develops.</p>
     </section>
 
     <section id="eligibility">
       <h2><span class="num">03</span> Eligibility &amp; authority</h2>
       <ul>
         <li>You must be at least <strong>18 years old</strong> and able to enter a binding contract.</li>
-        <li>Sirus is intended for <strong>business and professional use</strong>, not personal or household use.</li>
-        <li>If you use Sirus for an organisation, you represent that you are <strong>authorised to act for that organisation</strong> and to bind it to these terms.</li>
-        <li>You represent that you have the right and authority to connect the accounts you connect and to have the resulting data processed by Sirus and its providers.</li>
+        <li>The Service is intended for <strong>business and professional use</strong>, not personal or household use.</li>
+        <li>You must have authority to provide Customer Content, connect accounts, grant permissions, and instruct Sirus to process data or take actions on behalf of the relevant organisation.</li>
+        <li>If you administer a workspace, you must only invite people and assign roles you are authorised to manage.</li>
       </ul>
     </section>
 
     <section id="accounts">
-      <h2><span class="num">04</span> Your installation &amp; security</h2>
-      <p>Sirus identifies your installation with a credential stored on your device rather than a username and password. You are responsible for keeping your device and that credential secure, and for all activity that occurs through your installation. If you become a business customer, you may receive an activation code; keep it confidential and use it only as intended. Tell us promptly at <a href="mailto:parham@trysirus.com">parham@trysirus.com</a> if you suspect unauthorised use.</p>
+      <h2><span class="num">04</span> Accounts, workspaces &amp; security</h2>
+      <p>You must provide accurate account information, protect your login and devices, use reasonable security controls, and promptly notify us at <a href="mailto:parham@trysirus.com">parham@trysirus.com</a> if you suspect unauthorised access.</p>
+      <p>Customer data and configuration are organised into workspaces. Workspace roles, which may include owner, admin, builder, and viewer, determine what a member can access or change. Workspace owners and authorised admins are responsible for membership, role assignment, connected services, and activity performed by people they invite. Sirus may rely on instructions given through an authenticated account with the relevant permission.</p>
+      <p>You may not share individual credentials or bypass workspace permissions. You remain responsible for activity under your account to the extent it results from your failure to protect your credentials or devices.</p>
     </section>
 
     <section id="billing">
       <h2><span class="num">05</span> Subscriptions, credits &amp; payment</h2>
       <ul>
-        <li><strong>Plans.</strong> Sirus is offered on paid monthly subscription plans (currently AUD/USD $20, $50, and $120 per month), each of which grants a monthly allowance of usage credits. Credits are consumed as you use AI features, based on the work performed. Current pricing is shown at the point of purchase.</li>
-        <li><strong>Payment.</strong> Payments are processed by Stripe. By subscribing, you authorise us, through Stripe, to charge your payment method on a recurring basis.</li>
-        <li><strong>Auto-renewal.</strong> Subscriptions renew automatically each billing period until you cancel. You can cancel at any time, effective at the end of the current period.</li>
-        <li><strong>No partial refunds.</strong> Except where required by law, fees are non-refundable and we do not provide refunds or credits for partial periods, unused credits, or downgrades.</li>
-        <li><strong>Changes to pricing.</strong> We may change pricing or plan features. We will give reasonable notice of changes that affect your subscription, and changes take effect at your next renewal.</li>
-        <li><strong>Taxes.</strong> Fees are exclusive of taxes unless stated; you are responsible for any applicable taxes.</li>
-        <li><strong>Beta pricing.</strong> While Sirus is in beta, plans, credits, and pricing may change as the Service develops.</li>
+        <li><strong>Plans and limits.</strong> Plan fees, currency, included workflow runs, credits, workspaces, members, and other limits are shown at checkout or in the Service. Credits measure AI usage and may be consumed at different rates depending on the model and work performed. Workflow runs and credits are separate usage measures.</li>
+        <li><strong>Payment.</strong> Stripe processes subscription and add-on payments. By subscribing, you authorise recurring charges to your selected payment method, including applicable taxes disclosed at checkout.</li>
+        <li><strong>Renewal and cancellation.</strong> Paid plans renew automatically for the period shown at checkout until cancelled. Cancellation takes effect at the end of the current paid period unless law requires otherwise.</li>
+        <li><strong>Credits.</strong> Included allowances reset as described for your plan. Purchased or promotional credits have no cash value, are not transferable between customers, and expire only if disclosed when issued. Except where required by law, unused allowances and credits are not refundable.</li>
+        <li><strong>Pricing changes.</strong> We may change plan pricing or limits prospectively. We will give reasonable notice of a material adverse change to an existing paid subscription, and you may cancel before it takes effect.</li>
+        <li><strong>Payment failure.</strong> We may restrict paid features or suspend a workspace after reasonable notice if payment is overdue.</li>
       </ul>
-      <div class="callout"><strong>Australian Consumer Law.</strong> Nothing in these terms excludes, restricts, or modifies any guarantee, right, or remedy you have under the Australian Consumer Law or other law that cannot lawfully be excluded. Where we are permitted to limit our liability for a breach of such a guarantee, we do so as set out in <a href="#liability">Limitation of liability</a>.</div>
+      <div class="callout"><strong>Australian Consumer Law.</strong> Nothing in these terms excludes, restricts, or modifies a guarantee, right, or remedy under the Australian Consumer Law or another law that cannot lawfully be excluded. Any permitted limitation is set out in <a href="#liability">Limitation of liability</a>.</div>
     </section>
 
     <section id="content">
-      <h2><span class="num">06</span> Your content &amp; data</h2>
-      <p><strong>You own your content.</strong> As between you and us, you retain all rights to the content you create in or provide to Sirus, and to the data you connect. We do not claim ownership of it.</p>
-      <p>You grant us a limited, non-exclusive licence to access, store, process, and transmit your content and connected data <strong>only as needed to provide and improve the Service for you</strong> — for example, sending relevant context to an AI provider to answer you, or syncing a connected account. We do not sell your content and we do not use it to train our own models. Our handling of personal data, including data about other people you bring in, is described in the <a href="/privacy">Privacy Policy</a> and, for business customers, governed by its data-processing terms under which we act as your processor.</p>
-      <p>You are responsible for your content and for keeping your own backups. In on-device mode, your content lives on your computer and is subject to the same risks as any local data (loss, hardware failure, etc.).</p>
+      <h2><span class="num">06</span> Customer Content</h2>
+      <p>"Customer Content" means information, files, prompts, messages, records, credentials, workflow and agent configurations, tool outputs, knowledge records, and other material submitted to, connected to, or generated through the Service for your workspace.</p>
+      <p><strong>You retain your rights.</strong> As between you and Sirus, you retain ownership of Customer Content. You grant us a worldwide, non-exclusive, limited licence to host, copy, transmit, process, and display Customer Content only as reasonably necessary to provide, secure, support, and maintain the Service, comply with law, and follow your instructions. We do not sell Customer Content or use it to train models owned by Sirus.</p>
+      <p>You are responsible for the legality, accuracy, and quality of Customer Content and for maintaining independent backups of information that is important to your business. AI output may not be unique, and other users may receive similar output.</p>
     </section>
 
     <section id="connected">
-      <h2><span class="num">07</span> Connected accounts &amp; third parties</h2>
-      <p>Sirus lets you connect third-party services such as Google (Gmail, Calendar, Drive), Microsoft (Outlook), Slack, and CRM or commerce tools. When you connect a service:</p>
+      <h2><span class="num">07</span> Connected services</h2>
+      <p>You may connect email, calendar, storage, messaging, CRM, accounting, commerce, communications, MCP, or other third-party services. By connecting a service, you instruct Sirus to access, sync, and act on data within the permissions granted. You can disconnect a service, but this may not reverse actions already taken or delete information already imported into Sirus.</p>
       <ul>
-        <li>You authorise Sirus to access and act on that account as described at the time you connect it, and you can disconnect or revoke access at any time.</li>
-        <li>You must comply with that provider's own terms, and your use of their data through Sirus remains subject to those terms.</li>
-        <li>Those services are operated by third parties, not by us. We are not responsible for their availability, accuracy, or acts, and your relationship with them is your own.</li>
+        <li>You must comply with the connected provider's terms and have authority to grant the requested access.</li>
+        <li>Use the narrowest permissions and service accounts reasonably suitable for the task.</li>
+        <li>Third-party services may change, suspend, rate-limit, charge for, or stop their APIs. Sirus does not control those services.</li>
+        <li>Instructions and data sent to a connected provider are also handled under that provider's terms and privacy practices.</li>
       </ul>
-      <p>The Service also depends on third-party infrastructure and AI providers. We are not liable for outages, changes, or failures of those providers, though we will make reasonable efforts to keep the Service working.</p>
     </section>
 
     <section id="ai">
-      <h2><span class="num">08</span> AI features &amp; accuracy</h2>
+      <h2><span class="num">08</span> AI features &amp; output</h2>
       <div class="callout">
-        <strong>AI output can be wrong.</strong> Sirus uses generative AI, which can produce information that is inaccurate, incomplete, outdated, or fabricated ("hallucinated"), and can misread your data. Output is <strong>not professional advice</strong> (legal, financial, tax, medical, or otherwise). You must review AI output and use your own judgement before relying on it or acting on it, especially for important decisions or anything sent to others. You are responsible for the decisions you make using Sirus.
+        <strong>AI output can be wrong.</strong> Generative AI may produce inaccurate, incomplete, outdated, biased, or fabricated output, misread Customer Content, or choose an unsuitable action. Output is not legal, financial, tax, medical, employment, or other professional advice. Review output and use independent judgement before relying on it, sending it to another person, or using it for a significant decision.
       </div>
-      <p>Because AI behaviour is probabilistic, the same request may produce different results, and we do not warrant that any output will be accurate, reliable, or fit for a particular purpose.</p>
+      <p>AI behaviour is probabilistic, so the same instruction can produce different results. Sirus may use different model providers for different tasks. Relevant Customer Content may be sent to those providers as described in the <a href="/privacy">Privacy Policy</a>.</p>
+      <p>Workspace owners and authorised administrators may select DeepSeek. Selecting DeepSeek instructs Sirus to transmit relevant Customer Content to DeepSeek to perform requested tasks. You must have authority and an appropriate lawful basis for that instruction and must not use DeepSeek for information its terms prohibit or state the service is not designed to process.</p>
+      <p>Third-party model providers operate under their own terms and privacy practices, which Sirus does not control. To the maximum extent permitted by law, Sirus is not responsible for a provider's independent acts or omissions. This does not limit Sirus's obligations concerning its own selection, configuration, or use of providers, or any right that cannot lawfully be excluded.</p>
+      <p>Do not use Sirus as the sole basis for decisions that determine a person's legal rights, access to employment, credit, housing, healthcare, insurance, essential services, or other similarly significant outcomes.</p>
     </section>
 
     <section id="actions">
-      <h2><span class="num">09</span> Automations &amp; autonomous actions</h2>
-      <p>A core feature of Sirus is that it can <strong>take actions on your behalf</strong> — for example, sending emails, replying to messages, creating or editing calendar events and documents, and running automations and agents on a schedule or trigger that you set up.</p>
+      <h2><span class="num">09</span> Automations, agents &amp; local tools</h2>
+      <p>Sirus can create and operate standing automations and custom agents, execute one-off instructions, and take actions through connected services. Depending on the permissions you grant, actions can include sending communications, changing or deleting records, creating financial or operational records, issuing API requests, and causing third-party usage or charges.</p>
+      <p>Sirus may detect a failed workflow and attempt to diagnose and repair it before surfacing the failure. A repair may change workflow implementation within the authority already granted. Self-healing reduces some failures but does not guarantee that a failure will be detected, correctly diagnosed, repaired, or prevented from recurring.</p>
+      <p>In the desktop app, Sirus can access local tools when invoked, including listing directories, reading and writing files, and running shell commands. These tools can expose confidential information, overwrite or delete data, change system configuration, or execute software on your device.</p>
+      <div class="callout">
+        <strong>Review before trusting.</strong> Before enabling or materially changing a workflow or agent, review its trigger, steps, destinations, permissions, data access, and expected side effects; test it with non-critical data; use approvals where available; and monitor initial and high-impact runs. Review repair notices and run history. Keep independent backups and a manual recovery path for important operations.
+      </div>
+      <p>Sirus can fail, repeat, omit, delay, or perform an unintended action. This can include inaccurate or unintended communications, duplicate actions, data modification or loss, missed handoffs, incorrect records, or third-party charges. Approval and permission controls reduce risk but do not guarantee correctness.</p>
+      <p>Do not use the Service as the sole control for emergency, safety-critical, life-support, or other operations where a failure could reasonably cause death, personal injury, serious property damage, or unlawful deprivation of rights.</p>
+    </section>
+
+    <section id="responsibilities">
+      <h2><span class="num">10</span> Your responsibilities</h2>
+      <p>You are responsible for configuring and supervising your use of the Service, including:</p>
       <ul>
-        <li>These actions happen because <strong>you configure, approve, and authorise them</strong>. You are responsible for the automations and agents you create or enable and for their effects.</li>
-        <li>You should review automations before enabling them, test with care, and use available approval and review controls, particularly for actions that contact other people or change data.</li>
-        <li>To the extent permitted by law, <strong>we are not liable for actions Sirus takes that you have configured or authorised</strong>, including messages sent, data changed, or third-party charges incurred.</li>
-        <li>You are responsible for ensuring the actions you automate comply with applicable laws — including laws on electronic messaging and spam (such as the Spam Act 2003 (Cth) and equivalents) and on privacy.</li>
+        <li>reviewing workflows, agents, output, recipients, and tool calls at a level appropriate to their risk;</li>
+        <li>maintaining backups, access controls, human review, and business-continuity procedures;</li>
+        <li>ensuring outbound email, SMS, and other communications comply with consent, sender-identification, unsubscribe, privacy, and marketing laws;</li>
+        <li>checking financial, accounting, legal, employment, customer, and other significant records before relying on or submitting them;</li>
+        <li>providing required notices and obtaining required consents for personal information processed through the Service; and</li>
+        <li>complying with laws, industry obligations, connected-provider terms, and your own commitments to customers and staff.</li>
       </ul>
     </section>
 
     <section id="acceptable">
-      <h2><span class="num">10</span> Acceptable use</h2>
-      <p>You agree not to, and not to allow anyone else to:</p>
+      <h2><span class="num">11</span> Acceptable use</h2>
+      <p>You must not use, or help another person use, the Service to:</p>
       <ul>
-        <li>Use the Service for anything unlawful, harmful, deceptive, or infringing, or to violate anyone's privacy or rights.</li>
-        <li><strong>Record meetings or calls without the right to do so.</strong> If you use Sirus to record or transcribe meetings or calls, you must comply with all applicable recording, wiretapping, and surveillance laws and obtain any consent required from other participants <em>before</em> recording them. You are solely responsible for your recordings.</li>
-        <li>Process data you do not have the right to process, or connect accounts you are not authorised to connect.</li>
-        <li>Send spam or unlawful communications, or use Sirus to harass or deceive others.</li>
-        <li>Attempt to break, overload, circumvent, or abuse the Service, our usage limits, our proxy, or our security, or access it other than through the interfaces we provide.</li>
-        <li>Reverse engineer, decompile, or attempt to extract source code or model credentials, except to the extent this restriction is prohibited by law.</li>
-        <li>Resell, sublicense, or provide the Service to third parties as your own without our written permission.</li>
-        <li>Use the Service to develop a competing product, or in a way that violates the terms of our AI or infrastructure providers.</li>
+        <li>break the law, infringe rights, deceive, harass, discriminate, or cause harm;</li>
+        <li>access, process, disclose, or alter data or systems without authority;</li>
+        <li>send spam, malware, phishing, unlawful surveillance, or deceptive communications;</li>
+        <li>develop or deploy weapons, conduct destructive cyber activity, or facilitate physical harm;</li>
+        <li>bypass security, workspace permissions, rate limits, billing, or provider restrictions, or disrupt the Service;</li>
+        <li>extract model credentials or reverse engineer the Service except where law expressly permits it; or</li>
+        <li>use Sirus to provide access to unrelated third parties as a standalone resale of the Service without our written permission.</li>
       </ul>
+      <p>Agencies and consultants may use Sirus to deliver services within a client's authorised workspace, provided the client has an appropriate account or subscription and all users comply with these terms.</p>
+    </section>
+
+    <section id="processing">
+      <h2><span class="num">12</span> Business data processing</h2>
+      <p>This section applies where Sirus processes personal data in Customer Content on behalf of a business customer. The customer is the controller (or equivalent responsible party) and Sirus is its processor or service provider. Sirus is separately a controller for account administration, billing, service security, legal compliance, and our own business communications.</p>
+      <h3>Processing details</h3>
+      <ul>
+        <li><strong>Subject and duration:</strong> providing the Service during the subscription and the limited retention period described in the Privacy Policy.</li>
+        <li><strong>Nature and purpose:</strong> hosting, organising, retrieving, transmitting, analysing, synchronising, and acting on data as instructed through chats, workflows, agents, integrations, support, and security operations.</li>
+        <li><strong>Data types:</strong> identity and contact details, communications, files, business and transaction records, connected-service data, technical identifiers, and any other personal data the customer chooses to submit.</li>
+        <li><strong>People affected:</strong> customer users, staff, contractors, prospects, clients, suppliers, and other people represented in Customer Content.</li>
+      </ul>
+      <p>We will process that personal data only on documented instructions expressed through these terms, the customer's use and configuration of the Service, and written support requests, unless law requires otherwise. We will ensure authorised personnel are subject to confidentiality obligations and maintain reasonable technical and organisational security measures appropriate to the risk.</p>
+      <p>The customer gives general authorisation for the providers described in the Privacy Policy to act as subprocessors. We take reasonable steps to use providers whose contractual terms and safeguards appropriately protect the personal data they process for the Service. Where applicable law requires it, we will give reasonable notice of a material new subprocessor and consider a reasonable, evidence-based objection. If we cannot provide the Service without that provider, either party may terminate the affected Service.</p>
+      <p>Taking account of the nature of the processing and information available to us, we will provide reasonable assistance with data-subject requests, security incidents, impact assessments, regulator consultations, and demonstrating compliance. Requests that require substantial custom work may be charged at a reasonable rate agreed in advance unless the work is required because Sirus breached this section.</p>
+      <p>On termination or a verified deletion request, we will delete or return Customer Content as described in the Privacy Policy, unless law requires retention. Copies in backups may remain until overwritten in the ordinary backup cycle and will remain protected while retained. We will provide information reasonably necessary to demonstrate compliance. Any audit must be proportionate, protect other customers and our security, use existing reports first, occur no more than once annually unless required by a regulator or following a material incident, and be at the customer's cost unless it identifies a material breach by Sirus.</p>
+      <p>The customer is responsible for its instructions, lawful basis, notices, consents, data minimisation, and responding to people whose data it controls. Customers subject to EEA, UK, or other restricted-transfer rules should contact us before submitting covered personal data if additional transfer terms, including standard contractual clauses, are required.</p>
     </section>
 
     <section id="ip">
-      <h2><span class="num">11</span> Intellectual property</h2>
-      <p>The Service, including the Sirus software, design, and the "Sirus" name and marks, is owned by us and protected by law. Subject to these terms, we grant you a limited, non-exclusive, non-transferable, revocable licence to install and use the app for your internal business purposes while your subscription is active. We reserve all rights not expressly granted.</p>
-      <p>If you send us feedback or suggestions, you grant us a perpetual, royalty-free licence to use them to improve the Service, without obligation to you.</p>
+      <h2><span class="num">13</span> Intellectual property</h2>
+      <p>The Service, software, design, documentation, and Sirus name and marks are owned by Sirus or its licensors and protected by law. Subject to these terms, we grant you a limited, non-exclusive, non-transferable licence to use the Service for your internal business purposes and authorised client-service work during your subscription.</p>
+      <p>If you provide feedback, you grant us a perpetual, worldwide, royalty-free licence to use it without identifying you or disclosing your confidential information.</p>
     </section>
 
     <section id="beta">
-      <h2><span class="num">12</span> Beta &amp; changes to the service</h2>
-      <p>Sirus is offered as an early-stage, evolving product. Features may be added, changed, or removed, and the Service may contain bugs or behave unexpectedly. We may modify or discontinue the Service, or any feature, at any time. We will try to give reasonable notice of significant changes, but we are not liable to you for changes to or discontinuation of the Service, except as required by law.</p>
+      <h2><span class="num">14</span> Beta, availability &amp; changes</h2>
+      <p>Sirus is in beta and is an early-stage, evolving product. It may contain defects, incomplete features, breaking changes, or periods of unavailability. We do not promise a service-level agreement, continuous availability, or that a particular integration, model, or feature will remain available unless we agree otherwise in writing.</p>
+      <p>We may add, change, or remove features to improve reliability, security, compliance, or the product. If a change materially reduces a paid Service, we will give reasonable notice where practicable. Your statutory rights and rights relating to prepaid fees are not affected.</p>
     </section>
 
     <section id="disclaimer">
-      <h2><span class="num">13</span> Disclaimers</h2>
-      <p>To the maximum extent permitted by law, the Service is provided <strong>"as is" and "as available"</strong>, without warranties of any kind, whether express, implied, or statutory, including implied warranties of merchantability, fitness for a particular purpose, title, and non-infringement. We do not warrant that the Service will be uninterrupted, secure, error-free, or that any output, automation, or sync will be accurate or complete. This section does not exclude any guarantees or rights that cannot lawfully be excluded, including under the Australian Consumer Law.</p>
+      <h2><span class="num">15</span> Disclaimers</h2>
+      <p>To the maximum extent permitted by law, the Service is provided <strong>"as is" and "as available"</strong>. We do not warrant that it will be uninterrupted, secure, error-free, accurate, or suitable for every purpose, or that an output, sync, automation, agent, repair, integration, or local-tool action will be complete or correct. Third-party services and models are outside our control.</p>
+      <p>Nothing in these terms excludes any warranty, consumer guarantee, or other right that cannot lawfully be excluded. A beta label does not waive those rights.</p>
     </section>
 
     <section id="liability">
-      <h2><span class="num">14</span> Limitation of liability</h2>
+      <h2><span class="num">16</span> Limitation of liability</h2>
       <p>To the maximum extent permitted by law:</p>
       <ul>
-        <li>Neither party is liable for any <strong>indirect, incidental, special, consequential, or punitive damages</strong>, or for any loss of profits, revenue, data, goodwill, or business opportunity, arising out of or relating to the Service, even if advised of the possibility.</li>
-        <li>Our <strong>total aggregate liability</strong> for all claims relating to the Service is limited to the greater of (a) the amount you paid us for the Service in the <strong>twelve months</strong> before the event giving rise to the claim, or (b) AUD $100.</li>
+        <li>neither party is liable to the other for indirect, incidental, special, exemplary, punitive, or consequential loss, or loss of profit, revenue, goodwill, or business opportunity; and</li>
+        <li>our total aggregate liability arising out of or relating to the Service is limited to the greater of the fees you paid for the Service in the 12 months before the event giving rise to the claim and <strong>AUD $100</strong>.</li>
       </ul>
-      <p>Where the Australian Consumer Law or other non-excludable law applies and we are permitted to limit our liability for breach of a consumer guarantee, our liability is limited, at our option, to re-supplying the relevant service or paying the cost of having it re-supplied. Some jurisdictions do not allow certain limitations, so some of the above may not apply to you.</p>
+      <p>These limits do not apply to liability that cannot lawfully be excluded or limited, including liability for fraud or wilful misconduct, or death or personal injury caused by negligence where the law prohibits a limitation. Where the Australian Consumer Law applies and permits us to limit a remedy for a failure to comply with a consumer guarantee, our liability is limited, at our option, to supplying the relevant services again or paying the cost of having them supplied again. Some jurisdictions provide rights that override part of this section.</p>
     </section>
 
     <section id="indemnity">
-      <h2><span class="num">15</span> Indemnity</h2>
-      <p>To the extent permitted by law, you agree to indemnify and hold us harmless from claims, losses, liabilities, and reasonable expenses (including legal costs) arising out of or related to: your content and connected data; your use of the Service; the automations and actions you configure; your breach of these terms; or your violation of any law or third-party right.</p>
+      <h2><span class="num">17</span> Indemnity</h2>
+      <p>To the extent permitted by law, you indemnify Sirus against a third-party claim, and reasonable direct losses and legal costs arising from it, to the extent caused by: Customer Content that infringes that third party's rights; your unlawful use of the Service; an action you instructed Sirus to take without required authority, notice, or consent; or your material breach of these terms. This indemnity does not apply to the extent a claim was caused by Sirus's breach, negligence, fraud, or wilful misconduct. We will promptly notify you of a claim and allow you reasonable control of its defence, provided no settlement admits fault or imposes an obligation on us without our consent.</p>
     </section>
 
     <section id="termination">
-      <h2><span class="num">16</span> Suspension &amp; termination</h2>
-      <p>You may stop using the Service and cancel your subscription at any time. We may suspend or terminate your access if you breach these terms, if required for security or legal reasons, or if we discontinue the Service, giving notice where reasonable (and immediately where necessary, such as for serious breach or risk).</p>
-      <p>On termination, your right to use the Service ends. Your on-device content remains on your device. For hosted workspace data, we will, on request and where feasible, give you a reasonable opportunity to export your data before deletion, subject to our <a href="/privacy">Privacy Policy</a> and any legal retention requirements. Sections that by their nature should survive termination (including ownership, disclaimers, liability limits, indemnity, and governing law) survive.</p>
+      <h2><span class="num">18</span> Suspension &amp; termination</h2>
+      <p>You may stop using the Service and cancel a subscription at any time. We may suspend or restrict access where reasonably necessary to address a security risk, unlawful use, material breach, overdue payment, harm to the Service or another person, or a legal requirement. Where practicable, we will notify you and give you a reasonable opportunity to remedy the issue.</p>
+      <p>We may discontinue the Service on reasonable notice. On termination, your right to use the Service ends and automated activity may stop. Account closure may initially deactivate workspace access to prevent accidental loss. Before closing an account, use available export features or contact us about an export. Hosted Customer Content is handled under the retention and deletion section of the <a href="/privacy">Privacy Policy</a>.</p>
+      <p>Sections that by their nature should survive termination, including ownership, data-processing obligations while data is retained, disclaimers, liability limits, indemnity, and governing law, survive.</p>
     </section>
 
     <section id="law">
-      <h2><span class="num">17</span> Governing law &amp; disputes</h2>
-      <p>These terms are governed by the laws of <strong>New South Wales, Australia</strong>, without regard to conflict-of-laws rules. You and we submit to the <strong>non-exclusive jurisdiction of the courts of New South Wales</strong> and the courts competent to hear appeals from them. Before starting formal proceedings, please contact us at <a href="mailto:parham@trysirus.com">parham@trysirus.com</a> so we can try to resolve the matter. Nothing in this section limits any right you have to bring a claim in your local jurisdiction where applicable law gives you that right.</p>
+      <h2><span class="num">19</span> Governing law &amp; disputes</h2>
+      <p>These terms are governed by the laws of <strong>New South Wales, Australia</strong>. You and Sirus submit to the non-exclusive jurisdiction of its courts and competent appeal courts. Before starting formal proceedings, contact <a href="mailto:parham@trysirus.com">parham@trysirus.com</a> and allow a reasonable opportunity to resolve the dispute. Nothing limits a right to bring a claim elsewhere where applicable law gives you that right.</p>
     </section>
 
     <section id="general">
-      <h2><span class="num">18</span> General</h2>
+      <h2><span class="num">20</span> General</h2>
       <ul>
-        <li><strong>Entire agreement.</strong> These terms and the Privacy Policy are the entire agreement between you and us about the Service and supersede prior discussions.</li>
-        <li><strong>Severability.</strong> If any provision is found unenforceable, the rest remains in effect.</li>
-        <li><strong>No waiver.</strong> Our failure to enforce a provision is not a waiver of it.</li>
-        <li><strong>Assignment.</strong> You may not assign these terms without our consent; we may assign them in connection with a merger, acquisition, or sale of the business.</li>
-        <li><strong>Force majeure.</strong> We are not liable for delays or failures caused by events beyond our reasonable control.</li>
-        <li><strong>Changes to these terms.</strong> We may update these terms; we will revise the "Last updated" date and, for material changes, take reasonable steps to notify you. Continued use after an update means you accept the revised terms.</li>
-        <li><strong>Notices.</strong> We may give notice through the app, the website, or by email. You can reach us at the addresses below.</li>
+        <li><strong>Entire agreement.</strong> These terms, the Privacy Policy, and any written order or additional terms agreed by both parties are the entire agreement about the Service. If an order conflicts with these terms, the order controls only for that conflict.</li>
+        <li><strong>Severability.</strong> If a provision is unenforceable, it will be adjusted only as much as necessary and the rest remains effective.</li>
+        <li><strong>No waiver.</strong> A failure or delay in enforcing a right is not a waiver.</li>
+        <li><strong>Assignment.</strong> Neither party may assign these terms without the other's consent, not to be unreasonably withheld, except to an affiliate or in connection with a genuine sale or reorganisation of substantially all relevant business or assets.</li>
+        <li><strong>Force majeure.</strong> Neither party is liable for delay or failure caused by events beyond its reasonable control, except payment obligations.</li>
+        <li><strong>Changes.</strong> We may update these terms prospectively. We will give reasonable notice of a material change. If a material change adversely affects an existing paid subscription, you may cancel before it takes effect. Changes required urgently for law or security may take effect sooner.</li>
+        <li><strong>Notices.</strong> We may give notices through the Service, website, or account email. Legal notices to Sirus must be sent using the contact details below.</li>
       </ul>
     </section>
 
     <section id="contact">
-      <h2><span class="num">19</span> Contact us</h2>
-      <p>For questions about these terms, or any legal or privacy matter, email <a href="mailto:parham@trysirus.com">parham@trysirus.com</a>.</p>
-      <p>Sirus is operated by Parham Sepasgozar, New South Wales, Australia.</p>
+      <h2><span class="num">21</span> Contact us</h2>
+      <p>For questions about these terms or a legal matter, email <a href="mailto:parham@trysirus.com">parham@trysirus.com</a>.</p>
+      <p>Sirus is operated by Parham Mohammad Ebrahimzadeh Sepasgozar, ABN 58 713 255 101, New South Wales, Australia.</p>
     </section>
   </main>
 
